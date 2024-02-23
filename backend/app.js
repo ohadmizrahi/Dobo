@@ -1,11 +1,13 @@
 const path = require('path');
 const express = require('express');
 
-require('dotenv').config({ path:'../shared/.env' })
+require('module-alias').addAliases({
+  '@src': path.resolve(__dirname, 'src'),
+  // Add more aliases as needed
+});
 
-
-const firstRouter = require('./src/routes/route1');
-const secondRouter = require('./src/routes/route2');
+const firstRouter = require('@src/routes/route1');
+const secondRouter = require('@src/routes/route2');
 
 const app = express();
 const port = process.env.BE_PORT || 3000;
