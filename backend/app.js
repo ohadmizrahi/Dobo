@@ -6,10 +6,9 @@ require('module-alias').addAliases({
   '@be': path.resolve(__dirname),
   // Add more aliases as needed
 });
-
-const firstRouter = require('@src/routes/route1');
-const secondRouter = require('@src/routes/route2');
 const pool = require('@be/database/pool.js');
+
+const authRouter = require('@src/routes/auth');
 
 pool.query('SELECT NOW()', (err, res) => {
   if (err) {
@@ -21,12 +20,11 @@ pool.query('SELECT NOW()', (err, res) => {
 
 const app = express();
 const port = process.env.BE_PORT || 3000;
-
-// To handle requestes for firstRouter
-app.use(firstRouter)
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // To handle requestes for secondRouter
-app.use(secondRouter)
+app.use(authRouter)
 
 app.get('/', (req, res) => {
   res.send('Hello, Express!');
