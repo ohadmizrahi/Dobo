@@ -1,5 +1,14 @@
 const path = require('path');
 const express = require('express');
+const cors = require('cors');
+
+
+const corsOptions = {
+  origin: '*',
+  optionsSuccessStatus: 200,
+  methods: "GET, POST",
+  allowedHeaders: "Content-Type, Authorization" 
+};
 
 require('module-alias').addAliases({
   '@src': path.resolve(__dirname, 'src'),
@@ -24,6 +33,7 @@ const app = express();
 const port = process.env.BE_PORT || 3000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cors(corsOptions));
 
 // To handle requestes for secondRouter
 app.use(authRouter)

@@ -18,7 +18,15 @@ function refreshToken(decodedToken) {
     }
 }
 
+function resetPasswordToken(username) {
+    if (!username) {
+        return null;
+    }
+    return jwt.sign({ username }, process.env.RESERT_PASSWORD_SECRET_KEY, { expiresIn: '15m' });
+}
+
 module.exports = {
     generateTokens,
-    refreshToken, 
+    refreshToken,
+    resetPasswordToken
 } 

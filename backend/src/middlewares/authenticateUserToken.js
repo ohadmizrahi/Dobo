@@ -1,12 +1,10 @@
 const jwt = require("jsonwebtoken");
 
-function authenticateToken(req, res, next) {
+function authenticateUserToken(req, res, next) {
     let token = null;
     
     if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
         token = req.headers.authorization.split(' ')[1]; // Bearer <token>
-    } else if (req.body && req.body.token) {
-        token = req.body.token;
     }
 
     if (token == null) {
@@ -23,4 +21,4 @@ function authenticateToken(req, res, next) {
     }
 }
 
-module.exports = { authenticateToken };
+module.exports = { authenticateUserToken };

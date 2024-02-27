@@ -41,4 +41,22 @@ async function create(username, paymentMethod) {
     }
 }
 
-module.exports = { find, create }
+async function update(username, fieldsToUpdate) {
+    const paymentMethod = await find(username);
+    if (!paymentMethod) {
+        return { success: false, message: "Payment Method not found" }
+    }
+
+    try {
+        // update account
+        // ==== REPLACE WITH DATABASE CALL =====
+        paymentMethods[username] = {...paymentMethod, ...fieldsToUpdate}; // need to be async when use the DB
+        // ====================================
+        return { success: true, updatedFields: fieldsToUpdate, message: "Payment Method updated"}
+    } 
+    catch (error) {
+        throw new Error('Payment Method update failed');
+    }
+}
+
+module.exports = { find, create, update }

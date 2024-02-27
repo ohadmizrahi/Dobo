@@ -5,7 +5,8 @@ const accounts = {
         phoneNumber: "123-456-7890",
         address: "123 Main St, Anytown, USA",
         birthDate: "1980-01-01",
-        password: "password"
+        password: "password",
+        image: null
     },
     "jane.doe@gmail.com": {
         fullName: "Jane Doe",
@@ -13,7 +14,8 @@ const accounts = {
         phoneNumber: "098-765-4321",
         address: "456 Elm St, Anytown, USA",
         birthDate: "1985-02-02",
-        password: "password"
+        password: "password",
+        image: null
     }
 }
 
@@ -44,4 +46,22 @@ async function create(username, account) {
    
 }
 
-module.exports = { find, create }
+async function update(username, fieldsToUpdate) {
+    const account = await find(username);
+    if (!account) {
+        return { success: false, message: "Account not found" }
+    }
+
+    try {
+        // update account
+        // ==== REPLACE WITH DATABASE CALL =====
+        accounts[username] = {...account, ...fieldsToUpdate}; // need to be async when use the DB
+        // ====================================
+        return { success: true, updatedFields: fieldsToUpdate, message: "Account updated"}
+    } 
+    catch (error) {
+        throw new Error('Account update failed');
+    }
+}
+
+module.exports = { find, create, update }
