@@ -6,9 +6,11 @@ require('module-alias').addAliases({
   '@be': path.resolve(__dirname),
   // Add more aliases as needed
 });
+
 const pool = require('@be/database/pool.js');
 
 const authRouter = require('@src/routes/auth');
+const profileRouter = require('@src/routes/profile.js');
 
 pool.query('SELECT NOW()', (err, res) => {
   if (err) {
@@ -25,6 +27,9 @@ app.use(express.urlencoded({ extended: true }));
 
 // To handle requestes for secondRouter
 app.use(authRouter)
+
+// To handle requestes for secondRouter
+app.use(profileRouter)
 
 app.get('/', (req, res) => {
   res.send('Hello, Express!');

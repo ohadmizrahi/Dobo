@@ -7,10 +7,9 @@ function generateTokens(username) {
     return { token, tokenForRefresh };
 }
 
-function refreshToken(token) {
+function refreshToken(decodedToken) {
     try {
-        const decoded = jwt.verify(token, process.env.SECRET_KEY);
-        const username = decoded.username;
+        const username = decodedToken.username;
         const tokens = generateTokens(username)
         return tokens;
     } catch (error) {
@@ -19,17 +18,7 @@ function refreshToken(token) {
     }
 }
 
-function extractToken(headers, body) {
-    if (headers.authorization && headers.authorization.startsWith('Bearer')) {
-        return headers.authorization.split(' ')[1]; // Bearer <token>
-    } else if (body && body.token) {
-        return body.token;
-    }
-    return null;
-}
-
 module.exports = {
     generateTokens,
-    refreshToken,
-    extractToken 
+    refreshToken, 
 } 
