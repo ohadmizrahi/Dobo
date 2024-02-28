@@ -104,12 +104,12 @@ router.post("/api/profile/update/password", authenticateResetPasswordToken, asyn
 
 router.post("/api/profile/update/image", upload.single('image'), async (req, res) => {
     const username = req.user.username;
-    const filename = req.file.filename;
+    // const filename = req.file.filename;
+    console.log({req});
+    // console.log({filename});
     try {
         const response = await updateImage(username, filename)
-        if (!response.success) {
-            res.status(400).json({ error: response.message, invalidFields: response.invalidFields});
-        } else {
+        if (response.success) {
             res.status(200).json({ success: true, updatedFields: response.updatedFields });
         }
     }
