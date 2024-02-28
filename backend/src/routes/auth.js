@@ -66,7 +66,7 @@ router.post("/api/auth/signup", async (req, res) => {
 
 router.get("/api/auth/token/refresh", authenticateUserToken, (req, res) => {
     try {
-        const { token, tokenForRefresh } = refreshToken(req.user.username)
+        const { token, tokenForRefresh } = refreshToken(req.user)
         if (token && tokenForRefresh) {
             res.status(200).json({ success: true, token, tokenForRefresh, message: 'Token refresh successful' });
         } else {
