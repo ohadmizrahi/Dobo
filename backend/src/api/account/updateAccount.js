@@ -1,6 +1,6 @@
-const { update: updateAccount } = require('../../models/account.js')
-const { update: updatePaymentMethod } = require('../../models/paymentMethods.js')
-const { validateSchema } = require('../../utils/schema.js')
+const { update: updateAccount } = require('@src/models/account.js')
+const { update: updatePaymentMethod } = require('@src/models/paymentMethods.js')
+const { validateSchema } = require('@src/utils/schema.js')
 
 async function updateAccountDetails(username, fieldsToUpdate) {
     const schema = ["fullName", "phoneNumber", "address", "birthDate"];
