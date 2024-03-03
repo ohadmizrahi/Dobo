@@ -1,2 +1,2 @@
 # Dobo
-Very good Aplication !
+Very good Application !
