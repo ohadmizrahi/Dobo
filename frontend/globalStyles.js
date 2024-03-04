@@ -12,7 +12,7 @@ export const globalStyles = StyleSheet.create({
         fontWeight: "bold",
     },
     image: {
-        width: 400,
+        width: 200,
         height: 200,
     },
     button: {
