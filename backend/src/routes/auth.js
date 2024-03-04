@@ -11,7 +11,7 @@ router.post("/api/auth/signin", async (req, res) => {
     try {
         const authenticated = await authentication(username, password);
         if (authenticated) {
-            const { token, tokenForRefresh } = generateTokens(username);
+            const { token, tokenForRefresh } = generateTokens({ username });
             if (!token || !tokenForRefresh) {
                 throw new Error('Token generation failed');
             }
@@ -46,7 +46,7 @@ router.post("/api/auth/signup", async (req, res) => {
         });
 
         if (success) {
-            const { token, tokenForRefresh } = generateTokens(username);
+            const { token, tokenForRefresh } = generateTokens({ username });
             if (!token || !tokenForRefresh) {
                 throw new Error('Token generation failed');
             }
