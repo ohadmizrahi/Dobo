@@ -5,6 +5,8 @@ export const globalStyles = StyleSheet.create({
         flex: 1,
         backgroundColor: "#3D3D3D",
         padding: 20,
+        alignItems: "center",
+
     },
     text: {
         color: "#fff",
