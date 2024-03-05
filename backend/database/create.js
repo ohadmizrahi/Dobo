@@ -28,16 +28,8 @@ const tableQueries = {
     users: usersTableQuery,
 }
 
-const usersTableQuery =
-    // Add the users table creation query here
-    `CREATE TABLE IF NOT EXISTS users (
-        id SERIAL PRIMARY KEY,
-        name VARCHAR(255) NOT NULL,
-        email VARCHAR(255) NOT NULL
-    )`
-
 createTables(tableQueries)
-  .then(() => console.log('Table altered successfully'))
+  .then(() => console.log('Table created successfully'))
   .catch(console.error);
 */
 
@@ -52,7 +44,7 @@ const businessQuery = '\
 	imageUrl varchar(255)\
 )';
 
-accountsQuery = '\
+const accountsQuery = '\
     create table if not exists accounts (\
 	accountId varchar(255) PRIMARY KEY GENERATED ALWAYS AS (email) STORED,\
 	fullName varchar(255) not null, \
@@ -64,7 +56,7 @@ accountsQuery = '\
 	imageUrl varchar(255)\
 )'
 
-paymentMethodsQuery = '\
+const paymentMethodsQuery = '\
     create table if not exists PaymentMethods (\
 	accountId varchar(255) primary key,\
 	cardNumber varchar(16) not null unique,\
@@ -75,7 +67,7 @@ paymentMethodsQuery = '\
 	FOREIGN key (accountId) REFERENCES accounts(accountId)\
 )'
 
-tablesQuery = '\
+const tablesQuery = '\
     create table if not exists Tables (\
 	tableId varchar(4) not null,\
 	businessId varchar(255) not null,\
@@ -84,7 +76,7 @@ tablesQuery = '\
 	FOREIGN key (businessId) REFERENCES businesses(businessId)\
 )'
 
-itemsQuery = '\
+const itemsQuery = '\
     create table if not exists items (\
 	itemId UUID primary key DEFAULT uuid_generate_v4(),\
 	businessId varchar(255) not null,\
@@ -106,7 +98,7 @@ reservationsQuery = '\
 	numberOfPeople integer check (numberOfPeople > 0 and numberOfPeople <= 10) not null\
 )'
 
-virtualTablesQuery = "\
+const virtualTablesQuery = "\
     create table if not exists virtual_tables (\
 	virtualTableId UUID primary key DEFAULT uuid_generate_v4(),\
 	tableId varchar(4) not null,\
@@ -117,7 +109,7 @@ virtualTablesQuery = "\
 	FOREIGN KEY (tableId, businessId) REFERENCES Tables(tableId, businessId)\
 )"
 
-clientsQuert = "\
+const clientsQuert = "\
     create table if not exists clients (\
 	clientId UUID primary key DEFAULT uuid_generate_v4(),\
 	virtualTable UUID not null,\
@@ -129,7 +121,7 @@ clientsQuert = "\
 	foreign key (accountId) references accounts(accountId)\
 )"
 
-ordersQuery = "\
+const ordersQuery = "\
     create table if not exists orders (\
 	orderId UUID primary key default uuid_generate_v4(),\
 	itemId UUID not null,\
