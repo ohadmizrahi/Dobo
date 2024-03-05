@@ -4,7 +4,7 @@ export const globalStyles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: "#3D3D3D",
-        padding: 20,
+        padding: 60,
         alignItems: "center",
 
     },
@@ -17,6 +17,22 @@ export const globalStyles = StyleSheet.create({
         width: 400,
         height: 200,
     },
+
+    Icons: {
+        position: 'absolute',
+        fontSize: 40,
+        color: '#97DECC',
+    },
+    HeaderIconLeft: {
+        top: 50,
+        left: 20,
+
+    },
+    HeaderIconRight: {
+        top: 50,
+        right: 20,
+    },
+    
     button: {
         backgroundColor: "#fff",
         padding: 10,
