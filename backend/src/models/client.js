@@ -1,12 +1,14 @@
 const clients = [
     {
+        clientId: "1",
         accountId: "john.doe@gmail.com",
         virtualTableId: "abcd",
         paid: 0.00,
         total: 100.00,
         active: true
     },
-    {
+    {   
+        clientId: "2",
         accountId: "jane.doe@gmail.com",
         virtualTableId: "rtye",
         paid: 0.00,
@@ -16,18 +18,23 @@ const clients = [
 ]
 
 function find(clientId) {
-    return clients.filter(client => client.accountId === clientId);
+    return clients.filter(client => client.clientId === clientId);
 }
 
-function findActiveClient(clientId) {
-    return clients.find(client => client.accountId === clientId && client.active);
+function findActiveClient(accountId) {
+    return clients.find(client => client.accountId === accountId && client.active);
 }
 
-function create(clientId, virtualTableId) {
+function findClientsByVirtualTable(virtualTableId) {
+    return clients.filter(client => client.virtualTableId === virtualTableId);
+}
+
+function create(accountId, virtualTableId) {
     try {
 
         const client = {
-            accountId: clientId,
+            clientId: clients.length + 1,
+            accountId: accountId,
             virtualTableId,
             paid: 0.00,
             total: 0.00,
@@ -47,5 +54,6 @@ function create(clientId, virtualTableId) {
 module.exports = {
     find,
     create,
-    findActiveClient
+    findActiveClient,
+    findClientsByVirtualTable
 };

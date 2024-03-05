@@ -4,6 +4,10 @@ const { validateAccountWithoutOpenTables, validateClientToken } = require("@src/
 const { verifyClientActive } = require("@src/middlewares/clientValidations.js");
 const { openOrJoinVirtualTable } = require("@src/api/table/virtualTable.js");
 const { generateClientToken } = require("@src/api/token.js");
+const { find: getVirtualTable } = require("@src/models/virtualTables.js");
+const { findClientsByVirtualTable: getClients } = require("@src/models/clients.js");
+const { findOrdersByVirtualTable: getOrders } = require("@src/models/orders.js");
+const { findByBusiness: getMenu } = require("@src/models/items.js");
 
 const router = Router();
 
@@ -19,7 +23,7 @@ router.get("/api/table", validateClientToken, verifyClientActive, async (req, re
             const clients = await getClients(virtualTableId);
             res.status(200).json({ success: true, virtualTable, orders, clients });
         } else {
-            res.status(404).json({ error: 'Table not found' });
+            res.status(404).json({ error: 'Virtual table not found' });
         }
     } catch (error) {
         console.error(error);
@@ -35,7 +39,15 @@ router.post("/api/table/join", validateAccountWithoutOpenTables, async (req, res
         if (response.success) {
             const clientTokens = generateClientToken(response.client.accountId, response.virtualTable.virtualTableId);
             const client = { ...response.client, ...clientTokens };
-            res.status(200).json({ success: true, message: 'Joined table successfully', operation: response.operation, virtualTable: response.virtualTable, client });
+            const menu = await getMenu(businessId);
+            res.status(200).json({ 
+                success: true,
+                message: 'Joined table successfully',
+                operation: response.operation,
+                virtualTable: response.virtualTable,
+                client,
+                menu
+            });
         } else {
             res.status(400).json({ success: false, message: response.message });
         }
