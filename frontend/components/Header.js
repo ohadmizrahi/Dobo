@@ -7,8 +7,8 @@ export default function Header() {
     return (
         <View style={globalStyles.container}>
             <StatusBar barStyle="light-content" />
-            <Icon name="home" style={[globalStyles.HeaderIconLeft,globalStyles.Icons]} />
-            <Icon name="user" style={[globalStyles.HeaderIconRight,globalStyles.Icons]} />
+            <Icon name="home" style={[globalStyles.headerIconLeft,globalStyles.icons]} />
+            <Icon name="user" style={[globalStyles.headerIconRight,globalStyles.icons]} />
             <LogoImage />
         </View>
     )

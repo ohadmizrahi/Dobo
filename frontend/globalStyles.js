@@ -8,30 +8,31 @@ export const globalStyles = StyleSheet.create({
         alignItems: "center",
 
     },
-    text: {
-        color: "#fff",
-        fontSize: 20,
-        fontWeight: "bold",
-    },
     image: {
         width: 400,
         height: 200,
     },
 
-    Icons: {
+    icons: {
         position: 'absolute',
         fontSize: 40,
         color: '#97DECC',
     },
-    HeaderIconLeft: {
+    headerIconLeft: {
         top: 50,
         left: 20,
 
     },
-    HeaderIconRight: {
+    headerIconRight: {
         top: 50,
         right: 20,
     },
+    text: {
+        color: "#fff",
+        fontSize: 20,
+        fontWeight: "bold",
+    },
+
     
     button: {
         backgroundColor: "#fff",
