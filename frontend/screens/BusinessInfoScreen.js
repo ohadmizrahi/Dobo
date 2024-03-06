@@ -1,7 +1,6 @@
 import { View, Text } from "react-native"; 
-import { globalStyles } from '../styles/global';
 
-export default function BusinessInfo() {
+export default function BusinessInfoScreen({ navigation }) {
   return (
     <View>
       <Text>BusinessInfo</Text>
