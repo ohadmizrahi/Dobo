@@ -1,12 +1,9 @@
 import { StyleSheet } from "react-native";
 
 export const globalStyles = StyleSheet.create({
-    container: {
+    screenColor: {
         flex: 1,
         backgroundColor: "#3D3D3D",
-        padding: 60,
-        alignItems: "center",
-
     },
     image: {
         width: 400,
