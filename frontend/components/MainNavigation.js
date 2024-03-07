@@ -4,7 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import HomeScreen from '../screens/HomeScreen.js';
 import ItamScreen from '../screens/ItemScreen.js';
-import BusinessInfoScreen from '../screens/businessInfoScreen.js';
+import BusinessInfoScreen from '../screens/BusinessInfoScreen.js';
 import JoinTableScreen from '../screens/JoinTableScreen.js';
 import OrderScreen from '../screens/OrderScreen.js';
 import PayScreen from '../screens/PayScreen.js';
