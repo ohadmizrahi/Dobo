@@ -35,26 +35,6 @@ export const globalStyles = StyleSheet.create({
         right: 20,
     },
 
-    text: {
-        color: "#fff",
-        fontSize: 20,
-        fontWeight: "bold",
-    },
-
-    button: {
-        backgroundColor: "#fff",
-        padding: 10,
-        borderRadius: 10,
-        marginTop: 20,
-        width: 200,
-    },
-
-    buttonText: {
-        color: "#000",
-        fontSize: 20,
-        textAlign: "center",
-    },
-
     shadowBottom: {
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 5 },
@@ -95,6 +75,10 @@ export const globalStyles = StyleSheet.create({
         fontSize: 20,
         color: backgroundColor,
         marginLeft: 10,
+    },
+
+    BellIconRight: {
+        right: 10,
     },
     
 

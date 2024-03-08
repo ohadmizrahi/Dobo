@@ -4,7 +4,6 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import {globalStyles} from '../globalStyles';
 
 
-
 export default function SearchBar() {
     const [search, setSearch] = useState('');
 
