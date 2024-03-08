@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 export default function HomeLogo( {navigation} ) {
     return (
         <View>
-            <Pressable onPress={() => navigation.navigate('Home')}>
+            <Pressable onPress={() => navigation.navigate('Profile')}>
             <Icon name="user" style={[globalStyles.headerIconRight,globalStyles.icons]} />
             </Pressable>
         </View>
