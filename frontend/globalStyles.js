@@ -1,10 +1,16 @@
 import { StyleSheet } from "react-native";
 
+
+const backgroundColor = "#3D3D3D";
+const mainColor = "#97DECC";
+
+
+
 export const globalStyles = StyleSheet.create({
 
     screenColor: {
         flex: 1,
-        backgroundColor: "#3D3D3D",
+        backgroundColor: backgroundColor,
 
     },
 
@@ -16,7 +22,7 @@ export const globalStyles = StyleSheet.create({
     icons: {
         position: 'absolute',
         fontSize: 40,
-        color: '#97DECC',
+        color: mainColor,
     },
 
     headerIconLeft: {
@@ -59,7 +65,7 @@ export const globalStyles = StyleSheet.create({
 
     formHeadLine: {
         position: 'relative',
-        backgroundColor: '#97DECC',
+        backgroundColor: mainColor,
         borderRadius: 50,
         marginHorizontal: 50,
     },
