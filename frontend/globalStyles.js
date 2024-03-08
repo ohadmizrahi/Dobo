@@ -11,6 +11,7 @@ export const globalStyles = StyleSheet.create({
     image: {
         width: 400,
         height: 200,
+        backgroundColor: '#000'
     },
 
     icons: {
@@ -33,7 +34,6 @@ export const globalStyles = StyleSheet.create({
         fontWeight: "bold",
     },
 
-    
     button: {
         backgroundColor: "#fff",
         padding: 10,
@@ -45,6 +45,7 @@ export const globalStyles = StyleSheet.create({
         color: "#000",
         fontSize: 20,
         textAlign: "center",
+        opacity: 1
     },
     });
     
