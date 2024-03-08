@@ -77,5 +77,26 @@ export const globalStyles = StyleSheet.create({
         marginBottom: 10,
         textAlign: 'center',
     },
+
+    searchContain: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: "#EFEFEF",
+        borderRadius: 50,
+        marginHorizontal: 20,
+        paddingHorizontal: 10,
+        marginTop: 20,
+    },
+    textInput: {
+        flex: 1,
+        fontSize: 25,
+    },
+    searchIcon: {
+        fontSize: 20,
+        color: backgroundColor,
+        marginLeft: 10,
+    },
+    
+
     });
     
