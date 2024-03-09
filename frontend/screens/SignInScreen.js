@@ -4,15 +4,18 @@ import SocialSignIn from '../components/SocialSignIn';
 import LogoImage from '../components/DoboLogo';
 import ProfilePicture from  '../components/ProfilePic';
 import FormHeadLine from '../components/FormHeadLine';
+import { globalStyles } from '../globalStyles';
+import DontHaveAccount from '../components/NewAccount';
 
 export default function SignInScreen({ navigation }) {
   return (
-    <View>
+    <View style= {globalStyles.screenColor}>
       <Text>SignIn</Text>
       <LogoImage />
-      <ProfilePicture name='dan' />
-      <SocialSignIn />
+      <ProfilePicture />
       <FormHeadLine formName='Sign In' />
+      <DontHaveAccount navigation={navigation}/>
+      <SocialSignIn />
     </View>
   );
 }

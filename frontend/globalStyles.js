@@ -9,9 +9,9 @@ export const globalStyles = StyleSheet.create({
         backgroundColor: backgroundColor,
     },
     image: {
-        width: 400,
-        height: 200,
-        backgroundColor: '#000',
+        width: 200,
+        height: 80,
+        alignSelf: 'center',
     },
     icons: {
         position: 'absolute',
@@ -35,11 +35,21 @@ export const globalStyles = StyleSheet.create({
     },
     buttonSocial: {
         backgroundColor: "#fff",
-        padding: 10,
+        flex: 1,
+        padding: 20,
         fontSize: 30,
-        borderRadius: 5,
+        borderRadius: 10,
         marginBottom: 10,
         textAlign: 'center',
+        width: '70%',
+        height: '70%',
+        alignSelf: 'center',
+        },
+
+    socialtext:{
+        color: '#000',
+        fontWeight:'bold',
+        opacity: 1,
     },
     searchContain: {
         flexDirection: 'row',
@@ -66,6 +76,7 @@ export const globalStyles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         marginLeft: 140,
+        color: 'white',
     },
     profilePictureText: {
         fontSize: 24,
@@ -80,9 +91,10 @@ export const globalStyles = StyleSheet.create({
         right: 10,
     },
     Logoutcontainer: {
-        marginTop: 450,
-        padding: 40,
+        width: '80%',
         borderRadius: 10,
+        alignSelf: 'center',
+        marginBottom:'10%',
       },
     shadowBottom: {
         shadowColor: '#000',
@@ -96,7 +108,8 @@ export const globalStyles = StyleSheet.create({
         position: 'relative',
         backgroundColor: mainColor,
         borderRadius: 50,
-        marginHorizontal: 50,
+        marginHorizontal: 80,
+        margin:10,
     },
 
     formHeadLineText: {

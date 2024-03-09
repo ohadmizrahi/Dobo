@@ -8,7 +8,7 @@ import { Directions } from 'react-native-gesture-handler';
 const ProfilePicture = ({ name }) => (
   <View style={globalStyles.profilePictureContainer}>
       <Icon name="camera" style={globalStyles.icons}/>
-        <Text>Hi</Text>
+      <Text>Hi</Text>
   </View>
 );
 
