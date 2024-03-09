@@ -1,11 +1,16 @@
 import React from 'react';
 import { View, Text, Button } from 'react-native';
+import HomeLogo from '../components/HomeLogo';
+import ProfileLogo from '../components/ProfileLogo';
+import {globalStyles} from '../globalStyles';
+import Bell from '../components/Bell';
 
 export default function ItamScreen({navigation}) {   
   return (
-    <View>
-      <Text>Item</Text>
-      <Button title="Go to Home" onPress={() => navigation.navigate('Home')} />
+    <View style={globalStyles.screenColor} >
+      <HomeLogo navigation={navigation} />
+      <ProfileLogo navigation={navigation}/>
+      <Bell />
     </View>
   );
 }
