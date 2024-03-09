@@ -47,5 +47,22 @@ export const globalStyles = StyleSheet.create({
         textAlign: "center",
         opacity: 1
     },
+    profilePictureContainer: {
+        width: 80,
+        height: 80,
+        borderRadius: 40,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginLeft: 140,
+      },
+      profilePictureText: {
+        fontSize: 24,
+        color: '#000',
+      },
+      profilePictureImage: {
+        width: '100%',
+        height: '100%',
+        resizeMode: 'cover',
+      },
     });
     
