@@ -79,4 +79,9 @@ export const globalStyles = StyleSheet.create({
     BellIconRight: {
         right: 10,
     },
+    Logoutcontainer: {
+        marginTop: 450,
+        padding: 40,
+        borderRadius: 10,
+      },
 });
