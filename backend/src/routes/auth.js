@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const { authentication } = require("@src/api/auth/signin.js");
 const { signup } = require("@src/api/auth/signup.js");
-const { generateTokens, refreshToken, resetPasswordToken } = require("@src/api/auth/token.js");
+const { generateTokens, resetPasswordToken } = require("@src/api/auth/token.js");
 const { authenticateUserToken } = require("@src/middlewares/authenticateUserToken.js");
 
 const router = Router();
@@ -66,7 +66,7 @@ router.post("/api/auth/signup", async (req, res) => {
 
 router.get("/api/auth/token/refresh", authenticateUserToken, (req, res) => {
     try {
-        const { token, tokenForRefresh } = refreshToken(req.user)
+        const { token, tokenForRefresh } = generateTokens(req.user.username)
         if (token && tokenForRefresh) {
             res.status(200).json({ success: true, token, tokenForRefresh, message: 'Token refresh successful' });
         } else {

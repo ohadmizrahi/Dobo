@@ -2,9 +2,8 @@ const { Router } = require('express');
 const multer = require('multer');
 const { authenticateUserToken } = require("@src/middlewares/authenticateUserToken.js");
 const { authenticateResetPasswordToken } = require("@src/middlewares/authenticateResetPasswordToken.js");
-const { find: findUserAccount } = require('@src/models/account.js');
-const { find: getUserPaymentMethod } = require('@src/models/paymentMethods.js')
-const { updateAccountDetails, resetPassword, updatedPaymentMethod, updateImage } = require('@src/api/account/updateAccount.js');
+const { updateAccountDetails, resetPassword, updateImage, getAccount } = require('@src/api/account/account.js');
+const { updatedOrCreatePaymentMethod } = require('@src/api/account/paymentMethod.js');
 
 const router = Router();
 
@@ -23,9 +22,8 @@ const upload = multer({ storage: storage });
 
 router.get("/api/profile", async (req, res) => {
     const username = req.user.username;
+    const { account, paymentsMethod } = await getAccount(username);
     try {
-        const account = await findUserAccount(username);
-        const paymentsMethod = await getUserPaymentMethod(username);
         if (account) {
             const profile = {
                 account,
@@ -66,7 +64,7 @@ router.post("/api/profile/update/payment-method", async (req, res) => {
     const username = req.user.username;
     const fieldsToUpdate = req.body;
     try {
-        const response = await updatedPaymentMethod(username, fieldsToUpdate)
+        const response = await updatedOrCreatePaymentMethod(username, fieldsToUpdate)
         if (!response.success) {
             res.status(400).json({ error: response.message, invalidFields: response.invalidFields});
         } else {
@@ -77,6 +75,8 @@ router.post("/api/profile/update/payment-method", async (req, res) => {
         console.error(error);
         if (error.message === 'Payment Method not found') {
             res.status(404).json({ error: error.message });
+        } else if (error.message === "Payment method for this user already exists") {
+            res.status(409).json({ error: error.message });
         } else {
             res.status(500).json({ error: 'An error occurred during updating payment method.' });
         }

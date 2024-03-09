@@ -1,60 +1,61 @@
-const paymentMethods = {
-    "john.doe@gmail.com": {
-        cardNumber: "John Doe",
-        expiritionDate: "2026-09",
-        cvv: "456",
-        citizenId: "123456123",
-        type: "Visa"
-    },
-    "jane.doe@gmail.com": {
-        cardNumber: "Jane Doe",
-        expiritionDate: "2025-07",
-        cvv: "123",
-        citizenId: "123456789",
-        type: "Visa"
+const { pool } = require('@be/database/pool.js');
+
+async function find(accountId) {
+    const query = `SELECT * FROM PaymentMethods WHERE accountId = $1;`;
+    const values = [accountId];
+    try {
+        const res = await pool.query(query, values);
+        return res.rows;
+    } catch (error) {
+        throw new Error(`Failed to execute query:\n${error}`);
     }
 }
 
-async function find(username) {
-    // find paymentMethod by username
-    // ==== REPLACE WITH DATABASE CALL =====
-    const paymentMethod = await paymentMethods[username]
-    // ====================================
-    const response = paymentMethod ? paymentMethod : null
-    return response
-}
-
-async function create(username, paymentMethod) {
-    if (await find(username)) {
-        return { success: false, paymentMethod, message: "Payment method already exists" }
+async function create(username, paymentMethodData) {
+    const paymentMethods = await find(username);
+    if (paymentMethods.length > 0) {
+        return { success: false, username, message: "Payment method for this user already exists" }
     }
 
     try {
-        // create paymentMethod
-        // ==== REPLACE WITH DATABASE CALL =====
-        paymentMethods[username] = paymentMethod; // need to be async when use the DB
-        // ====================================
-        return { success: true, paymentMethod, message: "Payment method created"}
-    } 
-    catch (error) {
+        const query = `
+            INSERT INTO PaymentMethods (accountId, cardNumber, experationDate, cvv, citizenId, type)
+            VALUES ($1, $2, $3, $4, $5, $6)
+            RETURNING *;
+        `;
+        const { cardNumber, experationDate, cvv, citizenId, type } = paymentMethodData;
+
+        const values = [username, cardNumber, experationDate, cvv, citizenId, type];
+
+        const res = await pool.query(query, values)
+        const paymentMethod = res.rows[0];
+        return { success: true, data: paymentMethod, message: "Payment method created"}
+    } catch (error) {
         throw new Error('Payment method creation failed');
     }
 }
 
 async function update(username, fieldsToUpdate) {
-    const paymentMethod = await find(username);
-    if (!paymentMethod) {
-        return { success: false, message: "Payment Method not found" }
-    }
+    const { cardNumber, experationDate, cvv, citizenId, type } = fieldsToUpdate;
+    const query = "UPDATE accounts\
+                    SET\
+                        cardNumber = COALESCE($2, cardNumber),\
+                        experationDate = COALESCE($3, experationDate),\
+                        cvv = COALESCE($4, cvv),\
+                        citizenId = COALESCE($5, citizenId),\
+                        type = COALESCE($6, type)\
+                    WHERE accountId = $1\
+                    RETURNING *;";
 
+    const values = [username, cardNumber, experationDate, cvv, citizenId, type]
+    
     try {
-        // update account
-        // ==== REPLACE WITH DATABASE CALL =====
-        paymentMethods[username] = {...paymentMethod, ...fieldsToUpdate}; // need to be async when use the DB
-        // ====================================
-        return { success: true, updatedFields: fieldsToUpdate, message: "Payment Method updated"}
-    } 
-    catch (error) {
+        const res = await pool.query(query, values);
+        if (res.rows.length === 0) {
+            return { success: false, message: "Payment Method not found" }
+        }
+        return { success: true, data: fieldsToUpdate, message: "Payment Method updated"}
+    } catch (error) {
         throw new Error('Payment Method update failed');
     }
 }

@@ -1,5 +1,4 @@
-const items = require('../src/models/item');
-const pool = require('./pool'); // Assuming pool.js is in the same directory
+const pool = require('./pool');
 
 async function createTables(tableQueries) {
     const client = await pool.connect();
@@ -109,13 +108,11 @@ const virtualTablesQuery = "\
 	FOREIGN KEY (tableId, businessId) REFERENCES Tables(tableId, businessId)\
 )"
 
-const clientsQuert = "\
+const clientsQuery = "\
     create table if not exists clients (\
 	clientId UUID primary key DEFAULT uuid_generate_v4(),\
 	virtualTable UUID not null,\
 	accountId varchar(255) not null,\
-	paid decimal(5,2) default 0,\
-	total decimal(5,2) default 0,\
 	active boolean default true,\
 	foreign key (virtualTable) references virtual_tables(virtualTableID),\
 	foreign key (accountId) references accounts(accountId)\
@@ -126,9 +123,20 @@ const ordersQuery = "\
 	orderId UUID primary key default uuid_generate_v4(),\
 	itemId UUID not null,\
 	virtualTable UUID not null,\
-	payers varchar(255)[] not null,\
 	status varchar(15) default 'pending',\
 	ts timestamp default current_timestamp,\
 	foreign key (itemId) references items(itemId),\
 	foreign key (virtualTable) references virtual_tables(virtualTableId)\
 )"
+
+const clientsBalanceQuery = `
+	create table if not exists client_balance (
+		clientId UUID,
+		orderId UUID,
+		cost DECIMAL(5, 2) not null,
+		paid boolean default false,
+		foreign key (clientId) references clients(clientId),
+		foreign key (orderId) references orders(orderId),
+		primary key (clientId, orderId)
+	)
+`
