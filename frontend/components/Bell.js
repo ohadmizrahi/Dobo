@@ -27,7 +27,6 @@ export default function Bell({navigation}) {
     );
 }
 
-
 const CustomButton = ({ title, onPress }) => {
     return (
         <TouchableOpacity style={[styles.button, title === 'Join' && styles.joinButton, title === 'QR' && styles.qrButton]} onPress={onPress}>
