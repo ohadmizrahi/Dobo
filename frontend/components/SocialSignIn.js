@@ -4,7 +4,7 @@ import { View, Text, TouchableOpacity } from 'react-native';
 import { globalStyles } from '../globalStyles'
 
 const SocialSignInButton = ({ provider, onPress }) => (
-  <TouchableOpacity style={globalStyles.button} onPress={() => onPress(provider)}>
+  <TouchableOpacity style={globalStyles.buttonSocial} onPress={() => onPress(provider)}>
     <Text style={globalStyles.buttonText}>{`Sign in with ${provider}`}</Text>
   </TouchableOpacity>
 );

@@ -2,14 +2,13 @@
 import React from 'react';
 import { View, Text, Image } from 'react-native';
 import { globalStyles } from '../globalStyles';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import { Directions } from 'react-native-gesture-handler';
 
 const ProfilePicture = ({ name }) => (
   <View style={globalStyles.profilePictureContainer}>
-    {name ? (
-      <Text style={globalStyles.profilePictureText}>{name.charAt(0).toUpperCase()}</Text>
-    ) : (
-      <Image source={require('../assets/no picture default.png')} style={globalStyles.profilePictureImage} />
-    )}
+      <Icon name="camera" style={globalStyles.icons}/>
+        <Text>Hi</Text>
   </View>
 );
 

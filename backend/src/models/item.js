@@ -1,28 +1,50 @@
-const items = [
-    {
-        itemId: 1,
-        displayName: 'Item 1',
-        description: 'Item 1 description',
-        businessId: '1234',
-        price: 10.99,
-        image: null
-    },
-    {
-        itemId: 2,
-        displayName: 'Item 2',
-        description: 'Item 2 description',
-        businessId: '7894',
-        price: 10.99,
-        image: null
-    },
-    {
-        itemId: 3,
-        displayName: 'Item 3',
-        description: 'Item 3 description',
-        businessId: '1234',
-        price: 10.99,
-        image: null
-    }
-];
+const { pool } = require('@be/database/pool.js');
 
-module.exports = items;
+async function findOne(itemId) {
+    const query = `SELECT * FROM items WHERE itemId = $1 LIMIT 1;`;
+    const values = [itemId];
+    try {
+        const res = await pool.query(query, values);
+        return res.rows;
+    } catch (error) {
+        throw new Error(`Failed to execute query:\n${error}`);
+    }
+}
+
+async function findMany(businessId) {
+    const query = `SELECT * FROM items WHERE businessId = $1;`;
+    const values = [businessId];
+    try {
+        const res = await pool.query(query, values);
+        return res.rows;
+    } catch (error) {
+        throw new Error(`Failed to execute query:\n${error}`);
+    }
+}
+
+async function create(businessId, itemData) {
+    const { name, description, price, imageUrl } = itemData;
+    try {
+
+        const query = `
+            INSERT INTO clients (businessId, name, description, price, image)
+            VALUES ($1, $2, $3, $4, $5)
+            RETURNING *;
+        `;
+
+        const values = [businessId, name, description, price, imageUrl];
+
+        const res = await pool.query(query, values)
+        const item = res.rows[0];
+
+        return { success: true, item, message: "Item created" }
+    } catch (error) {
+        throw new Error(`Item Creation Failed:\n${error}`);
+    }
+}
+
+module.exports = {
+    findOne,
+    findMany,
+    create
+};

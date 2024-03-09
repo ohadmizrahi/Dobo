@@ -1,12 +1,14 @@
-const { findActiveClient } = require('@src/models/client.js');
-const jwt = require('jsonwebtoken');
 require('dotenv').config();
+const jwt = require('jsonwebtoken');
+const { findOne } = require('@src/models/client.js');
+const { select: findClient } = require('@src/utils/queries.js');
+
 
 async function validateAccountWithoutOpenTables(req, res, next) {
     const username = req.user.username;
     try {
-        const virtualTable = await findActiveClient(username);
-        if (virtualTable) {
+        const clients = await findClient("SELECT * FROM clients WHERE accountId = $1 AND active = $2", [username, true]);
+        if (clients.length > 0) {
             return res.status(400).json({ message: 'Account is already logged in to an existing table', virtualTableId: virtualTable.virtualTableId});
         } else {
             next();
@@ -23,10 +25,12 @@ async function validateClientToken(req, res, next) {
     } else {
         try {
             const decoded = jwt.verify(clientToken, process.env.CLIENT_SECRET_KEY);
-            req.virtualTable = {
-                virtualTableId: decoded.virtualTableId,
-                clientId: decoded.clientId
-            };
+            const clientId = decoded.clientId;
+            const clients = await findOne(clientId, true);
+            if (clients.length === 0) {
+                return res.status(403).json({ message: 'Client is forbidden' });
+            }
+            req.client = clients[0];
             next();
         } catch (err) {
             return res.status(403).json({ message: 'Invalid client token' });

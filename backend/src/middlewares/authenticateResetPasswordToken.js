@@ -4,7 +4,7 @@ function authenticateResetPasswordToken(req, res, next) {
     let token = null;
     
     if (req.body && req.body.resetPasswordToken) {
-        token = req.body.resetPasswordToken; // Bearer <token>
+        token = req.body.resetPasswordToken;
     }
 
     if (token == null) {
