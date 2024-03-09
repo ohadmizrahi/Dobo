@@ -4,7 +4,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { globalStyles } from '../globalStyles';
 
 
-export default function Bell() {
+export default function Bell({navigation}) {
     const [showButtons, setShowButtons] = useState(false);
 
     const toggleButtons = () => {
@@ -17,9 +17,9 @@ export default function Bell() {
                 <Icon name="bell" style={[globalStyles.icons, globalStyles.BellIconRight]} onPress={toggleButtons} />
                 {showButtons && (
                     <View style={styles.buttonContainer}>
-                        <CustomButton title="Join" />
-                        <CustomButton title="QR" />
-                        <CustomButton title="Active Table" />
+                        <CustomButton title="Join" onPress={() => navigation.navigate('JoinTable')} />
+                        <CustomButton title="QR" onPress={() => navigation.navigate('JoinTable')} />
+                        <CustomButton title="Active Table" onPress={() => navigation.navigate('TableStatus')} />
                     </View>
                 )}
             </View>
@@ -27,10 +27,9 @@ export default function Bell() {
     );
 }
 
-
-const CustomButton = ({ title }) => {
+const CustomButton = ({ title, onPress }) => {
     return (
-        <TouchableOpacity style={[styles.button, title === 'Join' && styles.joinButton, title === 'QR' && styles.qrButton]}>
+        <TouchableOpacity style={[styles.button, title === 'Join' && styles.joinButton, title === 'QR' && styles.qrButton]} onPress={onPress}>
             <Text>{title}</Text>
         </TouchableOpacity>
     );

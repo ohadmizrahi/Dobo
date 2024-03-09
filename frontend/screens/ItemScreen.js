@@ -12,8 +12,7 @@ export default function ItamScreen({navigation}) {
     <View style={globalStyles.screenColor} >
       <HomeLogo navigation={navigation} />
       <ProfileLogo navigation={navigation}/>
-      <Bell />
-      <SignUp />
+      <Bell navigation={navigation}/>
     </View>
   );
 }
