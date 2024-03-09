@@ -1,12 +1,13 @@
 // logo image 
 import React from 'react';
-import { View, Image } from 'react-native';
-import {globalStyles} from '../globalStyles';
+import { Image } from 'react-native';
+import { globalStyles } from '../globalStyles';
 
-export default function DoboLogo () {
+const logoImg = require('../assets/logo.png');
+
+const LogoImage = () => {
     return (
-        <View style={globalStyles.image}>
-            <Image source={require('../assets/logo.png')} />
-        </View>
+        <Image source={logoImg} style={globalStyles.image} />
     );
-}
+};
+export default LogoImage;

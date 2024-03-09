@@ -1,40 +1,31 @@
 import { StyleSheet } from "react-native";
 
-
 const backgroundColor = "#3D3D3D";
 const mainColor = "#97DECC";
 
-
-
 export const globalStyles = StyleSheet.create({
-
     screenColor: {
         flex: 1,
         backgroundColor: backgroundColor,
-
     },
-
     image: {
-        width: 200,
-        height: 100,
+        width: 400,
+        height: 200,
+        backgroundColor: '#000',
     },
-
     icons: {
         position: 'absolute',
         fontSize: 40,
         color: mainColor,
     },
-
     headerIconLeft: {
         top: 50,
         left: 20,
     },
-
     headerIconRight: {
         top: 50,
         right: 20,
     },
-
     shadowBottom: {
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 5 },
@@ -42,22 +33,14 @@ export const globalStyles = StyleSheet.create({
         shadowRadius: 3,
         elevation: 5,
     },
-
-    formHeadLine: {
-        position: 'relative',
-        backgroundColor: mainColor,
-        borderRadius: 50,
-        marginHorizontal: 50,
-    },
-
-    formHeadLineText: {
+    button: {
+        backgroundColor: "#fff",
         padding: 10,
         fontSize: 30,
         borderRadius: 5,
         marginBottom: 10,
         textAlign: 'center',
     },
-
     searchContain: {
         flexDirection: 'row',
         alignItems: 'center',
@@ -73,14 +56,27 @@ export const globalStyles = StyleSheet.create({
     },
     searchIcon: {
         fontSize: 20,
-        color: backgroundColor,
-        marginLeft: 10,
+        textAlign: "center",
+        opacity: 1,
     },
-
+    profilePictureContainer: {
+        width: 80,
+        height: 80,
+        borderRadius: 40,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginLeft: 140,
+    },
+    profilePictureText: {
+        fontSize: 24,
+        color: '#000',
+    },
+    profilePictureImage: {
+        width: '100%',
+        height: '100%',
+        resizeMode: 'cover',
+    },
     BellIconRight: {
         right: 10,
     },
-    
-
-    });
-    
+});
