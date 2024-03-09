@@ -3,7 +3,7 @@ import { View, Text, Button } from 'react-native';
 import SocialSignIn from '../components/SocialSignIn';
 import LogoImage from '../components/DoboLogo';
 import ProfilePicture from  '../components/ProfilePic';
-
+import FormHeadLine from '../components/FormHeadLine';
 
 export default function SignInScreen({ navigation }) {
   return (
@@ -12,6 +12,7 @@ export default function SignInScreen({ navigation }) {
       <LogoImage />
       <ProfilePicture name='dan' />
       <SocialSignIn />
+      <FormHeadLine formName='Sign In' />
     </View>
   );
 }

@@ -79,4 +79,26 @@ export const globalStyles = StyleSheet.create({
     BellIconRight: {
         right: 10,
     },
+    shadowBottom: {
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 5 },
+        shadowOpacity: 0.3,
+        shadowRadius: 3,
+        elevation: 5,
+    },
+
+    formHeadLine: {
+        position: 'relative',
+        backgroundColor: '#97DECC',
+        borderRadius: 50,
+        marginHorizontal: 50,
+    },
+
+    formHeadLineText: {
+        padding: 10,
+        fontSize: 30,
+        borderRadius: 5,
+        marginBottom: 10,
+        textAlign: 'center',
+    },
 });
