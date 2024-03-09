@@ -33,7 +33,7 @@ export const globalStyles = StyleSheet.create({
         shadowRadius: 3,
         elevation: 5,
     },
-    button: {
+    buttonSocial: {
         backgroundColor: "#fff",
         padding: 10,
         fontSize: 30,
@@ -89,7 +89,7 @@ export const globalStyles = StyleSheet.create({
 
     formHeadLine: {
         position: 'relative',
-        backgroundColor: '#97DECC',
+        backgroundColor: mainColor,
         borderRadius: 50,
         marginHorizontal: 50,
     },
