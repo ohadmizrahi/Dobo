@@ -13,6 +13,7 @@ export default function ItamScreen({navigation}) {
       <HomeLogo navigation={navigation} />
       <ProfileLogo navigation={navigation}/>
       <Bell navigation={navigation}/>
+      <SignUp />
     </View>
   );
 }
