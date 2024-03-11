@@ -25,37 +25,43 @@ const SignUp = () => {
           >
             {({ handleSubmit, isValid }) => (
               <>
-  <View style={styles.infoRow}>
-    <Icon name="user" size={24} color="black" style={styles.icon} />
-    <Field component={CustomInput} name="fullName" placeholder="Full Name" />
-  </View>
-  <View style={styles.infoRow}>
-    <Icon name="envelope" size={24} color="black" style={styles.icon} />
-    <Field component={CustomInput} name="email" placeholder="Email Address" keyboardType="email-address" />
-  </View>
-  <View style={styles.infoRow}>
-    <Icon name="mobile" size={24} color="black" style={styles.icon} />
-    <Field component={CustomInput} name="phoneNumber" placeholder="Phone Number" keyboardType="numeric" />
-  </View>
-  <View style={styles.infoRow}>
-    <Icon name="home" size={24} color="black" style={styles.icon} />
-    <Field component={CustomInput} name="address" placeholder="Address" />
-  </View>
-  <View style={styles.infoRow}>
-    <Icon name="gift" size={24} color="black" style={styles.icon} />
-    <Field component={CustomInput} name="birthday" placeholder="Birthday" />
-  </View>
-  <View style={styles.infoRow}>
-    <Icon name="lock" size={24} color="black" style={styles.icon} />
-    <Field component={CustomInput} name="password" placeholder="Password" secureTextEntry />
-  </View>
-  <View style={styles.infoRow}>
-    <Icon name="lock" size={24} color="black" style={styles.icon} />
-    <Field component={CustomInput} name="confirmPassword" placeholder="Confirm Password" secureTextEntry />
-  </View>
-  <Button onPress={handleSubmit} title="SIGN UP" disabled={!isValid} />
-</>
-
+                <View style={styles.infoRow}>
+                  <Icon name="user" size={24} color="black" style={styles.icon} />
+                  <Text>Full Name</Text>
+                  <Field component={CustomInput} name="fullName" />
+                </View>
+                <View style={styles.infoRow}>
+                  <Icon name="envelope" size={24} color="black" style={styles.icon} />
+                  <Text>Email</Text>
+                  <Field component={CustomInput} name="email"keyboardType="email-address" />
+                </View>
+                <View style={styles.infoRow}>
+                  <Icon name="mobile" size={24} color="black" style={styles.icon} />
+                  <Text>Phone</Text>
+                  <Field component={CustomInput} name="phoneNumber" keyboardType="numeric" />
+                </View>
+                <View style={styles.infoRow}>
+                  <Icon name="home" size={24} color="black" style={styles.icon} />
+                  <Text>Address</Text>
+                  <Field component={CustomInput} name="address" />
+                </View>
+                <View style={styles.infoRow}>
+                  <Icon name="gift" size={24} color="black" style={styles.icon} />
+                  <Text>Birthday</Text>
+                  <Field component={CustomInput} name="birthday" />
+                </View>
+                <View style={styles.infoRow}>
+                  <Icon name="lock" size={24} color="black" style={styles.icon} />
+                  <Text>Password</Text>
+                  <Field component={CustomInput} name="password" secureTextEntry />
+                </View>
+                <View style={styles.infoRow}>
+                  <Icon name="lock" size={24} color="black" style={styles.icon} />
+                  <Text>Confirm Password</Text>
+                  <Field component={CustomInput} name="confirmPassword" secureTextEntry />
+                </View>
+                <Button onPress={handleSubmit} title="SIGN UP" disabled={!isValid} />
+              </>
             )}
           </Formik>
         </View>
@@ -77,21 +83,24 @@ const styles = StyleSheet.create({
   },
   signupContainer: {
     backgroundColor: '#F5F5F5',
-    borderRadius: 100,
+    borderRadius: 100, // Reduced border radius to keep the container within bounds
     borderWidth: 5,
     borderColor: 'gray',
     margin: 10,
-    justifyContent: 'space-evenly',
+    padding: 20, // Added padding to keep content within the container
+    maxWidth: '95%', // Added maxWidth to limit the width of the container
+    paddingHorizontal: 30,
+
   },
   infoRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-evenly',
-
+    justifyContent: 'space-between', // Adjusted to space between icons and input fields
+    marginBottom: -5,
+    
   },
   icon: {
-    marginLeft: 10,
-    marginRight: 10,
-  
+    marginRight: 10, // Adjusted marginRight for better spacing between icon and input field
   },
 });
+

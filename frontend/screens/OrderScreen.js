@@ -1,10 +1,20 @@
 import React from 'react';
-import { View, Text, Button } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
+import { Places } from '../components/Places';
 
-export default function OrderScreen({ navigation}) {
+export default function OrderScreen({ navigation }) {
   return (
-    <View>
+    <View style={styles.container}>
       <Text>Order</Text>
+      <Places />
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+    container: {
+    flex: 1,
+    alignItems: 'center',
+    
+  },
+});
