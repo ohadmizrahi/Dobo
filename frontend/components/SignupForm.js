@@ -89,13 +89,15 @@ const styles = StyleSheet.create({
     margin: 10,
     padding: 20, // Added padding to keep content within the container
     maxWidth: '95%', // Added maxWidth to limit the width of the container
+    paddingHorizontal: 30,
+
   },
   infoRow: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between', // Adjusted to space between icons and input fields
     marginBottom: -5,
-
+    
   },
   icon: {
     marginRight: 10, // Adjusted marginRight for better spacing between icon and input field
