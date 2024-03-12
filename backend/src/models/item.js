@@ -1,4 +1,4 @@
-const { pool } = require('@be/database/pool.js');
+const pool = require('@be/database/pool.js');
 
 async function findOne(itemId) {
     const query = `SELECT * FROM items WHERE itemId = $1 LIMIT 1;`;

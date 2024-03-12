@@ -1,4 +1,4 @@
-const { pool } = require('@be/database/pool.js');
+const pool = require('@be/database/pool.js');
 
 
 async function getClientOrders(clientId) {
@@ -44,19 +44,25 @@ async function getOrderClients(orderId) {
 async function updateOrderClients(orderId, clientId, tableClients, itemPrice) {
     try {
         const orderClients = await getOrderClients(orderId);
-        const orderClientsIds = orderClients.reduce((ids, client) => ids.push(client.clientId), []);
+        const orderClientsIds = orderClients.reduce((ids, client) => {
+            ids.push(client.clientid);
+            return ids;
+        }, []);
 
         if (!orderClientsIds.includes(clientId)) {
             return { success: false, message: "Client not in order" };
         } else {
             let clientsForSpliting = [...tableClients]
 
-            if (clientsForSpliting.length === 1 && clientsForSpliting[0].clientId === clientId) {
+            if (clientsForSpliting.length === 1 && clientsForSpliting[0].clientid === clientId) {
                 return { success: false, message: "Client is the last client in table" };
             }
-            
             if (orderClientsIds.length > 1) {
-                clientsForSpliting = clientsForSpliting.filter(client => client.clientId !== clientId);
+                clientsForSpliting = clientsForSpliting.filter(client => client.clientid !== clientId);
+                const isDeleted = await deleteClientOrder(clientId, orderId);
+                if (!isDeleted.success) {
+                    return { success: false, message: isDeleted.message };
+                }
             } 
             const { success, modifiedClientsCount, message } = await splitOrder(orderId, clientsForSpliting, itemPrice);
             if (!success) {
@@ -73,8 +79,8 @@ async function splitOrder(orderId, tableClients, itemPrice) {
     try {
         const newCost = itemPrice / tableClients.length;
 
-        const client = await pool.connect();
-        await client.query('BEGIN');
+        const dbClient = await pool.connect();
+        await dbClient.query('BEGIN');
         const query = `
         INSERT INTO clientOrders (clientId, orderId, cost)
         VALUES ($1, $2, $3)
@@ -82,19 +88,19 @@ async function splitOrder(orderId, tableClients, itemPrice) {
         DO UPDATE SET cost = EXCLUDED.cost;`;
 
         let modifiedClientsCount = 0;
-        for (const clientId of tableClients) {
-            const values = [clientId, orderId, newCost];
-            const result = await client.query(query, values);
+        for (const client of tableClients) {
+            const values = [client.clientid, orderId, newCost];
+            const result = await dbClient.query(query, values);
             modifiedClientsCount += result.rowCount;
         }
         if (modifiedClientsCount !== tableClients.length) {
-            await client.query('ROLLBACK');
+            await dbClient.query('ROLLBACK');
             return { success: false, message: "Order split failed" };
         }
-        await client.query('COMMIT');
+        await dbClient.query('COMMIT');
         return { success: true, message: "Order split", modifiedClientsCount };
     } catch (error) {
-        await client.query('ROLLBACK');
+        await dbClient.query('ROLLBACK');
         throw new Error(`Split Order Failed:\n${error}`);
     }
 }
@@ -118,6 +124,23 @@ async function updateClientOrder(clientId, orderId, paid) {
     }
 }
 
+async function deleteClientOrder(clientId, orderId) {
+    const query = `
+    DELETE FROM clientOrders
+    WHERE clientId = $1 AND orderId = $2;`;
+
+    const values = [clientId, orderId];
+    try {
+        const res = await pool.query(query, values);
+        if (res.rowCount === 1) {
+            return { success: true, message: "Client Order Deleted" }
+        } else {
+            return { success: false, message: "Client Order not found" }
+        }
+    } catch (error) {
+        throw new Error(`Failed to execute query:\n${error}`);
+    }
+}
 
 module.exports = {
     getClientOrders,

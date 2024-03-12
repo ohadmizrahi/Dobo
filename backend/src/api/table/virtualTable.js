@@ -1,19 +1,18 @@
-const { create: joinVirtualTable, findOne, getTableClients } = require('@src/models/client.js');
+const { create: joinVirtualTable, getTableClients } = require('@src/models/client.js');
 const { 
     create: createVirtualTable,
     find: getVirtualTable,
     update: updateVirtualTable,
     findActiveVirtualTable 
 } = require('@src/models/virtualTables.js');
-const { getTableOrders, getItemPrice } = require("@src/models/orders.js");
-const { getClientOrders, getOrderClients, splitOrder } = require("@src/models/clientOrders.js");
+const { getTableOrders } = require("@src/models/order.js");
 
 
 async function openOrJoinVirtualTable(username, businessId, tableId) {
     try {
         const {success, operation, virtualTable, message} = await getOrCreateVirtualTable(businessId, tableId);
         if (success) {
-            const { success, client } = joinVirtualTable(username, virtualTable.virtualTableId);
+            const { success, client } = await joinVirtualTable(username, virtualTable.virtualtableid);
             if (success) {
                 return { success: true, client, operation, virtualTable };
             } else {
@@ -23,7 +22,7 @@ async function openOrJoinVirtualTable(username, businessId, tableId) {
             return { success: false, message };
         }
     } catch (error) {
-        throw new Error('Internal Serverl Error');
+        throw new Error(`Internal Serverl Error\n${error}`);
     }
 }
 
@@ -33,7 +32,8 @@ async function getOrCreateVirtualTable(businessId, tableId) {
         if (virtualTable) {
             return {success: true, operation: 'get', virtualTable};
         } else {
-            const { success, virtualTable, message } = createVirtualTable(businessId, tableId);
+            const { success, virtualTable, message } = await createVirtualTable(businessId, tableId);
+            
             if (success) {
                 return {success: true, operation: 'create', virtualTable};
             } else {
@@ -41,7 +41,7 @@ async function getOrCreateVirtualTable(businessId, tableId) {
             }
         }
     } catch (error) {
-        throw new Error('Get or Create Virtual Table failed');
+        throw new Error(`Get or Create Virtual Table failed \n${error}`);
     }
 }
 
@@ -56,7 +56,7 @@ async function getVirtualTableInfo(virtualTableId) {
             return { success: false, message: 'Virtual Table not found' };
         }
     } catch (error) {
-        throw new Error('Get Virtual Table failed');
+        throw new Error(`Get Virtual Table failed \n${error}`);
     }
 }
 

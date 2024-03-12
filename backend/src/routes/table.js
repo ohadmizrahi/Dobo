@@ -1,15 +1,10 @@
 const { Router } = require('express');
 const { authenticateUserToken } = require("@src/middlewares/authenticateUserToken.js");
 const { validateAccountWithoutOpenTables, validateClientToken } = require("@src/middlewares/tableValidations.js");
-const { 
-    openOrJoinVirtualTable,
-    handleCalculateCheck,
-    getVirtualTableInfo,
-    recalculateCheck,
-    payCheck
- } = require("@src/api/table/virtualTable.js");
-const { generateClientToken } = require("@src/api/token.js");
-const { getMenu } = require("@src/api/menu/items.js");
+const { openOrJoinVirtualTable, getVirtualTableInfo } = require("@src/api/table/virtualTable.js");
+const { payCheck, recalculateCheck, handleCalculateCheck } = require("@src/api/table/checkout.js");
+const { generateClientToken } = require("@src/api/auth/token.js");
+const { getMenu } = require("@src/api/menu/item.js");
 
 const router = Router();
 
@@ -19,7 +14,8 @@ router.get("/api/table", validateClientToken, async (req, res) => {
     const client = req.client;
 
     try { 
-        const { success, virtualTable, orders, clients } = await getVirtualTableInfo(client.virtualTable);
+        
+        const { success, virtualTable, orders, clients } = await getVirtualTableInfo(client.virtualtable);
         if (success) {
             res.status(200).json({ success, virtualTable, orders, clients });
         } else {
@@ -37,7 +33,7 @@ router.post("/api/table/join", validateAccountWithoutOpenTables, async (req, res
     try {
         const { success, client, virtualTable, operation, message } = await openOrJoinVirtualTable(username, businessId, tableId);
         if (success) {
-            const clientTokens = generateClientToken(client.clientId);
+            const clientTokens = generateClientToken(client.clientid);
             const clientInfo = { ...client, ...clientTokens };
             const menu = await getMenu(businessId);
             res.status(200).json({ 
@@ -58,9 +54,9 @@ router.post("/api/table/join", validateAccountWithoutOpenTables, async (req, res
 });
 
 router.get("/api/table/auth/refresh", validateClientToken, async (req, res) => {
-    const { clientId } = req.client;
+    const { clientid } = req.client;
     try {
-        const { token, tokenForRefresh } = generateClientToken(clientId)
+        const { token, tokenForRefresh } = generateClientToken(clientid)
         if (token && tokenForRefresh) {
             res.status(200).json({ success: true, token, tokenForRefresh, message: 'Token refresh successful' });
         } else {
@@ -72,13 +68,15 @@ router.get("/api/table/auth/refresh", validateClientToken, async (req, res) => {
     }
 });
 
-router.get("/api/table/check/calculate", validateClientToken, handleCalculateCheck);
+router.get("/api/table/check/calculate", validateClientToken, async (req, res) => {
+    await handleCalculateCheck(req, res);
+});
 
 router.post("/api/table/check/recalculate", validateClientToken, async (req, res) => {
-    const { clientId } = req.client;
+    const { clientid } = req.client;
     const { orders } = req.body;
     try {
-        const response = await recalculateCheck(clientId, orders);
+        const response = await recalculateCheck(clientid, orders);
         if (response.success) {
             await handleCalculateCheck(req, res);
         } else {
@@ -95,11 +93,12 @@ router.post("/api/table/check/recalculate", validateClientToken, async (req, res
 });
 
 router.post("/api/table/check/pay", validateClientToken, async (req, res) => {
-    const { clientId } = req.client;
-    const { ordersToPay } = req.body;
+    const { clientid } = req.client;
+    const { orders } = req.body;
     try {
-        const response = await payCheck(clientId, ordersToPay);
+        const response = await payCheck(clientid, orders);
         if (response.success) {
+            console.log({ clientDisabled: response.clientDisabled, message: response.message });
             await handleCalculateCheck(req, res);
         } else {
             res.status(400).json({ success: response.success, message: response.message });
@@ -109,3 +108,5 @@ router.post("/api/table/check/pay", validateClientToken, async (req, res) => {
         res.status(500).json({ error: 'An error occurred during paying client check.' });
     }
 });
+
+module.exports = router;

@@ -1,4 +1,4 @@
-const { pool } = require('@be/database/pool.js');
+const pool = require('@be/database/pool.js');
 
 async function findOne(orderId) {
     const query = `SELECT * FROM orders WHERE orderId = $1 LIMIT 1;`;
@@ -65,6 +65,7 @@ async function createMany(ordersData) {
 }
 
 async function getTableOrders(virtualTableId) {
+
     const query = `
     SELECT 
         o.orderId as orderId,
@@ -74,12 +75,17 @@ async function getTableOrders(virtualTableId) {
         i.price as itemPrice,
         o.status as status, 
         o.ts as orderTimeStamp,
-        payers.fullNames as clientNames
+        payers.clients as clients
     FROM 
 	    orders o 
 		    JOIN items i ON o.itemId = i.itemId
 			    JOIN (
-				    SELECT co.orderId as orderId, ARRAY_AGG(a.fullName) as fullNames
+				    SELECT co.orderId as orderId, json_agg(
+                        json_build_object(
+                            'clientId', c.clientId,
+                            'clientName', a.fullName
+						)
+					) as clients
 				    FROM clientOrders co 
 					    JOIN clients c on co.clientId = c.clientId
 					    JOIN accounts a on a.accountId = c.accountId
@@ -96,6 +102,7 @@ async function getTableOrders(virtualTableId) {
 }
 
 async function getItemPrice(orderId) {
+    
     const query = `
         SELECT i.price AS price
         FROM orders o
@@ -106,6 +113,9 @@ async function getItemPrice(orderId) {
     const values = [orderId];
     try {
         const res = await pool.query(query, values);
+        if (res.rows.length === 0) {
+            return null
+        }
         return parseFloat(res.rows[0].price);
     } catch (error) {
         throw new Error(`Failed to execute query:\n${error}`);

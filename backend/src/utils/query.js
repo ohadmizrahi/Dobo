@@ -1,4 +1,4 @@
-const { pool } = require('@be/database/pool.js');
+const pool = require('@be/database/pool.js');
 
 async function select(query, values=[]) {
     try {

@@ -1,11 +1,11 @@
 const { findOne, getTableClients, disable } = require('@src/models/client.js');
-const { getItemPrice } = require("@src/models/orders.js");
+const { getItemPrice } = require("@src/models/order.js");
 const { getClientOrders, updateOrderClients, updateClientOrder } = require("@src/models/clientOrders.js");
 
 async function calculateCheck(clientId) {
     try {
         const orders = await getClientOrders(clientId);
-        const clientBalance = orders.reduce((total, order) => total + order.clientCost, 0);
+        const clientBalance = orders.reduce((total, order) => total + parseFloat(order.clientcost), 0);
         return { success: true, clientBalance, clientOrders: orders, message: 'Client check retrieved successfully' };
     } catch (error) {
         throw new Error('Get Client Check failed');
@@ -16,7 +16,7 @@ async function handleCalculateCheck(req, res) {
     const client = req.client;
 
     try { 
-        const { success, clientBalance, clientOrders, message } = await calculateCheck(client.clientId);
+        const { success, clientBalance, clientOrders, message } = await calculateCheck(client.clientid);
         if (success) {
             if (clientBalance < 0) {
                 res.status(400).json({ success: false, clientBalance, message: 'Insufficient balance' });
@@ -40,17 +40,22 @@ async function recalculateCheck(clientId, orders) {
         const clientOrdersIds = orders.map(order => {
             return order.orderId;
         });
-
-        const itemPrice = await getItemPrice(orderId);
+        
         const client = await findOne(clientId)
-        const clientTable = client[0].virtualTable;
+        const clientTable = client[0].virtualtable;
         const tableClients = await getTableClients(clientTable, true);
 
-        for (const order in clientOrdersIds) {
-            const { success, message } = await updateOrderClients(order, clientId, tableClients, itemPrice);
+        for (const orderId of clientOrdersIds) {
+            const itemPrice = await getItemPrice(orderId);
+            if (!itemPrice) {
+                console.error(`Item price for order ${orderId} not found`);
+                failedOrders.push(orderId);
+                continue;
+            }
+            const { success, message } = await updateOrderClients(orderId, clientId, tableClients, itemPrice);
             if (!success) {
                 console.error(message);
-                failedOrders.push(order);
+                failedOrders.push(orderId);
             }
         }
         
@@ -60,7 +65,7 @@ async function recalculateCheck(clientId, orders) {
             return { success: false, message: 'Some of the client orders cant be updatetd', failedOrders };
         }
     } catch (error) {
-        throw new Error('Update Client Check failed');
+        throw new Error(`Recalculate check failed\n${error}`);
     }
 }
 
@@ -70,19 +75,23 @@ async function payCheck(clientId, ordersToPay) {
             return { success: false, message: "No orders to pay" };
         }
         const failedOrders = [];
-        for (const order in ordersToPay) {
-            const { success, message } = await updateClientOrder(order, clientId);
+        for (const order of ordersToPay) {
+            const { success, message } = await updateClientOrder(clientId, order.orderId, true);
             if (!success) {
-                console.error(message);
+                console.error({ error: message });
                 failedOrders.push(order);
             }
         }
+        const orders = await getClientOrders(clientId);
         if (failedOrders.length === 0) {
-            const client = disable(clientId);
+            if (orders.length !== 0) {
+                return { success: true, clientDisabled: false, message: 'Client paid on part of the check' };
+            }
+            const client = await disable(clientId);
             if (client.success) {
-                return { success: true, message: 'Client check paid successfully' };
+                return { success: true, clientDisabled: true, message: 'Client check paid successfully' };
             } else {
-                return { success: false, message: 'Client check paid but client failed to disable' };
+                return { success: false, clientDisabled: false, message: 'Client check paid but disabling client failed' };
             }
         } else {
             return { success: false, message: 'Some of the client orders cant be paid', failedOrders };

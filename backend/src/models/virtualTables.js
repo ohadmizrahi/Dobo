@@ -1,7 +1,7 @@
-const { pool } = require('@be/database/pool.js');
+const pool = require('@be/database/pool.js');
 
 async function find(virtualTableId, active=false) {
-    const query = active ? `SELECT * FROM virtualTables WHERE virtualTableId = $1;` : `SELECT * FROM virtualTables WHERE virtualTableId = $1 AND active = $2;`;
+    const query = active ? `SELECT * FROM virtual_tables WHERE virtualTableId = $1;` : `SELECT * FROM virtualTables WHERE virtualTableId = $1 AND active = $2;`;
     const values = active ? [virtualTableId] : [virtualTableId, true];
     try {
         const res = await pool.query(query, values);
@@ -18,7 +18,7 @@ async function create(businessId, tableId) {
             return { success: false, message: 'Virtual Table already exists' };
         }
         const query = `
-            INSERT INTO virtualTables (businessId, tableId)
+            INSERT INTO virtual_tables (businessId, tableId)
             VALUES ($1, $2)
             RETURNING *;
         `;
@@ -38,7 +38,7 @@ async function update(virtualTableId, name=null, active=null) {
     }
     try {
         const query = `
-            UPDATE virtualTables
+            UPDATE virtual_tables
             SET name = COALESCE($2, name), active = COALESCE($3, active)
             WHERE virtualTableId = $1
             RETURNING *;
@@ -56,12 +56,22 @@ async function update(virtualTableId, name=null, active=null) {
 }
 
 async function findActiveVirtualTable(businessId, tableId) {
-    const virtualTables = await find("SELECT * FROM virtualTables WHERE businessId = $1 AND tableId = $2 AND active = $3", [businessId, tableId, true])
-    if (virtualTables.length === 1) {
-        return virtualTables[0];
-    } else {
-        return null;
-    } 
+    const query = `
+    SELECT *
+    FROM virtual_tables
+    WHERE businessId = $1 AND tableId = $2 AND active = $3
+    `
+    const values = [businessId, tableId, true]
+    try {
+        const res = await pool.query(query, values);
+        if (res.rows.length === 1) {
+            return res.rows[0];
+        } else {
+            return null;
+        } 
+    } catch (error) {
+        throw new Error(`Failed to execute query:\n${error}`);
+    }
 }
 
 

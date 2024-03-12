@@ -1,4 +1,4 @@
-const { pool } = require('@be/database/pool.js');
+const pool = require('@be/database/pool.js');
 
 async function find(username) {
     const query = `SELECT * FROM accounts WHERE accountId = $1;`;

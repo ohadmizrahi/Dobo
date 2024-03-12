@@ -1,7 +1,7 @@
-const { pool } = require('@be/database/pool.js');
+const pool = require('@be/database/pool.js');
 
 async function find(accountId) {
-    const query = `SELECT * FROM PaymentMethods WHERE accountId = $1;`;
+    const query = `SELECT * FROM payment_methods WHERE accountId = $1;`;
     const values = [accountId];
     try {
         const res = await pool.query(query, values);
@@ -19,7 +19,7 @@ async function create(username, paymentMethodData) {
 
     try {
         const query = `
-            INSERT INTO PaymentMethods (accountId, cardNumber, experationDate, cvv, citizenId, type)
+            INSERT INTO payment_methods (accountId, cardNumber, experationDate, cvv, citizenId, type)
             VALUES ($1, $2, $3, $4, $5, $6)
             RETURNING *;
         `;
@@ -31,21 +31,21 @@ async function create(username, paymentMethodData) {
         const paymentMethod = res.rows[0];
         return { success: true, data: paymentMethod, message: "Payment method created"}
     } catch (error) {
-        throw new Error('Payment method creation failed');
+        throw new Error(`Payment method creation failed\n${error}`);
     }
 }
 
 async function update(username, fieldsToUpdate) {
     const { cardNumber, experationDate, cvv, citizenId, type } = fieldsToUpdate;
-    const query = "UPDATE accounts\
-                    SET\
-                        cardNumber = COALESCE($2, cardNumber),\
-                        experationDate = COALESCE($3, experationDate),\
-                        cvv = COALESCE($4, cvv),\
-                        citizenId = COALESCE($5, citizenId),\
-                        type = COALESCE($6, type)\
-                    WHERE accountId = $1\
-                    RETURNING *;";
+    const query = `UPDATE payment_methods
+                    SET
+                        cardNumber = COALESCE($2, cardNumber),
+                        experationDate = COALESCE($3, experationDate),
+                        cvv = COALESCE($4, cvv),
+                        citizenId = COALESCE($5, citizenId),
+                        type = COALESCE($6, type)
+                    WHERE accountId = $1
+                    RETURNING *;`;
 
     const values = [username, cardNumber, experationDate, cvv, citizenId, type]
     

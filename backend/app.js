@@ -20,6 +20,7 @@ const pool = require('@be/database/pool.js');
 
 const authRouter = require('@src/routes/auth');
 const profileRouter = require('@src/routes/profile.js');
+const tableRouter = require('@src/routes/table.js');
 
 pool.query('SELECT NOW()', (err, res) => {
   if (err) {
@@ -40,6 +41,9 @@ app.use(authRouter)
 
 // To handle requestes for secondRouter
 app.use(profileRouter)
+
+// To handle requestes for secondRouter
+app.use(tableRouter)
 
 app.get('/', (req, res) => {
   res.send('Hello, Express!');

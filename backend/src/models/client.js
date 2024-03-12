@@ -1,4 +1,4 @@
-const { pool } = require('@be/database/pool.js');
+const pool = require('@be/database/pool.js');
 
 async function findOne(clientId, onlyActive=false) {
     try {
@@ -47,10 +47,11 @@ async function create(accountId, virtualTableId) {
 
 async function disable(clientId) {
 
-    query = `UPDATE clients
-                SET active = $2 
-                WHERE clientId = $1
-                RETURNING clientId;`
+    query = `
+    UPDATE clients
+    SET active = $2 
+    WHERE clientId = $1
+    RETURNING clientId;`
     
     values = [clientId, false]
     try {
@@ -81,11 +82,11 @@ async function getTableClients(virtualTableId, active=false) {
                 JOIN accounts a ON c.accountId = a.accountId
                     LEFT JOIN clientOrders co ON c.clientId = co.clientId
         WHERE 
-            c.virtualTable = $1 AND c.active = $2
+            c.virtualTable = $1 AND c.active = ANY($2::boolean[])
         GROUP BY 
             c.clientId, a.fullName;
         `;
-        const values = [virtualTableId, active];
+        const values = [virtualTableId, active ? [true] : [true, false]];
         const res = await pool.query(query, values);
         return res.rows;
     } catch (error) {

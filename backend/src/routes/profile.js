@@ -63,6 +63,7 @@ router.post("/api/profile/update/account", async (req, res) => {
 router.post("/api/profile/update/payment-method", async (req, res) => {
     const username = req.user.username;
     const fieldsToUpdate = req.body;
+    
     try {
         const response = await updatedOrCreatePaymentMethod(username, fieldsToUpdate)
         if (!response.success) {
