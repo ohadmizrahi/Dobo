@@ -1,15 +1,13 @@
 // Bussines rating, description, menu btn, open hours
 import React from 'react';
-import { View, Text, StyleSheet, Image, Button } from 'react-native';
+import { View, Text, StyleSheet, Button } from 'react-native';
 
 export default function Businessinformation({business, navigation}){
-  const { name, description, rating, image, openingHours } = business;
+  const { description, rating, openingHours } = business;
 
   return (
     <View style={styles.container}>
-      <Image source={{ uri: image }} style={styles.image} />
       <View style={styles.details}>
-        <Text style={styles.title}>{name}</Text>
         <Text style={styles.rating}>Rating: {rating} stars</Text>
         <Text style={styles.description}>{description}</Text>
         <Text style={styles.openingHours}>Opening Hours: {openingHours}</Text>
@@ -30,12 +28,6 @@ const styles = StyleSheet.create({
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.2,
-      },
-      image: {
-        width: '100%',
-        height: 200,
-        resizeMode: 'cover', // Adjust resize mode as needed
-        borderRadius: 10, // Rounded corners for image
       },
       details: {
         marginTop: 20,

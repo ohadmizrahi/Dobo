@@ -2,22 +2,27 @@ import React from 'react';
 import { View, Text, StyleSheet, Image, Button } from 'react-native';
 import Businessinformation from '../components/BussinesInfo';
 import {globalStyles} from '../globalStyles';
+import BusinessCard from '../components/BussinesHeader';
 
 
 
 export default function BusinessInfoScreen({ navigation }) {
   // just an example of data to se on screen if it works 
   const businessData = {
-    name: 'My Restaurant',
     description: 'cozy restaurant serving delicious Italian food.',
     rating: 4.5,
-    image: 'https://example.com/business_image.jpg',
-    openingHours: '10:00 AM - 10:00 PM', // Replace with your menu URL
+    openingHours: '10:00 AM - 10:00 PM', 
   };
-  return (
-    <View style={globalStyles.screenColor}>
-      <Text>BusinessInfo</Text>
-      <Businessinformation navigation={navigation} business={businessData} />
-    </View>
+  const businessCardData ={
+    businessName: 'Aroma',
+    imageUrl: 'https://cdn.pixabay.com/photo/2017/05/12/08/29/coffee-2306471_960_720.jpg'
+  };
+
+return (
+  <View style={globalStyles.screenColor}>
+    <Text>BusinessInfo</Text>
+    <BusinessCard businessCard={businessCardData} /> 
+    <Businessinformation navigation={navigation} business={businessData} />
+  </View>
   );
 }
