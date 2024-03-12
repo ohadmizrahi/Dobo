@@ -1,6 +1,7 @@
 const { findOne, getTableClients, disable } = require('@src/models/client.js');
 const { getItemPrice } = require("@src/models/order.js");
 const { getClientOrders, updateOrderClients, updateClientOrder } = require("@src/models/clientOrders.js");
+const { closeVirtualTable } = require("@src/api/table/virtualTable.js");
 
 async function calculateCheck(clientId) {
     try {
@@ -43,7 +44,7 @@ async function recalculateCheck(clientId, orders) {
         
         const client = await findOne(clientId)
         const clientTable = client[0].virtualtable;
-        const tableClients = await getTableClients(clientTable, true);
+        const activeTableClients = await getTableClients(clientTable, true);
 
         for (const orderId of clientOrdersIds) {
             const itemPrice = await getItemPrice(orderId);
@@ -52,7 +53,7 @@ async function recalculateCheck(clientId, orders) {
                 failedOrders.push(orderId);
                 continue;
             }
-            const { success, message } = await updateOrderClients(orderId, clientId, tableClients, itemPrice);
+            const { success, message } = await updateOrderClients(orderId, clientId, activeTableClients, itemPrice);
             if (!success) {
                 console.error(message);
                 failedOrders.push(orderId);
@@ -89,9 +90,19 @@ async function payCheck(clientId, ordersToPay) {
             }
             const client = await disable(clientId);
             if (client.success) {
-                return { success: true, clientDisabled: true, message: 'Client check paid successfully' };
+                const activeTableClients = await getTableClients(clientTable, true);
+                if (activeTableClients.length === 0) {
+                    const virtualTable = await closeVirtualTable(client.virtualtable);
+                    if (virtualTable.success) {
+                        return { success: true, clientDisabled: true, tableClosed: true, message: 'Client check paid successfully and table closed' };
+                    } else {
+                        return { success: true, clientDisabled: true, tableClosed: false,  message: 'Client check paid successfully but table closing failed' };
+                    }
+                }
+
+                return { success: true, clientDisabled: true, tableClosed: false, message: 'Client check paid successfully' };
             } else {
-                return { success: false, clientDisabled: false, message: 'Client check paid but disabling client failed' };
+                return { success: true, clientDisabled: false, tableClosed: false, message: 'Client check paid but disabling client failed' };
             }
         } else {
             return { success: false, message: 'Some of the client orders cant be paid', failedOrders };

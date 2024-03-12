@@ -83,8 +83,8 @@ async function closeVirtualTable(virtualTableId) {
     try {
         const virtualTables = await getVirtualTable(virtualTableId);
         if (virtualTables.length === 1) {
-            const { virtualTableId } = virtualTables[0];
-            const { success, virtualTable, message } = updateVirtualTable(virtualTableId, null, false);
+            const { virtualtableid } = virtualTables[0];
+            const { success, virtualTable, message } = updateVirtualTable(virtualtableid, null, false);
             if (success) {
                 return { success: true, virtualTable };
             } else {

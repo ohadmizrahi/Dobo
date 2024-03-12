@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const { authenticateUserToken } = require("@src/middlewares/authenticateUserToken.js");
 const { validateAccountWithoutOpenTables, validateClientToken } = require("@src/middlewares/tableValidations.js");
-const { openOrJoinVirtualTable, getVirtualTableInfo } = require("@src/api/table/virtualTable.js");
+const { openOrJoinVirtualTable, getVirtualTableInfo, closeVirtualTable } = require("@src/api/table/virtualTable.js");
 const { payCheck, recalculateCheck, handleCalculateCheck } = require("@src/api/table/checkout.js");
 const { generateClientToken } = require("@src/api/auth/token.js");
 const { getMenu } = require("@src/api/menu/item.js");
@@ -98,14 +98,33 @@ router.post("/api/table/check/pay", validateClientToken, async (req, res) => {
     try {
         const response = await payCheck(clientid, orders);
         if (response.success) {
-            console.log({ clientDisabled: response.clientDisabled, message: response.message });
+            console.log(response);
             await handleCalculateCheck(req, res);
         } else {
-            res.status(400).json({ success: response.success, message: response.message });
+            res.status(400).json({ success: response.success, message: response.message, failedOrders: response.failedOrders});
         }
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'An error occurred during paying client check.' });
+    }
+});
+
+router.post("/api/table/close", async (req, res) => {
+    const { virtualTableId } = req.body;
+    try {
+        const response = await closeVirtualTable(virtualTableId);
+        if (response.success) {
+            res.status(200).json({ success: true, message: "Virtual Table Closed", virtualTable: response.virtualTable });
+        } else {
+            if (response.message === 'Virtual Table not found') {
+                res.status(404).json({ success: false, message: response.message });
+            } else {
+                res.status(400).json({ success: false, message: response.message });
+            }
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'An error occurred during closing virtual table.' });
     }
 });
 

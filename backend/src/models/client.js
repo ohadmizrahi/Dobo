@@ -51,7 +51,7 @@ async function disable(clientId) {
     UPDATE clients
     SET active = $2 
     WHERE clientId = $1
-    RETURNING clientId;`
+    RETURNING clientId, virtualTable;`
     
     values = [clientId, false]
     try {
