@@ -64,9 +64,59 @@ async function createMany(ordersData) {
     }
 }
 
+async function getTableOrders(virtualTableId) {
+    const query = `
+    SELECT 
+        o.orderId as orderId,
+        o.itemId as itemId,
+        i.name as itemName,
+        i.description as itemDescription, 
+        i.price as itemPrice,
+        o.status as status, 
+        o.ts as orderTimeStamp,
+        payers.fullNames as clientNames
+    FROM 
+	    orders o 
+		    JOIN items i ON o.itemId = i.itemId
+			    JOIN (
+				    SELECT co.orderId as orderId, ARRAY_AGG(a.fullName) as fullNames
+				    FROM clientOrders co 
+					    JOIN clients c on co.clientId = c.clientId
+					    JOIN accounts a on a.accountId = c.accountId
+				    GROUP BY co.orderId
+			    ) as payers ON o.orderId = payers.orderId 
+    WHERE o.virtualTable = $1;`;
+    const values = [virtualTableId];
+    try {
+        const res = await pool.query(query, values);
+        return res.rows;
+    } catch (error) {
+        throw new Error(`Failed to execute query:\n${error}`);
+    }
+}
+
+async function getItemPrice(orderId) {
+    const query = `
+        SELECT i.price AS price
+        FROM orders o
+                JOIN items i ON o.itemId = i.itemId
+        WHERE orderId = $1
+        LIMIT 1
+        `
+    const values = [orderId];
+    try {
+        const res = await pool.query(query, values);
+        return parseFloat(res.rows[0].price);
+    } catch (error) {
+        throw new Error(`Failed to execute query:\n${error}`);
+    }
+}
+
 module.exports = {
     findOne,
     findMany,
     create,
-    createMany
+    createMany,
+    getTableOrders,
+    getItemPrice
 }

@@ -108,29 +108,29 @@ const virtualTablesQuery = "\
 	FOREIGN KEY (tableId, businessId) REFERENCES Tables(tableId, businessId)\
 )"
 
-const clientsQuery = "\
-    create table if not exists clients (\
-	clientId UUID primary key DEFAULT uuid_generate_v4(),\
-	virtualTable UUID not null,\
-	accountId varchar(255) not null,\
-	active boolean default true,\
-	foreign key (virtualTable) references virtual_tables(virtualTableID),\
-	foreign key (accountId) references accounts(accountId)\
-)"
+const clientsQuery = `
+    create table if not exists clients (
+	clientId UUID primary key DEFAULT uuid_generate_v4(),
+	virtualTable UUID not null,
+	accountId varchar(255) not null,
+	active boolean default true,
+	foreign key (virtualTable) references virtual_tables(virtualTableID),
+	foreign key (accountId) references accounts(accountId)
+)`
 
-const ordersQuery = "\
-    create table if not exists orders (\
-	orderId UUID primary key default uuid_generate_v4(),\
-	itemId UUID not null,\
-	virtualTable UUID not null,\
-	status varchar(15) default 'pending',\
-	ts timestamp default current_timestamp,\
-	foreign key (itemId) references items(itemId),\
-	foreign key (virtualTable) references virtual_tables(virtualTableId)\
-)"
+const ordersQuery = `
+    create table if not exists orders (
+	orderId UUID primary key default uuid_generate_v4(),
+	itemId UUID not null,
+	virtualTable UUID not null,
+	status varchar(15) default 'pending',
+	ts timestamp default current_timestamp,
+	foreign key (itemId) references items(itemId),
+	foreign key (virtualTable) references virtual_tables(virtualTableId)
+)`
 
-const clientsBalanceQuery = `
-	create table if not exists client_balance (
+const clientOrdersQuery = `
+	create table if not exists clientOrders (
 		clientId UUID,
 		orderId UUID,
 		cost DECIMAL(5, 2) not null,

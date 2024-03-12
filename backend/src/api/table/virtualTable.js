@@ -1,11 +1,12 @@
-const { create: joinVirtualTable, findOne: getClient, findMany: getClients } = require('@src/models/client.js');
+const { create: joinVirtualTable, findOne, getTableClients } = require('@src/models/client.js');
 const { 
     create: createVirtualTable,
     find: getVirtualTable,
     update: updateVirtualTable,
-    getActiveVirtualTable 
+    findActiveVirtualTable 
 } = require('@src/models/virtualTables.js');
-const { findMany: getOrders } = require("@src/models/orders.js");
+const { getTableOrders, getItemPrice } = require("@src/models/orders.js");
+const { getClientOrders, getOrderClients, splitOrder } = require("@src/models/clientOrders.js");
 
 
 async function openOrJoinVirtualTable(username, businessId, tableId) {
@@ -28,7 +29,7 @@ async function openOrJoinVirtualTable(username, businessId, tableId) {
 
 async function getOrCreateVirtualTable(businessId, tableId) {
     try {
-        const virtualTable = await getActiveVirtualTable(businessId, tableId);
+        const virtualTable = await findActiveVirtualTable(businessId, tableId);
         if (virtualTable) {
             return {success: true, operation: 'get', virtualTable};
         } else {
@@ -48,8 +49,8 @@ async function getVirtualTableInfo(virtualTableId) {
     try {
         const virtualTables = await getVirtualTable(virtualTableId, true);
         if (virtualTables.length === 1) {
-            const orders = await getOrders(virtualTableId);
-            const clients = await getClients(virtualTableId, true);
+            const orders = await getTableOrders(virtualTableId);
+            const clients = await getTableClients(virtualTableId);
             return { success: true, virtualTable: virtualTables[0], orders, clients };
         } else {
             return { success: false, message: 'Virtual Table not found' };
@@ -97,42 +98,11 @@ async function closeVirtualTable(virtualTableId) {
     }
 }
 
-async function getClientBalance(clientId) {
-    try {
-        const clients = await getClient(clientId, true);
-        if (clients.length === 1) {
-            const { total, paid } = clients[0];
-            const balance = total - paid;
-            return { success: true, balance, message: 'Client balance retrieved successfully' };
-        } else {
-            return { success: false, message: 'Active client not found' };
-        }
-    } catch (error) {
-        throw new Error('Get Client Balance failed');
-    }
-}
-
-async function getClientItems(clientId) {
-    try {
-        const clients = await getClient(clientId, true);
-        if (clients.length === 1) {
-            const { total, paid } = clients[0];
-            const balance = total - paid;
-            return { success: true, balance, message: 'Client balance retrieved successfully' };
-        } else {
-            return { success: false, message: 'Active client not found' };
-        }
-    } catch (error) {
-        throw new Error('Get Client Balance failed');
-    }
-}
 
 module.exports = {
     openOrJoinVirtualTable,
     getVirtualTableInfo,
     updateVirtualTableName,
-    closeVirtualTable,
-    getClientBalance,
-    getClientItems
+    closeVirtualTable
 };
 

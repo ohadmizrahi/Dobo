@@ -11,15 +11,6 @@ async function find(virtualTableId, active=false) {
     }
 }
 
-async function findActiveVirtualTable(businessId, tableId) {
-    const virtualTables = await find("SELECT * FROM virtualTables WHERE businessId = $1 AND tableId = $2 AND active = $3", [businessId, tableId, true])
-    if (virtualTables.length === 1) {
-        return virtualTables[0];
-    } else {
-        return null;
-    } 
-}
-
 async function create(businessId, tableId) {
     try {
         const activeVirtualTable = await findActiveVirtualTable(businessId, tableId)
@@ -62,6 +53,15 @@ async function update(virtualTableId, name=null, active=null) {
     } catch (error) {
         throw new Error('Virtual Table update failed');
     }
+}
+
+async function findActiveVirtualTable(businessId, tableId) {
+    const virtualTables = await find("SELECT * FROM virtualTables WHERE businessId = $1 AND tableId = $2 AND active = $3", [businessId, tableId, true])
+    if (virtualTables.length === 1) {
+        return virtualTables[0];
+    } else {
+        return null;
+    } 
 }
 
 

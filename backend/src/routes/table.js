@@ -1,7 +1,13 @@
 const { Router } = require('express');
 const { authenticateUserToken } = require("@src/middlewares/authenticateUserToken.js");
 const { validateAccountWithoutOpenTables, validateClientToken } = require("@src/middlewares/tableValidations.js");
-const { openOrJoinVirtualTable, getClientBalance, getVirtualTableInfo } = require("@src/api/table/virtualTable.js");
+const { 
+    openOrJoinVirtualTable,
+    handleCalculateCheck,
+    getVirtualTableInfo,
+    recalculateCheck,
+    payCheck
+ } = require("@src/api/table/virtualTable.js");
 const { generateClientToken } = require("@src/api/token.js");
 const { getMenu } = require("@src/api/menu/items.js");
 
@@ -66,18 +72,40 @@ router.get("/api/table/auth/refresh", validateClientToken, async (req, res) => {
     }
 });
 
-router.get("/api/table/checkout", validateClientToken, async (req, res) => {
-    const client = req.client;
+router.get("/api/table/check/calculate", validateClientToken, handleCalculateCheck);
 
-    try { 
-        const { success, balance, message } = await getClientBalance(client.clientId);
-        if (success) {
-            res.status(200).json({ success, balance });
+router.post("/api/table/check/recalculate", validateClientToken, async (req, res) => {
+    const { clientId } = req.client;
+    const { orders } = req.body;
+    try {
+        const response = await recalculateCheck(clientId, orders);
+        if (response.success) {
+            await handleCalculateCheck(req, res);
         } else {
-            res.status(404).json({ error: message });
+            res.status(400).json({
+                success: response.success,
+                message: response.message,
+                failedOrders: response.failedOrders
+            });
         }
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: 'An error occurred during retriving client balance.' });
+        res.status(500).json({ error: 'An error occurred during updating client check.' });
+    }
+});
+
+router.post("/api/table/check/pay", validateClientToken, async (req, res) => {
+    const { clientId } = req.client;
+    const { ordersToPay } = req.body;
+    try {
+        const response = await payCheck(clientId, ordersToPay);
+        if (response.success) {
+            await handleCalculateCheck(req, res);
+        } else {
+            res.status(400).json({ success: response.success, message: response.message });
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'An error occurred during paying client check.' });
     }
 });

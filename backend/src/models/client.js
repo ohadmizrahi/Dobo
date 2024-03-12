@@ -13,7 +13,9 @@ async function findOne(clientId, onlyActive=false) {
 
 async function findMany(virtualTableId, onlyActive=false) {
     try {
-        const query = onlyActive ? `SELECT * FROM clients WHERE virtualTable = $1 AND active = $2;` : `SELECT * FROM clients WHERE virtualTable = $1;`;
+        const query = onlyActive ? 
+        `SELECT * FROM clients WHERE virtualTable = $1 AND active = $2;` 
+        : `SELECT * FROM clients WHERE virtualTable = $1;`;
         const values = onlyActive ? [virtualTableId, true] : [virtualTableId]; 
         const res = await pool.query(query, values);
         return res.rows;
@@ -21,6 +23,7 @@ async function findMany(virtualTableId, onlyActive=false) {
         throw new Error(`Failed to execute query:\n${error}`);
     }
 }
+
 
 async function create(accountId, virtualTableId) {
     try {
@@ -63,9 +66,37 @@ async function disable(clientId) {
     }
 }
 
+async function getTableClients(virtualTableId, active=false) {
+    try {
+        const query = 
+        `
+        SELECT 
+            c.clientId AS clientId,
+            a.fullName AS clientName,
+            MAX(a.imageUrl) AS clientImage,
+            COALESCE(SUM(CASE WHEN co.paid = true THEN co.cost ELSE 0 END), 0) AS paid,
+            COALESCE(SUM(co.cost), 0) AS total
+        FROM 
+            clients c 
+                JOIN accounts a ON c.accountId = a.accountId
+                    LEFT JOIN clientOrders co ON c.clientId = co.clientId
+        WHERE 
+            c.virtualTable = $1 AND c.active = $2
+        GROUP BY 
+            c.clientId, a.fullName;
+        `;
+        const values = [virtualTableId, active];
+        const res = await pool.query(query, values);
+        return res.rows;
+    } catch (error) {
+        throw new Error(`Get Table Clients failed:\n${error}`);
+    }
+}
+
 module.exports = {
     findOne,
     findMany,
     create,
-    disable
+    disable,
+    getTableClients
 };
