@@ -14,16 +14,13 @@ export const globalStyles = StyleSheet.create({
         alignSelf: 'center',
     },
     icons: {
-        position: 'absolute',
         fontSize: 40,
         color: mainColor,
     },
     headerIconLeft: {
-        top: 50,
         left: 20,
     },
     headerIconRight: {
-        top: 50,
         right: 20,
     },
     shadowBottom: {

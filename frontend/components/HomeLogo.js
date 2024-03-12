@@ -1,8 +1,10 @@
 import { View, Pressable } from 'react-native';
 import { globalStyles } from '../globalStyles';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { useNavigation } from '@react-navigation/native';
 
-export default function HomeLogo({ navigation }) {
+export default function HomeLogo() {
+    const navigation = useNavigation(); 
     return (
         <View>
             <Pressable onPress={() => navigation.navigate('Home')}>

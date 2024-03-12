@@ -10,8 +10,6 @@ import SignUp from '../components/SignupForm';
 export default function ItamScreen({navigation}) {   
   return (
     <View style={globalStyles.screenColor} >
-      <HomeLogo navigation={navigation} />
-      <ProfileLogo navigation={navigation}/>
       <Bell navigation={navigation}/>
       <SignUp />
     </View>
