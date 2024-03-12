@@ -1,5 +1,5 @@
 import React from 'react';
-import { SafeAreaView, StyleSheet, View, Text, StatusBar, Button } from 'react-native';
+import { SafeAreaView, StyleSheet, View, Text, Button } from 'react-native';
 import { Formik, Field } from 'formik';
 import CustomInput from './CustomInput';
 import { signUpValidationSchema } from '../schemas/signupSchema';
@@ -75,10 +75,8 @@ export default SignUp;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    justifyContent: 'space-evenly',
 
   },
   signupContainer: {

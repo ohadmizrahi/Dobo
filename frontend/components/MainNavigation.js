@@ -1,27 +1,42 @@
-import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-
-import HomeScreen from '../screens/HomeScreen.js';
-import ItamScreen from '../screens/ItemScreen.js';
-import BusinessInfoScreen from '../screens/BusinessInfoScreen.js';
-import JoinTableScreen from '../screens/JoinTableScreen.js';
-import OrderScreen from '../screens/OrderScreen.js';
-import PayScreen from '../screens/PayScreen.js';
-import MenuScreen from '../screens/MenuScreen.js';
-import OrderCartScreen from '../screens/OrderCartScreen.js';
-import ProfileScreen from '../screens/ProfileScreen.js';
-import SignInScreen from '../screens/SignInScreen.js';
-import SignUpScreen from '../screens/SignUpScreen.js';
-import TableReservationScreen from '../screens/TableReservationScreen.js';
-import TableStatusScreen from '../screens/TableStatusScreen.js';
+import ProfileLogo from '../components/ProfileLogo';
+import HomeLogo from './HomeLogo';
+import HomeScreen from '../screens/HomeScreen';
+import ItamScreen from '../screens/ItemScreen';
+import BusinessInfoScreen from '../screens/BusinessInfoScreen';
+import JoinTableScreen from '../screens/JoinTableScreen';
+import OrderScreen from '../screens/OrderScreen';
+import PayScreen from '../screens/PayScreen';
+import MenuScreen from '../screens/MenuScreen';
+import OrderCartScreen from '../screens/OrderCartScreen';
+import ProfileScreen from '../screens/ProfileScreen';
+import SignInScreen from '../screens/SignInScreen';
+import SignUpScreen from '../screens/SignUpScreen';
+import TableReservationScreen from '../screens/TableReservationScreen';
+import TableStatusScreen from '../screens/TableStatusScreen';
 
 const Stack = createStackNavigator();
 
-export default function MainNavigation() { 
+const HeaderRightComponent = ({ navigation }) => {
+  return <ProfileLogo navigation={navigation} />;
+};
+
+const HeaderLeftComponent = ({ navigation }) => {
+  return <HomeLogo navigation={navigation} />;
+};
+
+export default function MainNavigation() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
+      <Stack.Navigator initialRouteName="Home" screenOptions={{
+        headerStyle: {
+          backgroundColor: "#3D3D3D",
+          contentcolor: "#97DECC",
+        },
+        headerRight: ({ navigation }) => <HeaderRightComponent navigation={navigation} />,
+        headerLeft: ({ navigation }) => <HeaderLeftComponent navigation={navigation} />,
+      }}>
         <Stack.Screen name="Home" component={HomeScreen} />
         <Stack.Screen name="Item" component={ItamScreen} />
         <Stack.Screen name="BusinessInfo" component={BusinessInfoScreen} />
