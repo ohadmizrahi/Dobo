@@ -110,9 +110,11 @@ export const globalStyles = StyleSheet.create({
         borderRadius: 50,
         marginHorizontal: 80,
         margin:10,
+        alignSelf: 'center'
     },
 
     formHeadLineText: {
+        position: 'absolute',
         padding: 10,
         fontSize: 30,
         borderRadius: 5,
