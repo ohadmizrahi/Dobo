@@ -30,7 +30,7 @@ const SignUp = () => {
                 <View style={styles.infoRow}>
                   <Icon name="envelope" size={24} color="black" style={styles.icon} />
                   <Text>Email</Text>
-                  <Field component={CustomInput} name="email"keyboardType="email-address" />
+                  <Field component={CustomInput} name="email" keyboardType="email-address" />
                 </View>
                 <View style={styles.infoRow}>
                   <Icon name="mobile" size={24} color="black" style={styles.icon} />
@@ -45,7 +45,7 @@ const SignUp = () => {
                 <View style={styles.infoRow}>
                   <Icon name="gift" size={24} color="black" style={styles.icon} />
                   <Text>Birthday</Text>
-                  <Field component={CustomInput} name="birthday" />
+                  <Field component={CustomInput} name="birthday" keyboardType="numeric" />
                 </View>
                 <View style={styles.infoRow}>
                   <Icon name="lock" size={24} color="black" style={styles.icon} />

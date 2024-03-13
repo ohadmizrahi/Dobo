@@ -10,6 +10,20 @@ const CustomInput = (props) => {
 
   const hasError = errors[name] && touched[name]
 
+  const handleDatesChange = (text) => {
+    if (text.length === 2 && value.length === 1 && name === 'expirationDate') {
+      // Automatically add '/' after the user enters two numbers
+      onChange(name)(text + '/');
+    }
+    else if ((text.length === 2 || text.length === 5) && name === 'birthday') {
+      onChange(name)(text + '/');
+    }
+    else {
+      onChange(name)(text);
+    }
+  };
+
+
   return (
     <>
       <TextInput
@@ -18,7 +32,7 @@ const CustomInput = (props) => {
           hasError && styles.errorInput
         ]}
         value={value}
-        onChangeText={(text) => onChange(name)(text)}
+        onChangeText={handleDatesChange}
         onBlur={() => {
           setFieldTouched(name)
           onBlur(name)
@@ -40,6 +54,7 @@ const styles = StyleSheet.create({
     borderWidth: StyleSheet.hairlineWidth,
     borderRadius: 20,
     maxWidth: '50%',
+    padding: 5,
 
   },
   errorText: {
