@@ -11,8 +11,11 @@ import SigninForm from '../components/SigninForm';
 export default function SignInScreen({ navigation }) {
   return (
     <View style= {globalStyles.screenColor}>
-      <Text>SignIn</Text>
-
+      <LogoImage />
+      <ProfilePicture />
+      <FormHeadLine formName='Sign In' />
+      <DontHaveAccount navigation={navigation}/>
+       <SocialSignIn />
       <SigninForm />
     </View>
   );
