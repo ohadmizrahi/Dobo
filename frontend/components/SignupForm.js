@@ -5,21 +5,18 @@ import CustomInput from './CustomInput';
 import { signUpValidationSchema } from '../schemas/signupSchema';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
+// same structure as the signin form, but with different validation schema
+// and the same style.
+// needs to change style names to abstract the styles and reuse them
+
+
 const SignUp = () => {
   return (
     <>
       <SafeAreaView style={styles.container}>
         <View style={styles.signupContainer}>
-          <Formik
-            initialValues={{
-              fullName: '',
-              email: '',
-              phoneNumber: '',
-              address: '',
-              birthday: '',
-              password: '',
-              confirmPassword: ''
-            }}
+          <Formik 
+            initialValues={{fullName: '',email: '',phoneNumber: '',address: '',birthday: '',password: '',confirmPassword: ''}}
             onSubmit={values => console.log(values)}
             validationSchema={signUpValidationSchema}
           >
