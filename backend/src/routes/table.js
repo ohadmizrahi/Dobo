@@ -1,6 +1,6 @@
 const { Router } = require('express');
-const { authenticateUserToken } = require("@src/middlewares/authenticateUserToken.js");
-const { validateAccountWithoutOpenTables, validateClientToken } = require("@src/middlewares/tableValidations.js");
+const { authenticateUserToken, authenticateClientToken } = require("@src/middlewares/authenticateToken.js");
+const { validateAccountWithoutOpenTables } = require("@src/middlewares/tableValidations.js");
 const { openOrJoinVirtualTable, getVirtualTableInfo, closeVirtualTable } = require("@src/api/table/virtualTable.js");
 const { payCheck, recalculateCheck, handleCalculateCheck } = require("@src/api/table/checkout.js");
 const { generateClientToken } = require("@src/api/auth/token.js");
@@ -10,7 +10,7 @@ const router = Router();
 
 router.use(authenticateUserToken);
 
-router.get("/api/table", validateClientToken, async (req, res) => {
+router.get("/api/table", authenticateClientToken, async (req, res) => {
     const client = req.client;
 
     try { 
@@ -53,7 +53,7 @@ router.post("/api/table/join", validateAccountWithoutOpenTables, async (req, res
     }
 });
 
-router.get("/api/table/auth/refresh", validateClientToken, async (req, res) => {
+router.get("/api/table/auth/refresh", authenticateClientToken, async (req, res) => {
     const { clientid } = req.client;
     try {
         const { token, tokenForRefresh } = generateClientToken(clientid)
@@ -68,11 +68,11 @@ router.get("/api/table/auth/refresh", validateClientToken, async (req, res) => {
     }
 });
 
-router.get("/api/table/check/calculate", validateClientToken, async (req, res) => {
+router.get("/api/table/check/calculate", authenticateClientToken, async (req, res) => {
     await handleCalculateCheck(req, res);
 });
 
-router.post("/api/table/check/recalculate", validateClientToken, async (req, res) => {
+router.post("/api/table/check/recalculate", authenticateClientToken, async (req, res) => {
     const { clientid } = req.client;
     const { orders } = req.body;
     try {
@@ -92,7 +92,7 @@ router.post("/api/table/check/recalculate", validateClientToken, async (req, res
     }
 });
 
-router.post("/api/table/check/pay", validateClientToken, async (req, res) => {
+router.post("/api/table/check/pay", authenticateClientToken, async (req, res) => {
     const { clientid } = req.client;
     const { orders } = req.body;
     try {
@@ -101,6 +101,9 @@ router.post("/api/table/check/pay", validateClientToken, async (req, res) => {
             console.log(response);
             await handleCalculateCheck(req, res);
         } else {
+            if (response.message === 'No orders to pay') {
+                res.status(404).json({ success: response.success, ordersCount: response.ordersCount, message: response.message });
+            }
             res.status(400).json({ success: response.success, message: response.message, failedOrders: response.failedOrders});
         }
     } catch (error) {

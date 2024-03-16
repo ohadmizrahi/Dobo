@@ -1,6 +1,9 @@
+require('dotenv').config();
 const path = require('path');
 const express = require('express');
 const cors = require('cors');
+
+const PORT = process.env.BE_PORT || 3000;
 
 
 const corsOptions = {
@@ -17,6 +20,7 @@ require('module-alias').addAliases({
 });
 
 const pool = require('@be/database/pool.js');
+const { swaggerUi, swaggerSpec } = require('@be/docs/docs.js');
 
 const authRouter = require('@src/routes/auth');
 const profileRouter = require('@src/routes/profile.js');
@@ -32,10 +36,10 @@ pool.query('SELECT NOW()', (err, res) => {
 });
 
 const app = express();
-const port = process.env.BE_PORT || 3000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors(corsOptions));
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // To handle requestes for authRouter
 app.use(authRouter)
@@ -50,6 +54,6 @@ app.use(profileRouter)
 app.use(tableRouter)
 
 
-app.listen(port, () => {
-  console.log(`Server is running on  http://localhost:${port}`);
+app.listen(PORT, () => {
+  console.log(`Server is running on  http://localhost:${PORT}`);
 });

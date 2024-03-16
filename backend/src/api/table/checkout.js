@@ -27,7 +27,7 @@ async function handleCalculateCheck(req, res) {
                 res.status(200).json({ success, clientBalance, clientOrders });
             }
         } else {
-            res.status(404).json({ error: message });
+            res.status(404).json({ message: message });
         }
     } catch (error) {
         console.error(error);

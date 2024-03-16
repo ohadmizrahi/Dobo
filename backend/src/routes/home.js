@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { authenticateUserToken } = require("@src/middlewares/authenticateUserToken.js");
+const { authenticateUserToken } = require("@src/middlewares/authenticateToken.js");
 const { getGroupsOfBusinesses, getBusinessInfo, reserveTable } = require('@src/api/home/business.js');
 
 const router = Router();

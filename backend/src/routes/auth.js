@@ -2,7 +2,7 @@ const { Router } = require('express');
 const { authentication } = require("@src/api/auth/signin.js");
 const { signup } = require("@src/api/auth/signup.js");
 const { generateTokens, resetPasswordToken } = require("@src/api/auth/token.js");
-const { authenticateUserToken } = require("@src/middlewares/authenticateUserToken.js");
+const { authenticateUserToken } = require("@src/middlewares/authenticateToken.js");
 
 const router = Router();
 
@@ -50,7 +50,7 @@ router.post("/api/auth/signup", async (req, res) => {
             if (!token || !tokenForRefresh) {
                 throw new Error('Token generation failed');
             }
-            res.status(200).json({ success, token, tokenForRefresh, message: 'Signup successful' });
+            res.status(201).json({ success, token, tokenForRefresh, message: 'Signup successful' });
         } else {
             res.status(409).json({ success, username, message: `Signup failed: Account already exists` });
         }
@@ -64,6 +64,7 @@ router.post("/api/auth/signup", async (req, res) => {
     }
 });
 
+ 
 router.get("/api/auth/token/refresh", authenticateUserToken, (req, res) => {
     try {
         const { token, tokenForRefresh } = generateTokens({ username: req.user.username })

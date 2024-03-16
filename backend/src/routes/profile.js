@@ -1,7 +1,6 @@
 const { Router } = require('express');
 const multer = require('multer');
-const { authenticateUserToken } = require("@src/middlewares/authenticateUserToken.js");
-const { authenticateResetPasswordToken } = require("@src/middlewares/authenticateResetPasswordToken.js");
+const { authenticateUserToken, authenticateResetPasswordToken } = require("@src/middlewares/authenticateToken.js");
 const { updateAccountDetails, resetPassword, updateImage, getAccount, getAccountReservations } = require('@src/api/account/account.js');
 const { updatedOrCreatePaymentMethod } = require('@src/api/account/paymentMethod.js');
 
