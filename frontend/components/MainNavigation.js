@@ -32,7 +32,6 @@ export default function MainNavigation() {
       <Stack.Navigator initialRouteName="Home" screenOptions={{
         headerStyle: {
           backgroundColor: "#3D3D3D",
-          contentcolor: "#97DECC",
         },
         headerRight: ({ navigation }) => <HeaderRightComponent navigation={navigation} />,
         headerLeft: ({ navigation }) => <HeaderLeftComponent navigation={navigation} />,
