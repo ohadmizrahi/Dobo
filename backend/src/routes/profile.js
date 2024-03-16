@@ -2,7 +2,7 @@ const { Router } = require('express');
 const multer = require('multer');
 const { authenticateUserToken } = require("@src/middlewares/authenticateUserToken.js");
 const { authenticateResetPasswordToken } = require("@src/middlewares/authenticateResetPasswordToken.js");
-const { updateAccountDetails, resetPassword, updateImage, getAccount } = require('@src/api/account/account.js');
+const { updateAccountDetails, resetPassword, updateImage, getAccount, getAccountReservations } = require('@src/api/account/account.js');
 const { updatedOrCreatePaymentMethod } = require('@src/api/account/paymentMethod.js');
 
 const router = Router();
@@ -25,9 +25,11 @@ router.get("/api/profile", async (req, res) => {
     const { account, paymentsMethod } = await getAccount(username);
     try {
         if (account) {
+            const { reservations } = await getAccountReservations(username);
             const profile = {
                 account,
-                paymentsMethod
+                paymentsMethod,
+                reservations
             }
             res.status(200).json({ data: profile });
         } else {

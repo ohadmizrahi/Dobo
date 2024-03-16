@@ -32,16 +32,17 @@ createTables(tableQueries)
   .catch(console.error);
 */
 
-const businessQuery = '\
-    create table if not exists businesses ( \
-	businessId varchar(255) PRIMARY KEY,\
-	name varchar(255) not null, \
-	city varchar(255) not null,\
-	address varchar(255) not null,\
-	rank float not null,\
-	description varchar(255) not null,\
-	imageUrl varchar(255)\
-)';
+const businessQuery = `
+    create table if not exists businesses ( 
+	businessId varchar(255) PRIMARY KEY,
+	name varchar(255) not null,
+	city varchar(255) not null,
+	address varchar(255) not null,
+	rank float not null,
+	description varchar(255) not null,
+	imageUrl varchar(255)
+	ts timestamp default current_timestamp
+)`;
 
 const accountsQuery = '\
     create table if not exists accounts (\
@@ -86,16 +87,17 @@ const itemsQuery = '\
 	foreign key (businessId) references businesses(businessId)\
 )'
 
-reservationsQuery = '\
-    create table if not exists reservations (\
-	reservationId UUID primary key DEFAULT uuid_generate_v4(),\
-	tableId varchar(4) not null,\
-	accountId varchar(255) not null,\
-	reservationDateTime timestamp not null,\
-	prefernce varchar(10) not null,\
-	additionalRequest varchar(255),\
-	numberOfPeople integer check (numberOfPeople > 0 and numberOfPeople <= 10) not null\
-)'
+reservationsQuery = `
+    create table if not exists reservations (
+	reservationId UUID primary key DEFAULT uuid_generate_v4(),
+	tableId varchar(4) not null,
+	businessId varchar(255) not null,
+	accountId varchar(255) not null,
+	reservationDateTime timestamp not null,
+	type varchar(10) not null,
+	additionalRequest varchar(255),
+	numberOfPeople integer check (numberOfPeople > 0 and numberOfPeople <= 10) not null
+)`
 
 const virtualTablesQuery = "\
     create table if not exists virtual_tables (\

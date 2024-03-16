@@ -21,6 +21,7 @@ const pool = require('@be/database/pool.js');
 const authRouter = require('@src/routes/auth');
 const profileRouter = require('@src/routes/profile.js');
 const tableRouter = require('@src/routes/table.js');
+const homeRouter = require('@src/routes/home.js');
 
 pool.query('SELECT NOW()', (err, res) => {
   if (err) {
@@ -36,18 +37,18 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors(corsOptions));
 
-// To handle requestes for secondRouter
+// To handle requestes for authRouter
 app.use(authRouter)
 
-// To handle requestes for secondRouter
+// To handle requestes for homeRouter
+app.use(homeRouter)
+
+// To handle requestes for profileRouter
 app.use(profileRouter)
 
-// To handle requestes for secondRouter
+// To handle requestes for tableRouter
 app.use(tableRouter)
 
-app.get('/', (req, res) => {
-  res.send('Hello, Express!');
-});
 
 app.listen(port, () => {
   console.log(`Server is running on  http://localhost:${port}`);
