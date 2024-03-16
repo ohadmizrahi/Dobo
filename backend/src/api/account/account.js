@@ -1,14 +1,8 @@
 const { update: updateAccount, find: findAccount } = require('@src/models/account.js')
 const { find: getUserPaymentMethod } = require('@src/models/paymentMethods.js')
 const { findMany: findReservations } = require('@src/models/reservation.js')
-const { validateSchema } = require('@src/utils/schema.js')
 
 async function updateAccountDetails(username, fieldsToUpdate) {
-    const schema = ["fullName", "phoneNumber", "address", "birthDate"];
-    const invalidFields = validateSchema(schema, fieldsToUpdate);
-    if (invalidFields.length) {
-        return { success: false, invalidFields, message: 'Invalid fields to update' };
-    }
 
     const response = await updateAccount(username, fieldsToUpdate, "account");
     if (!response.success) {

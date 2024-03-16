@@ -80,7 +80,8 @@ router.get("/api/auth/token/refresh", authenticateUserToken, (req, res) => {
 
 router.get("/api/auth/token/reset-password", authenticateUserToken, (req, res) => {
     try {
-        const token = resetPasswordToken(req.user)
+        const username = req.user.username;
+        const token = resetPasswordToken(username)
         if (token) {
             res.status(200).json({ success: true, token, message: 'Token creation successful' });
         } else {

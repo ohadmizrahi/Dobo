@@ -1,12 +1,6 @@
 const { update, find, create } = require('@src/models/paymentMethods.js')
-const { validateSchema } = require('@src/utils/schema.js');
 
 async function updatedOrCreatePaymentMethod(username, data) {
-    const schema = ["cardNumber", "experationDate", "cvv", "citizenId", "type"];
-    const invalidFields = validateSchema(schema, data);
-    if (invalidFields.length) {
-        return { success: false, invalidFields, message: 'Invalid fields to update' };
-    }
     const response = await find(username);
     let operationResponse;
     if (response.length === 1) {
