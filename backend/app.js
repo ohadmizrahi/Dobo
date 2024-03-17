@@ -1,6 +1,9 @@
+require('dotenv').config();
 const path = require('path');
 const express = require('express');
 const cors = require('cors');
+
+const PORT = process.env.BE_PORT || 3000;
 
 
 const corsOptions = {
@@ -17,10 +20,12 @@ require('module-alias').addAliases({
 });
 
 const pool = require('@be/database/pool.js');
+const { swaggerUi, swaggerSpec } = require('@be/docs/docs.js');
 
 const authRouter = require('@src/routes/auth');
 const profileRouter = require('@src/routes/profile.js');
 const tableRouter = require('@src/routes/table.js');
+const homeRouter = require('@src/routes/home.js');
 
 pool.query('SELECT NOW()', (err, res) => {
   if (err) {
@@ -31,24 +36,24 @@ pool.query('SELECT NOW()', (err, res) => {
 });
 
 const app = express();
-const port = process.env.BE_PORT || 3000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors(corsOptions));
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-// To handle requestes for secondRouter
+// To handle requestes for authRouter
 app.use(authRouter)
 
-// To handle requestes for secondRouter
+// To handle requestes for homeRouter
+app.use(homeRouter)
+
+// To handle requestes for profileRouter
 app.use(profileRouter)
 
-// To handle requestes for secondRouter
+// To handle requestes for tableRouter
 app.use(tableRouter)
 
-app.get('/', (req, res) => {
-  res.send('Hello, Express!');
-});
 
-app.listen(port, () => {
-  console.log(`Server is running on  http://localhost:${port}`);
+app.listen(PORT, () => {
+  console.log(`Server is running on  http://localhost:${PORT}`);
 });

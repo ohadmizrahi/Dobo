@@ -1,13 +1,8 @@
 const { update: updateAccount, find: findAccount } = require('@src/models/account.js')
 const { find: getUserPaymentMethod } = require('@src/models/paymentMethods.js')
-const { validateSchema } = require('@src/utils/schema.js')
+const { findMany: findReservations } = require('@src/models/reservation.js')
 
 async function updateAccountDetails(username, fieldsToUpdate) {
-    const schema = ["fullName", "phoneNumber", "address", "birthDate"];
-    const invalidFields = validateSchema(schema, fieldsToUpdate);
-    if (invalidFields.length) {
-        return { success: false, invalidFields, message: 'Invalid fields to update' };
-    }
 
     const response = await updateAccount(username, fieldsToUpdate, "account");
     if (!response.success) {
@@ -41,9 +36,18 @@ async function getAccount(username) {
     return { account, paymentsMethod }
 }
 
+async function getAccountReservations(username) {
+    const reservations = await findReservations({accountId: username});
+    if (reservations.length === 0) {
+        return { success: false, message: "No reservations found" }
+    }
+    return { success: true, reservations };
+}
+
 module.exports = {
     updateAccountDetails,
     resetPassword,
     updateImage,
-    getAccount
+    getAccount,
+    getAccountReservations
 }

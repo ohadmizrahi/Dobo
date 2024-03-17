@@ -1,6 +1,4 @@
 require('dotenv').config();
-const jwt = require('jsonwebtoken');
-const { findOne } = require('@src/models/client.js');
 const { select: findClient } = require('@src/utils/query.js');
 
 
@@ -20,27 +18,8 @@ async function validateAccountWithoutOpenTables(req, res, next) {
     } 
 };
 
-async function validateClientToken(req, res, next) {
-    const clientToken = req.headers.clienttoken;
-    if (!clientToken) {
-        return res.status(400).json({ message: 'Client token is required' });
-    } else {
-        try {
-            const decoded = jwt.verify(clientToken, process.env.CLIENT_SECRET_KEY);
-            const clientId = decoded.clientId;
-            const clients = await findOne(clientId, true);
-            if (clients.length === 0) {
-                return res.status(403).json({ message: 'Client is forbidden' });
-            }
-            req.client = clients[0];
-            next();
-        } catch (err) {
-            return res.status(403).json({ message: 'Invalid client token' });
-        }
-    }
-}
+
 
 module.exports =  {
-    validateAccountWithoutOpenTables,
-    validateClientToken
+    validateAccountWithoutOpenTables
 };

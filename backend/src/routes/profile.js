@@ -1,8 +1,7 @@
 const { Router } = require('express');
 const multer = require('multer');
-const { authenticateUserToken } = require("@src/middlewares/authenticateUserToken.js");
-const { authenticateResetPasswordToken } = require("@src/middlewares/authenticateResetPasswordToken.js");
-const { updateAccountDetails, resetPassword, updateImage, getAccount } = require('@src/api/account/account.js');
+const { authenticateUserToken, authenticateResetPasswordToken } = require("@src/middlewares/authenticateToken.js");
+const { updateAccountDetails, resetPassword, updateImage, getAccount, getAccountReservations } = require('@src/api/account/account.js');
 const { updatedOrCreatePaymentMethod } = require('@src/api/account/paymentMethod.js');
 
 const router = Router();
@@ -25,9 +24,11 @@ router.get("/api/profile", async (req, res) => {
     const { account, paymentsMethod } = await getAccount(username);
     try {
         if (account) {
+            const { reservations } = await getAccountReservations(username);
             const profile = {
                 account,
-                paymentsMethod
+                paymentsMethod,
+                reservations
             }
             res.status(200).json({ data: profile });
         } else {
@@ -41,7 +42,8 @@ router.get("/api/profile", async (req, res) => {
 
 router.post("/api/profile/update/account", async (req, res) => {
     const username = req.user.username;
-    const fieldsToUpdate = req.body;
+    const { fullName, phoneNumber, address, birthDate } = req.body;
+    const fieldsToUpdate = { fullName, phoneNumber, address, birthDate }
     try {
         const response = await updateAccountDetails(username, fieldsToUpdate)
         if (!response.success) {
@@ -62,7 +64,8 @@ router.post("/api/profile/update/account", async (req, res) => {
 
 router.post("/api/profile/update/payment-method", async (req, res) => {
     const username = req.user.username;
-    const fieldsToUpdate = req.body;
+    const { cardNumber, experationDate, cvv, citizenId, type } = req.body;
+    const fieldsToUpdate = { cardNumber, experationDate, cvv, citizenId, type };
     
     try {
         const response = await updatedOrCreatePaymentMethod(username, fieldsToUpdate)
