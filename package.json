@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",
+    "@react-native-picker/picker": "^2.6.1",
     "@react-navigation/native": "^6.1.14",
     "@react-navigation/native-stack": "^6.9.22",
     "react-hook-form": "^7.51.0",
