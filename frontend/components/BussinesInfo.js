@@ -13,6 +13,9 @@ export default function Businessinformation({business, navigation}){
         <Text style={styles.openingHours}>Opening Hours: {openingHours}</Text>
         <Button title="View Menu" onPress={() => { navigation.navigate('Order')}} />
       </View>
+      <View>
+        <Button title='find place' onPress={()=>{ navigation.navigate('JoinTable')}}></Button>
+      </View>
     </View>
   );
 };

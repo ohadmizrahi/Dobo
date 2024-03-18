@@ -1,10 +1,13 @@
 import React from 'react';
-import { View, Text, Button } from 'react-native';
+import { View, Text } from 'react-native';
+import TableReservationForm from '../components/Reservation';
 
-export default function TableReservationScreen({ navigation }) {
+
+export default function TableReservationScreen({ navigation}) {
   return (
     <View>
       <Text>TableReservation</Text>
+      <TableReservationForm />
     </View>
   );
 }
