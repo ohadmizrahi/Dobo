@@ -1,6 +1,7 @@
 import React from 'react';
 import { signUpValidationSchema } from '../schemas/signupSchema';
 import Form from './Form';
+import { fetchAPI } from '../util/fetch';
 
 const SignUpForm = () => {
   const fields = [
@@ -14,39 +15,35 @@ const SignUpForm = () => {
   ];
 
   const onSubmit = async (values, { resetForm }) => {
-    const stam={
+    const userInfo = {
       name: values.fullName,
       email: values.email,
       phone: values.phoneNumber,
       address: values.address,
       birthday: values.birthday,
       password: values.password,
-    }
+    };
+
     const [day, month, year] = values.birthday.split("/");
     const formattedDate = `${year}-${month}-${day}`;
-    stam["birthday"] = formattedDate;
-    try {
-      const response = await fetch('http://10.100.102.51:3000/api/auth/signup', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+    userInfo["birthday"] = formattedDate;
 
-        body: JSON.stringify(stam),
-      });
-      const data = await response.json(); // Extract JSON data from response
-      console.log('Response from server:', data);
-      // if (response.ok) {
-      //   const data = await response.json();
-      //   console.log('Response from server:', data);
-      //   resetForm();
-      // } else {
-      //   throw new Error('Error: ' + response.statusText);
-      // }
+    try {
+      const { data, error } = await fetchAPI( 
+        `http://:3000/api/auth/signup`, // between the // to the :3000 put youe ip.
+        'POST', 
+        { 'Content-Type': 'application/json' }, 
+        userInfo 
+      );
+
+      if (data) {
+        console.log('Response from server:', data);
+        resetForm();
+      } else {
+        console.error('Error:', error);
+      }
     } catch (error) {
-      console.log("hi ohad")
       console.error('Error:', error);
-      
     }
   };
   
