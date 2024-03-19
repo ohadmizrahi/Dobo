@@ -4,7 +4,7 @@ import PaymentForm from '../components/PaymentForm';
 export default function MenuScreen({ navigation }) {
   return (
     <View>
-      <PaymentForm />
+      <Text>Menu Screen</Text>
     </View>
   );
 }
