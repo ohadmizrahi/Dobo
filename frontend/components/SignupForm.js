@@ -3,6 +3,9 @@ import { signUpValidationSchema } from '../schemas/signupSchema';
 import Form from './Form';
 import { fetchAPI } from '../util/fetch';
 
+
+const { IP } = process.env;
+
 const SignUpForm = () => {
   const fields = [
     { name: 'fullName', label: 'Full Name', iconName: 'user', placeholder: 'Enter full name' },
@@ -30,7 +33,7 @@ const SignUpForm = () => {
 
     try {
       const { data, error } = await fetchAPI( 
-        `http://:3000/api/auth/signup`, // between the // to the :3000 put youe ip.
+        'http://10.100.102.51:3000/api/auth/signup',
         'POST', 
         { 'Content-Type': 'application/json' }, 
         userInfo 
