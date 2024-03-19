@@ -14,9 +14,10 @@ export default function SignInScreen({ navigation }) {
       <LogoImage />
       <ProfilePicture />
       <FormHeadLine formName='Sign In' />
-      <DontHaveAccount navigation={navigation}/>
-       <SocialSignIn />
       <SigninForm />
+      <SocialSignIn />
+      <DontHaveAccount navigation={navigation}/>
+      
     </View>
   );
 }
