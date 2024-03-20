@@ -1,6 +1,7 @@
 import React from 'react';
 import { signUpValidationSchema } from '../schemas/signupSchema';
 import Form from './Form';
+import { fetchAPI } from '../util/fetch';
 
 const SignUpForm = () => {
   const fields = [
@@ -13,14 +14,47 @@ const SignUpForm = () => {
     { name: 'confirmPassword', label: 'Confirm Password', iconName: 'lock', placeholder: 'Confirm password', secureTextEntry: true },
   ];
 
+  const onSubmit = async (values, { resetForm }) => {
+    const userInfo = {
+      name: values.fullName,
+      email: values.email,
+      phone: values.phoneNumber,
+      address: values.address,
+      birthday: values.birthday,
+      password: values.password,
+    };
+
+    const [day, month, year] = values.birthday.split("/");
+    const formattedDate = `${year}-${month}-${day}`;
+    userInfo["birthday"] = formattedDate;
+
+    try {
+      const { data, error } = await fetchAPI( 
+        `http://:3000/api/auth/signup`, // between the // to the :3000 put youe ip.
+        'POST', 
+        { 'Content-Type': 'application/json' }, 
+        userInfo 
+      );
+
+      if (data) {
+        console.log('Response from server:', data);
+        resetForm();
+      } else {
+        console.error('Error:', error);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+  
   return (
-<Form
-  initialValues={{ fullName: '', email: '', phoneNumber: '', address: '', birthday: '', password: '', confirmPassword: '' }}
-  validationSchema={signUpValidationSchema}
-  onSubmit={(values) => console.log(values)}
-  fields={fields}
-  submitTitle="SIGN UP" // This is a string
-/>
+    <Form
+      initialValues={{ fullName: '', email: '', phoneNumber: '', address: '', birthday: '', password: '', confirmPassword: '' }}
+      validationSchema={signUpValidationSchema}
+      onSubmit={onSubmit}
+      fields={fields}
+      submitTitle="SIGN UP"
+    />
   );
 };
 
