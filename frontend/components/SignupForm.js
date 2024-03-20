@@ -3,9 +3,6 @@ import { signUpValidationSchema } from '../schemas/signupSchema';
 import Form from './Form';
 import { fetchAPI } from '../util/fetch';
 
-
-const { IP } = process.env;
-
 const SignUpForm = () => {
   const fields = [
     { name: 'fullName', label: 'Full Name', iconName: 'user', placeholder: 'Enter full name' },
@@ -33,7 +30,7 @@ const SignUpForm = () => {
 
     try {
       const { data, error } = await fetchAPI( 
-        'http://10.100.102.51:3000/api/auth/signup',
+        'http://172.20.10.4:3000/api/auth/signup',
         'POST', 
         { 'Content-Type': 'application/json' }, 
         userInfo
@@ -43,10 +40,17 @@ const SignUpForm = () => {
         console.log('Response from server:', data);
         resetForm();
       } else {
-        console.error('Error:', error);
+        if (error && error.message === "Signup failed: Account already exists") {
+          // Show an alert to the user if the account already exists
+          alert("Account already exists.");
+        } else {
+          console.error('Error:', error);
+        }
       }
     } catch (error) {
       console.error('Error:', error);
+      Alert.alert('Error', 'An error occurred. Please try again later.');
+
     }
   };
   
