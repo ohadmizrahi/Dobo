@@ -7,13 +7,11 @@ from pathlib import Path
 sys.path.append(str(Path(__file__).parent.parent))
 
 from api.agent import AgentManager
+from scheduler import scheduler
+
 
 router = APIRouter()
-agent_manager = AgentManager()
-
-@router.on_event("startup")
-async def startup_event():
-    agent_manager.cleanning = asyncio.create_task(agent_manager.cleanup())
+agent_manager = AgentManager(scheduler)
 
 @router.on_event("shutdown")
 async def shutdown_event():
