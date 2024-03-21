@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
         color: '#333',
       },
       menuButton: {
-        marginTop: 10,
+        color: "black",
         // Customize button styles as needed (consider rounded corners, background color)
       },
     });
