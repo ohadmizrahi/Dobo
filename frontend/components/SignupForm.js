@@ -30,7 +30,7 @@ const SignUpForm = () => {
 
     try {
       const { data, error } = await fetchAPI( 
-        'http://172.20.10.4:3000/api/auth/signup',
+        'http://10.100.102.51:3000/api/auth/signup',
         'POST', 
         { 'Content-Type': 'application/json' }, 
         userInfo
