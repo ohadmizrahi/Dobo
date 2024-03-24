@@ -20,7 +20,6 @@ export default function BusinessInfoScreen({ navigation }) {
 
 return (
   <View style={globalStyles.screenColor}>
-    <Text>BusinessInfo</Text>
     <BusinessCard businessCard={businessCardData} /> 
     <Businessinformation navigation={navigation} business={businessData} />
   </View>

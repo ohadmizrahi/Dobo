@@ -3,12 +3,8 @@ import { SafeAreaView, StyleSheet, View, Text, Button } from 'react-native';
 import { Formik, Field } from 'formik';
 import CustomInput from './CustomInput';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import LoadingIcon from './LoadingIcon';
-const Form = ({ initialValues, validationSchema, onSubmit, fields, error, isLoading }) => {
-  if (isLoading) {
-    return <LoadingIcon />;
-  }
 
+const Form = ({ initialValues, validationSchema, onSubmit, fields, error, submitTitle }) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.signupContainer}>
@@ -34,7 +30,7 @@ const Form = ({ initialValues, validationSchema, onSubmit, fields, error, isLoad
               ))}
               <Button
                 onPress={handleSubmit}
-                title={fields.submitTitle || 'Submit'}
+                title={submitTitle || 'Submit'} // If fields.submitTitle is not defined, 'Submit' will be used as the title
                 disabled={!isValid}
               />
               {error && <Text style={styles.error}>{error}</Text>}
@@ -77,5 +73,4 @@ const styles = StyleSheet.create({
     marginTop: 10,
     textAlign: 'center',
   },
-
 });
