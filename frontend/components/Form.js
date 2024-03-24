@@ -4,7 +4,7 @@ import { Formik, Field } from 'formik';
 import CustomInput from './CustomInput';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-const Form = ({ initialValues, validationSchema, onSubmit, fields, error }) => {
+const Form = ({ initialValues, validationSchema, onSubmit, fields, error, submitTitle }) => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.signupContainer}>
@@ -30,7 +30,7 @@ const Form = ({ initialValues, validationSchema, onSubmit, fields, error }) => {
               ))}
               <Button
                 onPress={handleSubmit}
-                title={fields.submitTitle || 'Submit'} // If fields.submitTitle is not defined, 'Submit' will be used as the title
+                title={submitTitle || 'Submit'} // If fields.submitTitle is not defined, 'Submit' will be used as the title
                 disabled={!isValid}
               />
               {error && <Text style={styles.error}>{error}</Text>}

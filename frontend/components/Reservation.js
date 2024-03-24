@@ -17,7 +17,7 @@ const TableReservationForm = () => {
       validationSchema={TableReservationFormSchema}
       onSubmit={(values) => console.log(values)}
       fields={fields}
-      submitTitle="SEND RESERVATION" // This is a string
+      submitTitle= "SEND RESERVATION" // This is a string
     />
       );
   };
