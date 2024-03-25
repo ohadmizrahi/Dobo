@@ -1,9 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { signUpValidationSchema } from '../schemas/signupSchema';
 import Form from './Form';
 import { fetchAPI } from '../util/fetch';
+import { useNavigation } from '@react-navigation/native';
+import {API_URL} from '@env'; 
 
 const SignUpForm = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const navigation = useNavigation();
+
   const fields = [
     { name: 'fullName', label: 'Full Name', iconName: 'user', placeholder: 'Enter full name' },
     { name: 'email', label: 'Email', iconName: 'envelope', placeholder: 'Enter email', keyboardType: 'email-address' },
@@ -14,7 +19,9 @@ const SignUpForm = () => {
     { name: 'confirmPassword', label: 'Confirm Password', iconName: 'lock', placeholder: 'Confirm password', secureTextEntry: true },
   ];
 
-  const onSubmit = async (values, { resetForm }) => {
+  const onSubmit = async (values) => {
+    setIsLoading(true);
+
     const userInfo = {
       name: values.fullName,
       email: values.email,
@@ -28,27 +35,32 @@ const SignUpForm = () => {
     const formattedDate = `${year}-${month}-${day}`;
     userInfo["birthday"] = formattedDate;
 
+
     try {
       const { data, error } = await fetchAPI( 
-        'http://172.20.10.4:3000/api/auth/signup',
+       `${API_URL}/api/auth/signup`,
         'POST', 
         { 'Content-Type': 'application/json' }, 
         userInfo
       );
 
+      setIsLoading(false);
+
       if (data) {
         console.log('Response from server:', data);
-        resetForm();
-      } else {
+        navigation.navigate('Home');
+      }
+       else {
         if (error && error.message === "Signup failed: Account already exists") {
-          // Show an alert to the user if the account already exists
           alert("Account already exists.");
-        } else {
-          console.error('Error:', error);
+        }
+         else {
+          Alert.alert('Error', 'An error occurred. Please try again later.');
         }
       }
-    } catch (error) {
-      console.error('Error:', error);
+    }
+     catch (error) {
+      setIsLoading(false);
       Alert.alert('Error', 'An error occurred. Please try again later.');
 
     }
@@ -61,6 +73,7 @@ const SignUpForm = () => {
       onSubmit={onSubmit}
       fields={fields}
       submitTitle="SIGN UP"
+      isLoading={isLoading}
     />
   );
 };
