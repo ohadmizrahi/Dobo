@@ -4,6 +4,7 @@ import { signinValidationSchema } from '../schemas/signupSchema';
 import Form from './Form';
 import { fetchAPI } from '../util/fetch';
 import { useNavigation } from '@react-navigation/native';
+import {API_URL} from '@env'; 
 
 const SignInForm = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -20,7 +21,7 @@ const SignInForm = () => {
     try {
       const { data } = await Promise.race([
         fetchAPI(
-          'http://10.100.102.51:3000/api/auth/signin',
+          `${API_URL}/api/auth/signin`,
           'POST',
           { 'Content-Type': 'application/json' },
           { username: values.email, password: values.password }

@@ -3,6 +3,7 @@ import { signUpValidationSchema } from '../schemas/signupSchema';
 import Form from './Form';
 import { fetchAPI } from '../util/fetch';
 import { useNavigation } from '@react-navigation/native';
+import {API_URL} from '@env'; 
 
 const SignUpForm = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -37,7 +38,7 @@ const SignUpForm = () => {
 
     try {
       const { data, error } = await fetchAPI( 
-        'http://10.100.102.51:3000/api/auth/signup',
+       `${API_URL}/api/auth/signup`,
         'POST', 
         { 'Content-Type': 'application/json' }, 
         userInfo
