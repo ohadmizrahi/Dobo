@@ -1,1 +1,0 @@
-// scan the qr code and get the data - Or's code
