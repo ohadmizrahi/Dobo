@@ -6,6 +6,7 @@ import ProfilePicture from  '../components/ProfilePic';
 import { globalStyles } from '../globalStyles';
 import DontHaveAccount from '../components/NewAccount';
 import SigninForm from '../components/SigninForm';
+import LineAcross from '../components/LineAcross';
 
 export default function SignInScreen({ navigation }) {
   return (
@@ -14,8 +15,8 @@ export default function SignInScreen({ navigation }) {
       <ProfilePicture />
       <SigninForm />
       <DontHaveAccount navigation={navigation}/>
+      <LineAcross text='OR' />
       <SocialSignIn />
-      
     </ScrollView>
   );
 }

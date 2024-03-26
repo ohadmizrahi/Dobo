@@ -174,5 +174,21 @@ export const globalStyles = StyleSheet.create({
         width: '90%',
         height: 40,
     },
+    divider: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginVertical: 20,
+      },
+      line: {
+        flex: 1,
+        height: StyleSheet.hairlineWidth,
+        backgroundColor: 'white',
+      },
+      lineText: {
+        marginHorizontal: 20,
+        fontWeight: 'bold',
+        color: 'white',
+      },
 
 });
