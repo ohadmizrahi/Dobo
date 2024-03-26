@@ -12,8 +12,40 @@ export default function ConnectedFriends({ navigation }) {
             name: 'Jane Doe',
             phoneNumber: '098-765-4321',
         },
+        {
+            name: 'Alice Smith',
+            phoneNumber: '111-222-3333',
+        },
+        {
+            name: 'Bob Johnson',
+            phoneNumber: '444-555-6666',
+        },
+        {
+            name: 'Emily Brown',
+            phoneNumber: '777-888-9999',
+        },
+        {
+            name: 'Michael Wilson',
+            phoneNumber: '101-202-3030',
+        },
+        {
+            name: 'Emma Taylor',
+            phoneNumber: '404-505-6060',
+        },
+        {
+            name: 'David Martinez',
+            phoneNumber: '707-808-9090',
+        },
+        {
+            name: 'Olivia Lopez',
+            phoneNumber: '121-212-2323',
+        },
+        {
+            name: 'James Anderson',
+            phoneNumber: '545-646-7474',
+        },
     ];
-
+    
     return (
         <View style={styles.container}>
         <View style={[styles.formHeadLine,styles.shadowBottom]}>
@@ -46,11 +78,13 @@ const styles = StyleSheet.create({
         width: '95%',
         alignSelf: 'center',
         paddingVertical: 20,
+        
     },
     friendContainer: {
         flexDirection: 'row',
         alignItems: 'center',
         marginBottom: 10,
+        width: 200, // Add a fixed width for the container holding the icons
     },
     textStyles: {
         fontSize: 20,
