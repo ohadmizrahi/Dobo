@@ -170,7 +170,7 @@ export const globalStyles = StyleSheet.create({
         margin: 5,
         backgroundColor: '#FFFFFF',
         borderRadius: 100,
-        width: '80%',
+        width: '90%',
         height: 40,
     },
 
