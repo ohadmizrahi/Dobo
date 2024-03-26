@@ -133,9 +133,10 @@ export const globalStyles = StyleSheet.create({
     },
     Logoutcontainer: {
         width: '80%',
-        borderRadius: 10,
+        borderRadius: 20,
         alignSelf: 'center',
         marginBottom:'10%',
+        backgroundColor : '#DA2121',
       },
     shadowBottom: {
         shadowColor: '#000',
@@ -170,8 +171,24 @@ export const globalStyles = StyleSheet.create({
         margin: 5,
         backgroundColor: '#FFFFFF',
         borderRadius: 100,
-        width: '80%',
+        width: '90%',
         height: 40,
     },
+    divider: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginVertical: 20,
+      },
+      line: {
+        flex: 1,
+        height: StyleSheet.hairlineWidth,
+        backgroundColor: 'white',
+      },
+      lineText: {
+        marginHorizontal: 20,
+        fontWeight: 'bold',
+        color: 'white',
+      },
 
 });
