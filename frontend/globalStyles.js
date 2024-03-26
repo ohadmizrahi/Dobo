@@ -133,9 +133,10 @@ export const globalStyles = StyleSheet.create({
     },
     Logoutcontainer: {
         width: '80%',
-        borderRadius: 10,
+        borderRadius: 20,
         alignSelf: 'center',
         marginBottom:'10%',
+        backgroundColor : '#DA2121',
       },
     shadowBottom: {
         shadowColor: '#000',
