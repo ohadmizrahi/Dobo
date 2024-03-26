@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, Button } from 'react-native';
+import { View,ScrollView, Text, StyleSheet, Image, Button } from 'react-native';
 import Businessinformation from '../components/BussinesInfo';
 import {globalStyles} from '../globalStyles';
 import BusinessCard from '../components/BussinesHeader';
@@ -19,9 +19,9 @@ export default function BusinessInfoScreen({ navigation }) {
   };
 
 return (
-  <View style={globalStyles.screenColor}>
+  <ScrollView style={globalStyles.screenColor}>
     <BusinessCard businessCard={businessCardData} /> 
     <Businessinformation navigation={navigation} business={businessData} />
-  </View>
+  </ScrollView>
   );
 }

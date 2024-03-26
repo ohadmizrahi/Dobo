@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Button } from 'react-native';
+import { View,ScrollView, Text, Button } from 'react-native';
 import SocialSignIn from '../components/SocialSignIn';
 import LogoImage from '../components/DoboLogo';
 import ProfilePicture from  '../components/ProfilePic';
@@ -10,7 +10,7 @@ import SigninForm from '../components/SigninForm';
 
 export default function SignInScreen({ navigation }) {
   return (
-    <View style= {globalStyles.screenColor}>
+    <ScrollView style= {globalStyles.screenColor}>
       <LogoImage />
       <ProfilePicture />
       <FormHeadLine formName='Sign In' />
@@ -18,6 +18,6 @@ export default function SignInScreen({ navigation }) {
       <SocialSignIn />
       <DontHaveAccount navigation={navigation}/>
       
-    </View>
+    </ScrollView>
   );
 }

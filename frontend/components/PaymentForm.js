@@ -17,6 +17,7 @@ const PaymentForm = () => {
       onSubmit={(values) => console.log(values)}
       fields={fields}
       submitTitle="Pay Now"
+      formName="Payment"
     />
   );
 };

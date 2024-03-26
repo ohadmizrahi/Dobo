@@ -1,10 +1,10 @@
 import React from 'react';
-import { View, Text, Button } from 'react-native';
+import { View,ScrollView, Text, Button } from 'react-native';
 // import Header from '../components/Header'; 
 
 export default function HomeScreen({ navigation }) {
   return (
-    <View>
+    <ScrollView>
       <Text>Home</Text>
       <Button title="Go to Item" onPress={() => navigation.navigate('Item')} />
       <Button title="Go to BusinessInfo" onPress={() => navigation.navigate('BusinessInfo')} />
@@ -19,6 +19,6 @@ export default function HomeScreen({ navigation }) {
       <Button title="Go to TableReservation" onPress={() => navigation.navigate('TableReservation')} />
       <Button title="Go to TableStatus" onPress={() => navigation.navigate('TableStatus')} />
       <Button title="Go to QRScanner" onPress={() => navigation.navigate('QRScanner')} />
-    </View>
+    </ScrollView>
   );
 }

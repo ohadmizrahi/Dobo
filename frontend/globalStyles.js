@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Platform } from "react-native";
 
 const backgroundColor = "#3D3D3D";
 const mainColor = "#97DECC";
@@ -9,10 +9,10 @@ export const globalStyles = StyleSheet.create({
         backgroundColor: backgroundColor,
     },
     image: {
-        width: 200,
-        height: 80,
+        width: 350,
+        height: 120,
         alignSelf: 'center',
-    },
+    },  
     icons: {
         fontSize: 40,
         color: mainColor,
@@ -67,14 +67,58 @@ export const globalStyles = StyleSheet.create({
         opacity: 1,
     },
     profilePictureContainer: {
-        width: 80,
-        height: 80,
-        borderRadius: 40,
+        width: 400,
+        height: 140,
+        borderRadius: 70,
         alignItems: 'center',
         justifyContent: 'center',
-        marginLeft: 140,
-        color: 'white',
+        alignSelf: 'center',
+        color: '#FFFFFF',
+        backgroundColor: '#FFFFFF',
+        borderWidth: 5,
+        borderColor: '#EFEFEF',
+        marginTop: 40,
     },
+    iconContainer: {
+        width: 100,
+        height: 100,
+        borderRadius: 50,
+        backgroundColor: mainColor,
+        alignItems: 'center',
+        alignSelf: 'center',
+        justifyContent: 'center',
+        position: 'absolute',
+        borderColor: '#EFEFEF',
+        borderWidth: 5,
+        top: -50,
+        ...Platform.select({
+            ios: {
+                shadowColor: '#000',
+                shadowOffset: { width: 0, height: 2 },
+                shadowOpacity: 0.5,
+                shadowRadius: 2,
+            },
+            android: {
+                elevation: 5,
+            },
+        }),
+    },
+    plusIcon:{
+        position: 'absolute',
+        top: 65,
+        right: 0,
+    },
+    nameText: {
+        fontSize: 30,
+        color: '#000',
+        marginTop: 50,
+
+    },
+    setupText: {
+        fontSize: 15,
+        color: '#000',
+    },
+    
     profilePictureText: {
         fontSize: 24,
         color: '#000',
@@ -118,4 +162,16 @@ export const globalStyles = StyleSheet.create({
         marginBottom: 10,
         textAlign: 'center',
     },
+    socialSignInContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        alignSelf: 'center',
+        margin: 5,
+        backgroundColor: '#FFFFFF',
+        borderRadius: 100,
+        width: '80%',
+        height: 40,
+    },
+
 });

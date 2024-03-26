@@ -1,10 +1,10 @@
 import React from 'react';
-import { View, Text, Button } from 'react-native';
+import { View,ScrollView, Text, Button } from 'react-native';
 
 export default function JoinTableScreen({ navigation }) {
   return (
-    <View>
+    <ScrollView>
       <Text>JoinTable</Text>
-    </View>
+    </ScrollView>
   );
 }

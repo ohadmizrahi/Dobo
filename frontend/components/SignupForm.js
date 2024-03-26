@@ -74,8 +74,10 @@ const SignUpForm = () => {
       fields={fields}
       submitTitle="SIGN UP"
       isLoading={isLoading}
+      formName="Account"
     />
   );
 };
 
 export default SignUpForm;
+
