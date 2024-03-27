@@ -61,6 +61,7 @@ const SignInForm = () => {
       fields={fields}
       submitTitle="SIGN IN"
       isLoading={isLoading}
+      formName="Sign In"
     />
   );
 };

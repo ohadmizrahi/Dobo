@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Button } from 'react-native';
+import { View,ScrollView, Text, Button } from 'react-native';
 import HomeLogo from '../components/HomeLogo';
 import ProfileLogo from '../components/ProfileLogo';
 import {globalStyles} from '../globalStyles';
@@ -12,5 +12,9 @@ export default function ItamScreen({navigation}) {
     <View style={globalStyles.screenColor} >
       {/* <Bell navigation={navigation}/> */}
     </View>
+    <ScrollView style={globalStyles.screenColor} >
+      <Bell navigation={navigation}/>
+      <SignUp />
+    </ScrollView>
   );
 }

@@ -1,22 +1,22 @@
 import React from 'react';
-import { View, Text, Button } from 'react-native';
+import { View,ScrollView, Text, Button } from 'react-native';
 import LogoutButton from '../components/LogOut';
 import { globalStyles } from '../globalStyles';
-import SignUpForm from '../components/SignupForm';
+import ProfilePicture from '../components/ProfilePic';
+import DoboLogo from '../components/DoboLogo';
+import AccountInfoForm from '../components/AccountInfoForm';
+import PasswordForm from '../components/PasswordForm';
 import PaymentForm from '../components/PaymentForm';
-import { ScrollView } from 'react-native-gesture-handler';
-
 
 export default function ProfileScreen({ navigation }) {
   return (
-    <View style={globalStyles.screenColor}>
-      <ScrollView>
-      <Text>Profile</Text>
-      <SignUpForm />
+    <ScrollView style={globalStyles.screenColor}>
+      <DoboLogo />
+      <ProfilePicture />
+      <AccountInfoForm />
+      <PasswordForm />
       <PaymentForm />
-      {/* reset password button */}
       <LogoutButton navigation={navigation} />
-      </ScrollView>
-    </View>
+    </ScrollView>
   );
 }
