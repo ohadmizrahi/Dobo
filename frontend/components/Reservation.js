@@ -1,7 +1,5 @@
 import React from 'react';
-// import { StyleSheet, View, Text, TextInput, Button } from 'react-native';
-// import { Formik } from 'formik';
-// import { Picker } from '@react-native-picker/picker';
+import { TableReservationFormSchema } from '../schemas/reservationSchema';
 import Form from './Form';
 
 const TableReservationForm = () => {
@@ -11,23 +9,17 @@ const TableReservationForm = () => {
     {name: 'hour', label: 'Hour', iconName: 'clock-o', placeholder: 'Reservation Hour', Keyboardtype: 'time'},
     {name: 'preference',iconName: 'gear', label: 'Preference (optional)', placeholder: 'Preference'},
     {name: 'specialRequest',iconName: 'gear', label: 'SpecialRequest (optional)', placeholder: 'Special Request'},
-  ]
-  const initialValues = {
-    date: '',
-    tableSize: '',
-    hour: '',
-    preference: '',
-    specialRequest: '',
-  };
-
-  const onSubmit = (values) => {
-    console.log('Reservation submitted:', values);
-    // Handle form submission here (e.g., send data to server)
-  };
+  ];
 
   return (
-    <Form initialValues={initialValues} onSubmit={onSubmit} fields={fields} submitsubmitTitle = 'Send Reservation' />
-  );
-};
+    <Form
+      initialValues={{date: '',tableSize: '',hour: '',preference: '',specialRequest: '' }}
+      validationSchema={TableReservationFormSchema}
+      onSubmit={(values) => console.log(values)}
+      fields={fields}
+      submitTitle= "SEND RESERVATION" // This is a string
+    />
+      );
+  };
 
 export default TableReservationForm;

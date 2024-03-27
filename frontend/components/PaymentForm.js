@@ -16,7 +16,8 @@ const PaymentForm = () => {
       validationSchema={paymentValidationSchema}
       onSubmit={(values) => console.log(values)}
       fields={fields}
-      submitTitle="Pay"
+      submitTitle="Pay Now"
+      formName="Payment"
     />
   );
 };

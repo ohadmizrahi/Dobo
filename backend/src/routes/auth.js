@@ -93,4 +93,6 @@ router.get("/api/auth/token/reset-password", authenticateUserToken, (req, res) =
         res.status(500).json({ error: 'An error occurred during token creation.' });
     }
 });
+
 module.exports = router;
+

@@ -11,7 +11,7 @@ export default function Businessinformation({business, navigation}){
         <Text style={styles.rating}>Rating: {rating} stars</Text>
         <Text style={styles.description}>{description}</Text>
         <Text style={styles.openingHours}>Opening Hours: {openingHours}</Text>
-        <Button title="View Menu" onPress={() => { navigation.navigate('Order')}} />
+        <Button title="View Menu" onPress={() => { navigation.navigate('Menu')}} />
       </View>
       <View>
         <Button title='find place' onPress={()=>{ navigation.navigate('JoinTable')}}></Button>
@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
         color: '#333',
       },
       menuButton: {
-        marginTop: 10,
+        color: "black",
         // Customize button styles as needed (consider rounded corners, background color)
       },
     });
