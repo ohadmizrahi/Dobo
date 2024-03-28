@@ -5,9 +5,9 @@ import BusinessCard from '../components/BussinesHeader';
 
 export default function MenuScreen({ navigation }) {
   return (
-    <ScrollView>
+    <View>
       {/* <PaymentForm /> */}
       <Menu />
-    </ScrollView>
+    </View>
   );
 }

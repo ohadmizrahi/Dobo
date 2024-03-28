@@ -6,8 +6,7 @@ import ProfilePicture from '../components/ProfilePic';
 import DoboLogo from '../components/DoboLogo';
 import AccountInfoForm from '../components/AccountInfoForm';
 import PasswordForm from '../components/PasswordForm';
-import PaymentForm from '../components/PaymentForm';
-
+import PaymentDetails from '../components/PaymentDetails';
 export default function ProfileScreen({ navigation }) {
   return (
     <ScrollView style={globalStyles.screenColor}>
@@ -15,7 +14,7 @@ export default function ProfileScreen({ navigation }) {
       <ProfilePicture />
       <AccountInfoForm />
       <PasswordForm />
-      <PaymentForm />
+      <PaymentDetails />
       <LogoutButton navigation={navigation} />
     </ScrollView>
   );

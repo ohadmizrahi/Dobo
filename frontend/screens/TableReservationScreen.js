@@ -5,7 +5,7 @@ import {globalstyles} from '../globalStyles';
 import BusinessCard from '../components/BussinesHeader';
 
 
-export default function TableReservationScreen({ navigation}) {
+export default function TableReservationScreen({ navigation},{BusinessID}) {
   return (
     <ScrollView>
       <Text>TableReservation</Text>

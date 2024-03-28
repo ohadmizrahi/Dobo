@@ -4,10 +4,18 @@ import { Places } from '../components/Places';
 import Menu from '../components/Menu';
 export default function OrderScreen({ navigation }) {
   return (
-    <ScrollView>
+    <View style={styles.container}>
       <Text>Order</Text>
       <Menu navigation={navigation} />
       <Places />
-    </ScrollView>
+    </View>
   );
 }
+
+const styles = StyleSheet.create({
+    container: {
+    flex: 1,
+    alignItems: 'center',
+    
+  },
+});
