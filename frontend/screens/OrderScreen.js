@@ -1,20 +1,13 @@
 import React from 'react';
-import { View,ScrollView, Text, StyleSheet } from 'react-native';
+import { View ,ScrollView, Text, StyleSheet } from 'react-native';
 import { Places } from '../components/Places';
-
+import Menu from '../components/Menu';
 export default function OrderScreen({ navigation }) {
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView>
       <Text>Order</Text>
+      <Menu navigation={navigation} />
       <Places />
     </ScrollView>
   );
 }
-
-const styles = StyleSheet.create({
-    container: {
-    flex: 1,
-    alignItems: 'center',
-    
-  },
-});
