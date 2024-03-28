@@ -6,6 +6,12 @@ const PasswordForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const navigation = useNavigation();
 
+  const [password, setPassword] = useState('123456Or!');
+
+  const updatePassword = (password) => {
+    setPassword(password);
+  };
+
   const fields = [
     { name: 'password', label: 'Password', iconName: 'lock', placeholder: 'Enter password', secureTextEntry: true },
   ];
@@ -17,7 +23,7 @@ const PasswordForm = () => {
 
   return (
     <Form
-      initialValues={{ email: '', password: '' }}
+      initialValues={password ? { password } : {}}
       onSubmit={onSubmit}
       fields={fields}
       submitTitle="Reset"

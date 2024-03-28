@@ -40,7 +40,6 @@ const CustomButton = ({ title, onPress }) => {
 const styles = StyleSheet.create({
     bellContainer1: {
         position: 'absolute',
-        bottom: 50,
         right: 30,
     },
     bellContainer: {
