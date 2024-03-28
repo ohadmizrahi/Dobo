@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     borderRadius: 90,
     alignSelf: "center",
     marginTop: 25,
-
+    marginBottom: 10,
   },
   text: {
     fontSize: 40,
