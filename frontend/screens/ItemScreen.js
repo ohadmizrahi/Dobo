@@ -1,17 +1,12 @@
 import React from 'react';
 import { View,ScrollView, Text, Button } from 'react-native';
-import HomeLogo from '../components/HomeLogo';
-import ProfileLogo from '../components/ProfileLogo';
 import {globalStyles} from '../globalStyles';
-import Bell from '../components/Bell';
-import SignUp from '../components/SignupForm';
-
-
+import NoPaymentDetails from '../components/PaymentDetails';
+import PaymentForm from '../components/PaymentForm';
 export default function ItamScreen({navigation}) {   
   return (
     <ScrollView style={globalStyles.screenColor} >
-      <Bell navigation={navigation}/>
-      <SignUp />
+      <NoPaymentDetails />
     </ScrollView>
   );
 }

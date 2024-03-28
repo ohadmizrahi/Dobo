@@ -7,7 +7,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 const Form = ({ initialValues, validationSchema, onSubmit, fields, error, submitTitle,formName }) => {
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.signupContainer}>
+      <View style={styles.detailsContainer}>
         <View style={[styles.formHeadLine,styles.shadowBottom]}>
           <Text style={styles.formHeadLineText}>{formName}</Text>
         </View>
@@ -33,12 +33,11 @@ const Form = ({ initialValues, validationSchema, onSubmit, fields, error, submit
               ))}
               <View style={styles.confirmBotton}>
               <TouchableOpacity
-  onPress={handleSubmit}
-  style={styles.confirmButton}
-  disabled={!isValid}
->
-  <Text style={styles.confirmButtonText}>{submitTitle || 'Submit'}</Text>
-</TouchableOpacity>
+                  onPress={handleSubmit}
+                  style={styles.confirmButton}
+                  disabled={!isValid}>
+                  <Text style={styles.confirmButtonText}>{submitTitle || 'Submit'}</Text>
+              </TouchableOpacity>
               </View>
               {error && <Text style={styles.error}>{error}</Text>}
             </>
@@ -57,7 +56,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 25,
   },
-  signupContainer: {
+  detailsContainer: {
     backgroundColor: '#FFFFFF',
     borderRadius: 100,
     borderWidth: 5,

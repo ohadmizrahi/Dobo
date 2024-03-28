@@ -4,10 +4,10 @@ import { Places } from '../components/Places';
 
 export default function OrderScreen({ navigation }) {
   return (
-    <ScrollView style={styles.container}>
+    <View style={styles.container}>
       <Text>Order</Text>
       <Places />
-    </ScrollView>
+    </View>
   );
 }
 
