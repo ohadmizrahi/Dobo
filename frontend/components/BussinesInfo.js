@@ -14,7 +14,7 @@ export default function Businessinformation({business, navigation}){
         <Button title="View Menu" onPress={() => { navigation.navigate('Menu')}} />
       </View>
       <View>
-        <Button title='find place' onPress={()=>{ navigation.navigate('JoinTable')}}></Button>
+        <Button title='find place' color={'black'} onPress={()=>{ navigation.navigate('JoinTable')}}></Button>
       </View>
     </View>
   );

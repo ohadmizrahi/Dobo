@@ -1,6 +1,5 @@
 import React from 'react';
 import { View,ScrollView, Text, Button } from 'react-native';
-import PaymentForm from '../components/PaymentForm';
 import Menu from '../components/Menu';
 import BusinessCard from '../components/BussinesHeader';
 

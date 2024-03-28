@@ -6,7 +6,7 @@ import { globalStyles } from '../globalStyles';
 export default function LogoutButton ({ navigation }){
   return (
     <View style={globalStyles.Logoutcontainer}>
-      <Button title="Logout" color= "#FFFFFF" 
+      <Button title="Logout" color= "red" 
         onPress={() => { navigation.navigate('SignIn')}} />
     </View>
   );
