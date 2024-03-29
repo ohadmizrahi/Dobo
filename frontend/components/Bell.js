@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Animated } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { globalStyles } from '../globalStyles';
 
@@ -40,7 +40,6 @@ const CustomButton = ({ title, onPress }) => {
 const styles = StyleSheet.create({
     bellContainer1: {
         position: 'absolute',
-        bottom: 50,
         right: 30,
     },
     bellContainer: {

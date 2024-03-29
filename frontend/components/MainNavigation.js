@@ -15,6 +15,7 @@ import SignInScreen from '../screens/SignInScreen';
 import SignUpScreen from '../screens/SignUpScreen';
 import TableReservationScreen from '../screens/TableReservationScreen';
 import TableStatusScreen from '../screens/TableStatusScreen';
+import ScanQRScreen from '../screens/ScanQRScreen';
 
 const Stack = createStackNavigator();
 
@@ -49,6 +50,7 @@ export default function MainNavigation() {
         <Stack.Screen name="SignUp" component={SignUpScreen} />
         <Stack.Screen name="TableReservation" component={TableReservationScreen} />
         <Stack.Screen name="TableStatus" component={TableStatusScreen} />
+        <Stack.Screen name='QRScanner' component={ScanQRScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

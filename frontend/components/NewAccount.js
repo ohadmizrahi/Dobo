@@ -14,14 +14,22 @@ const DontHaveAccount = ({ navigation }) => (
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row', // Arrange text and link horizontally
-    alignItems: 'center', // Align text and link vertically
-  },
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: "#97DECC",
+    alignSelf: 'center',
+    borderRadius: 50,
+    width: '80%',
+    height: 30,
+    margin: 20,
+
+   },
   text: {
     fontSize: 16,
   },
   link: {
-    color: '#0000EE', // Change to your desired link color
+    color: '#0000EE',
     fontWeight: 'bold',
   },
 });

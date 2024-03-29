@@ -2,7 +2,7 @@ import React from 'react';
 import { TableReservationFormSchema } from '../schemas/reservationSchema';
 import Form from './Form';
 
-const TableReservationForm = () => {
+const TableReservationForm = ({BusinessName}) => {
   const fields = [
     {name: 'date', label: 'Pick date', iconName: 'calendar', placeholder: 'Reservation Date', Keyboardtype: 'date'},
     {name: 'tableSize', label: 'TableSize', iconName: 'user', placeholder: 'Number Of Pepole'},
@@ -17,7 +17,8 @@ const TableReservationForm = () => {
       validationSchema={TableReservationFormSchema}
       onSubmit={(values) => console.log(values)}
       fields={fields}
-      submitTitle="SEND RESERVATION" // This is a string
+      submitTitle= "SEND RESERVATION" // This is a string
+      formName={BusinessName}
     />
       );
   };

@@ -1,10 +1,15 @@
 import React from 'react';
-import { View, Text, Button } from 'react-native';
+import { ScrollView } from 'react-native';
+import InvoiceComponent from '../components/ItemPayment';
+import YourAccountButton from '../components/YourAccountButton';
+import PaymentForm from '../components/PaymentForm';
 
 export default function PayScreen({ navigation }) {
   return (
-    <View>
-      <Text>Pay</Text>
-    </View>
+    <ScrollView>
+      <InvoiceComponent />
+      <YourAccountButton />
+      <PaymentForm />
+    </ScrollView>
   );
 }
