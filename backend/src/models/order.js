@@ -23,16 +23,16 @@ async function findMany(virtualTableId) {
 }
 
 async function create(orderData) {
-    const { itemId, virtualTable, payers, status } = orderData;
+    const { itemId, virtualTable } = orderData;
     try {
         const query = `
-            INSERT INTO orders (itemId, virtualTable, payers, status)
-            VALUES ($1, $2, $3, $4)
-            RETURNING *;
+            INSERT INTO orders (itemId, virtualTable)
+            VALUES ($1, $2)
+            RETURNING orderId;
         `;
-        const values = [itemId, virtualTable, payers, status];
+        const values = [itemId, virtualTable];
         const res = await pool.query(query, values)
-        const order = res.rows[0];
+        const order = res.rows[0].orderid;
         return { success: true, order, message: "Order created"}
     } 
     catch (error) {

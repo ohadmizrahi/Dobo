@@ -5,8 +5,28 @@ const { openOrJoinVirtualTable, getVirtualTableInfo, closeVirtualTable } = requi
 const { payCheck, recalculateCheck, handleCalculateCheck } = require("@src/api/table/checkout.js");
 const { generateClientToken } = require("@src/api/auth/token.js");
 const { getMenu } = require("@src/api/menu/item.js");
+const { handleNewOrders, sendToProducer } = require("@src/api/table/order.js");
 
 const router = Router();
+
+
+router.post("/api/table/order", async (req, res) => {
+    const { virtualtable } = req.client;
+    const { orders } = req.body;
+    try {
+        const response = await handleNewOrders(virtualtable, orders);
+        if (response.success) {
+            await sendToProducer( virtualtable, orders);
+            res.status(200).json({ success: true, message: "Order sent to producer", virtualTable: response.virtualTable });
+        } else {
+            res.status(400).json({ success: false, message: response.message });
+        }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'An error occurred during sending order to producer.' });
+    }
+});
+
 
 router.use(authenticateUserToken);
 
@@ -130,5 +150,8 @@ router.post("/api/table/close", async (req, res) => {
         res.status(500).json({ error: 'An error occurred during closing virtual table.' });
     }
 });
+
+
+
 
 module.exports = router;
