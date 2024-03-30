@@ -60,7 +60,12 @@ async function produce(virtualTable, orders) {
         orders: orderToSend
     }
     
-    channel = await channelPromise;
+    channel = await channelPromise
+    // TODO: Until RabbitMQ is implemented, resolve with null
+    if (!channel) {
+        console.warn('Failed to connect to RabbitMQ server.');
+        return
+    }
 
     const queue = virtualTable;
     const msg = JSON.stringify(payload);
