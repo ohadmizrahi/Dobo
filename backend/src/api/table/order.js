@@ -59,9 +59,9 @@ async function produce(virtualTable, orders) {
         businessid,
         orders: orderToSend
     }
-
-    channel = await channelPromise;
     
+    channel = await channelPromise;
+
     const queue = virtualTable;
     const msg = JSON.stringify(payload);
 

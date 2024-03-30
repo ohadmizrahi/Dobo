@@ -14,7 +14,6 @@ class Producer:
         return await self.channel.declare_queue(queue_id)
 
     async def produce(self, order, queue):
-        print(type(queue))
         print(f"Producing orders to queue {queue.name}")
         try:
             message = Message(body=order.encode())

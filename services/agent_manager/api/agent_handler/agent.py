@@ -1,6 +1,6 @@
 import json
 import time
-from ..queue_handler.table_consumer import Consumer
+from services.agent_manager.api.queue_handler.table_consumer import Consumer
 
 class Agent:
     def __init__(self, broker_conn, queue_id, producer):

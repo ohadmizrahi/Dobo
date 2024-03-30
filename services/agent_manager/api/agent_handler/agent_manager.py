@@ -1,6 +1,8 @@
 import time
 import pytz
-from .agent import Agent
+from services.agent_manager.api.agent_handler.agent import Agent
+from services.agent_manager.config.agent_manager import settings
+from services.agent_manager.consts import INTERVAL
 
 class AgentManager:
     def __init__(self, scheduler, producer):
@@ -21,8 +23,8 @@ class AgentManager:
 
             job = self.scheduler.add_job(
                 func=agent.handle_new_orders,
-                trigger='interval',
-                seconds=20,
+                trigger=INTERVAL,
+                seconds=settings.AGENT_SLEEPING_INTERVAL,
                 timezone=pytz.utc
                 )
             
@@ -42,11 +44,11 @@ class AgentManager:
         else:
             return {"status": "failed", "agent_id": agent_id}
 
-    async def cleanup(self, agent_timeout=100):
+    async def cleanup(self):
         running_agents = (agent for agent in self.agents.values() if agent.job and agent.last_execution)
         agent_to_delete = []
         for agent in running_agents:
-            if time.time() - agent.last_execution > agent_timeout:
+            if time.time() - agent.last_execution > settings.AGENT_TIMEOUT:
                 self.scheduler.remove_job(agent.job.id)
                 await agent.stop()
                 agent_to_delete.append(agent.queue_id)

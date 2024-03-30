@@ -78,7 +78,7 @@ router.post("/api/table/order", authenticateClientToken, async (req, res) => {
             if (handle.success) {
             
                 await produce( virtualtable, orders);
-                res.status(200).json({ success: true, message: "Order added to table queue", virtualTable: process.virtualTable });
+                res.status(200).json({ success: true, message: "Order added to table queue", virtualTable: handle.virtualTable });
         
             } else {
                 

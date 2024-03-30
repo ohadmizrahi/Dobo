@@ -3,7 +3,6 @@ import pytz
 import asyncpg
 
 from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
 from pathlib import Path
 from starlette.responses import JSONResponse
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
@@ -17,6 +16,9 @@ if path.name == 'Dobo':
     sys.path.append(str(path))
 
 from services.agent_manager.config.rabbit_mq import RabbitMQConfig
+from services.agent_manager.config.postgres import PostgresConfig
+from services.agent_manager.config.agent_manager import settings
+from services.agent_manager.consts import INTERVAL
 from services.agent_manager.api.queue_handler.business_producer import Producer
 from services.agent_manager.api.agent_handler.agent_manager import AgentManager
 
@@ -27,53 +29,28 @@ agent_manager = None
 broker_conn = None
 db_conn = None
 
-origins = [
-    "http://localhost:3000",  # Replace with the origin of your frontend
-]
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=origins,
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
 async def agent_manager_service_on_startup():
     print('Starting agent manager service...')
     global agent_manager, broker_conn, db_conn
     scheduler.start()
-    rabbitmq_config = RabbitMQConfig(
-        host='localhost',
-        port=5672,
-        username='guest',
-        password='guest',
-        vhost='/'
-        )
-    broker_conn = await rabbitmq_config.connect()
-    db_conn = await asyncpg.connect(
-        user='postgres',
-        password='190330Nj#',
-        database='postgres',
-        host='dobo.c1a8ya0cgjzv.us-east-1.rds.amazonaws.com'
-    )
+    broker_conn = await RabbitMQConfig().connect()
+    db_conn = await PostgresConfig().connect()
 
     producer = await Producer(broker_conn=broker_conn).setup()
     
     agent_manager = AgentManager(scheduler=scheduler, producer=producer)
     agent_manager.cleanning = scheduler.add_job(
         func=agent_manager.cleanup,
-        args=[1000],
-        trigger='interval',
-        seconds=10,
+        trigger=INTERVAL,
+        seconds=settings.CLEANUP_INTERVAL,
         timezone=pytz.utc
         )
 
     scheduler.add_job(
         func=agent_manager.snapshot_agents,
         args=[db_conn],
-        trigger='interval',
-        minutes=1,
+        trigger=INTERVAL,
+        seconds=settings.SNAPSHOT_INTERVAL,
         timezone=pytz.utc
         )
 
