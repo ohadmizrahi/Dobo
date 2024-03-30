@@ -1,70 +1,95 @@
-const { create: createOrder } = require("@src/models/order.js")
+const channelPromise = require('@be/connections/rabbitmq.js');
+const { create: createOrder, deleteOrder } = require("@src/models/order.js")
 const { splitOrder } = require("@src/models/clientOrders.js")
-const { find: findVirtualTable } = require("@src/models/virtualTable.js")
+const { find: findVirtualTable } = require("@src/models/virtualTables.js")
 
 async function handleNewOrders(virtualTable, orders) {
-    orders.forEach(order => async () => {
+    const promises = orders.map(async order => {
         try {
             const { itemId, clients, price } = order
-            const ceration = await createOrder({ itemId, virtualTable })
-            if (!ceration.success) {
-                return { success: false, message: creating.message }
+            const creation = await createOrder({ itemId, virtualTable })
+            if (!creation.success) {
+                return { success: false, step: 'create', message: creation.message }
             }
 
-            const splitted = splitOrder(ceration.order, clients, price)
+            const splitted = await splitOrder(creation.order, clients, price)
             if (!splitted.success) {
-                return { success: false, message: splitted.message }
+                await deleteOrder(creation.order)
+                return { success: false, step: 'split', message: splitted.message }
             }
+            return { success: true, virtualTable }
 
         } catch (error) {
-            return { success: false, message: error }
+            let step = 'create'
+            if (creation && creation.success) {
+                step = 'split'
+                await deleteOrder(creation.order)
+            }
+            console.error(error);
+            return { success: false, step: step, message: error }
         }
     });
+
+    return Promise.all(promises)
+        .then(results => {
+            const unsuccessful = results.filter(result => !result.success);
+
+            if (unsuccessful.length > 0) {
+                return {
+                    success: false,
+                    numOfUnsuccessfulOrders: unsuccessful.length,
+                    unsuccessfulOrders: unsuccessful,
+                    step: unsuccessful[0].step,
+                    message: unsuccessful[0].message
+                };
+            }
+
+            return { success: true, virtualTable };
+        })
+        .catch(error =>  ({ success: false, message: error }));
 }
 
-async function sendToProducer(virtualTable, orders) {
-    const { tableId, businessId } = findVirtualTable(virtualTable, active=true)
+async function produce(virtualTable, orders) {
+    const virtualTables = await findVirtualTable(virtualTable, active=true)
+    const { tableid, businessid } = virtualTables[0]
+    
     const orderToSend = groupOrdersByItem(orders)
     const payload = {
-        tableId,
-        businessId,
+        tableid,
+        businessid,
         orders: orderToSend
     }
-    fetch(`http://localhost:8001/producer/order`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(payload)
-    }
-    ).then(response => print(`RESPONSE: ${response.json()}`)).catch(error => console.error('Error:', error))
 
+    channel = await channelPromise;
+    
+    const queue = virtualTable;
+    const msg = JSON.stringify(payload);
 
+    channel.assertQueue(
+        queue, { durable: false }
+    );
+
+    channel.sendToQueue(queue, Buffer.from(msg));
 }
 
 function groupOrdersByItem(orders) {
     const ordersMap = orders.reduce((acc, item) => {
         if (!acc[item.itemId]) {
-            // If the item is not in the accumulator, add it with a count of 1
             acc[item.itemId] = {
                 itemId: item.itemId,
                 itemName: item.itemName,
                 count: 1
             };
         } else {
-            // If the item is already in the accumulator, increment its count
             acc[item.itemId].count++;
         }
         return acc;
     }, {});
 
-    // Convert the item map to an array of items
     return Object.values(ordersMap);
 }
 
-
-
 module.exports = {
     handleNewOrders,
-    sendToProducer
+    produce
 }

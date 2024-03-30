@@ -1,4 +1,4 @@
-const pool = require('@be/database/pool.js');
+const pool = require('@be/connections/postgres.js');
 
 async function findAvailableTables(businessId, datetime, numOfPeople) {
     try {
@@ -18,6 +18,7 @@ async function findAvailableTables(businessId, datetime, numOfPeople) {
         const res = await pool.query(query, values);
         return res.rows;
     } catch (error) {
+        console.error(error);
         throw new Error(`Failed to find reservations: ${error}`);
     }
 }
@@ -33,6 +34,7 @@ async function create(accountId, businessId, tableId, datetime, numOfPeople, typ
         const reservation = res.rows[0];
         return { success: true, reservation, message: "Reservation created"}
     } catch (error) {
+        console.error(error);
         throw new Error(`Failed to create reservation: ${error}`);
     }
 }
@@ -65,6 +67,7 @@ async function findMany(fields) {
         const res = await pool.query(query, values);
         return res.rows;
     } catch (error) {
+        console.error(error);
         throw new Error(`Failed to find reservations: ${error}`);
     }
 }

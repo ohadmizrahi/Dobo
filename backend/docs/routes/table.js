@@ -268,6 +268,107 @@
 
 /**
 * @swagger
+* /api/table/order:
+*   post:
+*     summary: Receieve orders for sending to business
+*     description: Receieve orders for sending to business
+*     tags: [Table]
+*     security:
+*       - $ref: '#/components/securitySchemes/bearerAuth'
+*     parameters:
+*       - in: header
+*         name: Authorization
+*         required: true
+*         description: Client JWT Token received after joining table
+*         schema:
+*           type: string
+*           format: JWT
+*         example: Bearer <token>
+*       - in: header
+*         name: clienttoken
+*         required: true
+*         description: Client JWT Token received after join to virtual table
+*         schema:
+*           type: string
+*           format: JWT
+*         example: <token>
+*     requestBody:
+*         required: true
+*         content:
+*             application/json:
+*                 schema:
+*                    type: object
+*                    properties:
+*                       orders:
+*                         type: array
+*                         items:
+*                           properties:
+*                             itemId:
+*                               type: string
+*                             itemName:
+*                               type: string
+*                             clients:
+*                               type: array
+*                               items:
+*                                 type: string
+*                             price:
+*                               type: number
+*     responses:
+*       200:
+*         description: Order added to table queu
+*         content:
+*           application/json:
+*             schema:
+*               type: object
+*               properties:
+*                 success:
+*                   type: boolean
+*                 virtualTable:
+*                   type: string
+*                 message:
+*                   type: string
+*       400:
+*         description: Bad Request
+*         content:
+*           application/json:
+*             schema:
+*               type: object
+*               properties:
+*                 success:
+*                   type: boolean
+*                 message:
+*                   type: string
+*         401:
+*             description: Unauthorized
+*             content:
+*                 application/json:
+*                     schema:
+*                         type: object
+*                         properties:
+*                             message:
+*                                 type: string
+*       403:
+*         description: Client is forbidden
+*         content:
+*           application/json:
+*             schema:
+*               type: object
+*               properties:
+*                 message:
+*                   type: string
+*       500:
+*         description: An error occurred during retrieving client check.
+*         content:
+*           application/json:
+*             schema:
+*               type: object
+*               properties:
+*                 error:
+*                   type: string
+*/
+
+/**
+* @swagger
 * /api/table/check/calculate:
 *   get:
 *     summary: Calculate check for client

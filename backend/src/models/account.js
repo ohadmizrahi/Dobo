@@ -1,4 +1,4 @@
-const pool = require('@be/database/pool.js');
+const pool = require('@be/connections/postgres.js');
 
 async function find(username) {
     const query = `SELECT * FROM accounts WHERE accountId = $1;`;
@@ -7,6 +7,7 @@ async function find(username) {
         const res = await pool.query(query, values);
         return res.rows;
     } catch (error) {
+        console.error(error);
         throw new Error(`Failed to execute query:\n${error}`);
     }
 }
@@ -36,6 +37,7 @@ async function create(username, accountData) {
 
         return { success: true, account, message: "Account created" }
     } catch (error) {
+        console.error(error);
         throw new Error(`Account Creation Failed:\n${error}`);
     }
 }
@@ -80,7 +82,8 @@ async function update(username, fieldsToUpdate, type) {
         
         return { success: true, updatedFields: fieldsToUpdate, message: "Account updated"}
     } catch (error) {
-        throw new Error('Account update failed');
+        console.error(error);
+        throw new Error(`Account update failed\n${error}`);
     }
 }
 

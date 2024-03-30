@@ -1,4 +1,4 @@
-const pool = require('@be/database/pool.js');
+const pool = require('@be/connections/postgres.js');
 
 
 async function getClientOrders(clientId) {
@@ -20,6 +20,7 @@ async function getClientOrders(clientId) {
         const res = await pool.query(query, values);
         return res.rows;
     } catch (error) {
+        console.error(error);
         throw new Error(`Failed to execute query:\n${error}`);
     }
 }
@@ -38,6 +39,7 @@ async function getOrderClients(orderId) {
         const res = await pool.query(query, values);
         return res.rows;
     } catch (error) {
+        console.error(error);
         throw new Error(`Failed to execute query:\n${error}`);
     }
 }
@@ -71,13 +73,15 @@ async function updateOrderClients(orderId, clientId, tableClients, itemPrice) {
             return { success: true, message: "Order split", modifiedClientsCount };
     }
     } catch (error) {
+        console.error(error);
         throw new Error(`Update client Check Failed:\n${error}`);
     }
 }
 
-async function splitOrder(orderId, tableClients, itemPrice) {
+async function splitOrder(orderId, clients, itemPrice) {
+    let dbClient;
     try {
-        const newCost = itemPrice / tableClients.length;
+        const newCost = itemPrice / clients.length;
 
         const dbClient = await pool.connect();
         await dbClient.query('BEGIN');
@@ -88,19 +92,22 @@ async function splitOrder(orderId, tableClients, itemPrice) {
         DO UPDATE SET cost = EXCLUDED.cost;`;
 
         let modifiedClientsCount = 0;
-        for (const client of tableClients) {
-            const values = [client.clientid, orderId, newCost];
+        for (const clientId of clients) {
+            const values = [clientId, orderId, newCost];
             const result = await dbClient.query(query, values);
             modifiedClientsCount += result.rowCount;
         }
-        if (modifiedClientsCount !== tableClients.length) {
+        if (modifiedClientsCount !== clients.length) {
             await dbClient.query('ROLLBACK');
             return { success: false, message: "Order split failed" };
         }
         await dbClient.query('COMMIT');
         return { success: true, message: "Order split", modifiedClientsCount };
     } catch (error) {
-        await dbClient.query('ROLLBACK');
+        if (dbClient) {
+            await dbClient.query('ROLLBACK');
+        }
+        console.error(error);
         throw new Error(`Split Order Failed:\n${error}`);
     }
 }
@@ -120,6 +127,7 @@ async function updateClientOrder(clientId, orderId, paid) {
             return { success: false, message: "Client Order not found" }
         }
     } catch (error) {
+        console.error(error);
         throw new Error(`Failed to execute query:\n${error}`);
     }
 }
@@ -138,6 +146,7 @@ async function deleteClientOrder(clientId, orderId) {
             return { success: false, message: "Client Order not found" }
         }
     } catch (error) {
+        console.error(error);
         throw new Error(`Failed to execute query:\n${error}`);
     }
 }
@@ -146,5 +155,6 @@ module.exports = {
     getClientOrders,
     getOrderClients,
     updateOrderClients,
-    updateClientOrder
+    updateClientOrder,
+    splitOrder
 }
