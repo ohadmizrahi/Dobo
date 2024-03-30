@@ -1,22 +1,15 @@
-from aio_pika import ExchangeType
 import asyncio
 
 class Consumer:
-    def __init__(self, queue_id, exchange_name, connection):
-        self.exchange_name = exchange_name
+    def __init__(self, queue_id, broker_conn):
         self.queue_id = queue_id
-        self.connection = connection
-        self.exchange_type = ExchangeType.DIRECT
+        self.broker_conn = broker_conn
         self.channel = None
         self.queue = None
-        self.exchange = None
-
 
     async def setup(self):
-        self.channel = await self.connection.channel()
-        self.exchange = await self.channel.declare_exchange(self.exchange_name, self.exchange_type)
+        self.channel = await self.broker_conn.channel()
         self.queue = await self.channel.declare_queue(self.queue_id)
-        await self.queue.bind(self.exchange, routing_key=self.queue_id)
         return self
 
     async def consume(self):
@@ -33,3 +26,6 @@ class Consumer:
                 break
 
         return orders
+
+    async def close(self):
+        await self.queue.delete()
