@@ -8,8 +8,8 @@ import ItemView from '../components/Itemview';
 export default function ItamScreen({route, navigation}) {   
   return (
     <ScrollView style={globalStyles.screenColor} >
-      <ItemView navigation={navigation} route={route} />
-      {/* <ItemChanges /> */}
+      {/* <ItemView navigation={navigation} route={route} /> */}
+      <ItemChanges />
     </ScrollView>
   );
 }

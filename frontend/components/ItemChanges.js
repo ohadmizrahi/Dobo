@@ -1,40 +1,12 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Button } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Button, Image } from 'react-native';
+import menu from '../data/menuDate';
+import AddItemBtn from './AddItemBtn';
 
 const ItemChanges = () => {
-  const Burger = {
-    id: 1,
-    name: 'Burger',
-    description: 'A delicious burger',
-    changes: [
-      {
-        cooked: {
-          description: 'Choose how you want your burger cooked',
-          options: ['Rare', 'Medium', 'Medium Well', 'Well Done'],
-        },
-        meatBall: {
-          description: 'Choose the type of meatball',
-          options: ['Beef', 'Chicken', 'Turkey', 'Veggie'],
-        },
-        cheese: {
-          description: 'Choose the type of cheese',
-          options: ['American', 'Swiss', 'Cheddar', 'Provolone'],
-        },
-        size: {
-          description: 'Choose the size of the burger',
-          options: ['100 grams', '200 grams + 5$', '300 grams + 10$'],
-        },
-        veggies: {
-          description: 'Choose the veggies to remove',
-          options: ['Lettuce', 'Tomato', 'Onion', 'Pickles'],
-        },
-        extras: {
-          description: 'Choose extra toppings',
-          options: ['Bacon +2$', 'Avocado +1$', 'Mushrooms +2$', 'Fried Egg +2$'],
-        },
-      },
-    ],
-  };
+
+  const Item = menu[2];
+  const [price, setPrice] = useState(Item.price);
 
   const [selectedOptions, setSelectedOptions] = useState({});
 
@@ -81,22 +53,27 @@ const ItemChanges = () => {
   
   return (
     <View style={styles.container}>
-      <Text style={styles.itemName}>{Burger.name}</Text>
-      <Text style={styles.itemDescription}>{Burger.description}</Text>
-      {Object.entries(Burger.changes[0]).map(([changeType, options]) =>
+      <Image source={{ uri: Item.image }} style={styles.image} />
+      <Text style={styles.itemName}>{Item.name}</Text>
+      <Text style={styles.itemDescription}>{Item.description}</Text>
+      {Object.entries(Item.changes[0]).map(([changeType, options]) =>
         renderChangeOptions(changeType, options)
       )}
+      <AddItemBtn price={price} />
       <Button title="Print Selected Options" onPress={handlePrintSelectedOptions} />
-    </View>
+      </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    padding: 16,
     backgroundColor: '#f0f0f0',
     borderRadius: 8,
     marginBottom: 16,
+  },
+  image: {
+    width: '100%',
+    height: 200,
   },
   itemName: {
     fontSize: 40,
