@@ -15,10 +15,10 @@ const AddItemBtn = ({price}) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "blue",
+    backgroundColor: "#474747",
     padding: 10,
     marginBottom: 30,
-    borderRadius: 5,
+    borderRadius: 50,
   },
   text: {
     color: "white",
