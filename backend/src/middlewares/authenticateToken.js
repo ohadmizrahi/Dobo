@@ -9,7 +9,7 @@ function authenticateUserToken(req, res, next) {
     }
 
     if (token == null) {
-        return res.status(401).json({ message: 'Unauthorized' });
+        return res.status(401).json({ message: 'User Unauthorized' });
     }
 
     try {
@@ -30,7 +30,7 @@ function authenticateResetPasswordToken(req, res, next) {
     }
 
     if (token == null) {
-        return res.status(401).json({ message: 'Unauthorized' });
+        return res.status(401).json({ message: 'Reset Password Unauthorized' });
     }
 
     try {

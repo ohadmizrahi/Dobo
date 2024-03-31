@@ -5,8 +5,10 @@ const { openOrJoinVirtualTable, getVirtualTableInfo, closeVirtualTable } = requi
 const { payCheck, recalculateCheck, handleCalculateCheck } = require("@src/api/table/checkout.js");
 const { generateClientToken } = require("@src/api/auth/token.js");
 const { getMenu } = require("@src/api/menu/item.js");
+const { handleNewOrders, produce } = require("@src/api/table/order.js");
 
 const router = Router();
+
 
 router.use(authenticateUserToken);
 
@@ -68,6 +70,27 @@ router.get("/api/table/auth/refresh", authenticateClientToken, async (req, res) 
     }
 });
 
+router.post("/api/table/order", authenticateClientToken, async (req, res) => {
+    const { virtualtable } = req.client;
+    const { orders } = req.body;
+    try {
+            const handle = await handleNewOrders(virtualtable, orders);
+            if (handle.success) {
+                // DON'T COMMENT IT BACK U DON'T HAVE THE SERVER
+                await produce( virtualtable, orders);
+                res.status(200).json({ success: true, message: "Order added to table queue", virtualTable: handle.virtualTable });
+        
+            } else {
+                
+                res.status(400).json({ success: false, message: handle.message });
+        
+            }
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'An error occurred during producing the order.' });
+    }
+});
+
 router.get("/api/table/check/calculate", authenticateClientToken, async (req, res) => {
     await handleCalculateCheck(req, res);
 });
@@ -119,7 +142,7 @@ router.post("/api/table/close", async (req, res) => {
         if (response.success) {
             res.status(200).json({ success: true, message: "Virtual Table Closed", virtualTable: response.virtualTable });
         } else {
-            if (response.message === 'Virtual Table not found') {
+            if (response.message === 'Virtual Table not found' || response.message === 'Consumer Agent not found') {
                 res.status(404).json({ success: false, message: response.message });
             } else {
                 res.status(400).json({ success: false, message: response.message });
@@ -130,5 +153,8 @@ router.post("/api/table/close", async (req, res) => {
         res.status(500).json({ error: 'An error occurred during closing virtual table.' });
     }
 });
+
+
+
 
 module.exports = router;

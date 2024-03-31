@@ -8,6 +8,7 @@ async function getMenu(businessId) {
         }
         return { success: true, items, message: 'Menu retrieved successfully'};
     } catch (error) {
+        console.error(error);
         throw new Error('Failed to get menu');
     }
 }

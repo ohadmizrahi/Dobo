@@ -1,4 +1,4 @@
-const pool = require('@be/database/pool.js');
+const pool = require('@be/connections/postgres.js');
 
 async function find(accountId) {
     const query = `SELECT * FROM payment_methods WHERE accountId = $1;`;
@@ -7,6 +7,7 @@ async function find(accountId) {
         const res = await pool.query(query, values);
         return res.rows;
     } catch (error) {
+        console.error(error);
         throw new Error(`Failed to execute query:\n${error}`);
     }
 }
@@ -31,6 +32,7 @@ async function create(username, paymentMethodData) {
         const paymentMethod = res.rows[0];
         return { success: true, data: paymentMethod, message: "Payment method created"}
     } catch (error) {
+        console.error(error);
         throw new Error(`Payment method creation failed\n${error}`);
     }
 }
@@ -56,6 +58,7 @@ async function update(username, fieldsToUpdate) {
         }
         return { success: true, data: fieldsToUpdate, message: "Payment Method updated"}
     } catch (error) {
+        console.error(error);
         throw new Error('Payment Method update failed');
     }
 }

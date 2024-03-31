@@ -9,7 +9,8 @@ async function calculateCheck(clientId) {
         const clientBalance = orders.reduce((total, order) => total + parseFloat(order.clientcost), 0);
         return { success: true, clientBalance, clientOrders: orders, message: 'Client check retrieved successfully' };
     } catch (error) {
-        throw new Error('Get Client Check failed');
+        console.error(error);
+        throw new Error(`Get Client Check failed\n${error}`);
     }
 }
 
@@ -45,6 +46,7 @@ async function recalculateCheck(clientId, orders) {
         const client = await findOne(clientId)
         const clientTable = client[0].virtualtable;
         const activeTableClients = await getTableClients(clientTable, true);
+        const activeTableClientsIds = activeTableClients.map(client => client.clientid);
 
         for (const orderId of clientOrdersIds) {
             const itemPrice = await getItemPrice(orderId);
@@ -53,7 +55,7 @@ async function recalculateCheck(clientId, orders) {
                 failedOrders.push(orderId);
                 continue;
             }
-            const { success, message } = await updateOrderClients(orderId, clientId, activeTableClients, itemPrice);
+            const { success, message } = await updateOrderClients(orderId, clientId, activeTableClientsIds, itemPrice);
             if (!success) {
                 console.error(message);
                 failedOrders.push(orderId);
@@ -66,6 +68,7 @@ async function recalculateCheck(clientId, orders) {
             return { success: false, message: 'Some of the client orders cant be updatetd', failedOrders };
         }
     } catch (error) {
+        console.error(error);
         throw new Error(`Recalculate check failed\n${error}`);
     }
 }
@@ -108,6 +111,7 @@ async function payCheck(clientId, ordersToPay) {
             return { success: false, message: 'Some of the client orders cant be paid', failedOrders };
         }
     } catch (error) {
+        console.error(error);
         throw new Error('Pay Client Check failed');
     }
 }

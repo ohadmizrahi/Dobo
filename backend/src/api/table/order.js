@@ -1,61 +1,100 @@
-const { create: createOrder } = require("@src/models/order.js")
+const channelPromise = require('@be/connections/rabbitmq.js');
+const { create: createOrder, deleteOrder } = require("@src/models/order.js")
+const { splitOrder } = require("@src/models/clientOrders.js")
+const { find: findVirtualTable } = require("@src/models/virtualTables.js")
 
-async function newOrders(orders) {
-    orders.forEach(order => async () => {
+async function handleNewOrders(virtualTable, orders) {
+    const promises = orders.map(async order => {
         try {
-            const creating = await createOrder(order)
-            if (!creating.success) {
-                return { success: false, message: creating.message }
+            const { itemId, clients, price } = order
+            const creation = await createOrder({ itemId, virtualTable })
+            if (!creation.success) {
+                return { success: false, step: 'create', message: creation.message }
             }
+
+            const splitted = await splitOrder(creation.order, clients, price)
+            if (!splitted.success) {
+                await deleteOrder(creation.order)
+                return { success: false, step: 'split', message: splitted.message }
+            }
+            return { success: true, virtualTable }
+
         } catch (error) {
-            return { success: false, message: error }
-        }
-        
-        const orderToSend = createBon({...creating.order, ...order})
-        const queued = await addOrderToQueue(orderToSend)
-        if (!queued.success) {
-            return { success: false, message: queued.message }
-        }
-        const { payers, price } = orderToSend
-        const pricePerPayer = price / payers.length
-        // const updated = await updateClients(payers, "total", pricePerPayer)
-        if (!updated.success) {
-            return { success: false, message: updated.message }
+            let step = 'create'
+            if (creation && creation.success) {
+                step = 'split'
+                await deleteOrder(creation.order)
+            }
+            console.error(error);
+            return { success: false, step: step, message: error }
         }
     });
-}
-function createBon(order) {
-    const { itemId, virtualTable, payers, status } = order
-    const bon = {
-        itemId,
-        virtualTable,
-        payers,
-        status
-    }
-    return bon
+
+    return Promise.all(promises)
+        .then(results => {
+            const unsuccessful = results.filter(result => !result.success);
+
+            if (unsuccessful.length > 0) {
+                return {
+                    success: false,
+                    numOfUnsuccessfulOrders: unsuccessful.length,
+                    unsuccessfulOrders: unsuccessful,
+                    step: unsuccessful[0].step,
+                    message: unsuccessful[0].message
+                };
+            }
+
+            return { success: true, virtualTable };
+        })
+        .catch(error =>  ({ success: false, message: error }));
 }
 
-async function sendQueuedOrders(business) {
-    const con = await connectBusiness(business)
-    const orders = await getQueuedOrders()
-    const failed = []
-    orders.forEach(order => {
-        const response = con.sendOrder(order)
-        if (!response.success) {
-            failed.push(order.orderId)
+async function produce(virtualTable, orders) {
+    const virtualTables = await findVirtualTable(virtualTable, active=true)
+    const { tableid, businessid } = virtualTables[0]
+    
+    const orderToSend = groupOrdersByItem(orders)
+    const payload = {
+        tableid,
+        businessid,
+        orders: orderToSend
+    }
+    
+    channel = await channelPromise
+    // TODO: Until RabbitMQ is implemented, resolve with null
+    if (!channel) {
+        console.warn('Failed to connect to RabbitMQ server.');
+        return
+    }
+
+    const queue = virtualTable;
+    const msg = JSON.stringify(payload);
+
+    channel.assertQueue(
+        queue, { durable: false }
+    );
+
+    channel.sendToQueue(queue, Buffer.from(msg));
+}
+
+function groupOrdersByItem(orders) {
+    const ordersMap = orders.reduce((acc, item) => {
+        if (!acc[item.itemId]) {
+            acc[item.itemId] = {
+                itemId: item.itemId,
+                itemName: item.itemName,
+                count: 1
+            };
+        } else {
+            acc[item.itemId].count++;
         }
-    });
-    if (failed.length > 0) {
-        return { success: false, message: "Failed to send orders", failedOrders: failed }
-    }
-    return { success: true, message: "Orders sent", orders: orders.map(order => order.orderId) }
-}
+        return acc;
+    }, {});
 
-async function connectBusiness(businessId) {
-    return businessId
+    return Object.values(ordersMap);
 }
 
 module.exports = {
-    newOrders,
-    sendQueuedOrders
+    handleNewOrders,
+    produce
 }
