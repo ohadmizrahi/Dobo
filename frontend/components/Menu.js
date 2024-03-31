@@ -2,8 +2,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, StyleSheet, Image,Button} from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { fetchAPI } from '../util/fetch';
-import {API_URL} from '@env';
 import menu from '../data/menuDate';
 
 
@@ -19,18 +17,18 @@ export default function Menu ({navigation, isOrderScreen }){
     return (
       <View>
         {isOrderScreen ? (
-          <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate("Item", { itemID: item.id, itemName: item.name, itemPrice: item.price, itemImg: item.bb })}>
+          <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate("Item", { itemID: item.id})}>
             <View style={styles.itemDetailsContainer} key={item.id}>
               <Image source={{ uri: bb }} style={styles.imageContainer} />
               <Text style={styles.itemName}>{item.name}</Text>
-              <Text style={styles.itemPrice}>Price:{item.price}</Text>
+              <Text style={styles.itemPrice}>Price:{item.price}$</Text>
             </View>
           </TouchableOpacity>
         ) : (
           <View style={[styles.itemDetailsContainer,styles.menuItem]}>
             <Image source={{ uri: bb }} style={styles.imageContainer} />
             <Text style={styles.itemName}>{item.name}</Text>
-            <Text style={styles.itemPrice}>Price:{item.price}</Text>
+            <Text style={styles.itemPrice}>Price:{item.price}$</Text>
           </View>
         )}
       </View>
