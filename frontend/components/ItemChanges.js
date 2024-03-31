@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Button, Image } from 'react-native';
 import menu from '../data/menuDate';
-import AddItemBtn from './AddItemBtn';
 
-const ItemChanges = () => {
+const ItemChanges = ({ route, navigation }) => {
+  const { itemID } = route.params;
+  const Item = menu.find(item => item.id === itemID);
 
-  const Item = menu[2];
   const [price, setPrice] = useState(Item.price);
 
   const [selectedOptions, setSelectedOptions] = useState({});
@@ -59,7 +59,6 @@ const ItemChanges = () => {
       {Object.entries(Item.changes[0]).map(([changeType, options]) =>
         renderChangeOptions(changeType, options)
       )}
-      <AddItemBtn price={price} />
       <Button title="Print Selected Options" onPress={handlePrintSelectedOptions} />
       </View>
   );

@@ -4,7 +4,7 @@
       id: 1,
       name: 'Burger',
       image: 'https://www.seriouseats.com/thmb/e16lLOoVEix_JZTv7iNyAuWkPn8=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/__opt__aboutcom__coeus__resources__content_migration__serious_eats__seriouseats.com__recipes__images__2014__09__20140918-jamie-olivers-comfort-food-insanity-burger-david-loftus-f7d9042bdc2a468fbbd50b10d467dafd.jpg',
-      price: '15$',
+      price: 15,
       description: 'A delicious burger',
       changes: [
         {
@@ -39,7 +39,7 @@
       id: 2,
       name: 'Pizza',
       image: 'https://www.allrecipes.com/thmb/0xH8n2D4cC97t7mcC7eT2SDZ0aE=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/6776_Pizza-Dough_ddmfs_2x1_1725-fdaa76496da045b3bdaadcec6d4c5398.jpg',
-      price: '12$',
+      price: 12,
       description: 'A delicious pizza',
       changes: [
         {
@@ -62,7 +62,7 @@
       id: 3,
       name: 'Salad',
       image: 'https://images.immediate.co.uk/production/volatile/sites/30/2014/05/Epic-summer-salad-hub-2646e6e.jpg?resize=1200%2C630',
-      price: '10$',
+      price: 10,
       description: 'A healthy salad',
       changes: [
         {
@@ -89,7 +89,7 @@
       id: 4,
       name: 'Sushi',
       image: 'https://tb-static.uber.com/prod/image-proc/processed_images/37c22d51d314e47b21c5bcaede28da23/3ac2b39ad528f8c8c5dc77c59abb683d.jpeg',
-      price: '20$',
+      price: 20,
       description: 'Delicious sushi rolls',
       changes: [
         {
@@ -116,7 +116,7 @@
       id: 5,
       name: 'Pasta',
       image: 'https://images.aws.nestle.recipes/resized/0a0717810b73a1672a029c29788e557b_creamy_alfredo_pasta_long_left_1080_850.jpg',
-      price: '14$',
+      price: 14,
       description: 'Delicious pasta dishes',
       changes: [
         {

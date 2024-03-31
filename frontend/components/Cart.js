@@ -16,7 +16,7 @@ export default function Cart({ route }) {
   const calculateTotalPrice = () => {
     let totalPrice = 0;
     SelectedItems.forEach((item) => {
-      totalPrice += parseFloat(item.itemPrice.substring(1));
+      totalPrice += parseFloat(item.price);
     });
     return totalPrice.toFixed(2);
   };
@@ -24,19 +24,16 @@ export default function Cart({ route }) {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Cart Items</Text>
-      <FlatList
-        data={SelectedItems}
-        renderItem={({ item }) => (
-          <View style={styles.itemContainer}>
-            <Text style={styles.itemName}>{item.itemName}</Text>
-            <Text style={styles.itemPrice}>Price: {item.itemPrice}</Text>
-          </View>
-        )}
-        keyExtractor={(item) => item.itemID.toString()}
-      />
+      {SelectedItems.map((item) => (
+        <View style={styles.itemContainer} key={item.id}>
+          <Text style={styles.itemName}>{item.name}</Text>
+          <Text style={styles.itemPrice}>Price: {item.price}$</Text>
+        </View>
+      ))}
       <Text style={styles.totalPrice}>Total Price: ${calculateTotalPrice()}</Text>
     </View>
   );
+  
 }
 
 const styles = StyleSheet.create({

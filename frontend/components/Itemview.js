@@ -1,19 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, Image, StyleSheet, Button, TouchableOpacity } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
+import menu from '../data/menuDate';
 
 export default function ItemView({ route, navigation }) {
-  const { itemID, itemName, itemPrice, bb } = route.params; 
-  const [recipe, setRecipe] = useState({});
+  const { itemID } = route.params;
+  const Item = menu.find(item => item.id === itemID);
+
   const [selectedItems, setSelectedItems] = useState([]);
 
-  useEffect(() => {
-    setRecipe({ itemID, itemName, itemPrice, bb });
-  }, [itemID, itemName, itemPrice, bb]);
+
 
   const handleAddToCart = () => {
-    const selectedItem = { itemID, itemName, itemPrice };
+    const selectedItem = Item;
+    console.log(selectedItem);
     setSelectedItems([...selectedItems, selectedItem]);
+    navigation.navigate('Order');
   };
 
   const handleGoToCart = () => {
@@ -22,25 +24,15 @@ export default function ItemView({ route, navigation }) {
 
   return (
     <View style={styles.container}>
-      {recipe ? (
-        <React.Fragment>
-          <Text style={styles.recipeName}>{recipe.itemName}</Text>
-          <Text style={styles.recipePrice}>Price: {recipe.itemPrice}</Text>
-        </React.Fragment>
-      ) : (
-        <Text>Loading...</Text>
-      )}
-      {/* Add to Cart Button */}
       <TouchableOpacity style={styles.addToCartButton} onPress={handleAddToCart}>
         <FontAwesome name="shopping-cart" size={24} color="white" />
         <Text style={styles.addToCartButtonText}>Add to Cart</Text>
       </TouchableOpacity>
-      {/* Go to Cart Button */}
+      <View style={styles.price}><Text>{Item.price}$</Text></View>
       <TouchableOpacity style={styles.addToCartButton} onPress={handleGoToCart}>
         <FontAwesome name="shopping-cart" size={24} color="white" />
         <Text style={styles.addToCartButtonText}>Go to Cart</Text>
       </TouchableOpacity>
-      <Button title="Go Back" onPress={() => navigation.goBack()} />
     </View>
   );
 }
@@ -51,15 +43,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 20,
     marginTop: 0,
-    backgroundColor: '#fff'
-  },
-  recipeName: {
-    fontSize: 18,
-    fontWeight: "bold",
-  },
-  recipePrice: {
-    fontSize: 16,
-    marginBottom: 10,
+    backgroundColor: '#fff',
+    flexDirection: 'row',
   },
   addToCartButton: {
     flexDirection: "row",
@@ -73,5 +58,16 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 18,
     marginLeft: 10,
+  },
+  price: {
+    backgroundColor: "grey",
+    fontSize: 20,
+    borderRadius: 30,
+    width: 50,
+    height: 50,
+    fontWeight: "bold",
+    marginBottom: 10,
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
