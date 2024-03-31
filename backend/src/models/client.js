@@ -1,4 +1,4 @@
-const pool = require('@be/database/pool.js');
+const pool = require('@be/connections/postgres.js');
 
 async function findOne(clientId, onlyActive=false) {
     try {
@@ -7,6 +7,7 @@ async function findOne(clientId, onlyActive=false) {
         const res = await pool.query(query, values);
         return res.rows;
     } catch (error) {
+        console.error(error);
         throw new Error(`Failed to execute query:\n${error}`);
     }
 }
@@ -20,6 +21,7 @@ async function findMany(virtualTableId, onlyActive=false) {
         const res = await pool.query(query, values);
         return res.rows;
     } catch (error) {
+        console.error(error);
         throw new Error(`Failed to execute query:\n${error}`);
     }
 }
@@ -41,6 +43,7 @@ async function create(accountId, virtualTableId) {
 
         return { success: true, client, message: "Client created" }
     } catch (error) {
+        console.error(error);
         throw new Error(`Client Creation Failed:\n${error}`);
     }
 }
@@ -63,6 +66,7 @@ async function disable(clientId) {
 
         return { success: true, client, message: "Client disabled" }
     } catch (error) {
+        console.error(error);
         throw new Error(`Client disable Failed:\n${error}`);
     }
 }
@@ -90,6 +94,7 @@ async function getTableClients(virtualTableId, active=false) {
         const res = await pool.query(query, values);
         return res.rows;
     } catch (error) {
+        console.error(error);
         throw new Error(`Get Table Clients failed:\n${error}`);
     }
 }

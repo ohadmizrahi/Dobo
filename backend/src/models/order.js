@@ -1,4 +1,4 @@
-const pool = require('@be/database/pool.js');
+const pool = require('@be/connections/postgres.js');
 
 async function findOne(orderId) {
     const query = `SELECT * FROM orders WHERE orderId = $1 LIMIT 1;`;
@@ -7,6 +7,7 @@ async function findOne(orderId) {
         const res = await pool.query(query, values);
         return res.rows;
     } catch (error) {
+        console.error(error);
         throw new Error(`Failed to execute query:\n${error}`);
     }
 }
@@ -18,6 +19,7 @@ async function findMany(virtualTableId) {
         const res = await pool.query(query, values);
         return res.rows;
     } catch (error) {
+        console.error(error);
         throw new Error(`Failed to execute query:\n${error}`);
     }
 }
@@ -36,7 +38,8 @@ async function create(orderData) {
         return { success: true, order, message: "Order created"}
     } 
     catch (error) {
-        throw new Error('Order creation failed');
+        console.error(error);
+        throw new Error(`Order creation failed\n${error}`);
     }
 }
 
@@ -60,7 +63,20 @@ async function createMany(ordersData) {
         return { success: true, orders, message: "Orders created"}
     } 
     catch (error) {
-        throw new Error('Orders creation failed');
+        console.error(error);
+        throw new Error(`Orders creation failed\n${error}`);
+    }
+}
+
+async function deleteOrder (orderId) {
+    const query = `DELETE FROM orders WHERE orderId = $1;`;
+    const values = [orderId];
+    try {
+        await pool.query(query, values);
+        return { success: true, message: "Order deleted" };
+    } catch (error) {
+        console.error(error);
+        throw new Error(`Failed to execute query:\n${error}`);
     }
 }
 
@@ -97,6 +113,7 @@ async function getTableOrders(virtualTableId) {
         const res = await pool.query(query, values);
         return res.rows;
     } catch (error) {
+        console.error(error);
         throw new Error(`Failed to execute query:\n${error}`);
     }
 }
@@ -118,6 +135,7 @@ async function getItemPrice(orderId) {
         }
         return parseFloat(res.rows[0].price);
     } catch (error) {
+        console.error(error);
         throw new Error(`Failed to execute query:\n${error}`);
     }
 }
@@ -128,5 +146,6 @@ module.exports = {
     create,
     createMany,
     getTableOrders,
-    getItemPrice
+    getItemPrice,
+    deleteOrder
 }

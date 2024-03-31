@@ -5,7 +5,6 @@ const cors = require('cors');
 
 const PORT = process.env.BE_PORT || 3000;
 
-
 const corsOptions = {
   origin: '*',
   optionsSuccessStatus: 200,
@@ -19,7 +18,8 @@ require('module-alias').addAliases({
   // Add more aliases as needed
 });
 
-const pool = require('@be/database/pool.js');
+const pool = require('@be/connections/postgres.js');
+
 const { swaggerUi, swaggerSpec } = require('@be/docs/docs.js');
 
 const authRouter = require('@src/routes/auth');
@@ -31,7 +31,7 @@ pool.query('SELECT NOW()', (err, res) => {
   if (err) {
     console.error('Error connecting to the database:', err);
   } else {
-    console.log('Connected to the database at:', res.rows[0].now);
+    console.info('Connected to the database at:', res.rows[0].now);
   }
 });
 

@@ -1,7 +1,7 @@
 require('dotenv').config()
 const jwt = require("jsonwebtoken");
 
-function generateTokens(base, secret=process.env.SECRET_KEY, expiresIn="1h", RefreshToken={ expiresIn: "30d" }) {
+function generateTokens(base, secret=process.env.SECRET_KEY, expiresIn="1d", RefreshToken={ expiresIn: "30d" }) {
     const token =  jwt.sign(base, secret, { expiresIn: expiresIn });
     if (Object.keys(RefreshToken).length === 0) {
         return { token };
@@ -19,7 +19,7 @@ function resetPasswordToken(username) {
 }
 
 function generateClientToken(clientId) {
-    return generateTokens({ clientId }, process.env.CLIENT_SECRET_KEY, "3h", { expiresIn: '1d' })
+    return generateTokens({ clientId }, process.env.CLIENT_SECRET_KEY, "1d", { expiresIn: '1d' })
 }
 
 module.exports = {

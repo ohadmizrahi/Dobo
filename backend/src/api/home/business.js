@@ -30,6 +30,7 @@ async function getGroupsOfBusinesses(groups, order='DESC', limit=30, offset=0) {
         }
         return { success: true, groupsOfBusinesses };
     } catch (error) {
+        console.error(error);
         throw new Error(`Failed to get businesses: ${error}`);
     }
 }
@@ -49,6 +50,7 @@ async function getBusinessInfo(businessId) {
             return { success: false, message: 'business not found' };
         }
     } catch (error) {
+        console.error(error);
         throw new Error(`Failed to get business info: ${error}`);
     }
 }
@@ -69,6 +71,7 @@ async function reserveTable(username, businessId, date, time, numOfPeople, type,
             }
         }
     } catch (error) {
+        console.error(error);
         throw new Error(`Failed to reserve table: ${error}`);
     }
 }

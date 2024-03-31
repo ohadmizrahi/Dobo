@@ -1,4 +1,4 @@
-const pool = require('@be/database/pool.js');
+const pool = require('@be/connections/postgres.js');
 
 async function findOne(itemId) {
     const query = `SELECT * FROM items WHERE itemId = $1 LIMIT 1;`;
@@ -7,6 +7,7 @@ async function findOne(itemId) {
         const res = await pool.query(query, values);
         return res.rows;
     } catch (error) {
+        console.error(error);
         throw new Error(`Failed to execute query:\n${error}`);
     }
 }
@@ -18,6 +19,7 @@ async function findMany(businessId) {
         const res = await pool.query(query, values);
         return res.rows;
     } catch (error) {
+        console.error(error);
         throw new Error(`Failed to execute query:\n${error}`);
     }
 }
@@ -39,6 +41,7 @@ async function create(businessId, itemData) {
 
         return { success: true, item, message: "Item created" }
     } catch (error) {
+        console.error(error);
         throw new Error(`Item Creation Failed:\n${error}`);
     }
 }

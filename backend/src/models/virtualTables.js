@@ -1,12 +1,13 @@
-const pool = require('@be/database/pool.js');
+const pool = require('@be/connections/postgres.js');
 
 async function find(virtualTableId, active=false) {
-    const query = active ? `SELECT * FROM virtual_tables WHERE virtualTableId = $1;` : `SELECT * FROM virtualTables WHERE virtualTableId = $1 AND active = $2;`;
+    const query = active ? `SELECT * FROM virtual_tables WHERE virtualTableId = $1;` : `SELECT * FROM virtual_tables WHERE virtualTableId = $1 AND active = $2;`;
     const values = active ? [virtualTableId] : [virtualTableId, true];
     try {
         const res = await pool.query(query, values);
         return res.rows;
     } catch (error) {
+        console.error(error);
         throw new Error(`Failed to execute query:\n${error}`);
     }
 }
@@ -28,12 +29,13 @@ async function create(businessId, tableId) {
         return { success: true, virtualTable, message: "Virtual Table created"}
     } 
     catch (error) {
-        throw new Error('Virtual Table creation failed');
+        console.error(error);
+        throw new Error(`Virtual Table creation failed\n${error}`);
     }
 }
 
 async function update(virtualTableId, name=null, active=null) {
-    if (!name && !active) {
+    if (name === null && active === null) {
         return { success: false, message: "No update parameters provided" }
     }
     try {
@@ -51,7 +53,8 @@ async function update(virtualTableId, name=null, active=null) {
         const virtualTable = res.rows[0];
         return { success: true, virtualTable, message: "Account updated"}
     } catch (error) {
-        throw new Error('Virtual Table update failed');
+        console.error(error);
+        throw new Error(`Virtual Table update failed\n${error}`);
     }
 }
 
@@ -70,6 +73,7 @@ async function findActiveVirtualTable(businessId, tableId) {
             return null;
         } 
     } catch (error) {
+        console.error(error);
         throw new Error(`Failed to execute query:\n${error}`);
     }
 }
