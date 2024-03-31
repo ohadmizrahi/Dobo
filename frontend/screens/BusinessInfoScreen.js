@@ -14,7 +14,7 @@ export default function BusinessInfoScreen({ navigation }) {
     openingHours: '10:00 AM - 10:00 PM', 
   };
   const businessCardData ={
-    businessName: 'Aroma',
+    businessname: 'Aroma',
     imageUrl: 'https://cdn.pixabay.com/photo/2017/05/12/08/29/coffee-2306471_960_720.jpg'
   };
 

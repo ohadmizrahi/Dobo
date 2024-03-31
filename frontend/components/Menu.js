@@ -45,7 +45,7 @@ const menu = [
      
     ];
 
-export default function Menu ({navigation}){
+export default function Menu ({navigation, isOrderScreen }){
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
@@ -55,21 +55,30 @@ export default function Menu ({navigation}){
   const renderProducts = ({ item }) => {
     const bb = item.image;
     return (
-      <TouchableOpacity style={styles.menuItem} onPress={()=> navigation.navigate("Item", { item1: item.id})}>
-      <View style={styles.itemDetailsContainer} key={item.id}>
-        <Image source={{ uri: bb }} style={styles.imageContainer} />
-        <Text style={styles.itemName}>{item.name}</Text>
-        <Text style={styles.itemPrice}>Price:{item.price}</Text>
+      <View>
+        {isOrderScreen ? (
+          <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate("Item", { itemID: item.id, itemName: item.name, itemPrice: item.price, itemImg: item.bb })}>
+            <View style={styles.itemDetailsContainer}>
+              <Image source={{ uri: bb }} style={styles.imageContainer} />
+              <Text style={styles.itemName}>{item.name}</Text>
+              <Text style={styles.itemPrice}>Price:{item.price}</Text>
+            </View>
+          </TouchableOpacity>
+        ) : (
+          <View style={[styles.itemDetailsContainer,styles.menuItem]}>
+            <Image source={{ uri: bb }} style={styles.imageContainer} />
+            <Text style={styles.itemName}>{item.name}</Text>
+            <Text style={styles.itemPrice}>Price:{item.price}</Text>
+          </View>
+        )}
       </View>
-      </TouchableOpacity>
-
     );
   };
-  
+
   return (
-    <View style={styles.container}>
+    <View>
       <FlatList
-        data={products}
+        data={menu}
         keyExtractor={(item) => item.id.toString()}
         renderItem={renderProducts}
       />
@@ -103,72 +112,10 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: '#333',
         flex: 1, // Allow text to wrap if name is long
+        paddingLeft: 10,
     },
     itemPrice: {
         fontSize: 14,
         color: '#888',
     },
 });
-
-
-// const Menu = () => {
-//   console.log(MENU);
-//   const [menu, setMenu] = useState([]);
-//   const [isLoading, setIsLoading] = useState(false);
-//   const [error, setError] = useState(null);
-
-//   const fetchItems = async () => {
-//     try {
-//       setIsLoading(true);
-//       setError(null);
-
-//       const apiEndpoint = `${API_URL}/api/business/info`; // Replace with your actual endpoint
-//       const {data, error} = await fetchAPI(apiEndpoint, 'POST',{ 'Content-Type': 'application/json' },{businessId:1}); // Use GET method for fetching data
-//       console.log({data:data.activityTime,error});
-//       if (response.data) {
-//         setMenu(response.data);
-//       } else if (response.error) {
-//         setError(response.error);
-//       } else {
-//         console.error('Unexpected response format from fetchAPI');
-//       }
-//      } catch (error) {
-//       console.error('Error fetching data:', error);
-//       setError(error);
-//     } finally {
-//       setIsLoading(false);
-//     }
-//   };
-
-//   useEffect(() => {
-//     fetchItems();
-//   }, []);
-
-//   const renderItem = ({ item }) => (
-//     <TouchableOpacity style={styles.menuItem}>
-//       <Image source={{ uri: item.image }} style={styles.imageContainer} />
-//       <View style={styles.itemDetailsContainer}>
-//         <Text style={styles.itemName}>{item.name}</Text>
-//         <Text style={styles.itemPrice}>{item.price}</Text>
-//       </View>
-//     </TouchableOpacity>
-//   );
-
-//   if (isLoading) {
-//     return <Text>Loading items...</Text>;
-//   }
-
-//   if (error) {
-//     return <Text>Error: {error.message}</Text>;
-//   }
-
-//   return (
-//     <View style={styles.container}>
-//       <FlatList
-//         data={menu}
-//         keyExtractor={(item) => item.id.toString()}
-//         renderItem={renderItem}
-//       />
-//     </View>
-//   );
-// };
