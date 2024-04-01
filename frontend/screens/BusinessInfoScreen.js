@@ -19,9 +19,9 @@ export default function BusinessInfoScreen({ navigation }) {
   };
 
 return (
-  <ScrollView style={globalStyles.screenColor}>
+  <View style={globalStyles.screenColor}>
     <BusinessCard businessCard={businessCardData} /> 
     <Businessinformation navigation={navigation} business={businessData} />
-  </ScrollView>
+  </View>
   );
 }
