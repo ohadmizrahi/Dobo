@@ -6,7 +6,7 @@ const ItemChanges = ({ route, navigation }) => {
   const { itemID } = route.params;
   const Item = menu.find(item => item.id === itemID);
 
-  const [price, setPrice] = useState(Item.price);
+  // const [price, setPrice] = useState(Item.price);
 
   const [selectedOptions, setSelectedOptions] = useState({});
 
@@ -17,9 +17,6 @@ const ItemChanges = ({ route, navigation }) => {
     }));
   };
 
-  const handlePrintSelectedOptions = () => {
-    console.log(selectedOptions);
-  };
 
   const renderChangeOptions = (changeType, options) => {
     return (
@@ -44,7 +41,6 @@ const ItemChanges = ({ route, navigation }) => {
             >
               <Text>{option}</Text>
             </TouchableOpacity>
-
           </View>
         ))}
       </View>
@@ -59,7 +55,6 @@ const ItemChanges = ({ route, navigation }) => {
       {Object.entries(Item.changes[0]).map(([changeType, options]) =>
         renderChangeOptions(changeType, options)
       )}
-      <Button title="Print Selected Options" onPress={handlePrintSelectedOptions} />
       </View>
   );
 };
