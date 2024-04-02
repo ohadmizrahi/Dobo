@@ -1,17 +1,17 @@
 import React from 'react';
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
 
-const GoToTableButton = ({ navigation }) => {
+const PayNowButton = ({ navigation }) => {
   return (
-    <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('TableStatus')}>
-      <Text style={styles.text}>Go to Table</Text>
+    <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Pay')}>
+      <Text style={styles.text}>Pay Now</Text>
     </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: '#1D2328',
+    backgroundColor: 'red',
     marginTop: 20,
     width: '80%',
     height: 60,
@@ -36,4 +36,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default GoToTableButton;
+export default PayNowButton;
