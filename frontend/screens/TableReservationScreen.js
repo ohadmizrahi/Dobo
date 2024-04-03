@@ -1,7 +1,6 @@
 import React from 'react';
 import { View,ScrollView, Text } from 'react-native';
 import TableReservationForm from '../components/Reservation';
-import {globalstyles} from '../globalStyles';
 import BusinessCard from '../components/BussinesHeader';
 
 

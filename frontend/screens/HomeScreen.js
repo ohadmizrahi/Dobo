@@ -1,6 +1,7 @@
 import React from 'react';
 import { View,ScrollView, Text, Button } from 'react-native';
 // import Header from '../components/Header'; 
+// import { Places } from '../components/Places';
 
 export default function HomeScreen({ navigation }) {
   return (

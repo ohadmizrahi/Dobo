@@ -1,6 +1,7 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import ProfileLogo from '../components/ProfileLogo';
+// import ExitSign from '../components/ExitSign';
 import HomeLogo from './HomeLogo';
 import HomeScreen from '../screens/HomeScreen';
 import ItamScreen from '../screens/ItemScreen';
@@ -27,31 +28,47 @@ const HeaderLeftComponent = ({ navigation }) => {
   return <HomeLogo navigation={navigation} />;
 };
 
+// const ExitSignComponent = ({ navigation }) => {
+//   return <ExitSign navigation={navigation} />;
+// };
+
+const MainHeaderOptions = {
+  headerStyle: {
+    backgroundColor: "#3D3D3D",
+  },
+  headerRight: ({ navigation }) => <HeaderRightComponent navigation={navigation} />,
+  headerLeft: ({ navigation }) => <HeaderLeftComponent navigation={navigation} />,
+};
+
+// const ExitSignOptions = {
+//   headerStyle: {
+//     backgroundColor: "#3D3D3D",
+//   },
+//   headerRight: ({ navigation }) => <ExitSignComponent navigation={navigation} />,
+// };
+
 export default function MainNavigation() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home" screenOptions={{
-        headerStyle: {
-          backgroundColor: "#3D3D3D",
-        },
-        headerRight: ({ navigation }) => <HeaderRightComponent navigation={navigation} />,
-        headerLeft: ({ navigation }) => <HeaderLeftComponent navigation={navigation} />,
-      }}>
-        <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="Item" component={ItamScreen} />
-        <Stack.Screen name="BusinessInfo" component={BusinessInfoScreen} />
-        <Stack.Screen name="JoinTable" component={JoinTableScreen} />
-        <Stack.Screen name="Order" component={OrderScreen} />
-        <Stack.Screen name="Pay" component={PayScreen} />
-        <Stack.Screen name="Menu" component={MenuScreen} />
-        <Stack.Screen name="OrderCart" component={OrderCartScreen} />
-        <Stack.Screen name="Profile" component={ProfileScreen} />
-        <Stack.Screen name="SignIn" component={SignInScreen} />
-        <Stack.Screen name="SignUp" component={SignUpScreen} />
-        <Stack.Screen name="TableReservation" component={TableReservationScreen} />
-        <Stack.Screen name="TableStatus" component={TableStatusScreen} />
-        <Stack.Screen name='QRScanner' component={ScanQRScreen} />
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen name="Home" component={HomeScreen} options={MainHeaderOptions}/>
+        <Stack.Screen name="Item" component={ItamScreen} options={{ headerShown: false }}/>
+        <Stack.Screen name="BusinessInfo" component={BusinessInfoScreen} options={{ headerShown: false }}/>
+        <Stack.Screen name="JoinTable" component={JoinTableScreen} options={MainHeaderOptions}/>
+        <Stack.Screen name="Order" component={OrderScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="Pay" component={PayScreen} options={{ headerShown: false }}/>
+        <Stack.Screen name="Menu" component={MenuScreen} options={{ headerShown: false }}/>
+        <Stack.Screen name="OrderCart" component={OrderCartScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="Profile" component={ProfileScreen} options={MainHeaderOptions}/>
+        <Stack.Screen name="SignIn" component={SignInScreen} options={MainHeaderOptions}/>
+        <Stack.Screen name="SignUp" component={SignUpScreen} options={MainHeaderOptions}/>
+        <Stack.Screen name="TableReservation" component={TableReservationScreen} options={{ headerShown: false }}/>
+        <Stack.Screen name="TableStatus" component={TableStatusScreen} options={MainHeaderOptions}/>
+        <Stack.Screen name='QRScanner' component={ScanQRScreen} options={{ headerShown: false }}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
 }
+
+
+

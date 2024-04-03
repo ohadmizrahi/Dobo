@@ -6,8 +6,7 @@ import BusinessCard from '../components/BussinesHeader';
 export default function MenuScreen({ navigation }) {
   return (
     <View>
-      {/* <PaymentForm /> */}
-      <Menu />
+      <Menu isOrderScreen={false}/>
     </View>
   );
 }

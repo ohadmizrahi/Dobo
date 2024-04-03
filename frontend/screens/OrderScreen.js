@@ -1,21 +1,14 @@
 import React from 'react';
 import { View ,ScrollView, Text, StyleSheet } from 'react-native';
-import { Places } from '../components/Places';
 import Menu from '../components/Menu';
-export default function OrderScreen({ navigation }) {
+import GoToCart from '../components/GoToCartBTN';
+
+export default function OrderScreen({ navigation,route }) {
   return (
-    <View style={styles.container}>
+    <View>
       <Text>Order</Text>
-      <Menu navigation={navigation} />
-      <Places />
+      <GoToCart navigation={navigation} route={route} />
+      <Menu navigation={navigation} isOrderScreen={true} />
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-    container: {
-    flex: 1,
-    alignItems: 'center',
-    
-  },
-});
