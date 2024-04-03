@@ -1,27 +1,49 @@
 require('dotenv').config();
 const amqp = require('amqplib/callback_api');
 
-let channelPromise = new Promise((resolve, reject) => {
-    amqp.connect(`amqp://${process.env.RABBITMQ_HOST}`, function(connError, connection) {
-        if (connError) {
-            console.warn(connError.message);
-            // reject(connError);
-        }
-        if (!connection) {
-            // reject(new Error('Failed to connect to RabbitMQ server.'));
-            console.warn('WARNING: Failed to connect to RabbitMQ server.');
-        } else {
-            connection.createChannel(function(channelError, channel) {
+let channel;
+let connection;
+
+const connectToRabbitMQ = () => {
+    return new Promise((resolve, reject) => {
+        // if (channel) {
+        //     resolve(channel);
+        //     return;
+        // }
+
+        amqp.connect(`amqp://${process.env.RABBITMQ_HOST}`, function(connError, conn) {
+            if (connError) {
+                reject(connError);
+                return;
+            }
+
+            connection = conn;
+
+            connection.on('error', (err) => {
+                console.error('Connection error', err);
+                channel = null;
+                // Try to reconnect
+                connectToRabbitMQ().catch(console.error);
+            });
+
+            connection.on('close', () => {
+                console.error('Connection closed');
+                channel = null;
+                // Try to reconnect
+                connectToRabbitMQ().catch(console.error);
+            });
+
+            connection.createChannel(function(channelError, ch) {
                 if (channelError) {
-                    console.warn(connError.message);
-                    // reject(channelError);
+                    reject(channelError);
+                    return;
                 }
+
+                channel = ch;
                 resolve(channel);
             });
-        }
-        // TODO: Until RabbitMQ is implemented, resolve with null
-        resolve(null);
+        });
     });
-});
+};
 
-module.exports = channelPromise;
+module.exports = connectToRabbitMQ;

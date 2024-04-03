@@ -8,7 +8,7 @@ class PostgresConfig(BaseSettings):
     pg_host: str
 
     class Config:
-        env_file = ".env"
+        env_file = "../.env"
 
     async def connect(self):
         connection = await asyncpg.connect(

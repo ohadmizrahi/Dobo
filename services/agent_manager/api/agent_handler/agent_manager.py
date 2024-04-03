@@ -1,7 +1,7 @@
 import time
 import pytz
 from services.agent_manager.api.agent_handler.agent import Agent
-from services.agent_manager.config.agent_manager import settings
+from services.config.agent_manager import settings
 from services.agent_manager.consts import INTERVAL
 
 class AgentManager:
@@ -22,7 +22,7 @@ class AgentManager:
             await agent.activate()
 
             job = self.scheduler.add_job(
-                func=agent.handle_new_orders,
+                func=agent.process_new_orders,
                 trigger=INTERVAL,
                 seconds=settings.AGENT_SLEEPING_INTERVAL,
                 timezone=pytz.utc

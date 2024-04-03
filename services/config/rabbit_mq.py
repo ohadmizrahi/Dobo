@@ -8,7 +8,7 @@ class RabbitMQConfig(BaseSettings):
     broker_password: str
 
     class Config:
-        env_file = ".env"
+        env_file = "../.env"
 
     async def connect(self):
         connection_string = f"amqp://{self.broker_username}:{self.broker_password}@{self.broker_host}:{self.broker_port}/"
