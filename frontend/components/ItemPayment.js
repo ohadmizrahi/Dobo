@@ -1,26 +1,47 @@
-import React from 'react';
-import { View, Text, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
-
-const invoices = [
-    {
-        id: '1',
-        item: 'Classic Burger',
-        price: 10,
-        payers: ['John', 'Alice']
-    },
-    {
-        id: '2',
-        item: 'Pizza Margarita',
-        price: 12,
-        payers: ['Bob', 'Alice', 'Emily']
-    },
-
-];
+import React, { useState } from 'react';
+import { View, Text, FlatList, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 
 const InvoiceComponent = () => {
+    const [invoiceList, setInvoiceList] = useState([
+        {
+            id: '1',
+            item: 'Classic Burger',
+            price: 10,
+            payers: ['John', 'Alice']
+        },
+        {
+            id: '2',
+            item: 'Pizza Margarita',
+            price: 12,
+            payers: ['Bob', 'Alice', 'Emily']
+        },
+    ]);
+
+    const handleRemoveItem = (id) => {
+        Alert.alert(
+            'Confirm',
+            'Are you sure you want to remove this item?',
+            [
+                {
+                    text: 'Cancel',
+                    style: 'cancel',
+                },
+                {
+                    text: 'Yes',
+                    onPress: () => {
+                        const updatedInvoices = invoiceList.filter(item => item.id !== id);
+                        setInvoiceList(updatedInvoices); // Update state with filtered list
+                        console.log('Item removed:', id);
+                    },
+                },
+            ],
+            { cancelable: false }
+        );
+    };
+
     const renderItem = ({ item }) => (
         <View style={styles.invoiceItem}>
-            <TouchableOpacity style={styles.removeButton}>
+            <TouchableOpacity style={styles.removeButton} onPress={() => handleRemoveItem(item.id)}>
                 <Text style={styles.removeButtonText}>-</Text>
             </TouchableOpacity>
             <View style={styles.invoiceDetails}>
@@ -35,8 +56,11 @@ const InvoiceComponent = () => {
 
     return (
         <View style={styles.container}>
+            {/* Header "You pay on" */}
+            <Text style={styles.header}>You pay on</Text>
+            {/* Invoice List */}
             <FlatList
-                data={invoices}
+                data={invoiceList} // Use updated invoiceList state
                 keyExtractor={(item) => item.id.toString()}
                 renderItem={renderItem}
             />
@@ -48,6 +72,12 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
+    },
+    header: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        textAlign: 'center',
+        marginTop: 20,
     },
     invoiceItem: {
         flexDirection: 'row',
@@ -93,7 +123,6 @@ const styles = StyleSheet.create({
         color: '#333',
         flex: 1,
     },
-
 });
 
 export default InvoiceComponent;
