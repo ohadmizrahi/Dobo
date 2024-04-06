@@ -1,4 +1,3 @@
-// GlobalStateContext.js
 import React, { createContext, useState, useContext } from 'react';
 
 const CartStateContext = createContext();

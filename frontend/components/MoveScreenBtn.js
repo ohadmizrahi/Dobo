@@ -1,9 +1,9 @@
 import React from 'react';
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
 
-const MoveScreenButton = ({ navigation,screen,title }) => {
+const MoveScreenButton = ({ navigation, screen, title, route  }) => {
   return (
-    <TouchableOpacity style={styles.button} onPress={() => navigation.navigate(screen)}>
+    <TouchableOpacity style={styles.button} onPress={() => navigation.navigate(screen, { route })}>
       <Text style={styles.text}>{title}</Text>
     </TouchableOpacity>
   );

@@ -22,7 +22,7 @@ export default function ItemView({ route, navigation }) {
     const selectedItem = Item;
     console.log(selectedItem);
     setDataToCartState(selectedItem);
-    navigation.navigate('Order');
+    navigation.navigate('Order',{ SelectedItems: cartState});
   };
 
   const handleGoToCart = () => {

@@ -4,6 +4,7 @@ import { View, Text, FlatList, StyleSheet } from "react-native";
 
 
 export default function Cart({ route }) {
+  console.log('Cart', route.params);
   const { SelectedItems } = route.params;
   if (!SelectedItems) {
     return (
