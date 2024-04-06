@@ -1,25 +1,32 @@
-import React, { useEffect, useState } from "react";
 import { View, Text, Image, StyleSheet, Button, TouchableOpacity } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import menu from '../data/menuDate';
+import { useCartState } from './CartStateContext';
 
 export default function ItemView({ route, navigation }) {
   const { itemID } = route.params;
   const Item = menu.find(item => item.id === itemID);
+  const { cartState, setCartState } = useCartState();
 
-  const [selectedItems, setSelectedItems] = useState([]);
 
+  const setDataToCartState = (itemToAdd) => {
+    if (cartState === null) {
+      setCartState([itemToAdd])
+    } else {
+      setCartState([...cartState, itemToAdd]);
+    }
+  };
 
 
   const handleAddToCart = () => {
     const selectedItem = Item;
     console.log(selectedItem);
-    setSelectedItems([...selectedItems, selectedItem]);
-    navigation.navigate('Order');
+    setDataToCartState(selectedItem);
+    navigation.navigate('Order',{ SelectedItems: cartState});
   };
 
   const handleGoToCart = () => {
-    navigation.navigate("OrderCart", { SelectedItems: selectedItems});
+    navigation.navigate("OrderCart", { SelectedItems: cartState});
   };
 
   return (
