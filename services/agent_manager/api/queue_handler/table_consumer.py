@@ -19,7 +19,7 @@ class Consumer:
             try:
                 async with self.queue.iterator(timeout=1.0) as iqueue:
                     async for order in iqueue:
-                        orders.append(order.body.decode())
+                        orders.append(order)
                         await order.ack()
             except asyncio.TimeoutError:
                 print(f'All orders has been consumed, total consumed orders {len(orders)}')

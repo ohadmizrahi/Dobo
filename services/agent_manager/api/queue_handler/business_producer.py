@@ -13,11 +13,12 @@ class Producer:
     async def get_queue(self, queue_id):
         return await self.channel.declare_queue(queue_id)
 
-    async def produce(self, order, queue):
+    async def produce(self, message, queue):
         print(f"Producing orders to queue {queue.name}")
         try:
-            message = Message(body=order.encode())
+            message = Message(body=message.encode())
             await self.channel.default_exchange.publish(message, routing_key=queue.name)
+            return True
         except Exception as e:
             print(f"Failed to produce order to queue {queue.name}: {e}")
-        await asyncio.sleep(1)
+            return False

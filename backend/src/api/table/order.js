@@ -1,4 +1,4 @@
-const channelPromise = require('@be/connections/rabbitmq.js');
+const connectToRabbitMQ = require('@be/connections/rabbitmq.js');
 const { create: createOrder, deleteOrder } = require("@src/models/order.js")
 const { splitOrder } = require("@src/models/clientOrders.js")
 const { find: findVirtualTable } = require("@src/models/virtualTables.js")
@@ -11,7 +11,6 @@ async function handleNewOrders(virtualTable, orders) {
             if (!creation.success) {
                 return { success: false, step: 'create', message: creation.message }
             }
-
             const splitted = await splitOrder(creation.order, clients, price)
             if (!splitted.success) {
                 await deleteOrder(creation.order)
@@ -33,7 +32,6 @@ async function handleNewOrders(virtualTable, orders) {
     return Promise.all(promises)
         .then(results => {
             const unsuccessful = results.filter(result => !result.success);
-
             if (unsuccessful.length > 0) {
                 return {
                     success: false,
@@ -50,31 +48,37 @@ async function handleNewOrders(virtualTable, orders) {
 }
 
 async function produce(virtualTable, orders) {
-    const virtualTables = await findVirtualTable(virtualTable, active=true)
-    const { tableid, businessid } = virtualTables[0]
+    try {
+        console.log('find virtual table')
+        const virtualTables = await findVirtualTable(virtualTable, active=true)
+        const { tableid, businessid } = virtualTables[0]
     
-    const orderToSend = groupOrdersByItem(orders)
-    const payload = {
-        tableid,
-        businessid,
-        orders: orderToSend
+        const orderToSend = groupOrdersByItem(orders)
+        const payload = {
+            tableid,
+            businessid,
+            orders: orderToSend
+        }
+        channel = await connectToRabbitMQ()
+        // TODO: Until RabbitMQ is implemented, resolve with null
+        if (!channel) {
+            console.warn('Failed to connect to RabbitMQ server.');
+            return
+        }
+
+        const queue = virtualTable;
+        const msg = JSON.stringify(payload);
+
+        channel.assertQueue(
+            queue, { durable: false }
+        );
+
+        channel.sendToQueue(queue, Buffer.from(msg));
+        console.log('message sent');
+    } catch (error) {
+        console.error(error);
+        return { success: false, message: error }
     }
-    
-    channel = await channelPromise
-    // TODO: Until RabbitMQ is implemented, resolve with null
-    if (!channel) {
-        console.warn('Failed to connect to RabbitMQ server.');
-        return
-    }
-
-    const queue = virtualTable;
-    const msg = JSON.stringify(payload);
-
-    channel.assertQueue(
-        queue, { durable: false }
-    );
-
-    channel.sendToQueue(queue, Buffer.from(msg));
 }
 
 function groupOrdersByItem(orders) {

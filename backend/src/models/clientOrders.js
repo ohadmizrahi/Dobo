@@ -79,36 +79,43 @@ async function updateOrderClients(orderId, clientId, tableClients, itemPrice) {
 }
 
 async function splitOrder(orderId, clients, itemPrice) {
-    let dbClient;
+    const client = await pool.connect();
     try {
+        await client.query('BEGIN');
+
         const newCost = itemPrice / clients.length;
 
-        const dbClient = await pool.connect();
-        await dbClient.query('BEGIN');
+        const values = [];
+        const valueTuples = [];
+        let i = 1;
+
+        for (const clientId of clients) {
+            values.push(clientId, orderId, newCost);
+            valueTuples.push(`($${i++}, $${i++}, $${i++})`);
+        }
+
         const query = `
         INSERT INTO clientOrders (clientId, orderId, cost)
-        VALUES ($1, $2, $3)
+        VALUES ${valueTuples.join(', ')}
         ON CONFLICT (clientId, orderId)
         DO UPDATE SET cost = EXCLUDED.cost;`;
 
-        let modifiedClientsCount = 0;
-        for (const clientId of clients) {
-            const values = [clientId, orderId, newCost];
-            const result = await dbClient.query(query, values);
-            modifiedClientsCount += result.rowCount;
+        const result = await client.query(query, values);
+
+        if (result.rowCount !== clients.length) {
+            throw new Error(`Order split failed: expect to insert ${clients.length} but insert ${result.rowCount}.`);
         }
-        if (modifiedClientsCount !== clients.length) {
-            await dbClient.query('ROLLBACK');
-            return { success: false, message: "Order split failed" };
-        }
-        await dbClient.query('COMMIT');
-        return { success: true, message: "Order split", modifiedClientsCount };
+
+        await client.query('COMMIT');
+
+        return { success: true, message: "Order split", modifiedClientsCount: result.rowCount };
+        
     } catch (error) {
-        if (dbClient) {
-            await dbClient.query('ROLLBACK');
-        }
+        await client.query('ROLLBACK');
         console.error(error);
         throw new Error(`Split Order Failed:\n${error}`);
+    } finally {
+        client.release();
     }
 }
 

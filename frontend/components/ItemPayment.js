@@ -5,13 +5,13 @@ const invoices = [
     {
         id: '1',
         item: 'Classic Burger',
-        price: '$10',
+        price: 10,
         payers: ['John', 'Alice']
     },
     {
         id: '2',
         item: 'Pizza Margarita',
-        price: '$12',
+        price: 12,
         payers: ['Bob', 'Alice', 'Emily']
     },
 
@@ -26,7 +26,7 @@ const InvoiceComponent = () => {
             <View style={styles.invoiceDetails}>
                 <Text style={styles.invoiceText}>{item.item}</Text>
                 <View style={styles.priceContainer}>
-                    <Text style={styles.invoiceText}>{item.price}</Text>
+                    <Text style={styles.invoiceText}>${item.price}</Text>
                 </View>
                 <Text style={styles.invoiceText}>{item.payers.join(', ')}</Text>
             </View>
@@ -74,17 +74,24 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     invoiceDetails: {
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'flex-end',
+        flexDirection: 'row', // Arrange elements horizontally
+        alignItems: 'center', // Align text vertically
+        flex: 1, // Fill remaining space in the row
+        padding: 10,
     },
     invoiceText: {
+        alignItems: 'center',
         fontSize: 16,
+        fontWeight: 'bold',
         color: '#333',
+        flex: 1,
     },
     priceContainer: {
-        
+        alignItems: 'center',
+        fontSize: 16,
+        fontWeight: 'bold',
+        color: '#333',
+        flex: 1,
     },
 
 });

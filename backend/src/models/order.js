@@ -33,6 +33,7 @@ async function create(orderData) {
             RETURNING orderId;
         `;
         const values = [itemId, virtualTable];
+
         const res = await pool.query(query, values)
         const order = res.rows[0].orderid;
         return { success: true, order, message: "Order created"}

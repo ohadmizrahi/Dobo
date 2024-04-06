@@ -6,7 +6,8 @@ import JoinTableForm from '../components/JoinTableForm';
 import ConnectedFriends from '../components/ConnectedFriends';
 import LineAcross from '../components/LineAcross';
 import TableLink from '../components/TableLink';
-import GoToTableButton from '../components/GoToTableBtn';
+import MoveScreenButton from '../components/MoveScreenBtn';
+
 export default function JoinTableScreen({ navigation }) {
   return (
     <ScrollView style={globalStyles.screenColor}>
@@ -15,7 +16,7 @@ export default function JoinTableScreen({ navigation }) {
       <ConnectedFriends navigation={navigation} />
       <LineAcross text='OR' />
       <TableLink />
-      <GoToTableButton navigation={navigation} />
+      <MoveScreenButton navigation={navigation} title='Go to Table' screen='TableStatus' />
     </ScrollView>
   );
 }

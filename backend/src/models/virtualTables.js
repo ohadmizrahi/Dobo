@@ -5,6 +5,7 @@ async function find(virtualTableId, active=false) {
     const values = active ? [virtualTableId] : [virtualTableId, true];
     try {
         const res = await pool.query(query, values);
+        console.log('res:', res.rows);
         return res.rows;
     } catch (error) {
         console.error(error);

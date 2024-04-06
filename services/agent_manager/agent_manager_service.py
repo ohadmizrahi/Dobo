@@ -15,9 +15,9 @@ while path.name != 'Dobo' and path.name != '':
 if path.name == 'Dobo':
     sys.path.append(str(path))
 
-from services.agent_manager.config.rabbit_mq import RabbitMQConfig
-from services.agent_manager.config.postgres import PostgresConfig
-from services.agent_manager.config.agent_manager import settings
+from services.config.rabbit_mq import RabbitMQConfig
+from services.config.postgres import PostgresConfig
+from services.config.agent_manager import settings
 from services.agent_manager.consts import INTERVAL
 from services.agent_manager.api.queue_handler.business_producer import Producer
 from services.agent_manager.api.agent_handler.agent_manager import AgentManager
@@ -110,6 +110,7 @@ async def create_or_activate_agent(queue_id: str):
         )
     }
     try:
+        print(f'Creating or activating agent with id: {queue_id}')
         res = await agent_manager.create_or_activate_agent(
             broker_conn=broker_conn,
             queue_id=queue_id
