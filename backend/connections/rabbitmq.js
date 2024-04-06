@@ -6,14 +6,14 @@ let connection;
 
 const connectToRabbitMQ = () => {
     return new Promise((resolve, reject) => {
-        // if (channel) {
-        //     resolve(channel);
-        //     return;
-        // }
+        if (channel) {
+            resolve(channel);
+            return;
+        }
 
         amqp.connect(`amqp://${process.env.RABBITMQ_HOST}`, function(connError, conn) {
             if (connError) {
-                reject(connError);
+                reject(`Failed to connect to RabbitMQ server: ${connError}`);
                 return;
             }
 
@@ -35,7 +35,7 @@ const connectToRabbitMQ = () => {
 
             connection.createChannel(function(channelError, ch) {
                 if (channelError) {
-                    reject(channelError);
+                    reject(`Failed to create channel: ${channelError}`);
                     return;
                 }
 

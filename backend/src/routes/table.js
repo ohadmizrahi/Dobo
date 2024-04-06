@@ -6,6 +6,7 @@ const { payCheck, recalculateCheck, handleCalculateCheck } = require("@src/api/t
 const { generateClientToken } = require("@src/api/auth/token.js");
 const { getMenu } = require("@src/api/menu/item.js");
 const { handleNewOrders, produce } = require("@src/api/table/order.js");
+const connectToRabbitMQ = require("@be/connections/rabbitmq.js");
 
 const router = Router();
 
@@ -74,19 +75,20 @@ router.post("/api/table/order", authenticateClientToken, async (req, res) => {
     const { virtualtable } = req.client;
     const { orders } = req.body;
     try {
-            const handle = await handleNewOrders(virtualtable, orders);
-            if (handle.success) {
-                // DON'T COMMENT IT BACK U DON'T HAVE THE SERVER
-
-                await produce( virtualtable, orders);
-
-                res.status(200).json({ success: true, message: "Order added to table queue", virtualTable: handle.virtualTable });
-        
-            } else {
-                
-                res.status(400).json({ success: false, message: handle.message });
-        
+        channel = await connectToRabbitMQ()
+        const handle = await handleNewOrders(virtualtable, orders);
+        if (handle.success) {
+            const produced = await produce(channel, virtualtable, orders);
+            if (!produced.success) {
+                res.status(500).json({ success: false, message: produced.message });
             }
+            res.status(200).json({ success: true, message: "Order added to table queue", virtualTable: handle.virtualTable });
+    
+        } else {
+            
+            res.status(400).json({ success: false, message: handle.message });
+    
+        }
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'An error occurred during producing the order.' });

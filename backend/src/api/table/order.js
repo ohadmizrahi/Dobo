@@ -1,4 +1,3 @@
-const connectToRabbitMQ = require('@be/connections/rabbitmq.js');
 const { create: createOrder, deleteOrder } = require("@src/models/order.js")
 const { splitOrder } = require("@src/models/clientOrders.js")
 const { find: findVirtualTable } = require("@src/models/virtualTables.js")
@@ -47,9 +46,8 @@ async function handleNewOrders(virtualTable, orders) {
         .catch(error =>  ({ success: false, message: error }));
 }
 
-async function produce(virtualTable, orders) {
+async function produce(channel, virtualTable, orders) {
     try {
-        console.log('find virtual table')
         const virtualTables = await findVirtualTable(virtualTable, active=true)
         const { tableid, businessid } = virtualTables[0]
     
@@ -59,11 +57,10 @@ async function produce(virtualTable, orders) {
             businessid,
             orders: orderToSend
         }
-        channel = await connectToRabbitMQ()
-        // TODO: Until RabbitMQ is implemented, resolve with null
+        
         if (!channel) {
             console.warn('Failed to connect to RabbitMQ server.');
-            return
+            return { success: false, message: 'Failed to connect to RabbitMQ server.' }
         }
 
         const queue = virtualTable;
@@ -74,7 +71,9 @@ async function produce(virtualTable, orders) {
         );
 
         channel.sendToQueue(queue, Buffer.from(msg));
-        console.log('message sent');
+
+        return { success: true, message: "Order added to table queue", virtualTable };
+
     } catch (error) {
         console.error(error);
         return { success: false, message: error }
