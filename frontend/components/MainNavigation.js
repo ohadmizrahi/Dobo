@@ -17,7 +17,6 @@ import SignUpScreen from '../screens/SignUpScreen';
 import TableReservationScreen from '../screens/TableReservationScreen';
 import TableStatusScreen from '../screens/TableStatusScreen';
 import ScanQRScreen from '../screens/ScanQRScreen';
-import { CartStateProvider } from './CartStateContext';
 
 const Stack = createStackNavigator();
 
@@ -50,7 +49,6 @@ const MainHeaderOptions = {
 
 export default function MainNavigation() {
   return (
-    <CartStateProvider>
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Home">
         <Stack.Screen name="Home" component={HomeScreen} options={MainHeaderOptions}/>
@@ -69,7 +67,6 @@ export default function MainNavigation() {
         <Stack.Screen name='QRScanner' component={ScanQRScreen} options={{ headerShown: false }}/>
       </Stack.Navigator>
     </NavigationContainer>
-    </CartStateProvider>
   );
 }
 

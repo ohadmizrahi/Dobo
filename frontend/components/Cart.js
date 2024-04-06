@@ -1,12 +1,30 @@
-import React, { useState, useEffect } from "react";
-import { View, Text, FlatList, StyleSheet } from "react-native";
+import React, { useState, useEffect } from 'react';
+import { View, Text, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
+import { getData, removeData } from '../util/localStorage';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
+export default function Cart() {
+  const [selectedItems, setSelectedItems] = useState([]);
 
+  useEffect(() => {
+    const fetchCartData = async () => {
+      const data = await getData('cart');
+      if (data) {
+        setSelectedItems(JSON.parse(data));
+      }
+    };
+    fetchCartData();
+  }, []);
 
-export default function Cart({ route }) {
-  console.log('Cart', route.params);
-  const { SelectedItems } = route.params;
-  if (!SelectedItems) {
+  const removeItem = async (index) => {
+    const updatedCart = [...selectedItems];
+    updatedCart.splice(index, 1);
+    setSelectedItems(updatedCart);
+    await removeData('cart');
+    await storeData('cart', JSON.stringify(updatedCart));
+  };
+
+  if (selectedItems.length === 0) {
     return (
       <View style={styles.container}>
         <Text>No items in the cart.</Text>
@@ -16,7 +34,7 @@ export default function Cart({ route }) {
 
   const calculateTotalPrice = () => {
     let totalPrice = 0;
-    SelectedItems.forEach((item) => {
+    selectedItems.forEach((item) => {
       totalPrice += parseFloat(item.price);
     });
     return totalPrice.toFixed(2);
@@ -25,8 +43,11 @@ export default function Cart({ route }) {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Cart Items</Text>
-      {SelectedItems.map((item) => (
-        <View style={styles.itemContainer} key={item.id}>
+      {selectedItems.map((item, index) => (
+        <View style={styles.itemContainer} key={index}>
+          <TouchableOpacity onPress={() => removeItem(index)}>
+            <Icon name="minus-circle" size={24} color="red" />
+          </TouchableOpacity>
           <Text style={styles.itemName}>{item.name}</Text>
           <Text style={styles.itemPrice}>Price: {item.price}$</Text>
         </View>
@@ -34,7 +55,6 @@ export default function Cart({ route }) {
       <Text style={styles.totalPrice}>Total Price: ${calculateTotalPrice()}</Text>
     </View>
   );
-  
 }
 
 const styles = StyleSheet.create({
@@ -44,26 +64,29 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 20,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     marginBottom: 10,
   },
   itemContainer: {
     marginBottom: 10,
     padding: 10,
     borderWidth: 1,
-    borderColor: "#ccc",
+    borderColor: '#ccc',
     borderRadius: 5,
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   itemName: {
     fontSize: 16,
-    fontWeight: "bold",
+    fontWeight: 'bold',
+    padding: 10,
   },
   itemPrice: {
     fontSize: 14,
   },
   totalPrice: {
     fontSize: 18,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     marginTop: 10,
   },
 });
