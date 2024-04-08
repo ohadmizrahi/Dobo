@@ -6,6 +6,7 @@ class PostgresConfig(BaseSettings):
     pg_password: str
     database: str
     pg_host: str
+    pg_port: int
 
     class Config:
         env_file = "../.env"
@@ -15,7 +16,8 @@ class PostgresConfig(BaseSettings):
             user=self.pg_user,
             password=self.pg_password,
             database=self.database,
-            host=self.pg_host
+            host=self.pg_host,
+            port=self.pg_port
         )
         return connection
 

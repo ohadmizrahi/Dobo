@@ -1,7 +1,6 @@
 import asyncio
 from datetime import datetime
 import json
-from time import sleep
 
 class Orchestrator:
     def __init__(self, consumer, processor):
@@ -22,9 +21,10 @@ class Orchestrator:
             message_body = json.loads(message.body.decode())
             processed = await self.processor.process(message_body)
             if processed:
+                print(f"Processed message to {message_body['table']} at {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
                 await self.consumer.acknowledge(message)
             else:
-                print(f"Failed to process message: {message_body} at {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+                print(f"Failed to process message to {message_body['table']}\nmessage: {message_body['orders']}\n at {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
                 await message.nack(requeue=True)
     
     async def stop(self):
