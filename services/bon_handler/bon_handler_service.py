@@ -17,13 +17,15 @@ if path.name == 'Dobo':
 from services.config.rabbit_mq import RabbitMQConfig
 from services.bon_handler.api.orchestrator import Orchestrator
 from services.bon_handler.api.consumer import RabbitMQConsumer
-from services.bon_handler.api.processor import PrintProcessor
+from services.bon_handler.api.processor import PrinterProcessor
+from services.bon_handler.api.printers import CupsPrinter
 
 app = FastAPI()
 
 ORCHESTRATORS = []
 TASKS = []
 os.environ['BUSINESS_ID'] = '1'
+os.environ['PRINTER_ID'] = 'home'
 
 @app.on_event('startup')
 async def startup_event():
@@ -32,7 +34,7 @@ async def startup_event():
     try:
         rabbit_printer_orchestrator = await Orchestrator(
             RabbitMQConsumer(RabbitMQConfig()),
-            PrintProcessor(os.environ['BUSINESS_ID'])
+            PrinterProcessor(os.environ['BUSINESS_ID'], CupsPrinter(os.environ['PRINTER_ID']))
         ).setup()
 
         ORCHESTRATORS.append(rabbit_printer_orchestrator)

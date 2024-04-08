@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Button, Image } from 'react-native';
 import menu from '../data/menuDate';
 
-const ItemChanges = ({ route, navigation }) => {
+const ItemChanges = ({ route }) => {
   const { itemID } = route.params;
   const Item = menu.find(item => item.id === itemID);
 
@@ -55,6 +55,7 @@ const ItemChanges = ({ route, navigation }) => {
       {Object.entries(Item.changes[0]).map(([changeType, options]) =>
         renderChangeOptions(changeType, options)
       )}
+
       </View>
   );
 };
