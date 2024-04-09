@@ -1,8 +1,9 @@
 import React from 'react';
-import { View,ScrollView, Text, StyleSheet, Image, Button } from 'react-native';
+import { View,ScrollView, Text, StyleSheet, Image, Button} from 'react-native';
 import Businessinformation from '../components/BussinesInfo';
 import {globalStyles} from '../globalStyles';
 import BusinessCard from '../components/BussinesHeader';
+import ExitSign from '../components/ExitSign';
 
 
 
@@ -20,6 +21,7 @@ export default function BusinessInfoScreen({ navigation }) {
 
 return (
   <View style={globalStyles.screenColor}>
+    <ExitSign/>
     <BusinessCard businessCard={businessCardData} /> 
     <Businessinformation navigation={navigation} business={businessData} />
   </View>

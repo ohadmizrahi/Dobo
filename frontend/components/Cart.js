@@ -3,7 +3,7 @@ import { View, Text, FlatList, StyleSheet, TouchableOpacity } from 'react-native
 import { getData, removeData } from '../util/localStorage';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-export default function Cart() {
+export default function Cart({navigation}) {
   const [selectedItems, setSelectedItems] = useState([]);
 
   useEffect(() => {
@@ -52,7 +52,9 @@ export default function Cart() {
           <Text style={styles.itemPrice}>Price: {item.price}$</Text>
         </View>
       ))}
-      <Text style={styles.totalPrice}>Total Price: ${calculateTotalPrice()}</Text>
+      <TouchableOpacity onPress={()=> navigation.navigate ('Pay')}>
+      <Text style={styles.totalPrice} >Send Order ${calculateTotalPrice()}</Text>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -66,6 +68,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 10,
+    alignSelf: 'center',
   },
   itemContainer: {
     marginBottom: 10,
@@ -85,8 +88,14 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   totalPrice: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: 'bold',
-    marginTop: 10,
+    width: 250,
+    height: 50,
+    alignSelf: 'center',
+    backgroundColor: '#97DECC',
+    borderRadius: 50,
+    alignItems: 'center',
+    textAlign:'center',
   },
 });
