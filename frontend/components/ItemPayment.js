@@ -1,21 +1,15 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View, Text, FlatList, StyleSheet, TouchableOpacity, Alert } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
-const InvoiceComponent = () => {
-    const [invoiceList, setInvoiceList] = useState([
-        {
-            id: '1',
-            item: 'Classic Burger',
-            price: 10,
-            payers: ['John', 'Alice']
-        },
-        {
-            id: '2',
-            item: 'Pizza Margarita',
-            price: 12,
-            payers: ['Bob', 'Alice', 'Emily']
-        },
-    ]);
+const InvoiceComponent = ({ invoiceList, onRemoveItem }) => {
+    const calculateTotalPrice = () => {
+        let totalPrice = 0;
+        invoiceList.forEach(item => {
+            totalPrice += item.price;
+        });
+        return totalPrice;
+    };
 
     const handleRemoveItem = (id) => {
         Alert.alert(
@@ -28,11 +22,7 @@ const InvoiceComponent = () => {
                 },
                 {
                     text: 'Yes',
-                    onPress: () => {
-                        const updatedInvoices = invoiceList.filter(item => item.id !== id);
-                        setInvoiceList(updatedInvoices); // Update state with filtered list
-                        console.log('Item removed:', id);
-                    },
+                    onPress: () => onRemoveItem(id),
                 },
             ],
             { cancelable: false }
@@ -41,8 +31,8 @@ const InvoiceComponent = () => {
 
     const renderItem = ({ item }) => (
         <View style={styles.invoiceItem}>
-            <TouchableOpacity style={styles.removeButton} onPress={() => handleRemoveItem(item.id)}>
-                <Text style={styles.removeButtonText}>-</Text>
+            <TouchableOpacity onPress={() => handleRemoveItem(item.id)}>
+                <Icon name="minus-circle" size={24} color="red" />
             </TouchableOpacity>
             <View style={styles.invoiceDetails}>
                 <Text style={styles.invoiceText}>{item.item}</Text>
@@ -56,11 +46,9 @@ const InvoiceComponent = () => {
 
     return (
         <View style={styles.container}>
-            {/* Header "You pay on" */}
             <Text style={styles.header}>You pay on</Text>
-            {/* Invoice List */}
             <FlatList
-                data={invoiceList} // Use updated invoiceList state
+                data={invoiceList}
                 keyExtractor={(item) => item.id.toString()}
                 renderItem={renderItem}
             />
@@ -78,6 +66,12 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         textAlign: 'center',
         marginTop: 20,
+    },
+    total: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        textAlign: 'center',
+        marginVertical: 10,
     },
     invoiceItem: {
         flexDirection: 'row',
@@ -104,9 +98,9 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     invoiceDetails: {
-        flexDirection: 'row', // Arrange elements horizontally
-        alignItems: 'center', // Align text vertically
-        flex: 1, // Fill remaining space in the row
+        flexDirection: 'row',
+        alignItems: 'center',
+        flex: 1,
         padding: 10,
     },
     invoiceText: {
