@@ -1,19 +1,20 @@
-import React, { useState, useEffect } from 'react'; // Import React and necessary hooks
-import { TouchableOpacity, Text, StyleSheet } from 'react-native'; // Import TouchableOpacity and Text components from React Native
+import React, { useState, useEffect } from 'react';
+import { TouchableOpacity, Text, StyleSheet } from 'react-native';
 
 const YourAccountButton = ({ invoices }) => {
     const [total, setTotal] = useState(0); // State to hold the total amount
 
     useEffect(() => {
-        const calculateTotal = () => {
-            let price = 0;
-            // Sum the invoices array
-            invoices.forEach((invoice) => {
-                price += parseFloat(invoice);
+        const calculateTotalPrice = () => {
+            let totalPrice = 0;
+            invoices.forEach(item => {
+                totalPrice += item.price;
             });
-            return price.toFixed(2); // Format total to two decimal places
+            return totalPrice.toFixed(2); // Format total to two decimal places
         };
-        setTotal(calculateTotal()); // Update total when invoices prop changes
+
+        const newTotal = calculateTotalPrice();
+        setTotal(newTotal); // Update total price when invoices prop changes
     }, [invoices]); // Run effect when invoices prop changes
 
     return (
@@ -24,7 +25,6 @@ const YourAccountButton = ({ invoices }) => {
     );
 };
 
-// Styles for the button and text
 const styles = StyleSheet.create({
     button: {
         width: 300,
@@ -47,4 +47,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default YourAccountButton; // Export the component
+export default YourAccountButton;
