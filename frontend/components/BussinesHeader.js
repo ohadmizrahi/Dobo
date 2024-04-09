@@ -23,8 +23,8 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   head: {
-    width: 220,
-    height: 50,
+    width: 200,
+    height: 40,
     alignSelf: 'center',
     backgroundColor: '#97DECC',
     marginTop: '10%',
@@ -33,7 +33,7 @@ const styles = StyleSheet.create({
   text: {
     position: 'absolute',
     padding: 10,
-    fontSize: 30,
+    fontSize: 24,
     borderRadius: 50,
     marginBottom: 10,
     textAlign: 'center',
