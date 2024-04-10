@@ -28,7 +28,7 @@ const PasswordForm = () => {
       fields={fields}
       submitTitle="Reset"
       isLoading={isLoading}
-      formName="Sign In"
+      formName="Password"
     />
   );
 };

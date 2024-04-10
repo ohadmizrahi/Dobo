@@ -7,13 +7,11 @@ import MoveScreenButton from '../components/MoveScreenBtn';
 
 export default function OrderScreen({ navigation }) {
   return (
-    <View style={globalStyles.screenColor}>
-      <LogoImage/>
-      <ScrollView>
+    <ScrollView style={globalStyles.screenColor}>
+        <LogoImage/>
         <MoveScreenButton navigation={navigation} screen='OrderCart' title={'View Order'} />
         <Menu navigation={navigation} isOrderScreen={true} />
-      </ScrollView>
-    </View>
+    </ScrollView>
   );
 }
 

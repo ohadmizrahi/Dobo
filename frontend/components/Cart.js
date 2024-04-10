@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
-import { getData, removeData } from '../util/localStorage';
+import { getData, removeData, storeData } from '../util/localStorage';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default function Cart({navigation}) {
@@ -23,6 +23,13 @@ export default function Cart({navigation}) {
     await removeData('cart');
     await storeData('cart', JSON.stringify(updatedCart));
   };
+
+  const sendorder = async () => {
+    await getData('cart');
+    navigation.navigate('TableStatus');
+    console.log(selectedItems); // צריך לשלוח את הדאטה של ההזמנה לדאטה בייס וגם להציג את מה הוזמן במסך של השולחן
+    await removeData('cart');
+  }
 
   if (selectedItems.length === 0) {
     return (
@@ -50,9 +57,10 @@ export default function Cart({navigation}) {
           </TouchableOpacity>
           <Text style={styles.itemName}>{item.name}</Text>
           <Text style={styles.itemPrice}>Price: {item.price}$</Text>
+          <Text style={styles.itemName}>User/Table</Text>
         </View>
       ))}
-      <TouchableOpacity onPress={()=> navigation.navigate ('Pay')}>
+      <TouchableOpacity onPress={()=> sendorder()}>
       <Text style={styles.totalPrice} >Send Order ${calculateTotalPrice()}</Text>
       </TouchableOpacity>
     </View>
@@ -89,7 +97,7 @@ const styles = StyleSheet.create({
   },
   totalPrice: {
     fontSize: 20,
-    fontWeight: 'bold',
+    paddingTop:10,
     width: 250,
     height: 50,
     alignSelf: 'center',
