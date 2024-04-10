@@ -1,61 +1,50 @@
-import win32print
-import win32ui
-import win32con
-from reportlab.pdfgen import canvas
-from xml.etree.ElementTree import ElementTree,fromstring
+import platform
+import io
+from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Spacer, PageTemplate
+from reportlab.lib.pagesizes import letter
+from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.platypus.frames import Frame
+import subprocess
+import tempfile
 
-printer_name = win32print.GetDefaultPrinter()
-print(printer_name)
-drivers = win32print.EnumPrinterDrivers(None, None, 2)
-hPrinter = win32print.OpenPrinter(printer_name)
-print(hPrinter)
-printer_info = win32print.GetPrinter(hPrinter, 2)
-for driver in drivers:
-    if driver["Name"] == printer_info["pDriverName"]:
-        printer_driver = driver
-raw_type = "XPS_PASS" if printer_driver["Version"] == 4 else "RAW"
+table_data = [{'name': 'test', 'quantity': 3}, {'name': 'test2', 'quantity': 3}]
+buffer = io.BytesIO()
 
-try:
-  hJob = win32print.StartDocPrinter(hPrinter, 1, ("test of raw data", None, raw_type))
-  try:
-    win32print.StartPagePrinter(hPrinter)
-    # Create a dictionary
-    data = {
-        "Name": "John Doe",
-        "Age": 30,
-        "Location": "New York"
-    }
+if platform.system() == 'Linux':
+    doc = SimpleDocTemplate(buffer, pagesize=letter)
 
-    # Convert the dictionary to XML
-    xml_data = "<root>"
-    for key, value in data.items():
-        xml_data += f"<{key}>{value}</{key}>"
-    xml_data += "</root>"
+    styles = getSampleStyleSheet()
+    styles['Heading1'].alignment = 1  # 1 is center alignment
+    header = Paragraph("Table Number: 1", styles['Heading1'])
 
-    # Parse the XML data
-    root = fromstring(xml_data)
+    spacer = Spacer(1, 25)
 
-    # Create a new PDF
-    c = canvas.Canvas("temp.pdf")
+    table = Table(table_data, hAlign='CENTER')
 
-    # Write the XML data to the PDF
-    # (This is a very basic example - you'll need to adjust this to suit your XML structure)
-    c.drawString(100, 750, f"{root.tag}: {root.text}")
+    style = TableStyle([
+        ('FONTNAME', (0, 0), (-1, -1), 'Helvetica-Bold'),  # Make all text bold
+        ('FONTSIZE', (0, 0), (-1, -1), 14),  # Increase text size to 14
+        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+        ('BOTTOMPADDING', (0, 0), (-1, -1), 12)  # Apply padding to all cells
+    ])
+    table.setStyle(style)
 
-    # Save the PDF
-    c.save()
-    win32print.WritePrinter(hPrinter, open("temp.pdf", "rb").read())
-    win32print.EndPagePrinter(hPrinter)
-  finally:
-    win32print.EndDocPrinter(hPrinter)
-finally:
-  win32print.ClosePrinter(hPrinter)
+    frame = Frame(50, 50, 500, 700, id='normal')
 
-# import win32print
+    template = PageTemplate(id='main', frames=[frame])
 
-# def list_all_printers():
-#     printers = win32print.EnumPrinters(win32print.PRINTER_ENUM_LOCAL | win32print.PRINTER_ENUM_CONNECTIONS)
-#     for printer in printers:
-#         print(printer[2])
+    doc.addPageTemplates([template])
 
-# list_all_printers()
+    story = [header, spacer, table]
+
+    doc.build(story)
+
+    pdf_data = buffer.getvalue()
+
+    def print_file(printer_name, data):
+        with tempfile.NamedTemporaryFile(delete=True) as temp:
+            temp.write(data)
+            temp.flush()
+            subprocess.run(["lp", "-d", printer_name, temp.name])
+
+    print_file("home", pdf_data)
