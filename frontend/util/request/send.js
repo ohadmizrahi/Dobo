@@ -84,3 +84,5 @@ async function sendPostRequest(endpoint, body, tokens={}) {
     return success ? success : error;
     
 }
+
+export { sendGetRequest, sendPostRequest, refreshToken };
