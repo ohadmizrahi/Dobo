@@ -18,7 +18,7 @@ function authenticateUserToken(req, res, next) {
         next();
     } catch (error) {
         console.error(error);
-        return res.status(403).json({ message: 'Forbidden' });
+        return res.status(403).json({ message: 'Forbidden', source: 'user'});
     }
 }
 
@@ -39,7 +39,7 @@ function authenticateResetPasswordToken(req, res, next) {
         next();
     } catch (error) {
         console.error(error);
-        return res.status(403).json({ message: 'Forbidden' });
+        return res.status(403).json({ message: 'Forbidden', source: 'password'});
     }
 }
 
@@ -53,7 +53,7 @@ async function authenticateClientToken(req, res, next) {
             const clientId = decoded.clientId;
             const clients = await findOne(clientId, true);
             if (clients.length === 0) {
-                return res.status(403).json({ message: 'Client is forbidden' });
+                return res.status(403).json({ message: 'Client is forbidden', source: 'client'});
             }
             req.client = clients[0];
             next();
