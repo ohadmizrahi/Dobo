@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { signUpValidationSchema } from '../schemas/signupSchema';
 import Form from './Form';
-import { fetchAPI } from '../util/fetch';
 import { useNavigation } from '@react-navigation/native';
 import {API_URL} from '@env'; 
 
