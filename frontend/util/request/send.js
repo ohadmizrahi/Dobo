@@ -1,33 +1,34 @@
-import { buildHeaders, buildUrl, buildRequest } from './build';
+import { buildHeaders, buildRequest } from './build';
+import { removeData, storeData, getData } from '../localStorage';
 
 async function refreshToken(source) {
     let headers = null;
-    let url = null;
+    let endpoint = null;
     if (source === 'user') {
-      localStorage.removeItem('userToken');
-      const refreshToken = localStorage.getItem('userRefreshToken');
-      const endpoint = 'api/auth/token/refresh';
-      headers = buildHeaders(refreshToken)
-      url = buildUrl(endpoint);
+        await removeData('userToken');
+      const refreshToken = await getData('userRefreshToken');
+      endpoint = 'api/auth/token/refresh';
+      headers = buildHeaders(refreshToken, null)
 
     } else if (source === 'client') {
-      localStorage.removeItem('clientToken');
-      const userToken = localStorage.getItem('userToken');
-      const refreshToken = localStorage.getItem('clientRefreshToken');
-      const endpoint = 'api/table/auth/refresh';
+      await removeData('clientToken');
+      const userToken = await getData('userToken');
+      const refreshToken = await getData('clientRefreshToken');
+      endpoint = 'api/table/auth/refresh';
       headers = buildHeaders(userToken, refreshToken)
-      url = buildUrl(endpoint);
     }
 
-    const refreshResponse = await fetchAPI(url, 'GET', headers, null);
+    const { url, content } = buildRequest(endpoint, 'GET', headers);
 
-    if (!refreshResponse.ok) {
+    const { success, error } = await sendRequest(url, content, true);
+
+    if (error) {
         throw new Error('Token refresh failed');
     }
 
-    const { token, tokenForRefresh } = refreshResponse.data;
-    localStorage.setItem(`${source}Token`, token);
-    localStorage.setItem(`${source}RefreshToken`, tokenForRefresh);
+    const { token, tokenForRefresh } = success.data;
+    await storeData(`${source}Token`, token);
+    await storeData(`${source}RefreshToken`, tokenForRefresh);
 
     return { token, tokenForRefresh };
 }
@@ -41,8 +42,11 @@ async function sendRequest(url, content, ignoreTokenExperation=false) {
             if (ignoreTokenExperation) {
                 return { error: { status: response.status, message: responseData.message }};
             } else {
-                const { token } = await refreshToken(responseData.source);
-                const { userToken, clientToken } = responseData.source == 'user' ? { userToken: token, clientToken: null } : { userToken: null, clientToken: token };
+                const currentUserToken = await getData('userToken');
+                const { clienttoken } = content.headers;
+                
+                const { token: newToken } = await refreshToken(responseData.source);
+                const { userToken, clientToken } = responseData.source == 'user' ? { userToken: newToken, clientToken: clienttoken } : { userToken: currentUserToken, clientToken: newToken };
                 const headers = buildHeaders(userToken, clientToken);
                 return await sendRequest(url, { ...content, headers }, true);
             }

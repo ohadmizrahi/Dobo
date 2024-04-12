@@ -6,6 +6,7 @@ export const storeData = async (key, value) => {
         console.log('Data stored successfully');
     } catch (error) {
         console.log('Error storing data:', error);
+        throw new Error('Error storing data');
     }
 };
 
@@ -18,6 +19,7 @@ export const getData = async (key) => {
         }
     } catch (error) {
         console.log('Error retrieving data:', error);
+        throw new Error('Error retrieving data');
     }
 };
 
@@ -27,6 +29,7 @@ export const removeData = async (key) => {
         console.log('Data removed successfully');
     } catch (error) {
         console.log('Error removing data:', error);
+        throw new Error('Error removing data');
     }
 };
 
