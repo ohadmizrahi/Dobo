@@ -5,8 +5,8 @@ import YourAccountButton from '../components/YourAccountButton';
 import PaymentForm from '../components/PaymentForm';
 import LogoImage from '../components/DoboLogo';
 
-export default function PayScreen({ navigation }) {
-  const [invoices, setInvoices] = useState([
+// Define the invoice data
+const invoicesData = [
     {
       id: '1',
       item: 'Classic Burger',
@@ -19,7 +19,10 @@ export default function PayScreen({ navigation }) {
       price: 12,
       payers: ['Bob', 'Alice', 'Emily']
     },
-  ]);
+];
+
+export default function PayScreen({ navigation }) {
+  const [invoices, setInvoices] = useState(invoicesData);
 
   const handleRemoveItem = (id) => {
     setInvoices(prevInvoices => prevInvoices.filter(item => item.id !== id));
