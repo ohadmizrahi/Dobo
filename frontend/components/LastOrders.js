@@ -70,9 +70,9 @@ const styles = StyleSheet.create({
         position: 'relative',
     },
     orderItem: {
-        flexDirection: 'row', // Arrange elements horizontally
-        alignItems: 'center', // Align text vertically
-        flex: 1, // Fill remaining space in the row
+        flexDirection: 'row',
+        alignItems: 'center',
+        flex: 1,
         padding: 10,
     },
     orderText: {
