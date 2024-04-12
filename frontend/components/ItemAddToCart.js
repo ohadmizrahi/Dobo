@@ -20,29 +20,25 @@ export default function ItemAddToCart({ route, navigation }) {
     fetchCartData();
   }, []);
 
-  const handleAddToCart = async () => {
+  const handleAddToCart = async () => { // להוסיף תנאי אם הלחיצה הייתה עליי או על השולחן ולפי זה לשלוח את ההזמנה יחד עם האנשים ששותפים לה
     const updatedCart = [...cartState, Item];
     setCartState(updatedCart);
     await storeData('cart', JSON.stringify(updatedCart));
     navigation.navigate('Order');
   };
 
-  const handleGoToCart = () => {
-    navigation.navigate('OrderCart');
-  };
-
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.addToCartButton} onPress={handleAddToCart}>
         <FontAwesome name="shopping-cart" size={24} color="white" />
-        <Text style={styles.addToCartButtonText}>Add to Cart</Text>
+        <Text style={styles.addToCartButtonText}>Add to Me</Text>
       </TouchableOpacity>
       <View style={styles.price}>
         <Text>{Item.price}$</Text>
       </View>
-      <TouchableOpacity style={styles.addToCartButton} onPress={handleGoToCart}>
+      <TouchableOpacity style={styles.addToCartButton} onPress={handleAddToCart}>
         <FontAwesome name="shopping-cart" size={24} color="white" />
-        <Text style={styles.addToCartButtonText}>Go to Cart</Text>
+        <Text style={styles.addToCartButtonText}>Add to Table</Text>
       </TouchableOpacity>
     </View>
   );
@@ -56,6 +52,7 @@ const styles = StyleSheet.create({
     marginTop: 0,
     backgroundColor: '#fff',
     flexDirection: 'row',
+    alignSelf: 'center',
   },
   addToCartButton: {
     flexDirection: 'row',
@@ -71,7 +68,7 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   price: {
-    backgroundColor: 'grey',
+    backgroundColor: 'lightgrey',
     fontSize: 20,
     borderRadius: 30,
     width: 50,
