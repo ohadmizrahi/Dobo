@@ -8,14 +8,15 @@ import LineAcross from '../components/LineAcross';
 import TableLink from '../components/TableLink';
 import MoveScreenButton from '../components/MoveScreenBtn';
 
-export default function JoinTableScreen({ navigation }) {
+export default function JoinTableScreen({ navigation, route }) {
+  const qrData = route.params ? route.params.qrData : null;
   return (
     <ScrollView style={globalStyles.screenColor}>
       <DoboLogo />
-      <JoinTableForm />
+      <JoinTableForm qrData={qrData} />
       <ConnectedFriends navigation={navigation} />
       <LineAcross text='OR' />
-      <TableLink />
+      <TableLink/>
       <MoveScreenButton navigation={navigation} title='Go to Table' screen='TableStatus' />
     </ScrollView>
   );
