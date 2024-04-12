@@ -12,10 +12,10 @@ const MoveScreenButton = ({ navigation, screen, title }) => {
 const styles = StyleSheet.create({
   button: {
     backgroundColor: '#1D2328',
-    marginTop: 20,
+    marginTop: 5,
     width: '80%',
-    height: 60,
-    borderRadius: 20,
+    height: 40,
+    borderRadius: 10,
     alignItems: 'center',
     alignSelf: 'center',
     justifyContent: 'center',
