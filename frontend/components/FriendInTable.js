@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, StyleSheet, Image } from 'react-native';
-
+import {storeData} from '../util/localStorage';
 const friendsData = [
     {
         id: '1',
@@ -16,10 +16,20 @@ const friendsData = [
         paid: 20,
         totalToPay: 50,
     },
+    {
+        id: '3',
+        name: 'Moshe Smith',
+        image: 'https://randomuser.me/api/portraits/men/1.jpg',
+        paid: 60,
+        totalToPay: 100,
+    },
     // Add more friends as needed
 ];
 
 const FriendsInTable = () => {
+    const FriendsData = JSON.stringify(friendsData);
+    storeData('FriendsData',FriendsData)
+
     return (
         <View style={styles.container}>
             <Text style={[styles.header, styles.headerText]}>Friends</Text>
