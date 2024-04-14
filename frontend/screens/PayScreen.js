@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { ScrollView } from 'react-native';
-import InvoiceComponent from '../components/ItemPayment';
-import YourAccountButton from '../components/YourAccountButton';
-import PaymentForm from '../components/PaymentForm';
-import LogoImage from '../components/DoboLogo';
+import InvoiceComponent from '@Components/ItemPayment';
+import YourAccountButton from '@Components/YourAccountButton';
+import PaymentForm from '@Components/PaymentForm';
+import LogoImage from '@Components/DoboLogo';
 
 // Define the invoice data
 const invoicesData = [

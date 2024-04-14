@@ -1,12 +1,12 @@
 import React from 'react';
 import { View,ScrollView, Text, Button } from 'react-native';
-import { globalStyles } from '../globalStyles';
-import DoboLogo from '../components/DoboLogo';
-import JoinTableForm from '../components/JoinTableForm';
-import ConnectedFriends from '../components/ConnectedFriends';
-import LineAcross from '../components/LineAcross';
-import TableLink from '../components/TableLink';
-import MoveScreenButton from '../components/MoveScreenBtn';
+import { globalStyles } from '@Root/globalStyles';
+import DoboLogo from '@Components/DoboLogo';
+import JoinTableForm from '@Components/JoinTableForm';
+import ConnectedFriends from '@Components/ConnectedFriends';
+import LineAcross from '@Components/LineAcross';
+import TableLink from '@Components/TableLink';
+import MoveScreenButton from '@Components/MoveScreenBtn';
 
 export default function JoinTableScreen({ navigation }) {
   return (

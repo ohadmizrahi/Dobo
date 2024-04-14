@@ -1,9 +1,9 @@
 // logo image 
 import React from 'react';
 import { Image } from 'react-native';
-import { globalStyles } from '../globalStyles';
+import { globalStyles } from '@Root/globalStyles';
 
-const logoImg = require('../assets/logo.png');
+const logoImg = require('@Assets/logo.png');
 
 const LogoImage = () => {
     return (

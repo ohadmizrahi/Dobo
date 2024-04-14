@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text } from 'react-native';
-import { globalStyles } from '../globalStyles';
+import { globalStyles } from '@Root/globalStyles';
 
 export default function LineAcross({ text }) {
   return (

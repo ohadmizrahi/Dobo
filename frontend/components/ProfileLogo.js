@@ -1,6 +1,6 @@
 import { View, Pressable } from 'react-native';
 import { useNavigation } from '@react-navigation/native'; 
-import { globalStyles } from '../globalStyles';
+import { globalStyles } from '@Root/globalStyles';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default function ProfileLogo() {

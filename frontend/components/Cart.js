@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
-import { getData, removeData, storeData } from '../util/localStorage';
+import { getData, removeData, storeData } from '@Utils/localStorage';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default function Cart({navigation}) {
