@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { signUpValidationSchema } from '@Schemas/signupSchema';
-import Form from './Form';
+import Form from '@Components/Form';
 import { useNavigation } from '@react-navigation/native';
 import { sendPostRequest } from '@Utils/request/send.js'; 
 import { storeData } from '@Utils/storage/asyncStorage';
@@ -37,13 +37,12 @@ const SignUpForm = () => {
     const formattedDate = `${year}-${month}-${day}`;
     userInfo["birthday"] = formattedDate;
 
-
     try {
       const response = await sendPostRequest('api/auth/signup', userInfo);
 
-      await handleResponse(response, (data) => {
-        storeData('userToken', data.token);
-        storeData('userRefreshToken', data.tokenForRefresh);
+      await handleResponse(response, async (data, error) => {
+        await storeData('userToken', data.token);
+        await storeData('userRefreshToken', data.tokenForRefresh);
         navigation.navigate('Profile');
       });
     }

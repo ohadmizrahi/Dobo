@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { signinValidationSchema } from '@Schemas/signupSchema';
-import Form from './Form';
+import Form from '@Components/Form';
 import { useNavigation } from '@react-navigation/native';
 
 const JoinTableForm = () => {
