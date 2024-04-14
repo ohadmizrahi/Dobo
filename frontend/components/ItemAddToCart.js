@@ -1,7 +1,7 @@
 import { View, Text, Image, StyleSheet, Button, TouchableOpacity } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import React, { useState, useEffect } from 'react';
-import { storeData, getData } from '@Utils/localStorage'; // Import getData here
+import { storeData, getData } from '@Utils/storage/asyncStorage'; // Import getData here
 
 const menu = [
   {

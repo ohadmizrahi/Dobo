@@ -1,6 +1,6 @@
 import React from 'react';
 import { TableReservationFormSchema } from '@Schemas/reservationSchema';
-import Form from './Form';
+import Form from '@Components/Form';
 
 const TableReservationForm = () => {
   const fields = [

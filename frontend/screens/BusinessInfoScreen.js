@@ -1,7 +1,7 @@
 import React from 'react';
-import { View,ScrollView, Text, StyleSheet, Image, Button} from 'react-native';
+import { View } from 'react-native';
 import Businessinformation from '@Components/BussinesInfo';
-import {globalStyles} from '@Root/globalStyles';
+import { globalStyles } from '@Root/globalStyles';
 import BusinessHeader from '@Components/BussinesHeader';
 import ExitSign from '@Components/ExitSign';
 
