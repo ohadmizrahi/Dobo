@@ -22,7 +22,7 @@ function buildRequest(endpoint, method, headers, body=null) {
     if (method === 'GET' && body) {
         throw new Error('GET requests should not have a body');
     }
-    if (method !== 'POST' && !body) {
+    if (method === 'POST' && !body) {
         throw new Error('POST requests should have a body');
     }
 

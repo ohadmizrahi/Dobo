@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, StyleSheet, Image } from 'react-native';
 import {storeData} from '../util/localStorage';
 const friendsData = [
@@ -23,10 +24,28 @@ const friendsData = [
         paid: 60,
         totalToPay: 100,
     },
-    // Add more friends as needed
 ];
 
-const FriendsInTable = () => {
+const FriendsInTable = ({ totalFriends }) => {
+    const [joinedFriends, setJoinedFriends] = useState(0);
+
+    useEffect(() => {
+        if (joinedFriends === totalFriends) {
+            console.log('All friends have joined the table');
+        }
+    }, [joinedFriends, totalFriends]);
+
+    // Function to handle when a friend joins the table
+    const handleFriendJoin = () => {
+        setJoinedFriends(prevJoinedFriends => prevJoinedFriends + 1);
+    };
+
+    useEffect(() => {
+        if (joinedFriends < totalFriends) {
+            handleFriendJoin();
+        }
+    }, []);
+
     const FriendsData = JSON.stringify(friendsData);
     storeData('FriendsData',FriendsData)
 
@@ -51,7 +70,7 @@ const FriendsInTable = () => {
 
 const styles = StyleSheet.create({
     container: {
-        justifyContent: 'center',
+        flex: 1,
         alignItems: 'center',
         marginTop: 25,
     },
@@ -66,9 +85,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     headerText: {
-        alignItems: 'center',
-        alignSelf: 'center',
-        justifyContent: 'center',
         fontSize: 20,
         color: '#000',
         textAlign: 'center',
@@ -99,14 +115,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     friendName: {
-        alignItems: 'center',
         flex: 1,
         fontSize: 16,
         fontWeight: 'bold',
         color: '#333',
     },
     friendAmount: {
-        alignItems: 'center',
         flex: 1,
         fontSize: 16,
         fontWeight: 'bold',
