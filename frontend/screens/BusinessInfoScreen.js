@@ -2,7 +2,7 @@ import React from 'react';
 import { View,ScrollView, Text, StyleSheet, Image, Button} from 'react-native';
 import Businessinformation from '@Components/BussinesInfo';
 import {globalStyles} from '@Root/globalStyles';
-import BusinessCard from '@Components/BussinesHeader';
+import BusinessHeader from '@Components/BussinesHeader';
 import ExitSign from '@Components/ExitSign';
 
 
@@ -14,7 +14,7 @@ export default function BusinessInfoScreen({ navigation }) {
     rating: 4.5,
     openingHours: '10:00 AM - 10:00 PM', 
   };
-  const businessCardData ={
+  const BusinessHeaderData ={
     businessname: 'Aroma',
     imageUrl: 'https://cdn.pixabay.com/photo/2017/05/12/08/29/coffee-2306471_960_720.jpg'
   };
@@ -22,7 +22,7 @@ export default function BusinessInfoScreen({ navigation }) {
 return (
   <View style={globalStyles.screenColor}>
     <ExitSign/>
-    <BusinessCard businessCard={businessCardData} /> 
+    <BusinessHeader BusinessHeader={BusinessHeaderData} /> 
     <Businessinformation navigation={navigation} business={businessData} />
   </View>
   );

@@ -3,10 +3,10 @@ import React from 'react';
 import { View, Image, Text, StyleSheet } from 'react-native';
 
 
-const BusinessCard = ({ businessCard  }) => {
-    const {businessname, imageUrl} = businessCard 
+const BusinessHeader = ({ BusinessHeader  }) => {
+    const {businessname, imageUrl} = BusinessHeader 
   return (
-    <View style={styles.BusinessCardcontainer}>
+    <View style={styles.BusinessHeadercontainer}>
       <Image source={{ uri: imageUrl }} style={styles.backgroundImage} />
       <Text style={[styles.head, styles.text]}>{businessname}</Text>
     </View>
@@ -14,7 +14,7 @@ const BusinessCard = ({ businessCard  }) => {
 };
 
 const styles = StyleSheet.create({
-    BusinessCardcontainer: {
+    BusinessHeadercontainer: {
     flex: 0.5,
   },
   backgroundImage: {
@@ -41,4 +41,4 @@ const styles = StyleSheet.create({
 
 });
 
-export default BusinessCard;
+export default BusinessHeader;
