@@ -1,4 +1,4 @@
-import { globalStyles } from '../globalStyles';
+import { globalStyles } from '@Root/globalStyles';
 import React from 'react';
 import { View, Text } from 'react-native';
 

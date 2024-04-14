@@ -1,9 +1,9 @@
 import React from 'react';
 import { View,ScrollView, SafeAreaView, Button } from 'react-native';
-import {globalStyles} from '../globalStyles';
-import ItemChanges from '../components/ItemChanges';
-import ItemAddToCart from '../components/ItemAddToCart';
-import ExitSign from '../components/ExitSign';
+import {globalStyles} from '@Root/globalStyles';
+import ItemChanges from '@Components/ItemChanges';
+import ItemAddToCart from '@Components/ItemAddToCart';
+import ExitSign from '@Components/ExitSign';
 
 export default function ItamScreen({route, navigation}) {   
   return (

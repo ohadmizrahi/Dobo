@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { signUpValidationSchema } from '../schemas/signupSchema';
+import { signUpValidationSchema } from '@Schemas/signupSchema';
 import Form from './Form';
 import { useNavigation } from '@react-navigation/native';
 import {API_URL} from '@env'; 

@@ -77,8 +77,8 @@ async function stopTableConsumer(virtualTableId) {
         }
         return { success: true };
     } catch (error) {
-        console.error(error);
-        throw new Error(`Stop Consumer Agent failed\n${error}`);
+        console.error(`Stop Consumer Agent failed\n${error}`);
+        return { success: false, message: 'Stop Consumer Agent failed'};
     }
 }
 
@@ -127,9 +127,7 @@ async function closeVirtualTable(virtualTableId) {
             const { success, virtualTable, message } = await updateVirtualTable(virtualtableid, null, false);
             if (success) {
                 const response = await stopTableConsumer(virtualtableid);
-                if (!response.success) {
-                    return { success: false, message: response.message };
-                }
+                console.log(`Stop Consumer: ${response.message}`);
                 return { success: true, virtualTable };
             } else {
                 return { success: false, message };

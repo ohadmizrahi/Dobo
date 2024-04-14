@@ -4,7 +4,7 @@ import { View, Image, Text, StyleSheet } from 'react-native';
 
 
 const BusinessCard = ({ businessCard  }) => {
-    const {businessname,imageUrl} = businessCard 
+    const {businessname, imageUrl} = businessCard 
   return (
     <View style={styles.BusinessCardcontainer}>
       <Image source={{ uri: imageUrl }} style={styles.backgroundImage} />

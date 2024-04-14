@@ -12,6 +12,20 @@ module.exports = function(api) {
 
         },
       ],
+      ["module-resolver", {
+        "alias": {
+          "@Root": ".",
+          "@Components": "./components",
+          "@Schemas": "./schemas",
+          "@Utils": "./utils",
+          "@Screens": "./screens",
+          "@Assets": "./assets"
+        },
+        "extensions": [
+          ".js",
+          ".jsx"
+        ]
+      }],
     ],
   };
 };

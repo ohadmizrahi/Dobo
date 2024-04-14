@@ -1,10 +1,10 @@
 import React from 'react';
 import { View,ScrollView, Text, Button } from 'react-native';
-import MoveScreenButton from '../components/MoveScreenBtn';
-import LatestOrderComponent from '../components/LastOrders';
-import LogoImage from '../components/DoboLogo';
-import { globalStyles } from '../globalStyles';
-import FriendsInTable from '../components/FriendInTable';
+import MoveScreenButton from '@Components/MoveScreenBtn';
+import LatestOrderComponent from '@Components/LastOrders';
+import LogoImage from '@Components/DoboLogo';
+import { globalStyles } from '@Root/globalStyles';
+import FriendsInTable from '@Components/FriendInTable';
 
 export default function TableStatusScreen({ navigation }) {
   return (

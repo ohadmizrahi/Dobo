@@ -1,9 +1,9 @@
 import React from 'react';
 import { View , Text,ScrollView } from 'react-native';
-import Menu from '../components/Menu';
-import {globalStyles} from '../globalStyles';
-import LogoImage from '../components/DoboLogo';
-import MoveScreenButton from '../components/MoveScreenBtn';
+import Menu from '@Components/Menu';
+import {globalStyles} from '@Root/globalStyles';
+import LogoImage from '@Components/DoboLogo';
+import MoveScreenButton from '@Components/MoveScreenBtn';
 
 export default function OrderScreen({ navigation }) {
   return (

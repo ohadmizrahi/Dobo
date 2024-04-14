@@ -1,5 +1,5 @@
 import React from 'react';
-import { paymentValidationSchema } from '../schemas/paymentSchema';
+import { paymentValidationSchema } from '@Schemas/paymentSchema';
 import Form from './Form';
 
 const PaymentForm = ({paymentDetails}) => {
