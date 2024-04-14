@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList, StyleSheet, Image } from 'react-native';
-import {storeData} from '@Utils/localStorage';
+import { View, Text, StyleSheet, Image } from 'react-native';
+import {storeData} from '@Utils/storage/asyncStorage';
 const friendsData = [
     {
         id: '1',

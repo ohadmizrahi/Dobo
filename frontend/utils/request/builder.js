@@ -1,3 +1,4 @@
+import {BASE_URL, BE_PORT} from '@env';
 
 function buildHeaders(userToken=null, clientToken=null) {
     const headers = {
@@ -15,7 +16,7 @@ function buildHeaders(userToken=null, clientToken=null) {
   }
 
 function buildUrl(endpoint) {
-    return `${process.env.URL}/${endpoint}`;
+    return `${BASE_URL}:${BE_PORT}/${endpoint}`;
 }
 
 function buildRequest(endpoint, method, headers, body=null) {

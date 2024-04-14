@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, Text, Button } from 'react-native';
+import { ScrollView } from 'react-native';
 import SocialSignIn from '@Components/SocialSignIn';
 import LogoImage from '@Components/DoboLogo';
 import ProfilePicture from  '@Components/ProfilePic';

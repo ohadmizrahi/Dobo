@@ -2,7 +2,10 @@ import React, { useState } from 'react';
 import { signUpValidationSchema } from '@Schemas/signupSchema';
 import Form from './Form';
 import { useNavigation } from '@react-navigation/native';
-import {API_URL} from '@env'; 
+import { sendPostRequest } from '@Utils/request/send.js'; 
+import { storeData } from '@Utils/storage/asyncStorage';
+import { handleResponse } from '@Utils/response/handler';
+import { Alert } from 'react-native';
 
 const SignUpForm = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -36,32 +39,18 @@ const SignUpForm = () => {
 
 
     try {
-      const { data, error } = await fetchAPI( 
-       `${API_URL}/api/auth/signup`,
-        'POST', 
-        { 'Content-Type': 'application/json' }, 
-        userInfo
-      );
+      const response = await sendPostRequest('api/auth/signup', userInfo);
 
-      setIsLoading(false);
-
-      if (data) {
-        console.log('Response from server:', data);
-        navigation.navigate('Home');
-      }
-       else {
-        if (error && error.message === "Signup failed: Account already exists") {
-          alert("Account already exists.");
-        }
-         else {
-          Alert.alert('Error', 'An error occurred. Please try again later.');
-        }
-      }
+      await handleResponse(response, (data) => {
+        storeData('userToken', data.token);
+        storeData('userRefreshToken', data.tokenForRefresh);
+        navigation.navigate('Profile');
+      });
     }
      catch (error) {
-      setIsLoading(false);
       Alert.alert('Error', 'An error occurred. Please try again later.');
-
+    } finally {
+      setIsLoading(false);
     }
   };
   
