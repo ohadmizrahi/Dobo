@@ -4,7 +4,7 @@ import Form from './Form';
 import { useNavigation } from '@react-navigation/native';
 import { sendPostRequest } from '@Utils/request/send.js'; 
 import { storeData } from '@Utils/storage/asyncStorage';
-import { handleResponse } from '@Utils/response/handleResponses';
+import { handleResponse } from '@Utils/response/handler';
 import { Alert } from 'react-native';
 
 const SignUpForm = () => {
