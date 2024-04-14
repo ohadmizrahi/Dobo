@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { Alert } from 'react-native';
 import { signinValidationSchema } from '@Schemas/signupSchema';
-import Form from './Form';
+import Form from '@Components/Form';
 import { useNavigation } from '@react-navigation/native';
-import {API_URL} from '@env'; 
+import { sendPostRequest } from '@Utils/request/send.js';
+import { storeData } from '@Utils/storage/asyncStorage';
+import { handleResponse } from '@Utils/response/handler';
 
 const SignInForm = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -17,40 +19,28 @@ const SignInForm = () => {
   const onSubmit = async (values) => {
     setIsLoading(true);
 
+    const userInfo = {
+      username: values.email,
+      password: values.password,
+    };
+
+    console.log(JSON.stringify(userInfo));
+
     try {
-      const { data } = await Promise.race([
-        fetchAPI(
-          `${API_URL}/api/auth/signin`,
-          'POST',
-          { 'Content-Type': 'application/json' },
-          { username: values.email, password: values.password }
-        ),
-        new Promise(( reject ) => {
-          setTimeout(() => reject(new Error('Timeout')), 5000);
-        })
-      ]);
+      const response = await sendPostRequest('api/auth/signin', userInfo);
 
-      setIsLoading(false);
+      await handleResponse(response, async (data) => {
+        await storeData('userToken', data.token);
+        await storeData('userRefreshToken', data.tokenForRefresh);
+        navigation.navigate('Profile');
+      });
 
-      if (data) {
-        Alert.alert('Welcome', 'You have successfully signed in.');
-            navigation.navigate('Home');
-      }
-      else {
-        Alert.alert('Wrong Email or Password', 'Please check your email and password and try again.');
-      }
     } catch (error) {
+      Alert.alert('Error', 'An error occurred. Please try again later.');
+    } finally {
       setIsLoading(false);
-      console.error('Error:', error);
-      
-      if (error.message === 'Timeout') {
-        Alert.alert('Error', 'No response received from the server. Please try again later.');
-      }
-      else {
-        Alert.alert('Error', 'An error occurred. Please try again later.');
-      }
     }
-  };
+  }
 
   return (
     <Form
