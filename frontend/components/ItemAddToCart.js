@@ -161,7 +161,18 @@ export default function ItemAddToCart({ route, navigation }) {
     fetchCartData();
   }, []);
 
-  const handleAddToCart = async () => { // להוסיף תנאי אם הלחיצה הייתה עליי או על השולחן ולפי זה לשלוח את ההזמנה יחד עם האנשים ששותפים לה
+  const handleAddToCart = async (person) => { // להוסיף תנאי אם הלחיצה הייתה עליי או על השולחן ולפי זה לשלוח את ההזמנה יחד עם האנשים ששותפים לה
+    const itemClients = [];
+    ClientsData = await getData('FriendsData')
+    TableClients = JSON.parse(ClientsData)
+    if (person==="Me") {
+      itemClients.push(TableClients[0].id)
+    }else if (person==="Table"){
+      TableClients.forEach(client => {
+        itemClients.push(client.id)
+      })
+    }
+    Item.clients = itemClients
     const updatedCart = [...cartState, Item];
     setCartState(updatedCart);
     await storeData('cart', JSON.stringify(updatedCart));
@@ -170,14 +181,14 @@ export default function ItemAddToCart({ route, navigation }) {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.addToCartButton} onPress={handleAddToCart}>
+      <TouchableOpacity style={styles.addToCartButton} onPress={()=> {handleAddToCart('Me')}}>
         <FontAwesome name="shopping-cart" size={24} color="white" />
         <Text style={styles.addToCartButtonText}>Add to Me</Text>
       </TouchableOpacity>
       <View style={styles.price}>
         <Text>{Item.price}$</Text>
       </View>
-      <TouchableOpacity style={styles.addToCartButton} onPress={handleAddToCart}>
+      <TouchableOpacity style={styles.addToCartButton} onPress={()=> {handleAddToCart('Table')}}>
         <FontAwesome name="shopping-cart" size={24} color="white" />
         <Text style={styles.addToCartButtonText}>Add to Table</Text>
       </TouchableOpacity>
