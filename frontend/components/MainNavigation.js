@@ -17,6 +17,7 @@ import SignUpScreen from '../screens/SignUpScreen';
 import TableReservationScreen from '../screens/TableReservationScreen';
 import TableStatusScreen from '../screens/TableStatusScreen';
 import ScanQRScreen from '../screens/ScanQRScreen';
+import Navscreen from '../screens/NavScreen';
 
 const Stack = createStackNavigator();
 
@@ -50,7 +51,8 @@ const MainHeaderOptions = {
 export default function MainNavigation() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
+      <Stack.Navigator initialRouteName="Nav">
+        <Stack.Screen name="Nav" component={Navscreen} options={MainHeaderOptions}/>
         <Stack.Screen name="Home" component={HomeScreen} options={MainHeaderOptions}/>
         <Stack.Screen name="Item" component={ItamScreen} options={{ headerShown: false }}/>
         <Stack.Screen name="BusinessInfo" component={BusinessInfoScreen} options={{ headerShown: false }}/>

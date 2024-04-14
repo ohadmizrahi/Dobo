@@ -1,5 +1,4 @@
 // list of Places for home screen
-
 import React from 'react';
 import { View, Text, StyleSheet, FlatList, Image} from 'react-native';
 
@@ -129,6 +128,8 @@ export const Places = () => {
 
 const styles = StyleSheet.create({
     container: {
+        flex:1,
+        margin:5,
         overflow: 'hidden', // To clip the content within rounded edges
     },
     place: {
@@ -143,6 +144,7 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 15,
         fontWeight: 'bold',
+        textAlign: 'center',
     },
     type: {
         fontSize: 14,
