@@ -190,5 +190,8 @@ export const globalStyles = StyleSheet.create({
         fontWeight: 'bold',
         color: 'white',
       },
+      exitSignContainer: {
+        zIndex: 999,
+      },
 
 });

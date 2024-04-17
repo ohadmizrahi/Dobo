@@ -28,6 +28,7 @@ function buildRequest(endpoint, method, headers, body=null) {
     }
 
     const url = buildUrl(endpoint);
+    
     const content = method === 'GET' ? { method, headers } : { method, headers, body: JSON.stringify(body) };
     return {url, content};
 }

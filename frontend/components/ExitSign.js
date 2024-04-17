@@ -8,9 +8,9 @@ export default function ExitSign() {
   const navigation = useNavigation();
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, globalStyles.exitSignContainer]}>
         <TouchableOpacity onPress={() => navigation.goBack()}>
-            <Icon name="times-circle-o" size={30} color="grey" />
+            <Icon name="times-circle-o" size={35} color="grey" />
         </TouchableOpacity>
     </View>
   );
@@ -18,7 +18,9 @@ export default function ExitSign() {
 
 const styles = StyleSheet.create({
   container: {
-    marginRight: 16,
-    alignItems: 'flex-end',
+    position: 'absolute',
+    top: 40,
+    right: 20,
+    zIndex: 999,
   },
 });
