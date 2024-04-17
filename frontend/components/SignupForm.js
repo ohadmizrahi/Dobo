@@ -40,7 +40,7 @@ const SignUpForm = () => {
     try {
       const response = await sendPostRequest('api/auth/signup', userInfo);
 
-      await handleResponse(response, async (data, error) => {
+      await handleResponse(response, navigation, async (data, error) => {
         await storeData('userToken', data.token);
         await storeData('userRefreshToken', data.tokenForRefresh);
         navigation.navigate('Profile');

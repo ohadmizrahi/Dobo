@@ -2,6 +2,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import ProfileLogo from '@Components/ProfileLogo';
 // import ExitSign from '@Components/ExitSign';
+import withFocusHandler from '@Components/withFocusHandler';
 import HomeLogo from './HomeLogo';
 import HomeScreen from '@Screens/HomeScreen';
 import ItamScreen from '@Screens/ItemScreen';
@@ -39,6 +40,7 @@ const MainHeaderOptions = {
   },
   headerRight: ({ navigation }) => <HeaderRightComponent navigation={navigation} />,
   headerLeft: ({ navigation }) => <HeaderLeftComponent navigation={navigation} />,
+  gestureEnabled: true
 };
 
 // const ExitSignOptions = {
@@ -52,21 +54,21 @@ export default function MainNavigation() {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Nav">
-        <Stack.Screen name="Nav" component={Navscreen} options={MainHeaderOptions}/>
-        <Stack.Screen name="Home" component={HomeScreen} options={MainHeaderOptions}/>
-        <Stack.Screen name="Item" component={ItamScreen} options={{ headerShown: false }}/>
-        <Stack.Screen name="BusinessInfo" component={BusinessInfoScreen} options={{ headerShown: false }}/>
-        <Stack.Screen name="JoinTable" component={JoinTableScreen} options={MainHeaderOptions}/>
-        <Stack.Screen name="Order" component={OrderScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="Pay" component={PayScreen} options={{ headerShown: false }}/>
-        <Stack.Screen name="Menu" component={MenuScreen} options={{ headerShown: false }}/>
-        <Stack.Screen name="OrderCart" component={OrderCartScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="Profile" component={ProfileScreen} options={MainHeaderOptions}/>
-        <Stack.Screen name="SignIn" component={SignInScreen} options={MainHeaderOptions}/>
-        <Stack.Screen name="SignUp" component={SignUpScreen} options={MainHeaderOptions}/>
-        <Stack.Screen name="TableReservation" component={TableReservationScreen} options={{ headerShown: false }}/>
-        <Stack.Screen name="TableStatus" component={TableStatusScreen} options={MainHeaderOptions}/>
-        <Stack.Screen name='QRScanner' component={ScanQRScreen} options={{ headerShown: false }}/>
+        <Stack.Screen name="Nav" component={withFocusHandler(Navscreen)} options={MainHeaderOptions}/>
+        <Stack.Screen name="Home" component={withFocusHandler(HomeScreen)} options={MainHeaderOptions}/>
+        <Stack.Screen name="Item" component={withFocusHandler(ItamScreen)} options={{ headerShown: false }}/>
+        <Stack.Screen name="BusinessInfo" component={withFocusHandler(BusinessInfoScreen)} options={{ headerShown: false }}/>
+        <Stack.Screen name="JoinTable" component={withFocusHandler(JoinTableScreen)} options={MainHeaderOptions}/>
+        <Stack.Screen name="Order" component={withFocusHandler(OrderScreen)} options={{ headerShown: false }} />
+        <Stack.Screen name="Pay" component={withFocusHandler(PayScreen)} options={{ headerShown: false }}/>
+        <Stack.Screen name="Menu" component={withFocusHandler(MenuScreen)} options={{ headerShown: false }}/>
+        <Stack.Screen name="OrderCart" component={withFocusHandler(OrderCartScreen)} options={{ headerShown: false }} />
+        <Stack.Screen name="Profile" component={withFocusHandler(ProfileScreen)} options={MainHeaderOptions}/>
+        <Stack.Screen name="SignIn" component={withFocusHandler(SignInScreen)} options={MainHeaderOptions}/>
+        <Stack.Screen name="SignUp" component={withFocusHandler(SignUpScreen)} options={MainHeaderOptions}/>
+        <Stack.Screen name="TableReservation" component={withFocusHandler(TableReservationScreen)} options={{ headerShown: false }}/>
+        <Stack.Screen name="TableStatus" component={withFocusHandler(TableStatusScreen)} options={MainHeaderOptions}/>
+        <Stack.Screen name='QRScanner' component={withFocusHandler(ScanQRScreen)} options={{ headerShown: false }}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
