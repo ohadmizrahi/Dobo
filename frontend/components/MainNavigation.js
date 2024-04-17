@@ -30,9 +30,7 @@ const HeaderLeftComponent = ({ navigation }) => {
   return <HomeLogo navigation={navigation} />;
 };
 
-// const ExitSignComponent = ({ navigation }) => {
-//   return <ExitSign navigation={navigation} />;
-// };
+
 
 const MainHeaderOptions = {
   headerStyle: {
@@ -43,12 +41,7 @@ const MainHeaderOptions = {
   gestureEnabled: true
 };
 
-// const ExitSignOptions = {
-//   headerStyle: {
-//     backgroundColor: "#3D3D3D",
-//   },
-//   headerRight: ({ navigation }) => <ExitSignComponent navigation={navigation} />,
-// };
+
 
 export default function MainNavigation() {
   return (

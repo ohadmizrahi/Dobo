@@ -22,11 +22,11 @@ router.get("/api/table", authenticateClientToken, async (req, res) => {
         if (success) {
             res.status(200).json({ success, virtualTable, orders, clients });
         } else {
-            res.status(404).json({ error: 'Virtual table not found' });
+            res.status(404).json({ message: 'Virtual table not found' });
         }
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: 'An error occurred during searching table.' });
+        res.status(500).json({ message: 'An error occurred during searching table.' });
     }
 });
 
@@ -52,7 +52,7 @@ router.post("/api/table/join", validateAccountWithoutOpenTables, async (req, res
         }
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: 'An error occurred during open or join table.' });
+        res.status(500).json({ message: 'An error occurred during open or join table.' });
     }
 });
 
@@ -67,7 +67,7 @@ router.get("/api/table/auth/refresh", authenticateClientToken, async (req, res) 
         }
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: 'An error occurred during token refresh.' });
+        res.status(500).json({ message: 'An error occurred during token refresh.' });
     }
 });
 
@@ -91,7 +91,7 @@ router.post("/api/table/order", authenticateClientToken, async (req, res) => {
         }
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: 'An error occurred during producing the order.' });
+        res.status(500).json({ message: 'An error occurred during producing the order.' });
     }
 });
 
@@ -115,7 +115,7 @@ router.post("/api/table/check/recalculate", authenticateClientToken, async (req,
         }
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: 'An error occurred during updating client check.' });
+        res.status(500).json({ message: 'An error occurred during updating client check.' });
     }
 });
 
@@ -135,7 +135,7 @@ router.post("/api/table/check/pay", authenticateClientToken, async (req, res) =>
         }
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: 'An error occurred during paying client check.' });
+        res.status(500).json({ message: 'An error occurred during paying client check.' });
     }
 });
 
@@ -154,7 +154,7 @@ router.post("/api/table/close", async (req, res) => {
         }
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: 'An error occurred during closing virtual table.' });
+        res.status(500).json({ message: 'An error occurred during closing virtual table.' });
     }
 });
 

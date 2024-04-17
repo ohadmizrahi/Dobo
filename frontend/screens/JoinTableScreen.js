@@ -7,11 +7,12 @@ import LineAcross from '@Components/LineAcross';
 import TableLink from '@Components/TableLink';
 import CustomButton from '@Components/CustomButton';
 
-export default function JoinTableScreen({ navigation }) {
+export default function JoinTableScreen({ navigation, route }) {
+  const qrData = route.params ? route.params.qrData : null;
   return (
     <ScrollView style={globalStyles.screenColor}>
       <DoboLogo />
-      <JoinTableForm />
+      <JoinTableForm qrData={qrData} />
       <ConnectedFriends navigation={navigation} />
       <LineAcross text='OR' />
       <TableLink />

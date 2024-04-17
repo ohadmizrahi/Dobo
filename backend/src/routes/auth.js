@@ -21,7 +21,7 @@ router.post("/api/auth/signin", async (req, res) => {
         }
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: 'An error occurred during authentication.' });
+        res.status(500).json({ message: 'An error occurred during authentication.' });
     }
 });
 
@@ -57,9 +57,9 @@ router.post("/api/auth/signup", async (req, res) => {
     } catch (error) {
         console.error(error);
         if (error.message === 'Invalid input') {
-            res.status(400).json({ error: error.message, input: req.body });
+            res.status(400).json({ message: error.message, input: req.body });
         } else {
-            res.status(500).json({ error: 'An error occurred during signup.' });
+            res.status(500).json({ message: 'An error occurred during signup.' });
         }
     }
 });
@@ -75,7 +75,7 @@ router.get("/api/auth/token/refresh", authenticateUserToken, (req, res) => {
         }
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: 'An error occurred during token refresh.' });
+        res.status(500).json({ message: 'An error occurred during token refresh.' });
     }
 });
 
@@ -90,7 +90,7 @@ router.get("/api/auth/token/reset-password", authenticateUserToken, (req, res) =
         }
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: 'An error occurred during token creation.' });
+        res.status(500).json({ message: 'An error occurred during token creation.' });
     }
 });
 
