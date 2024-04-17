@@ -1,6 +1,5 @@
-import React from 'react';
-import { View,ScrollView, Text, Button } from 'react-native';
-import MoveScreenButton from '@Components/MoveScreenBtn';
+import { ScrollView } from 'react-native';
+import CustomButton from '@Components/CustomButton';
 import LatestOrderComponent from '@Components/LastOrders';
 import LogoImage from '@Components/DoboLogo';
 import { globalStyles } from '@Root/globalStyles';
@@ -10,10 +9,10 @@ export default function TableStatusScreen({ navigation }) {
   return (
     <ScrollView style={globalStyles.screenColor}>
       <LogoImage />
-      <MoveScreenButton navigation={navigation} title='Order Now' screen='Order'/>
+      <CustomButton navigation={navigation} title='Order Now' screen='Order'/>
       <LatestOrderComponent />
       <FriendsInTable/>
-      <MoveScreenButton navigation={navigation} screen={'Pay'} title={'Pay Now'} backgroundColor={'red'}/>
+      <CustomButton navigation={navigation} screen={'Pay'} title={'Pay Now'} backgroundColor={'red'}/>
     </ScrollView>
   );
 }

@@ -45,7 +45,7 @@ const FriendsInTable = ({ totalFriends }) => {
         }
     }, []);
 
-    const FriendsData = JSON.stringify(friendsData);
+    const FriendsData = friendsData;
     storeData('FriendsData',FriendsData)
 
     return (

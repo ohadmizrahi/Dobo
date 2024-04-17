@@ -6,7 +6,6 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 const Form = ({ initialValues, validationSchema, onSubmit, fields, error, submitTitle, formName }) => {
   const [formValues, setFormValues] = useState(initialValues);
-  console.log('Form', formValues);
 
   useEffect(() => {
     setFormValues(initialValues);

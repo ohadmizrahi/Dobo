@@ -10,7 +10,6 @@ const AccountInfoForm = ({ data }) => {
     setAccount(data);
   }, [data]);
 
-  console.log('Account:', account);
 
   const fields = [
     { name: 'fullName', label: 'Full Name', iconName: 'user', placeholder: 'Enter full name' },
@@ -34,7 +33,13 @@ const AccountInfoForm = ({ data }) => {
 
   return (
     <Form
-      initialValues={ {fullName: account.fullname, email: account.email, phoneNumber: account.phonenumber, address: account.address, birthday: account.birthdate} }
+      initialValues={ {
+        fullName: account.fullname,
+        email: account.email,
+        phoneNumber: account.phonenumber,
+        address: account.address,
+        birthday: account.birthdate,
+      } }
       onSubmit={onSubmit}
       fields={fields}
       submitTitle="Edit"
