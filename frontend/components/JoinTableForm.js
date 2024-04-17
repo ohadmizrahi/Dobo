@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import Form from './Form';
+import { signinValidationSchema } from '@Schemas/signupSchema';
+import Form from '@Components/Form';
+import { useNavigation } from '@react-navigation/native';
 
 const JoinTableForm = ({ qrData , navigation }) => {
   const [isLoading, setIsLoading] = useState(false);

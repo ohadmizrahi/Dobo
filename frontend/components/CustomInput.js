@@ -1,4 +1,4 @@
-import React from 'react'
+import { useState, useEffect } from 'react'
 import { Text, TextInput, StyleSheet } from 'react-native'
 
 const CustomInput = (props) => {
@@ -7,6 +7,8 @@ const CustomInput = (props) => {
     form: { errors, touched, setFieldTouched },
     ...inputProps
   } = props
+
+  console.log('CustomInput', props.field);
 
   const hasError = errors[name] && touched[name]
 
@@ -22,7 +24,6 @@ const CustomInput = (props) => {
       onChange(name)(text);
     }
   };
-
 
   return (
     <>

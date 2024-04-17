@@ -4,6 +4,9 @@ export const storeData = async (key, value) => {
     try {
         await AsyncStorage.setItem(key, value);
         console.log('Data stored successfully');
+        const keys = await AsyncStorage.getAllKeys()
+        const items = await AsyncStorage.multiGet(keys)
+        console.log(JSON.stringify(items))
     } catch (error) {
         console.log('Error storing data:', error);
         throw new Error('Error storing data');
