@@ -91,11 +91,11 @@ async function payCheck(clientId, ordersToPay) {
             if (orders.length !== 0) {
                 return { success: true, clientDisabled: false, message: 'Client paid on part of the check' };
             }
-            const client = await disable(clientId);
-            if (client.success) {
-                const activeTableClients = await getTableClients(clientTable, true);
+            const disabled = await disable(clientId);
+            if (disabled.success) {
+                const activeTableClients = await getTableClients(disabled.client.virtualtable, true);
                 if (activeTableClients.length === 0) {
-                    const virtualTable = await closeVirtualTable(client.virtualtable);
+                    const virtualTable = await closeVirtualTable(disabled.client.virtualtable);
                     if (virtualTable.success) {
                         return { success: true, clientDisabled: true, tableClosed: true, message: 'Client check paid successfully and table closed' };
                     } else {

@@ -1,12 +1,13 @@
 import React from 'react';
 import { View,ScrollView, Text, Button } from 'react-native';
-import LogoutButton from '../components/LogOut';
-import { globalStyles } from '../globalStyles';
-import ProfilePicture from '../components/ProfilePic';
-import DoboLogo from '../components/DoboLogo';
-import AccountInfoForm from '../components/AccountInfoForm';
-import PasswordForm from '../components/PasswordForm';
-import PaymentDetails from '../components/PaymentDetails';
+import MoveScreenBtn from '@Components/MoveScreenBtn';
+import { globalStyles } from '@Root/globalStyles';
+import ProfilePicture from '@Components/ProfilePic';
+import DoboLogo from '@Components/DoboLogo';
+import AccountInfoForm from '@Components/AccountInfoForm';
+import PasswordForm from '@Components/PasswordForm';
+import PaymentDetails from '@Components/PaymentDetails';
+
 export default function ProfileScreen({ navigation }) {
   return (
     <ScrollView style={globalStyles.screenColor}>
@@ -15,7 +16,7 @@ export default function ProfileScreen({ navigation }) {
       <AccountInfoForm />
       <PasswordForm />
       <PaymentDetails />
-      <LogoutButton navigation={navigation} />
+      <MoveScreenBtn navigation={navigation} screen={'SignIn'} title={'Log out'} backgroundColor={'red'}/>
     </ScrollView>
   );
 }

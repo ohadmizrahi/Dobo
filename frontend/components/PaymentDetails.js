@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, Button,TouchableOpacity } from "react-native";
-import { globalStyles } from "../globalStyles";
+import { globalStyles } from "@Root/globalStyles";
 import PaymentForm from "./PaymentForm";
 
 export default function PaymentDetails({ navigation }) {

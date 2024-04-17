@@ -1,5 +1,5 @@
-import { buildHeaders, buildRequest } from './build';
-import { removeData, storeData, getData } from '../localStorage';
+import { buildHeaders, buildRequest } from './builder';
+import { removeData, storeData, getData } from '@Utils/storage/asyncStorage';
 
 async function refreshToken(source) {
     let headers = null;
@@ -72,7 +72,7 @@ async function sendGetRequest(endpoint, tokens={}) {
     
     const {success, error} = await sendRequest(url, content, ignoreTokenExperation);
 
-    return success ? success : error;
+    return {success, error}
     
 }
 
@@ -85,7 +85,7 @@ async function sendPostRequest(endpoint, body, tokens={}) {
 
     const {success, error} = await sendRequest(url, content, ignoreTokenExperation);
 
-    return success ? success : error;
+    return {success, error}
     
 }
 

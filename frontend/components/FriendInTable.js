@@ -1,6 +1,6 @@
-import React from 'react';
-import { View, Text, FlatList, StyleSheet, Image } from 'react-native';
-
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, Image } from 'react-native';
+import {storeData} from '@Utils/storage/asyncStorage';
 const friendsData = [
     {
         id: '1',
@@ -16,10 +16,38 @@ const friendsData = [
         paid: 20,
         totalToPay: 50,
     },
-    // Add more friends as needed
+    {
+        id: '3',
+        name: 'Moshe Smith',
+        image: 'https://randomuser.me/api/portraits/men/1.jpg',
+        paid: 60,
+        totalToPay: 100,
+    },
 ];
 
-const FriendsInTable = () => {
+const FriendsInTable = ({ totalFriends }) => {
+    const [joinedFriends, setJoinedFriends] = useState(0);
+
+    useEffect(() => {
+        if (joinedFriends === totalFriends) {
+            console.log('All friends have joined the table');
+        }
+    }, [joinedFriends, totalFriends]);
+
+    // Function to handle when a friend joins the table
+    const handleFriendJoin = () => {
+        setJoinedFriends(prevJoinedFriends => prevJoinedFriends + 1);
+    };
+
+    useEffect(() => {
+        if (joinedFriends < totalFriends) {
+            handleFriendJoin();
+        }
+    }, []);
+
+    const FriendsData = JSON.stringify(friendsData);
+    storeData('FriendsData',FriendsData)
+
     return (
         <View style={styles.container}>
             <Text style={[styles.header, styles.headerText]}>Friends</Text>
@@ -41,7 +69,7 @@ const FriendsInTable = () => {
 
 const styles = StyleSheet.create({
     container: {
-        justifyContent: 'center',
+        flex: 1,
         alignItems: 'center',
         marginTop: 25,
     },
@@ -56,9 +84,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     headerText: {
-        alignItems: 'center',
-        alignSelf: 'center',
-        justifyContent: 'center',
         fontSize: 20,
         color: '#000',
         textAlign: 'center',
@@ -89,14 +114,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     friendName: {
-        alignItems: 'center',
         flex: 1,
         fontSize: 16,
         fontWeight: 'bold',
         color: '#333',
     },
     friendAmount: {
-        alignItems: 'center',
         flex: 1,
         fontSize: 16,
         fontWeight: 'bold',

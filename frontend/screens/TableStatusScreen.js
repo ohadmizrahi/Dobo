@@ -1,11 +1,10 @@
 import React from 'react';
 import { View,ScrollView, Text, Button } from 'react-native';
-import MoveScreenButton from '../components/MoveScreenBtn';
-import LatestOrderComponent from '../components/LastOrders';
-import LogoImage from '../components/DoboLogo';
-import { globalStyles } from '../globalStyles';
-import FriendsInTable from '../components/FriendInTable';
-import PayNowButton from '../components/PayNowBtn';
+import MoveScreenButton from '@Components/MoveScreenBtn';
+import LatestOrderComponent from '@Components/LastOrders';
+import LogoImage from '@Components/DoboLogo';
+import { globalStyles } from '@Root/globalStyles';
+import FriendsInTable from '@Components/FriendInTable';
 
 export default function TableStatusScreen({ navigation }) {
   return (
@@ -14,7 +13,7 @@ export default function TableStatusScreen({ navigation }) {
       <MoveScreenButton navigation={navigation} title='Order Now' screen='Order'/>
       <LatestOrderComponent />
       <FriendsInTable/>
-      <PayNowButton navigation={navigation}/>
+      <MoveScreenButton navigation={navigation} screen={'Pay'} title={'Pay Now'} backgroundColor={'red'}/>
     </ScrollView>
   );
 }

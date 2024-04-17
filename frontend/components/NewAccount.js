@@ -1,7 +1,7 @@
 // create account btn
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, } from 'react-native'; // Assuming you're using react-navigation
-import { globalStyles } from '../globalStyles';
+import { globalStyles } from '@Root/globalStyles';
 
 const DontHaveAccount = ({ navigation }) => (
   <View style={styles.container}>

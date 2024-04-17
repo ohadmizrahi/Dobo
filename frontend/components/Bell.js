@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { globalStyles } from '../globalStyles';
+import { globalStyles } from '@Root/globalStyles';
 
 
 export default function Bell({navigation}) {
