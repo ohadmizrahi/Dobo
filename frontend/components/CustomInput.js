@@ -8,8 +8,6 @@ const CustomInput = (props) => {
     ...inputProps
   } = props
 
-  console.log('CustomInput', props.field);
-
   const hasError = errors[name] && touched[name]
 
   const handleDatesChange = (text) => {

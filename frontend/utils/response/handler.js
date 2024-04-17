@@ -18,6 +18,10 @@ async function handleSucsess(status, data, callback) {
         successCodes[status] &&
         successCodes[status].logMessage &&
         console.log(successCodes[status].logMessage, `Data is: ${printData}`);
+        if (!callback) {
+            console.log('No callback function provided');
+            return;
+        }
 
         console.log('Execute callback function...');
         await callback(data, null)

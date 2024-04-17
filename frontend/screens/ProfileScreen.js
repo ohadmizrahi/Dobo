@@ -13,7 +13,7 @@ import { storeData, getData } from '@Utils/storage/asyncStorage';
 import { useState, useEffect } from 'react';
 
 export default function ProfileScreen({ navigation }) {
-  const [profile, setProfile] = useState({account: {}, paymentsMethod: {}});
+  const [profile, setProfile] = useState({account: {}, paymentsMethod: {}})
 
     useEffect(() => {
     const fetchData = async () => {
@@ -37,8 +37,10 @@ export default function ProfileScreen({ navigation }) {
         });
     };
 
-    fetchData();
+    fetchData()
+    
     }, []);
+
 
   return (
     <ScrollView style={globalStyles.screenColor}>

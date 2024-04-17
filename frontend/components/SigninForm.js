@@ -36,6 +36,7 @@ const SignInForm = () => {
       });
 
     } catch (error) {
+      console.log('Error:', error);
       Alert.alert('Error', 'An error occurred. Please try again later.');
     } finally {
       setIsLoading(false);
