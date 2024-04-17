@@ -22,6 +22,7 @@ const Form = ({ initialValues, validationSchema, onSubmit, fields, error, submit
           initialValues={formValues}
           onSubmit={onSubmit}
           validationSchema={validationSchema}
+          enableReinitialize
         >
           {({ handleSubmit, isValid }) => (
             <>

@@ -24,8 +24,6 @@ const SignInForm = () => {
       password: values.password,
     };
 
-    console.log(JSON.stringify(userInfo));
-
     try {
       const response = await sendPostRequest('api/auth/signin', userInfo);
 

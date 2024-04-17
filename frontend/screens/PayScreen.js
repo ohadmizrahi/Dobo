@@ -4,6 +4,7 @@ import InvoiceComponent from '@Components/ItemPayment';
 import YourAccountButton from '@Components/YourAccountButton';
 import PaymentForm from '@Components/PaymentForm';
 import LogoImage from '@Components/DoboLogo';
+import ExitSign from '@Components/ExitSign';
 
 // Define the invoice data
 const invoicesData = [
@@ -30,6 +31,7 @@ export default function PayScreen({ navigation }) {
 
   return (
     <ScrollView>
+      <ExitSign />
       <LogoImage />
       <InvoiceComponent invoiceList={invoices} onRemoveItem={handleRemoveItem} />
       <YourAccountButton invoices={invoices} />
