@@ -1,7 +1,6 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import ProfileLogo from '@Components/ProfileLogo';
-// import ExitSign from '@Components/ExitSign';
 import HomeLogo from './HomeLogo';
 import HomeScreen from '@Screens/HomeScreen';
 import ItamScreen from '@Screens/ItemScreen';
@@ -29,9 +28,7 @@ const HeaderLeftComponent = ({ navigation }) => {
   return <HomeLogo navigation={navigation} />;
 };
 
-// const ExitSignComponent = ({ navigation }) => {
-//   return <ExitSign navigation={navigation} />;
-// };
+
 
 const MainHeaderOptions = {
   headerStyle: {
@@ -41,12 +38,7 @@ const MainHeaderOptions = {
   headerLeft: ({ navigation }) => <HeaderLeftComponent navigation={navigation} />,
 };
 
-// const ExitSignOptions = {
-//   headerStyle: {
-//     backgroundColor: "#3D3D3D",
-//   },
-//   headerRight: ({ navigation }) => <ExitSignComponent navigation={navigation} />,
-// };
+
 
 export default function MainNavigation() {
   return (
