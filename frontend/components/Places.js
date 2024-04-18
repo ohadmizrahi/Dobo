@@ -1,11 +1,17 @@
-// list of Places for home screen
-import React from 'react';
-import { View, Text, StyleSheet, FlatList, Image} from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { sendPostRequest } from '@Utils/request/send.js';
+import { storeData, getAllData } from '@Utils/storage/asyncStorage';
+import { handleResponse } from '@Utils/response/handler';
 
-export const Places = () => {
+export const Places = ({title}) => {
+    const navigation = useNavigation();
+    const [selectedBusinessId, setSelectedBusinessId] = useState(null);
+
     const places = [
         {
-            "id": "001",
+            "businessId": "001",
             "name": "Bella Italia",
             "rate": 4.5,
             "type": "Italian",
@@ -15,7 +21,7 @@ export const Places = () => {
 
         },
         {
-            "id": "002",
+            "businessId": "002",
             "name": "Tokyo Sushi Bar",
             "rate": 4.8,
             "type": "Japanese",
@@ -25,8 +31,8 @@ export const Places = () => {
 
         },
         {
-            "id": "003",
-            "name": "La Maison du Croissant",
+            "businessId": "003",
+            "name": "The Croissant",
             "rate": 4.3,
             "type": "French Bakery",
             "description": "Authentic French bakery known for its freshly baked croissants, baguettes, and pastries. Also serves coffee and tea.",
@@ -35,7 +41,7 @@ export const Places = () => {
 
         },
         {
-            "id": "004",
+            "businessId": "004",
             "name": "Spice Kingdom",
             "rate": 4.6,
             "type": "Indian",
@@ -45,7 +51,7 @@ export const Places = () => {
 
         },
         {
-            "id": "005",
+            "businessId": "005",
             "name": "El Rancho Grill",
             "rate": 4.4,
             "type": "Mexican",
@@ -55,8 +61,8 @@ export const Places = () => {
 
         },
         {
-            "id": "006",
-            "name": "The Greek Taverna",
+            "businessId": "006",
+            "name": "Greek Taverna",
             "rate": 4.7,
             "type": "Greek",
             "description": "Traditional Greek cuisine with a modern twist. Offers souvlaki, gyros, Greek salads, and seafood dishes.",
@@ -65,7 +71,7 @@ export const Places = () => {
 
         },
         {
-            "id": "007",
+            "businessId": "007",
             "name": "BBQ Pitmaster",
             "rate": 4.9,
             "type": "Barbecue",
@@ -75,7 +81,7 @@ export const Places = () => {
 
         },
         {
-            "id": "008",
+            "businessId": "008",
             "name": "Veggie Delight",
             "rate": 4.2,
             "type": "Vegetarian",
@@ -85,7 +91,7 @@ export const Places = () => {
 
         },
         {
-            "id": "009",
+            "businessId": "009",
             "name": "Seafood Cove",
             "rate": 4.6,
             "type": "Seafood",
@@ -94,7 +100,7 @@ export const Places = () => {
             "image": "https://www.tiuli.com/image/cea91d38ee5eecf992db4e3d4fae4c48.jpg?&width=520&height=450"
         },
         {
-            "id": "010",
+            "businessId": "010",
             "name": "Spice Route",
             "rate": 4.5,
             "type": "Asian Fusion",
@@ -105,53 +111,83 @@ export const Places = () => {
         }
     ]
 
+    const handleBusinessPress = async (businessId) => {
+        setSelectedBusinessId(businessId);
+        try {
+          const response = await sendPostRequest('/api/business/info', { businessId });
+            await handleResponse(response, navigation, async (data) => {
+            await storeData('businessId', data);
+            navigation.navigate('BusinessInfo');
+        });
+    
+        } catch (error) {
+          console.log('Error:', error);
+          Alert.alert('Error', 'An error occurred. Please try again later.');
+        }
+    };
+
     return (
         <View style={styles.container}>
+            <Text style={styles.sectionTitle}>{title}</Text>
             <FlatList
                 data={places}
                 renderItem={({ item }) => (
-                    <View style={styles.place}>
-                        <Image style={styles.image} source={{ uri: item.image }} />
-                        <Text style={styles.title}>{item.name}</Text>
-                        <Text style={styles.type}>{item.type}</Text>
-                    </View>
+                    <TouchableOpacity onPress={() => handleBusinessPress(item.businessId)}>
+                        <View style={styles.place}>
+                            <Image style={styles.image} source={{ uri: item.image }} />
+                            <Text style={styles.title}>{item.name}</Text>
+                            <Text style={styles.type}>{item.type}</Text>
+                        </View>
+                    </TouchableOpacity>
                 )}
-                keyExtractor={(item) => item.id.toString()}
+                keyExtractor={(item) => item.businessId.toString()}
                 horizontal={true}
                 showsHorizontalScrollIndicator={false}
-                ItemSeparatorComponent={() => <View style={{ width: 16 }} />}
+                ItemSeparatorComponent={() => <View style={{ width: 15 }} />}
                 ListEmptyComponent={() => <Text>No places found</Text>}
             />
         </View>
     );
-}
+};
 
 const styles = StyleSheet.create({
     container: {
         flex:1,
         margin:5,
-        overflow: 'hidden', // To clip the content within rounded edges
+        marginTop: 10,
+        overflow: 'hidden',
+        width: '100%',
+        height: '100%',
     },
     place: {
         width: 130,
         height: 130,
         borderRadius: 15,
         backgroundColor: '#fff',
-        elevation: 3,
         shadowColor: '#333',
-        justifyContent: 'center',
     },
     title: {
         fontSize: 15,
         fontWeight: 'bold',
-        textAlign: 'center',
+        alignSelf: 'flex-start',
+
     },
     type: {
         fontSize: 14,
         color: '#666',
+        alignSelf: 'flex-start',
     },
     image: {
-        width: '100%',
-        height: '100%',
+        width: 130,
+        height: 80,
+        borderTopLeftRadius: 15,
+        borderTopRightRadius: 15,
+        alignSelf: 'center',
+    },
+    sectionTitle: {
+        fontSize: 20,
+        color: '#EFEFEF',
+        alignSelf: 'center',
+        marginBottom: 10,
     },
 });
