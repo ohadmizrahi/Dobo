@@ -1,62 +1,70 @@
-// Bussines rating, description, menu btn, open hours
 import React from 'react';
 import { View, Text, StyleSheet, Button } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
-export default function Businessinformation({business, navigation}){
-  const { description, rating, openingHours } = business;
+
+export default function Businessinformation({ navigation }) {
+
+  const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+
+  const businessData = {
+    description: 'cozy restaurant serving delicious Italian food.',
+    rating: 4.5,
+    openingHours: '10:00 - 22:00', 
+  };
 
   return (
     <View style={styles.container}>
       <View style={styles.details}>
-        <Text style={styles.rating}>Rating: {rating} stars</Text>
-        <Text style={styles.description}>{description}</Text>
-        <Text style={styles.openingHours}>Opening Hours: {openingHours}</Text>
-        <Button title="View Menu" onPress={() => { navigation.navigate('Menu')}} />
+        <View style={styles.align}>
+          <Icon name="smile-o" size={20} />
+          <Text style={styles.info}>{businessData.rating}</Text>
+        </View>
+        <View style={styles.align}>
+          <Icon name="clock-o" size={20} />
+          <Text style={styles.info}>{businessData.openingHours}</Text>
+          {/* Add Dropdown for days of the week */}
+        </View>
+        <View style={styles.align}>
+          <Icon name="info-circle" size={20} />
+          <Text style={styles.info}>{businessData.description}</Text>
+        </View>
+        <View style={styles.align}>
+          <Icon name="book" size={20} />
+          <Button title="View Menu" onPress={() => navigation.navigate('Menu')} />
+        </View>
       </View>
       <View>
-        <Button title='find place' color={'black'} onPress={()=>{ navigation.navigate('JoinTable')}}></Button>
+        <Button title='find place' color={'black'} onPress={() => navigation.navigate('JoinTable')} />
       </View>
     </View>
   );
 };
 
-
-// need to be passed to the globalstylesheet 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        padding: 20,
-        backgroundColor: '#f5f5f5', // Light background color
-        borderRadius: 10, // Rounded corners
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.2,
-      },
-      details: {
-        marginTop: 20,
-        padding: 10, // Add some padding for better separation
-        backgroundColor: '#fff', // White background for details
-        borderRadius: 10, // Rounded corners for details section
-      },
-      title: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        color: '#333', // Darker text color
-      },
-      rating: {
-        marginVertical: 5,
-        color: '#777', // Light text color for rating
-      },
-      description: {
-        marginBottom: 10,
-        color: '#555', // Medium text color for description
-      },
-      openingHours: {
-        fontWeight: 'bold',
-        color: '#333',
-      },
-      menuButton: {
-        color: "black",
-        // Customize button styles as needed (consider rounded corners, background color)
-      },
-    });
+  container: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: '#f5f5f5',
+    borderRadius: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+  },
+  details: {
+    marginTop: 20,
+    padding: 10,
+    backgroundColor: '#fff',
+    borderRadius: 10,
+  },
+  info: {
+    marginVertical: 5,
+    color: '#000',
+    marginLeft: 10,
+  },
+  align: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+});
