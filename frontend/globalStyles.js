@@ -56,6 +56,7 @@ export const globalStyles = StyleSheet.create({
         marginHorizontal: 20,
         paddingHorizontal: 10,
         marginTop: 20,
+        marginBottom: 20,
     },
     textInput: {
         flex: 1,

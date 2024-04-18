@@ -35,6 +35,9 @@ const HeaderLeftComponent = ({ navigation }) => {
 const MainHeaderOptions = {
   headerStyle: {
     backgroundColor: "#3D3D3D",
+    elevation: 0,
+    shadowOpacity: 0,
+    borderBottomWidth: 0,
   },
   headerRight: ({ navigation }) => <HeaderRightComponent navigation={navigation} />,
   headerLeft: ({ navigation }) => <HeaderLeftComponent navigation={navigation} />,
@@ -48,7 +51,7 @@ export default function MainNavigation() {
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Nav">
         <Stack.Screen name="Nav" component={withFocusHandler(Navscreen)} options={MainHeaderOptions}/>
-        <Stack.Screen name="Home" component={withFocusHandler(HomeScreen)} options={MainHeaderOptions}/>
+        <Stack.Screen name="Home" component={withFocusHandler(HomeScreen)} options={{...MainHeaderOptions,title: ""}}/>
         <Stack.Screen name="Item" component={withFocusHandler(ItamScreen)} options={{ headerShown: false }}/>
         <Stack.Screen name="BusinessInfo" component={withFocusHandler(BusinessInfoScreen)} options={{ headerShown: false }}/>
         <Stack.Screen name="JoinTable" component={withFocusHandler(JoinTableScreen)} options={MainHeaderOptions}/>
