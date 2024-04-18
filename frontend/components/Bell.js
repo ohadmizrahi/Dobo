@@ -39,10 +39,11 @@ export default function Bell({ navigation }) {
 
 const styles = StyleSheet.create({
     bellContainer: {
-        position: 'absolute',
-        top: 700,
-        right: 30,
+        position: 'relative',
+        bottom: 80,
         zIndex: 999,
+        right: 30,
+        direction: 'rtl',
     },
     bellBackground: {
         backgroundColor: '#3D3D3D',
