@@ -1,7 +1,7 @@
 import React from 'react';
 import { ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
 import TableReservationForm from '@Components/Reservation';
-import BusinessCard from '@Components/BussinesHeader';
+import BusinessHeader from '@Components/BussinesHeader';
 import ExitSign from '@Components/ExitSign';
 import { globalStyles } from '@Root/globalStyles';
 
@@ -12,6 +12,7 @@ export default function TableReservationScreen({ navigation},{BusinessID}) {
     <ScrollView>
       <ExitSign/>
       {/* <BusinessCard /> */}
+      <BusinessHeader />
       <TableReservationForm />
     </ScrollView>
     </KeyboardAvoidingView>
