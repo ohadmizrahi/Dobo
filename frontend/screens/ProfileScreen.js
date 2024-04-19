@@ -36,7 +36,8 @@ export default function ProfileScreen({ navigation }) {
                 setProfile(newProfile);
 
                 await storeData('account', newAccount);
-                });
+            }
+        );
     };
 
     fetchData()
@@ -49,7 +50,8 @@ export default function ProfileScreen({ navigation }) {
             'userRefreshToken',
             'clientToken',
             'account',
-            'FriendsData'
+            'FriendsData',
+            'cart'
         ];
         await removeMulti(keysToRemove);
         navigation.navigate('SignIn');
