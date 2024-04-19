@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Text, TextInput, StyleSheet } from 'react-native'
+import { Text, TextInput, StyleSheet, View } from 'react-native'
 
 const CustomInput = (props) => {
   const {
@@ -24,12 +24,9 @@ const CustomInput = (props) => {
   };
 
   return (
-    <>
+    <View style={styles.inputContainer}>
       <TextInput
-        style={[
-          styles.textInput,
-          hasError && styles.errorInput
-        ]}
+        style={styles.textInput}
         value={value}
         onChangeText={handleDatesChange}
         onBlur={() => {
@@ -38,31 +35,38 @@ const CustomInput = (props) => {
         }}
         {...inputProps}
       />
-      {hasError && <Text style={styles.errorText}>{errors[name]}</Text>}
-    </>
+      {hasError && (
+        <View>
+          <Text style={styles.errorText}>{errors[name]}</Text>
+        </View>
+      )}
+    </View>
   )
 }
 
 const styles = StyleSheet.create({
+  inputContainer: {
+    width: '82%',
+    maxWidth: '50%',
+    margin: 10,
+    position: 'relative',
+
+  },
   textInput: {
     height: 25,
-    width: '82%',
-    margin: 10,
     backgroundColor: 'white',
     borderColor: 'gray',
     borderWidth: StyleSheet.hairlineWidth,
     borderRadius: 20,
-    maxWidth: '50%',
     padding: 5,
-
   },
   errorText: {
     fontSize: 10,
     color: 'red',
+    position: 'absolute',
+    bottom: -13,
+    left: 5,
   },
-  errorInput: {
-    borderColor: 'red',
-  }
 })
 
 export default CustomInput;
