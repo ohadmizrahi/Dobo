@@ -1,4 +1,4 @@
-import { ScrollView } from 'react-native';
+import { ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
 import CustomButton from '@Components/CustomButton';
 import { globalStyles } from '@Root/globalStyles';
 import ProfilePicture from '@Components/ProfilePic';
@@ -59,7 +59,8 @@ export default function ProfileScreen({ navigation }) {
 
 
   return (
-    <ScrollView style={globalStyles.screenColor}>
+    <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} keyboardVerticalOffset={Platform.OS === "ios" ? 100 : 0} style={globalStyles.screenColor}>
+    <ScrollView>
       <DoboLogo />
       <ProfilePicture />
       <AccountInfoForm data={profile.account}/>
@@ -67,5 +68,6 @@ export default function ProfileScreen({ navigation }) {
       <PaymentDetails data={profile.paymentsMethod}/>
       <CustomButton handlePress={handleLogOut} title={'Log out'} backgroundColor={'red'}/>
     </ScrollView>
+    </KeyboardAvoidingView>
   );
 }
