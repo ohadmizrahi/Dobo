@@ -1,76 +1,101 @@
-import React, { useState, useRef } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import React, { useState } from 'react';
+import { View, StyleSheet, TouchableOpacity, Text, Button } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { globalStyles } from '@Root/globalStyles';
 
-
-export default function Bell({navigation}) {
+export default function Bell({ navigation }) {
     const [showButtons, setShowButtons] = useState(false);
-
     const toggleButtons = () => {
         setShowButtons(!showButtons);
     }
 
     return (
-        <View style={styles.bellContainer1}>
-            <View style={[styles.bellContainer, showButtons && styles.expanded]}>
-                <Icon name="bell" style={[globalStyles.icons, globalStyles.BellIconRight]} onPress={toggleButtons} />
-                {showButtons && (
-                    <View style={styles.buttonContainer}>
-                        <CustomButton title="Join" onPress={() => navigation.navigate('JoinTable')} />
-                        <CustomButton title="QR" onPress={() => navigation.navigate('JoinTable')} />
-                        <CustomButton title="Active Table" onPress={() => navigation.navigate('TableStatus')} />
+        <View style={styles.bellContainer}>
+            {showButtons ? (
+                <TouchableOpacity onPress={toggleButtons}>
+                    <View style={[styles.bellBackground,styles.bellComponentPressed]}>
+                        <Icon name="bell" style={[styles.bellIcon, globalStyles.icons]} />
+                            <TouchableOpacity style={[styles.activeTableButton,styles.button]} onPress={() => navigation.navigate('TableStatus')}>
+                                  <Text style={styles.buttonText}>Active Table</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={[styles.qrButton,styles.button]} onPress={() => navigation.navigate('QRScanner')}>
+                                  <Text style={styles.buttonText}>QR</Text>
+                            </TouchableOpacity>
+                           <TouchableOpacity style={[styles.joinButton,styles.button]} onPress={() => navigation.navigate('JoinTable')}>
+                                <Text style={styles.buttonText}>Join</Text>
+                           </TouchableOpacity>
                     </View>
-                )}
-            </View>
+                </TouchableOpacity>
+            ) : (
+                <TouchableOpacity onPress={toggleButtons}>
+                    <View style={[styles.bellBackground,styles.regularBellComponent]}>
+                        <Icon name="bell" style={[styles.bellIcon, globalStyles.icons]} />
+                    </View>
+                </TouchableOpacity>
+            )}
         </View>
     );
 }
 
-const CustomButton = ({ title, onPress }) => {
-    return (
-        <TouchableOpacity style={[styles.button, title === 'Join' && styles.joinButton, title === 'QR' && styles.qrButton]} onPress={onPress}>
-            <Text>{title}</Text>
-        </TouchableOpacity>
-    );
-};
-
-
-
 const styles = StyleSheet.create({
-    bellContainer1: {
-        position: 'absolute',
-        right: 30,
-    },
     bellContainer: {
-        backgroundColor: 'yellow',
+        position: 'relative',
+        bottom: 80,
+        zIndex: 999,
+        right: 30,
+        direction: 'rtl',
+    },
+    bellBackground: {
+        backgroundColor: '#3D3D3D',
+        shadowColor: 'black',
+        shadowOffset: { width: 0, height: 5 },
+        shadowOpacity: 0.5,
+        shadowRadius: 5,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderWidth: 1,
+        borderColor: '#97DECC',
+    },
+    regularBellComponent: {
         borderRadius: 50,
         width: 60,
         height: 60,
-        justifyContent: 'center',
-        alignItems: 'center',
-        
     },
-    expanded: {
+    bellComponentPressed: {
+        borderRadius: 50,
         width: 350,
-    },
-    buttonContainer: {
+        height: 60,
+        direction: 'rtl',
         flexDirection: 'row',
-        marginTop: 5,
-        marginRight: 20,
+    },
+    bellIcon: {
+        alignSelf: 'center',
+    },
+    buttonText: {
+        color: 'black',
+        fontSize: 20,
     },
     button: {
-        backgroundColor: 'red',
-        padding: 10,
-        marginHorizontal: 5,
-        borderRadius: 20,
+        backgroundColor: '#97DECC',
+        borderRadius: 40,
+        height: 40,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    activeTableButton: {
+    marginLeft: 30,
+    marginRight: 30,
+    width: 120,
     },
     joinButton: {
-        borderTopRightRadius: 0,
-        borderBottomRightRadius: 0,
+    borderTopLeftRadius: 0,
+    borderBottomLeftRadius: 0,  
+    width: 50,
+    marginLeft: 10,
     },
     qrButton: {
-        borderTopLeftRadius: 0,
-        borderBottomLeftRadius: 0,
+        borderTopRightRadius: 0,
+        borderBottomRightRadius: 0,
+        width: 50,
     },
 });

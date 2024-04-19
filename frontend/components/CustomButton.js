@@ -1,14 +1,14 @@
 import React from 'react';
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
 
-const MoveScreenButton = ({ navigation, screen, title, backgroundColor }) => {
+const CustomButton = ({ handlePress, title, backgroundColor }) => {
   const buttonStyle = {
     ...styles.button,
     backgroundColor: backgroundColor || styles.button.backgroundColor,
   };
 
   return (
-    <TouchableOpacity style={buttonStyle} onPress={() => navigation.navigate(screen)}>
+    <TouchableOpacity style={buttonStyle} onPress={handlePress}>
       <Text style={styles.text}>{title}</Text>
     </TouchableOpacity>
   );
@@ -41,4 +41,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default MoveScreenButton;
+export default CustomButton;

@@ -4,7 +4,7 @@ import { signinValidationSchema } from '@Schemas/signupSchema';
 import Form from '@Components/Form';
 import { useNavigation } from '@react-navigation/native';
 import { sendPostRequest } from '@Utils/request/send.js';
-import { storeData } from '@Utils/storage/asyncStorage';
+import { storeData, getAllData } from '@Utils/storage/asyncStorage';
 import { handleResponse } from '@Utils/response/handler';
 
 const SignInForm = () => {
@@ -24,18 +24,17 @@ const SignInForm = () => {
       password: values.password,
     };
 
-    console.log(JSON.stringify(userInfo));
-
     try {
       const response = await sendPostRequest('api/auth/signin', userInfo);
 
-      await handleResponse(response, async (data) => {
+      await handleResponse(response, navigation, async (data) => {
         await storeData('userToken', data.token);
         await storeData('userRefreshToken', data.tokenForRefresh);
         navigation.navigate('Profile');
       });
 
     } catch (error) {
+      console.log('Error:', error);
       Alert.alert('Error', 'An error occurred. Please try again later.');
     } finally {
       setIsLoading(false);

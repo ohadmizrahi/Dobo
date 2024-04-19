@@ -1,7 +1,6 @@
-import React from 'react';
-import { View,ScrollView, Text, Button } from 'react-native';
+import { View, Button } from 'react-native';
 
-export default function Navscreen ({navigation}){
+export default function Navscreen ({ navigation }){
     return (
     <View>
         <Button title="Go to Home" onPress={() => navigation.navigate('Home')} />
