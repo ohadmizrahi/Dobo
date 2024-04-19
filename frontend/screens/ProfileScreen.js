@@ -12,7 +12,7 @@ import { storeData, getData, removeMulti, getAllData } from '@Utils/storage/asyn
 import { useState, useEffect } from 'react';
 
 export default function ProfileScreen({ navigation }) {
-  const [profile, setProfile] = useState({account: {}, paymentsMethod: {}})
+  const [profile, setProfile] = useState({ account: {}, paymentsMethod: {} })
 
     useEffect(() => {
     const fetchData = async () => {

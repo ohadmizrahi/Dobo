@@ -39,6 +39,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors(corsOptions));
+app.use('/assets', express.static('assets'));
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // To handle requestes for authRouter
