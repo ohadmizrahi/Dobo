@@ -175,7 +175,7 @@ export default function ItemAddToCart({ route, navigation }) {
     Item.clients = itemClients
     const updatedCart = [...cartState, Item];
     setCartState(updatedCart);
-    await storeData('cart', JSON.stringify(updatedCart));
+    await storeData('cart', updatedCart);
     navigation.navigate('Order');
   };
 

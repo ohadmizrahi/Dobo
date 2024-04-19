@@ -4,13 +4,8 @@ import { useNavigation } from '@react-navigation/native';
 
 const PasswordForm = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const navigation = useNavigation();
 
-  const [password, setPassword] = useState('123456Or!');
-
-  const updatePassword = (password) => {
-    setPassword(password);
-  };
+  const dummyPassword = '123456789'
 
   const fields = [
     { name: 'password', label: 'Password', iconName: 'lock', placeholder: 'Enter password', secureTextEntry: true },
@@ -23,7 +18,7 @@ const PasswordForm = () => {
 
   return (
     <Form
-      initialValues={password ? { password } : {}}
+      initialValues={{ password: dummyPassword }}
       onSubmit={onSubmit}
       fields={fields}
       submitTitle="Reset"

@@ -21,7 +21,7 @@ export default function Cart({navigation}) {
     updatedCart.splice(index, 1);
     setSelectedItems(updatedCart);
     await removeData('cart');
-    await storeData('cart', JSON.stringify(updatedCart));
+    await storeData('cart', updatedCart);
   };
 
   const sendorder = async () => {

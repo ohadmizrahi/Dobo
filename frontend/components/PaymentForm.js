@@ -14,7 +14,13 @@ const PaymentForm = ({paymentDetails}) => {
 
   return (
     <Form
-      initialValues={paymentDetails ? paymentDetails : {}}
+      initialValues={
+        paymentDetails ? {
+          cardNumber: paymentDetails.cardnumber,
+          expirationDate: paymentDetails.experationdate,
+          cvv: paymentDetails.cvv,
+          ID: paymentDetails.citizenid,
+        } : {}}
       validationSchema={paymentValidationSchema}
       onSubmit={(values) => console.log(values)}
       fields={fields}
