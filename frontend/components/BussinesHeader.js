@@ -24,6 +24,7 @@ const BussinesHeader = () => {
 const styles = StyleSheet.create({
   BusinessCardcontainer: {
   flex: 0.5,
+  marginBottom: 20,
   },
   backgroundImage: {
     flex: 1,
