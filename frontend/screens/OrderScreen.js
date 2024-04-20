@@ -7,7 +7,7 @@ import CustomButton from '@Components/CustomButton';
 export default function OrderScreen({ navigation }) {
   return (
     <ScrollView style={globalStyles.screenColor}>
-        <ExitSign/>
+        {/* <ExitSign/> */}
         <LogoImage/>
         <CustomButton navigation={navigation} screen='OrderCart' title={'View Order'} />
         <Menu navigation={navigation} isOrderScreen={true} />

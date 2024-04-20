@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
 import {storeData} from '@Utils/storage/asyncStorage';
 const friendsData = [
@@ -27,7 +27,7 @@ const friendsData = [
 
 const FriendsInTable = ({ totalFriends }) => {
     const [joinedFriends, setJoinedFriends] = useState(0);
-
+    // Question to Bar: why do we need this?
     useEffect(() => {
         if (joinedFriends === totalFriends) {
             console.log('All friends have joined the table');
@@ -46,7 +46,7 @@ const FriendsInTable = ({ totalFriends }) => {
     }, []);
 
     const FriendsData = friendsData;
-    storeData('FriendsData',FriendsData)
+    storeData('FriendsData', FriendsData)
 
     return (
         <View style={styles.container}>

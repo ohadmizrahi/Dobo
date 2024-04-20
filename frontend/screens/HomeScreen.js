@@ -1,25 +1,56 @@
-import React from 'react';
 import { ScrollView, View } from 'react-native';
+import { useState, useEffect } from 'react';
 import { Places } from '@Components/Places';
 import { globalStyles } from '@Root/globalStyles';
 import SearchBar from '@Components/SearchBar';
 import Bell from '@Components/Bell';
 import { FilterPlaces } from '@Components/FilterPlaces';
+import { sendPostRequest } from '@Utils/request/send';
+import { handleResponse } from '@Utils/response/handler';
 
-// Duplicated Placed Just for view Until we get the data from the backend
 // TBD : how to divide the places into different sections
 
 export default function HomeScreen({ navigation }) {
+  const [places, setPlaces] = useState([]);
+
+  const homeFetchConfiguration = {
+    groups: ['recommend', 'new', 'name'],
+    order: 'DESC',
+    limit: 5,
+    offset: 0,
+  }
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await sendPostRequest('api/home', homeFetchConfiguration);
+      await handleResponse(
+        response,
+        navigation,
+        async (data, error) => {
+          if (error) {
+            console.log('Error:', error);
+            return;
+          }
+
+          const { recommend: recommendGroup, new: newPlaces, name: nameGroup, businessId: idGroup } = data.groups;
+          idGroup
+          ? setPlaces({'unorderd': idGroup})
+          : setPlaces({'recommend': recommendGroup, 'new': newPlaces, 'name': nameGroup});
+        }
+      );
+    };
+    fetchData();
+  }, []);
+  
   return (
     <View style={globalStyles.screenColor}>
       <ScrollView>
         <SearchBar/>
         <FilterPlaces/>
-        <Places title="New places"/>
-        <Places title="Near you"/>
-        <Places title="Recomended for you"/>
-        <Places title="Italian"/>
-        <Places title="Breakfast"/>
+        <Places title="New places" data={places.new} />
+        <Places title="Near you" data={places.name} />
+        <Places title="Recomended for you" data={places.recommend} />
+        <Places title="Italian" data={places.name} />
+        <Places title="Breakfast" data={places.name} />
       </ScrollView>
       <Bell navigation={navigation} />
     </View>

@@ -166,7 +166,9 @@ export default function ItemAddToCart({ route, navigation }) {
     ClientsData = await getData('FriendsData')
     TableClients = JSON.parse(ClientsData)
     if (person==="Me") {
-      itemClients.push(TableClients.id)
+      // cont clientData = await getData('client');
+      // itemClients.push(clientData.id)
+      itemClients.push(TableClients[0].id)
     }else if (person==="Table"){
       TableClients.forEach(client => {
         itemClients.push(client.id)

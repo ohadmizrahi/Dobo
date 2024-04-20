@@ -1,5 +1,5 @@
 import React from 'react';
-import {ScrollView } from 'react-native';
+import {ScrollView , KeyboardAvoidingView, Platform} from 'react-native';
 import SocialSignIn from '@Components/SocialSignIn';
 import LogoImage from '@Components/DoboLogo';
 import ProfilePicture from  '@Components/ProfilePic';
@@ -10,7 +10,8 @@ import LineAcross from '@Components/LineAcross';
 
 export default function SignInScreen({ navigation }) {
   return (
-    <ScrollView style= {globalStyles.screenColor}>
+    <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} keyboardVerticalOffset={Platform.OS === "ios" ? 100 : 0} style={globalStyles.screenColor}>
+    <ScrollView>
       <LogoImage />
       <ProfilePicture />
       <SigninForm />
@@ -18,5 +19,6 @@ export default function SignInScreen({ navigation }) {
       <LineAcross text='OR' />
       <SocialSignIn />
     </ScrollView>
+    </KeyboardAvoidingView>
   );
 }
