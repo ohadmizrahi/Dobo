@@ -3,7 +3,7 @@ import React from 'react';
 import { View, Image, Text, StyleSheet } from 'react-native';
 
 
-const BusinessCard = () => {
+const BussinesHeader = () => {
 
     const businessCardData ={
       businessname: 'Coffie House',
@@ -53,4 +53,4 @@ const styles = StyleSheet.create({
 
 });
 
-export default BusinessCard;
+export default BussinesHeader;

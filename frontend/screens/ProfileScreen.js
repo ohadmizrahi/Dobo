@@ -1,4 +1,4 @@
-import { ScrollView } from 'react-native';
+import { ScrollView, KeyboardAvoidingView, Platform,StatusBar } from 'react-native';
 import CustomButton from '@Components/CustomButton';
 import { globalStyles } from '@Root/globalStyles';
 import ProfilePicture from '@Components/ProfilePic';
@@ -12,7 +12,7 @@ import { storeData, getData, removeMulti, getAllData } from '@Utils/storage/asyn
 import { useState, useEffect } from 'react';
 
 export default function ProfileScreen({ navigation }) {
-  const [profile, setProfile] = useState({account: {}, paymentsMethod: {}})
+  const [profile, setProfile] = useState({ account: {}, paymentsMethod: {} })
 
     useEffect(() => {
     const fetchData = async () => {
@@ -36,7 +36,8 @@ export default function ProfileScreen({ navigation }) {
                 setProfile(newProfile);
 
                 await storeData('account', newAccount);
-                });
+            }
+        );
     };
 
     fetchData()
@@ -49,7 +50,8 @@ export default function ProfileScreen({ navigation }) {
             'userRefreshToken',
             'clientToken',
             'account',
-            'FriendsData'
+            'FriendsData',
+            'cart'
         ];
         await removeMulti(keysToRemove);
         navigation.navigate('SignIn');
@@ -59,7 +61,9 @@ export default function ProfileScreen({ navigation }) {
 
 
   return (
-    <ScrollView style={globalStyles.screenColor}>
+    <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} keyboardVerticalOffset={Platform.OS === "ios" ? 100 : 0} style={globalStyles.screenColor}>
+    <ScrollView>
+      <StatusBar barStyle="light-content" />
       <DoboLogo />
       <ProfilePicture />
       <AccountInfoForm data={profile.account}/>
@@ -67,5 +71,6 @@ export default function ProfileScreen({ navigation }) {
       <PaymentDetails data={profile.paymentsMethod}/>
       <CustomButton handlePress={handleLogOut} title={'Log out'} backgroundColor={'red'}/>
     </ScrollView>
+    </KeyboardAvoidingView>
   );
 }
