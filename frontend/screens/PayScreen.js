@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
+import { ScrollView, KeyboardAvoidingView, Platform,StatusBar } from 'react-native';
 import InvoiceComponent from '@Components/ItemPayment';
 import YourAccountButton from '@Components/YourAccountButton';
 import PaymentForm from '@Components/PaymentForm';
@@ -33,6 +33,7 @@ export default function PayScreen({ navigation }) {
   return (
     <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} keyboardVerticalOffset={Platform.OS === "ios" ? 100 : 0} style={globalStyles.screenColor}>
     <ScrollView>
+      <StatusBar barStyle="light-content" />
       <ExitSign />
       <LogoImage />
       <InvoiceComponent invoiceList={invoices} onRemoveItem={handleRemoveItem} />

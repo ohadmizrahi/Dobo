@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, StyleSheet, Button } from 'react-native';
+import { Text, SafeAreaView, StyleSheet, Button,StatusBar, View} from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
+import { globalStyles } from '@Root/globalStyles';
+import DoboLogo from '@Components/DoboLogo';
+import CustomButton from '@Components/CustomButton';
+
 
 export default function App({navigation}) {
   const [hasPermission, setHasPermission] = useState(null);
@@ -29,13 +33,20 @@ export default function App({navigation}) {
   }
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={globalStyles.screenColor}>
+      <StatusBar barStyle="light-content" />
+      <DoboLogo />
+      <Text style={styles.title}>Scan QR Code</Text>
+      <View style={styles.cameraView}>
       <BarCodeScanner
-        onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-        style={StyleSheet.absoluteFillObject}
+      onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+      style={styles.square}
       />
+      </View>
       {scanned && <Button title={'Tap to Scan Again'} onPress={() => setScanned(false)} />}
-    </View>
+      <View style={{marginTop: 200}} />
+      <CustomButton title="Back To Home" handlePress={() => navigation.goBack()} />
+    </SafeAreaView>
   );
 }
 
@@ -44,5 +55,27 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',
+  },
+  cameraView: {
+    width: 350,
+    maxHeight: 350,
+    flex: 1,
+    borderRadius: 50,
+    overflow: 'hidden',
+    alignSelf: 'center',
+    marginTop: 20,
+    borderWidth: 2,
+    borderColor: '#97DECC',
+  },
+  square: {
+    width: '100%',
+    height: '100%',
+  },
+  title: {
+    fontSize: 30,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    color: '#EFEFEF',
+    marginTop: 20,
   },
 });

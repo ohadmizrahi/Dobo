@@ -1,4 +1,4 @@
-import { ScrollView, View } from 'react-native';
+import { ScrollView, View, StatusBar } from 'react-native';
 import { useState, useEffect } from 'react';
 import { Places } from '@Components/Places';
 import { globalStyles } from '@Root/globalStyles';
@@ -43,6 +43,7 @@ export default function HomeScreen({ navigation }) {
   
   return (
     <View style={globalStyles.screenColor}>
+      <StatusBar barStyle="light-content" />
       <ScrollView>
         <SearchBar/>
         <FilterPlaces/>

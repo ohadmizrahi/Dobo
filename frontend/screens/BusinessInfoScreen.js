@@ -1,5 +1,5 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, StatusBar } from 'react-native';
 import Businessinformation from '@Components/BussinesInfo';
 import { globalStyles } from '@Root/globalStyles';
 import BusinessHeader from '@Components/BussinesHeader';
@@ -21,6 +21,7 @@ export default function BusinessInfoScreen({ navigation }) {
 
 return (
   <View style={globalStyles.screenColor}>
+    <StatusBar barStyle="light-content" />
     <ExitSign/>
     <BusinessHeader BusinessHeader={BusinessHeaderData} /> 
     <Businessinformation navigation={navigation} business={businessData} />

@@ -1,4 +1,4 @@
-import { ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
+import { ScrollView, KeyboardAvoidingView, Platform,StatusBar } from 'react-native';
 import CustomButton from '@Components/CustomButton';
 import { globalStyles } from '@Root/globalStyles';
 import ProfilePicture from '@Components/ProfilePic';
@@ -63,6 +63,7 @@ export default function ProfileScreen({ navigation }) {
   return (
     <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} keyboardVerticalOffset={Platform.OS === "ios" ? 100 : 0} style={globalStyles.screenColor}>
     <ScrollView>
+      <StatusBar barStyle="light-content" />
       <DoboLogo />
       <ProfilePicture />
       <AccountInfoForm data={profile.account}/>

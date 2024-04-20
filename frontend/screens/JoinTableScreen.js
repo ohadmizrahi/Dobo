@@ -1,4 +1,4 @@
-import { ScrollView } from 'react-native';
+import { ScrollView, StatusBar } from 'react-native';
 import { globalStyles } from '@Root/globalStyles';
 import DoboLogo from '@Components/DoboLogo';
 import JoinTableForm from '@Components/JoinTableForm';
@@ -11,6 +11,7 @@ export default function JoinTableScreen({ navigation, route }) {
   const qrData = route.params ? route.params.qrData : null;
   return (
     <ScrollView style={globalStyles.screenColor}>
+      <StatusBar barStyle="light-content" />
       <DoboLogo />
       <JoinTableForm qrData={qrData} />
       <ConnectedFriends navigation={navigation} />

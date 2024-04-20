@@ -1,5 +1,5 @@
 import React from 'react';
-import { View,ScrollView, Text, Button } from 'react-native';
+import { View,ScrollView, StatusBar } from 'react-native';
 import Menu from '@Components/Menu';
 import BusinessHeader from '@Components/BussinesHeader';
 import ExitSign from '@Components/ExitSign';
@@ -7,6 +7,7 @@ import ExitSign from '@Components/ExitSign';
 export default function MenuScreen({ navigation }) {
   return (
     <View>
+      <StatusBar barStyle="light-content" />
       <ExitSign/>
       <Menu isOrderScreen={false}/>
     </View>
