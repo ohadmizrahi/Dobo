@@ -49,7 +49,7 @@ export default function Cart({navigation}) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Cart Items</Text>
+      <Text style={styles.title}>Order Items</Text>
       {selectedItems.map((item, index) => (
         <View style={styles.itemContainer} key={index}>
           <TouchableOpacity onPress={() => removeItem(index)}>
