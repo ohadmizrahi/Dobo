@@ -7,7 +7,7 @@ import ExitSign from '@Components/ExitSign';
 
 export default function ItamScreen({route, navigation}) {   
   return (
-    <ScrollView style={globalStyles.screenColor}>
+    <ScrollView style={{flex : 1}}>
       <StatusBar barStyle="light-content" />
       <ExitSign />
       <ItemChanges route={route}/>

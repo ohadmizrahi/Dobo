@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, Button } from 'react-native';
+import { View, Text, StyleSheet, Button, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 
@@ -8,10 +8,11 @@ export default function Businessinformation({ navigation }) {
   const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
   const businessData = {
-    description: 'cozy restaurant serving delicious Italian food.',
+    description: "Nestled in the heart of the bustling city center, our cozy restaurant offers an inviting atmosphere and a delightful culinary experience. Our menu features a tantalizing selection of authentic Italian dishes crafted with the finest ingredients and traditional recipes passed down through generations. From handcrafted pasta dishes to wood-fired pizzas and decadent desserts, every bite is a celebration of Italian gastronomy.",
     rating: 4.5,
     openingHours: '10:00 - 22:00', 
   };
+  
 
   return (
     <View style={styles.container}>
@@ -31,12 +32,14 @@ export default function Businessinformation({ navigation }) {
         </View>
         <View style={styles.align}>
           <Icon name="book" size={20} />
-          <Button title="View Menu" onPress={() => navigation.navigate('Menu')} />
+            <TouchableOpacity style={styles.menuBtn} onPress={() => navigation.navigate('Menu')}>
+            <Text style={styles.menuText}>Menu</Text>
+            </TouchableOpacity>
         </View>
       </View>
-      <View>
-        <Button title='find place' color={'black'} onPress={() => navigation.navigate('JoinTable')} />
-      </View>
+      <TouchableOpacity style={styles.findPlace} onPress={() => navigation.navigate('JoinTable')}>
+      <Text style={styles.findText}>Find Place</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -44,27 +47,56 @@ export default function Businessinformation({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
+    padding: 15,
     backgroundColor: '#f5f5f5',
-    borderRadius: 10,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
   },
   details: {
-    marginTop: 20,
     padding: 10,
-    backgroundColor: '#fff',
     borderRadius: 10,
   },
   info: {
-    marginVertical: 5,
+    marginVertical: 4,
     color: '#000',
     marginLeft: 10,
   },
   align: {
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'flex-start', // Change this line
     marginBottom: 10,
+  },
+  menuBtn: {
+    backgroundColor: '#3B4248',
+    borderRadius: 20,
+    marginLeft: 5,
+    height: 25,
+    width: 60,
+    alignItems: 'center',
+    shadowColor: 'black',
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.5,
+    justifyContent: 'center',
+    borderWidth: 0.5,
+    borderColor: 'white',
+  },
+  menuText: {
+    color: 'white',
+  },
+  findPlace: {
+    backgroundColor: '#3B4248',
+    borderRadius: 40,
+    height: 50,
+    width: 200,
+    alignItems: 'center',
+    alignSelf: 'center',
+    justifyContent: 'center',
+    shadowColor: 'black',
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.5,
+    position: 'absolute',
+    bottom: 40,
+  },
+  findText: {
+    color: 'white',
+    fontSize: 20,
   },
 });
