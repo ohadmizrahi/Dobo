@@ -12,7 +12,7 @@ import { storeData, getData, removeMulti, getAllData } from '@Utils/storage/asyn
 import { useState, useEffect } from 'react';
 
 export default function ProfileScreen({ navigation }) {
-  const [profile, setProfile] = useState({account: {}, paymentsMethod: {}})
+  const [profile, setProfile] = useState({ account: {}, paymentsMethod: {} })
 
     useEffect(() => {
     const fetchData = async () => {
@@ -36,7 +36,8 @@ export default function ProfileScreen({ navigation }) {
                 setProfile(newProfile);
 
                 await storeData('account', newAccount);
-                });
+            }
+        );
     };
 
     fetchData()
@@ -49,7 +50,8 @@ export default function ProfileScreen({ navigation }) {
             'userRefreshToken',
             'clientToken',
             'account',
-            'FriendsData'
+            'FriendsData',
+            'cart'
         ];
         await removeMulti(keysToRemove);
         navigation.navigate('SignIn');

@@ -7,7 +7,7 @@ import ExitSign from '@Components/ExitSign';
 export default function OrderScreen({ navigation }) {
   return (
     <ScrollView style={globalStyles.screenColor}>
-        <ExitSign/>
+        {/* <ExitSign/> */}
         <LogoImage/>
         <Menu navigation={navigation} isOrderScreen={true} />
         <CustomButton navigation={navigation} screen='OrderCart' title={'View Order'} />
