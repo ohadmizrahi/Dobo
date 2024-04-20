@@ -64,17 +64,19 @@ const styles = StyleSheet.create({
         borderRadius: 15,
         backgroundColor: '#fff',
         shadowColor: '#333',
+        
     },
     title: {
         fontSize: 15,
         fontWeight: 'bold',
         alignSelf: 'flex-start',
-
+        marginLeft: 2,
     },
     type: {
         fontSize: 14,
         color: '#666',
         alignSelf: 'flex-start',
+        marginLeft: 2,
     },
     image: {
         width: 130,
