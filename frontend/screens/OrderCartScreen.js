@@ -1,11 +1,17 @@
 import React from 'react';
-import { View,ScrollView, Text, Button } from 'react-native';
-import Cart from '../components/Cart';
+import { View,ScrollView, Text, StatusBar } from 'react-native';
+import Cart from '@Components/Cart';
+import ExitSign from '@Components/ExitSign';
+import HeaderImage from '@Components/HeaderImage';
+
 
 export default function OrderCartScreen({ navigation }) {
   return (
     <ScrollView>
-      <Text>OrderCart</Text>
+      <StatusBar barStyle="light-content" />
+      {/* It can gets an imageUrl prop */}
+      <HeaderImage/> 
+      <ExitSign/>
       <Cart navigation={navigation} />
     </ScrollView>
   );

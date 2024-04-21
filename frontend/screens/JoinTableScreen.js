@@ -1,22 +1,23 @@
-import React from 'react';
-import { View,ScrollView, Text, Button } from 'react-native';
-import { globalStyles } from '../globalStyles';
-import DoboLogo from '../components/DoboLogo';
-import JoinTableForm from '../components/JoinTableForm';
-import ConnectedFriends from '../components/ConnectedFriends';
-import LineAcross from '../components/LineAcross';
-import TableLink from '../components/TableLink';
-import MoveScreenButton from '../components/MoveScreenBtn';
+import { ScrollView, StatusBar } from 'react-native';
+import { globalStyles } from '@Root/globalStyles';
+import DoboLogo from '@Components/DoboLogo';
+import JoinTableForm from '@Components/JoinTableForm';
+import ConnectedFriends from '@Components/ConnectedFriends';
+import LineAcross from '@Components/LineAcross';
+import TableLink from '@Components/TableLink';
+import CustomButton from '@Components/CustomButton';
 
-export default function JoinTableScreen({ navigation }) {
+export default function JoinTableScreen({ navigation, route }) {
+  const qrData = route.params ? route.params.qrData : null;
   return (
     <ScrollView style={globalStyles.screenColor}>
+      <StatusBar barStyle="light-content" />
       <DoboLogo />
-      <JoinTableForm />
+      <JoinTableForm qrData={qrData} />
       <ConnectedFriends navigation={navigation} />
       <LineAcross text='OR' />
       <TableLink />
-      <MoveScreenButton navigation={navigation} title='Go to Table' screen='TableStatus' />
+      <CustomButton navigation={navigation} title='Go to Table' screen='TableStatus' />
     </ScrollView>
   );
 }

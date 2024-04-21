@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
-import { ScrollView } from 'react-native';
-import InvoiceComponent from '../components/ItemPayment';
-import YourAccountButton from '../components/YourAccountButton';
-import PaymentForm from '../components/PaymentForm';
-import LogoImage from '../components/DoboLogo';
+import { ScrollView, KeyboardAvoidingView, Platform,StatusBar, View } from 'react-native';
+import InvoiceComponent from '@Components/ItemPayment';
+import YourAccountButton from '@Components/YourAccountButton';
+import PaymentForm from '@Components/PaymentForm';
+import ExitSign from '@Components/ExitSign';
+import { globalStyles } from '@Root/globalStyles';
+import LineAcross from '@Components/LineAcross';
+import HeaderImage from '@Components/HeaderImage';
 
 // Define the invoice data
 const invoicesData = [
@@ -29,11 +32,16 @@ export default function PayScreen({ navigation }) {
   };
 
   return (
+    <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} keyboardVerticalOffset={Platform.OS === "ios" ? 100 : 0} style={{flex : 1}}>
     <ScrollView>
-      <LogoImage />
+      <StatusBar barStyle="light-content" />
+      <HeaderImage />
+      <ExitSign />
       <InvoiceComponent invoiceList={invoices} onRemoveItem={handleRemoveItem} />
       <YourAccountButton invoices={invoices} />
+      <LineAcross text='Payment Method' />
       <PaymentForm />
     </ScrollView>
+    </KeyboardAvoidingView>
   );
 }

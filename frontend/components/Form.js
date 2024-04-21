@@ -1,10 +1,16 @@
-import React from 'react';
+import { useState, useEffect } from 'react';
 import { SafeAreaView, StyleSheet, View, Text,TouchableOpacity, KeyboardAvoidingView } from 'react-native';
 import { Formik, Field } from 'formik';
 import CustomInput from './CustomInput';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-const Form = ({ initialValues, validationSchema, onSubmit, fields, error, submitTitle,formName }) => {
+const Form = ({ initialValues, validationSchema, onSubmit, fields, error, submitTitle, formName }) => {
+  const [formValues, setFormValues] = useState(initialValues);
+
+  useEffect(() => {
+    setFormValues(initialValues);
+  }, [initialValues]);
+  
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.detailsContainer}>
@@ -12,9 +18,10 @@ const Form = ({ initialValues, validationSchema, onSubmit, fields, error, submit
           <Text style={styles.formHeadLineText}>{formName}</Text>
         </View>
         <Formik
-          initialValues={initialValues}
+          initialValues={formValues}
           onSubmit={onSubmit}
           validationSchema={validationSchema}
+          enableReinitialize
         >
           {({ handleSubmit, isValid }) => (
             <>

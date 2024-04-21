@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
-import { getData, removeData, storeData } from '../util/localStorage';
+import { getData, removeData, storeData } from '@Utils/storage/asyncStorage';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default function Cart({navigation}) {
@@ -21,7 +21,7 @@ export default function Cart({navigation}) {
     updatedCart.splice(index, 1);
     setSelectedItems(updatedCart);
     await removeData('cart');
-    await storeData('cart', JSON.stringify(updatedCart));
+    await storeData('cart', updatedCart);
   };
 
   const sendorder = async () => {
@@ -49,7 +49,7 @@ export default function Cart({navigation}) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Cart Items</Text>
+      <Text style={styles.title}>Order Items</Text>
       {selectedItems.map((item, index) => (
         <View style={styles.itemContainer} key={index}>
           <TouchableOpacity onPress={() => removeItem(index)}>

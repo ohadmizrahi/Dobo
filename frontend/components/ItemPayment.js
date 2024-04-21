@@ -51,6 +51,7 @@ const InvoiceComponent = ({ invoiceList, onRemoveItem }) => {
                 data={invoiceList}
                 keyExtractor={(item) => item.id.toString()}
                 renderItem={renderItem}
+                style={{padding: 10}}
             />
         </View>
     );
@@ -59,13 +60,11 @@ const InvoiceComponent = ({ invoiceList, onRemoveItem }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
     },
     header: {
         fontSize: 24,
-        fontWeight: 'bold',
         textAlign: 'center',
-        marginTop: 20,
+        marginBottom: 10,
     },
     total: {
         fontSize: 20,
@@ -80,6 +79,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         borderBottomWidth: 1,
         borderBottomColor: '#ccc',
+        paddingHorizontal: 10,
     },
     removeButton: {
         width: 30,

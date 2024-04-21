@@ -1,7 +1,7 @@
 import { View, Text, Image, StyleSheet, Button, TouchableOpacity } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import React, { useState, useEffect } from 'react';
-import { storeData, getData } from '../util/localStorage'; // Import getData here
+import { storeData, getData } from '@Utils/storage/asyncStorage'; // Import getData here
 
 const menu = [
   {
@@ -161,24 +161,35 @@ export default function ItemAddToCart({ route, navigation }) {
     fetchCartData();
   }, []);
 
-  const handleAddToCart = async () => { // להוסיף תנאי אם הלחיצה הייתה עליי או על השולחן ולפי זה לשלוח את ההזמנה יחד עם האנשים ששותפים לה
+  const handleAddToCart = async (person) => { // להוסיף תנאי אם הלחיצה הייתה עליי או על השולחן ולפי זה לשלוח את ההזמנה יחד עם האנשים ששותפים לה
+    const itemClients = [];
+    ClientsData = await getData('FriendsData')
+    TableClients = JSON.parse(ClientsData)
+    if (person==="Me") {
+      // cont clientData = await getData('client');
+      // itemClients.push(clientData.id)
+      itemClients.push(TableClients[0].id)
+    }else if (person==="Table"){
+      TableClients.forEach(client => {
+        itemClients.push(client.id)
+      })
+    }
+    Item.clients = itemClients
     const updatedCart = [...cartState, Item];
     setCartState(updatedCart);
-    await storeData('cart', JSON.stringify(updatedCart));
+    await storeData('cart', updatedCart);
     navigation.navigate('Order');
   };
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.addToCartButton} onPress={handleAddToCart}>
-        <FontAwesome name="shopping-cart" size={24} color="white" />
+      <TouchableOpacity style={styles.addToCartButton} onPress={()=> {handleAddToCart('Me')}}>
         <Text style={styles.addToCartButtonText}>Add to Me</Text>
       </TouchableOpacity>
       <View style={styles.price}>
         <Text>{Item.price}$</Text>
       </View>
-      <TouchableOpacity style={styles.addToCartButton} onPress={handleAddToCart}>
-        <FontAwesome name="shopping-cart" size={24} color="white" />
+      <TouchableOpacity style={styles.addToCartButton} onPress={()=> {handleAddToCart('Table')}}>
         <Text style={styles.addToCartButtonText}>Add to Table</Text>
       </TouchableOpacity>
     </View>
@@ -190,30 +201,33 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     padding: 20,
-    marginTop: 0,
-    backgroundColor: '#fff',
+    marginTop: -20,
     flexDirection: 'row',
     alignSelf: 'center',
   },
   addToCartButton: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#007bff',
+    backgroundColor: '#97DECC',
     padding: 10,
-    borderRadius: 5,
+    height: 60,
+    borderRadius: 50,
     margin: 10,
+    marginBottom: 20,
+    shadowColor: 'grey',
+    shadowOffset: { width: 0, height: 5 },
+    shadowOpacity: 0.7,
   },
   addToCartButtonText: {
-    color: 'white',
+    color: 'black',
     fontSize: 18,
     marginLeft: 10,
   },
   price: {
     backgroundColor: 'lightgrey',
-    fontSize: 20,
-    borderRadius: 30,
-    width: 50,
-    height: 50,
+    borderRadius: 50,
+    width: 70,
+    height: 70,
     fontWeight: 'bold',
     marginBottom: 10,
     alignItems: 'center',

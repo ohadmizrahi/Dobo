@@ -32,11 +32,11 @@ router.get("/api/profile", async (req, res) => {
             }
             res.status(200).json({ data: profile });
         } else {
-            res.status(404).json({ error: 'Account not found' });
+            res.status(404).json({ message: 'Account not found' });
         }
     } catch (error) {
         console.error(error);
-        res.status(500).json({ error: 'An error occurred during fetching profile.' });
+        res.status(500).json({ message: 'An error occurred during fetching profile.' });
     }
 });
 
@@ -47,7 +47,7 @@ router.post("/api/profile/update/account", async (req, res) => {
     try {
         const response = await updateAccountDetails(username, fieldsToUpdate)
         if (!response.success) {
-            res.status(400).json({ error: response.message, invalidFields: response.invalidFields});
+            res.status(400).json({ message: response.message, invalidFields: response.invalidFields});
         } else {
             res.status(200).json({ success: true, updatedFields: response.updatedFields });
         }
@@ -55,9 +55,9 @@ router.post("/api/profile/update/account", async (req, res) => {
     catch (error) {
         console.error(error);
         if (error.message === 'Account not found') {
-            res.status(404).json({ error: error.message });
+            res.status(404).json({ message: error.message });
         } else {
-            res.status(500).json({ error: 'An error occurred during updating account.' });
+            res.status(500).json({ message: 'An error occurred during updating account.' });
         }
     }
 });
@@ -70,7 +70,7 @@ router.post("/api/profile/update/payment-method", async (req, res) => {
     try {
         const response = await updatedOrCreatePaymentMethod(username, fieldsToUpdate)
         if (!response.success) {
-            res.status(400).json({ error: response.message, invalidFields: response.invalidFields});
+            res.status(400).json({ message: response.message, invalidFields: response.invalidFields});
         } else {
             res.status(200).json({ success: true, updatedFields: response.updatedFields });
         }
@@ -78,11 +78,11 @@ router.post("/api/profile/update/payment-method", async (req, res) => {
     catch (error) {
         console.error(error);
         if (error.message === 'Payment Method not found') {
-            res.status(404).json({ error: error.message });
+            res.status(404).json({ message: error.message });
         } else if (error.message === "Payment method for this user already exists") {
-            res.status(409).json({ error: error.message });
+            res.status(409).json({ message: error.message });
         } else {
-            res.status(500).json({ error: 'An error occurred during updating payment method.' });
+            res.status(500).json({ message: 'An error occurred during updating payment method.' });
         }
     }
 });
@@ -99,9 +99,9 @@ router.post("/api/profile/update/password", authenticateResetPasswordToken, asyn
     catch (error) {
         console.error(error);
         if (error.message === 'Account not found') {
-            res.status(404).json({ error: error.message });
+            res.status(404).json({ message: error.message });
         } else {
-            res.status(500).json({ error: 'An error occurred during updating password.' });
+            res.status(500).json({ message: 'An error occurred during updating password.' });
         }
     }
 });
@@ -120,9 +120,9 @@ router.post("/api/profile/update/image", upload.single('image'), async (req, res
     catch (error) {
         console.error(error);
         if (error.message === 'Account not found') {
-            res.status(404).json({ error: error.message });
+            res.status(404).json({ message: error.message });
         } else {
-            res.status(500).json({ error: 'An error occurred during updating account.' });
+            res.status(500).json({ message: 'An error occurred during updating account.' });
         }
     }
 });

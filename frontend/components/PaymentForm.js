@@ -1,6 +1,6 @@
 import React from 'react';
-import { paymentValidationSchema } from '../schemas/paymentSchema';
-import Form from './Form';
+import { paymentValidationSchema } from '@Schemas/paymentSchema';
+import Form from '@Components/Form';
 
 const PaymentForm = ({paymentDetails}) => {
 
@@ -14,7 +14,13 @@ const PaymentForm = ({paymentDetails}) => {
 
   return (
     <Form
-      initialValues={paymentDetails ? paymentDetails : {}}
+      initialValues={
+        paymentDetails ? {
+          cardNumber: paymentDetails.cardnumber,
+          expirationDate: paymentDetails.experationdate,
+          cvv: paymentDetails.cvv,
+          ID: paymentDetails.citizenid,
+        } : {}}
       validationSchema={paymentValidationSchema}
       onSubmit={(values) => console.log(values)}
       fields={fields}

@@ -16,9 +16,12 @@ async function getGroupsOfBusinesses(groups, order='DESC', limit=30, offset=0) {
     const groupsOfBusinesses = {}
     const failedGroups = [];
 
+    if (groups.length === 0) {
+        groups.push('businessId')
+    }
     try {
         for (const group of groups) {
-            if (!groupColMap[group]) {
+            if (!groupColMap[group] && group !== 'businessId') {
                 failedGroups.push(group);
                 continue;
             }

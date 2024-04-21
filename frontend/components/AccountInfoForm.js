@@ -1,10 +1,15 @@
-import React, { useState } from 'react';
-import Form from './Form';
+import React, { useState, useEffect } from 'react';
+import Form from '@Components/Form';
 import { useNavigation } from '@react-navigation/native';
 
-const AccountInfoForm = () => {
+const AccountInfoForm = ({ data }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const navigation = useNavigation();
+  const [account, setAccount] = useState(data);
+
+  useEffect(() => {
+    setAccount(data);
+  }, [data]);
+
 
   const fields = [
     { name: 'fullName', label: 'Full Name', iconName: 'user', placeholder: 'Enter full name' },
@@ -28,7 +33,13 @@ const AccountInfoForm = () => {
 
   return (
     <Form
-      initialValues={{ fullName: '', email: '', phoneNumber: '', address: '', birthday: '' }}
+      initialValues={ {
+        fullName: account.fullname,
+        email: account.email,
+        phoneNumber: account.phonenumber,
+        address: account.address,
+        birthday: account.birthdate,
+      } }
       onSubmit={onSubmit}
       fields={fields}
       submitTitle="Edit"

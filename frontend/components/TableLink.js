@@ -1,7 +1,7 @@
 // google and facebook sing in section ( sign in & sign up screens)
 import React from 'react';
 import { View,Button } from 'react-native';
-import { globalStyles } from '../globalStyles'
+import { globalStyles } from '@Root/globalStyles'
 import Icon from 'react-native-vector-icons/FontAwesome';
 const TableLink = () => (
   <>

@@ -1,110 +1,81 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { Camera } from 'expo-camera';
-// import * as Permissions from 'expo-permissions';
+import { Text, SafeAreaView, StyleSheet, Button,StatusBar, View} from 'react-native';
+import { BarCodeScanner } from 'expo-barcode-scanner';
+import { globalStyles } from '@Root/globalStyles';
+import DoboLogo from '@Components/DoboLogo';
+import CustomButton from '@Components/CustomButton';
 
-const ScanQRScreen = () => {
-  const [scannedData, setScannedData] = useState('');
+
+export default function App({navigation}) {
   const [hasPermission, setHasPermission] = useState(null);
+  const [scanned, setScanned] = useState(false);
 
   useEffect(() => {
-    (async () => {
-      const { status } = await Camera.requestCameraPermissionsAsync();
+    const getBarCodeScannerPermissions = async () => {
+      const { status } = await BarCodeScanner.requestPermissionsAsync();
       setHasPermission(status === 'granted');
-    })();
+    };
+
+    getBarCodeScannerPermissions();
   }, []);
 
-  const handleBarCodeScanned = ({ data }) => {
-    try {
-      const parsedData = JSON.parse(data);
-      const { businessId, tableId } = parsedData;
-      console.log(`Business ID: ${businessId}, Table ID: ${tableId}`);
-      // You can set these to state or do something else with them here
-    } catch (error) {
-      console.error('Failed to parse QR code data:', error);
-    }
+  const handleBarCodeScanned = ({ type, data }) => {
+    setScanned(true);
+    navigation.navigate('JoinTable', { qrData: data });
+
   };
 
   if (hasPermission === null) {
-    return <View />;
+    return <Text>Requesting for camera permission</Text>;
   }
   if (hasPermission === false) {
     return <Text>No access to camera</Text>;
   }
 
   return (
-    <View style={styles.container}>
-      <Camera
-        style={styles.camera}
-        type={Camera.Constants.Type.back}
-        autoFocus={Camera.Constants.AutoFocus.on}
-        onBarCodeScanned={handleBarCodeScanned}
-        barCodeScannerSettings={{
-          barCodeTypes: ['qr'],
-        }}
+    <SafeAreaView style={globalStyles.screenColor}>
+      <StatusBar barStyle="light-content" />
+      <DoboLogo />
+      <Text style={styles.title}>Scan QR Code</Text>
+      <View style={styles.cameraView}>
+      <BarCodeScanner
+      onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+      style={styles.square}
       />
-      {/* Corner frames */}
-      <View style={styles.cornerFrameTopLeft} />
-      <View style={styles.cornerFrameTopRight} />
-      <View style={styles.cornerFrameBottomLeft} />
-      <View style={styles.cornerFrameBottomRight} />
-    </View>
+      </View>
+      {scanned && <Button title={'Tap to Scan Again'} onPress={() => setScanned(false)} />}
+      <View style={{marginTop: 200}} />
+      <CustomButton title="Back To Home" handlePress={() => navigation.goBack()} />
+    </SafeAreaView>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    flexDirection: 'column',
     justifyContent: 'center',
-    alignItems: 'center',
   },
-  camera: {
-    aspectRatio: 1,
-    width: '70%',
-    borderRadius: 10,
+  cameraView: {
+    width: 350,
+    maxHeight: 350,
+    flex: 1,
+    borderRadius: 50,
     overflow: 'hidden',
-  },
-  cornerFrameTopLeft: {
-    position: 'absolute',
-    top: 280,
-    left: 80,
-    width: 40,
-    height: 40,
+    alignSelf: 'center',
+    marginTop: 20,
+    borderWidth: 2,
     borderColor: '#97DECC',
-    borderLeftWidth: 5,
-    borderTopWidth: 5,
   },
-  cornerFrameTopRight: {
-    position: 'absolute',
-    top: 280,
-    right: 80,
-    width: 40,
-    height: 40,
-    borderColor: '#97DECC',
-    borderRightWidth: 5,
-    borderTopWidth: 5,
+  square: {
+    width: '100%',
+    height: '100%',
   },
-  cornerFrameBottomLeft: {
-    position: 'absolute',
-    bottom: 280,
-    left: 80,
-    width: 40,
-    height: 40,
-    borderColor: '#97DECC',
-    borderLeftWidth: 5,
-    borderBottomWidth: 5,
+  title: {
+    fontSize: 30,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    color: '#EFEFEF',
+    marginTop: 20,
   },
-  cornerFrameBottomRight: {
-    position: 'absolute',
-    bottom: 280,
-    right: 80,
-    width: 40,
-    height: 40,
-    borderColor: '#97DECC',
-    borderRightWidth: 5,
-    borderBottomWidth: 5,
-  },
-
 });
-
-export default ScanQRScreen;

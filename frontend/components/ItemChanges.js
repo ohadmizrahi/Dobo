@@ -143,6 +143,7 @@ const menu = [
   },
 ];
 
+
 const ItemChanges = ({ route }) => {
   const { itemID } = route.params;
   const Item = menu.find(item => item.id === itemID);
@@ -192,11 +193,12 @@ const ItemChanges = ({ route }) => {
     <View style={styles.container}>
       <Image source={{ uri: Item.image }} style={styles.image} />
       <Text style={styles.itemName}>{Item.name}</Text>
-      <Text style={styles.itemDescription}>{Item.description}</Text>
-      {Object.entries(Item.changes[0]).map(([changeType, options]) =>
-        renderChangeOptions(changeType, options)
-      )}
-
+        <View style={{padding : 10}} >
+          <Text style={styles.itemDescription}>{Item.description}</Text>
+          {Object.entries(Item.changes[0]).map(([changeType, options]) =>
+            renderChangeOptions(changeType, options)
+          )}
+        </View>
       </View>
   );
 };
@@ -238,6 +240,7 @@ const styles = StyleSheet.create({
   optionContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    marginBottom: -8,
   },
   optionButton: {
     paddingVertical: 8,

@@ -1,21 +1,26 @@
-import React from 'react';
-import { View,ScrollView, Text, Button } from 'react-native';
-import MoveScreenButton from '../components/MoveScreenBtn';
-import LatestOrderComponent from '../components/LastOrders';
-import LogoImage from '../components/DoboLogo';
-import { globalStyles } from '../globalStyles';
-import FriendsInTable from '../components/FriendInTable';
-import TableHeader from '../components/TableHeader';
+import { ScrollView, StatusBar } from 'react-native';
+import CustomButton from '@Components/CustomButton';
+import LatestOrderComponent from '@Components/LastOrders';
+import LogoImage from '@Components/DoboLogo';
+import { globalStyles } from '@Root/globalStyles';
+import FriendsInTable from '@Components/FriendInTable';
 
 export default function TableStatusScreen({ navigation }) {
+  function handlePayNow() {
+    navigation.navigate('Pay');
+  }
+
+  function handleOrderNow() {
+    navigation.navigate('Order');
+  }
   return (
     <ScrollView style={globalStyles.screenColor}>
+      <StatusBar barStyle="light-content" />
       <LogoImage />
-      <TableHeader tableNumber={555} showPencilButton={false}/>
-      <MoveScreenButton navigation={navigation} title='Order Now' screen='Order'/>
+      <CustomButton handlePress={handleOrderNow} title='Order Now' />
       <LatestOrderComponent />
-      <FriendsInTable/>
-      <MoveScreenButton navigation={navigation} screen={'Pay'} title={'Pay Now'} backgroundColor={'red'}/>
+      <FriendsInTable />
+      <CustomButton handlePress={handlePayNow} title={'Pay Now'} backgroundColor={'red'}/>
     </ScrollView>
   );
 }

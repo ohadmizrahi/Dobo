@@ -1,18 +1,21 @@
-import React, { useState } from "react";
-import { View, Text, StyleSheet, Button,TouchableOpacity } from "react-native";
-import { globalStyles } from "../globalStyles";
+import { useState, useEffect } from "react";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { globalStyles } from "@Root/globalStyles";
 import PaymentForm from "./PaymentForm";
 
-export default function PaymentDetails({ navigation }) {
+export default function PaymentDetails({ data, navigation }) {
   const [showPaymentForm, setShowPaymentForm] = useState(false);
-  const paymentDetails = {
+  const [paymentDetails, setPaymentDetails] = useState(data);
 
-  };
+  useEffect(() => {
+    setPaymentDetails(data);
+  }, [data]);
+
   const handleAddPaymentMethod = () => {
     setShowPaymentForm(true);
   };
 
-  if (showPaymentForm || Object.keys(paymentDetails).length > 0) {
+  if (showPaymentForm || (paymentDetails && Object.keys(paymentDetails).length > 0)) {
     return <PaymentForm paymentDetails={paymentDetails} />;
   }
 

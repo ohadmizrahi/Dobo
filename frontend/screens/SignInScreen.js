@@ -1,16 +1,18 @@
 import React from 'react';
-import {ScrollView } from 'react-native';
-import SocialSignIn from '../components/SocialSignIn';
-import LogoImage from '../components/DoboLogo';
-import ProfilePicture from  '../components/ProfilePic';
-import { globalStyles } from '../globalStyles';
-import DontHaveAccount from '../components/NewAccount';
-import SigninForm from '../components/SigninForm';
-import LineAcross from '../components/LineAcross';
+import {ScrollView , KeyboardAvoidingView, Platform, StatusBar} from 'react-native';
+import SocialSignIn from '@Components/SocialSignIn';
+import LogoImage from '@Components/DoboLogo';
+import ProfilePicture from  '@Components/ProfilePic';
+import { globalStyles } from '@Root/globalStyles';
+import DontHaveAccount from '@Components/NewAccount';
+import SigninForm from '@Components/SigninForm';
+import LineAcross from '@Components/LineAcross';
 
 export default function SignInScreen({ navigation }) {
   return (
-    <ScrollView style= {globalStyles.screenColor}>
+    <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} keyboardVerticalOffset={Platform.OS === "ios" ? 100 : 0} style={globalStyles.screenColor}>
+    <ScrollView>
+      <StatusBar barStyle="light-content" />
       <LogoImage />
       <ProfilePicture />
       <SigninForm />
@@ -18,5 +20,6 @@ export default function SignInScreen({ navigation }) {
       <LineAcross text='OR' />
       <SocialSignIn />
     </ScrollView>
+    </KeyboardAvoidingView>
   );
 }

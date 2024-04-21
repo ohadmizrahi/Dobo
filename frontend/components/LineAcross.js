@@ -1,8 +1,8 @@
 import React from 'react';
 import { View, Text } from 'react-native';
-import { globalStyles } from '../globalStyles';
+import { globalStyles } from '@Root/globalStyles';
 
-export default function LineAcross({ text }) {
+export default function LineAcross({ text, color }) {
   return (
     <View style={globalStyles.divider}>
       <View style={globalStyles.line} />
