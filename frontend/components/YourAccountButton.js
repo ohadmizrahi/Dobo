@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
 
 const YourAccountButton = ({ invoices }) => {
-    const [total, setTotal] = useState(0); // State to hold the total amount
+    const [total, setTotal] = useState(0);
 
     useEffect(() => {
         const calculateTotalPrice = () => {
@@ -10,12 +10,12 @@ const YourAccountButton = ({ invoices }) => {
             invoices.forEach(item => {
                 totalPrice += item.price;
             });
-            return totalPrice.toFixed(2); // Format total to two decimal places
+            return totalPrice.toFixed(2);
         };
 
         const newTotal = calculateTotalPrice();
-        setTotal(newTotal); // Update total price when invoices prop changes
-    }, [invoices]); // Run effect when invoices prop changes
+        setTotal(newTotal);
+    }, [invoices]);
 
     return (
         <TouchableOpacity style={styles.button}>

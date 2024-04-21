@@ -5,11 +5,13 @@ import LatestOrderComponent from '../components/LastOrders';
 import LogoImage from '../components/DoboLogo';
 import { globalStyles } from '../globalStyles';
 import FriendsInTable from '../components/FriendInTable';
+import TableHeader from '../components/TableHeader';
 
 export default function TableStatusScreen({ navigation }) {
   return (
     <ScrollView style={globalStyles.screenColor}>
       <LogoImage />
+      <TableHeader tableNumber={555} showPencilButton={false}/>
       <MoveScreenButton navigation={navigation} title='Order Now' screen='Order'/>
       <LatestOrderComponent />
       <FriendsInTable/>
