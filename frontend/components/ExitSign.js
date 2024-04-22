@@ -19,7 +19,7 @@ export default function ExitSign() {
 const styles = StyleSheet.create({
   container: {
     position: 'absolute',
-    top: 40,
+    top: 20,
     right: 20,
     zIndex: 999,
   },

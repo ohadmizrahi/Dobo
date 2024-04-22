@@ -37,7 +37,7 @@ export default function Businessinformation({ navigation }) {
             </TouchableOpacity>
         </View>
       </View>
-      <TouchableOpacity style={styles.findPlace} onPress={() => navigation.navigate('JoinTable')}>
+      <TouchableOpacity style={styles.findPlace} onPress={() => navigation.navigate('TableReservation')}>
       <Text style={styles.findText}>Find Place</Text>
       </TouchableOpacity>
     </View>

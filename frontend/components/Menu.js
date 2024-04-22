@@ -215,6 +215,7 @@ const styles = StyleSheet.create({
         color: '#333',
         flex: 1, // Allow text to wrap if name is long
         paddingLeft: 10,
+        textAlign: 'center',
     },
     itemPrice: {
         fontSize: 14,
