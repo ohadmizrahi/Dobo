@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
 confirmBotton: {
   backgroundColor: '#D9D9D9',
   borderRadius: 50,
-  width: 100,
+  width: 150,
   height: 30,
   alignSelf: 'center',
   marginTop: 20,
