@@ -2,43 +2,38 @@ import React from 'react';
 import { View, Text, StyleSheet, Button, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
+export default function Businessinformation({ navigation, activityTime, description, menu, rank }) {
+  const handleMenu = () => {
+    navigation.navigate('Menu', menu);
+  }
 
-export default function Businessinformation({ navigation }) {
 
-  const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-
-  const businessData = {
-    description: "Nestled in the heart of the bustling city center, our cozy restaurant offers an inviting atmosphere and a delightful culinary experience. Our menu features a tantalizing selection of authentic Italian dishes crafted with the finest ingredients and traditional recipes passed down through generations. From handcrafted pasta dishes to wood-fired pizzas and decadent desserts, every bite is a celebration of Italian gastronomy.",
-    rating: 4.5,
-    openingHours: '10:00 - 22:00', 
-  };
-  
 
   return (
     <View style={styles.container}>
       <View style={styles.details}>
         <View style={styles.align}>
           <Icon name="smile-o" size={20} />
-          <Text style={styles.info}>{businessData.rating}</Text>
+          <Text style={styles.info}>{rank}</Text>
         </View>
         <View style={styles.align}>
           <Icon name="clock-o" size={20} />
-          <Text style={styles.info}>{businessData.openingHours}</Text>
+          <Text style={styles.info}>{activityTime[0]?.open}-{activityTime[0]?.close}</Text>
           {/* Add Dropdown for days of the week */}
         </View>
         <View style={styles.align}>
           <Icon name="info-circle" size={20} />
-          <Text style={styles.info}>{businessData.description}</Text>
+          <Text style={styles.info}>{description}</Text>
         </View>
         <View style={styles.align}>
           <Icon name="book" size={20} />
-            <TouchableOpacity style={styles.menuBtn} onPress={() => navigation.navigate('Menu')}>
+          <TouchableOpacity style={styles.menuBtn} onPress={() => navigation.navigate('Menu')}>
             <Text style={styles.menuText}>Menu</Text>
-            </TouchableOpacity>
+          </TouchableOpacity>
         </View>
       </View>
-      <TouchableOpacity style={styles.findPlace} onPress={() => navigation.navigate('JoinTable')}>
-      <Text style={styles.findText}>Find Place</Text>
+      <TouchableOpacity style={styles.findPlace} onPress={() => handleMenu()}>
+        <Text style={styles.findText}>Find Place</Text>
       </TouchableOpacity>
     </View>
   );
@@ -98,5 +93,10 @@ const styles = StyleSheet.create({
   findText: {
     color: 'white',
     fontSize: 20,
+  },
+  errorText: {
+    color: 'red',
+    fontSize: 18,
+    textAlign: 'center',
   },
 });

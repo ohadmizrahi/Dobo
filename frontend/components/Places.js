@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity } from 'react-native';
 import { BASE_URL, BE_PORT } from '@env';
-
+import { useNavigation } from '@react-navigation/native';
 export const Places = ({ title, data }) => {
+    const navigation = useNavigation();
     const [selectedBusinessId, setSelectedBusinessId] = useState(null);
     const [places, setPlaces] = useState([]);
 
@@ -23,6 +24,7 @@ export const Places = ({ title, data }) => {
 
     const handleBusinessPress = async (businessId) => {
         setSelectedBusinessId(businessId);
+        navigation.navigate('BusinessInfo', { businessId });
     };
 
     return (
