@@ -37,7 +37,6 @@ export default function BusinessInfoScreen({ navigation, route }) {
     fetchData();
   }, []);
 
-  console.log('busineesInfo', businessInfo);
 
   if (loading) {
     return <LoadingIcon />;
@@ -49,13 +48,7 @@ export default function BusinessInfoScreen({ navigation, route }) {
       <ExitSign />
       <HeaderImage data={businessInfo.imageurl} />
       <FilterPlaces />
-      <Businessinformation
-        navigation={navigation}
-        activityTime={businessInfo.activityTime}
-        description={businessInfo.description}
-        menu={businessInfo.menu}
-        rank={businessInfo.rank}
-      />
+      <Businessinformation navigation={navigation} data={businessInfo}/>
     </View>
   );
 }

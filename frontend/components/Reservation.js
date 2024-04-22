@@ -7,8 +7,8 @@ const TableReservationForm = () => {
     {name: 'date', label: 'Pick date', iconName: 'calendar', placeholder: 'Reservation Date', Keyboardtype: 'date'},
     {name: 'tableSize', label: 'TableSize', iconName: 'user', placeholder: 'Number Of Pepole'},
     {name: 'hour', label: 'Hour', iconName: 'clock-o', placeholder: 'Reservation Hour', Keyboardtype: 'time'},
-    {name: 'preference',iconName: 'gear', label: 'Preference (optional)', placeholder: 'Preference'},
-    {name: 'specialRequest',iconName: 'gear', label: 'SpecialRequest (optional)', placeholder: 'Special Request'},
+    {name: 'preference',iconName: 'gear', label: 'Preference', placeholder: '(optional)'},
+    {name: 'specialRequest',iconName: 'gear', label: 'Special Request', placeholder: '(optional)'},
   ];
 
   return (
@@ -17,7 +17,7 @@ const TableReservationForm = () => {
       validationSchema={TableReservationFormSchema}
       onSubmit={(values) => console.log(values)}
       fields={fields}
-      submitTitle= "SEND RESERVATION"
+      submitTitle= "RESERVE"
       formName="Reservation" // This is a string
     />
       );

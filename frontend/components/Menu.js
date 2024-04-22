@@ -147,9 +147,10 @@ const menu = [
 ];
 
 
-export default function Menu ({navigation, isOrderScreen }){
+export default function Menu ({navigation, isOrderScreen , data}){
   const [products, setProducts] = useState([]);
-
+  menuData= data;
+  
   useEffect(() => {
     setProducts(menu);
   }, []);

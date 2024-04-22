@@ -2,37 +2,39 @@ import React from 'react';
 import { View, Text, StyleSheet, Button, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-export default function Businessinformation({ navigation, activityTime, description, menu, rank }) {
-  const handleMenu = () => {
-    navigation.navigate('Menu', menu);
-  }
+export default function Businessinformation({ navigation, data }) {
+const handleMenu = () => {
+  navigation.navigate('Menu', { menu: data.menu, imageurl: data.imageurl });
+}
 
+const handleFindPlace = () => {
+  navigation.navigate('TableReservation', { businessId: data.businessId, imageurl: data.imageurl, name: data.name});
 
-
+}
   return (
     <View style={styles.container}>
       <View style={styles.details}>
         <View style={styles.align}>
           <Icon name="smile-o" size={20} />
-          <Text style={styles.info}>{rank}</Text>
+          <Text style={styles.info}>{data.rank}</Text>
         </View>
         <View style={styles.align}>
           <Icon name="clock-o" size={20} />
-          <Text style={styles.info}>{activityTime[0]?.open}-{activityTime[0]?.close}</Text>
+          <Text style={styles.info}>{data.activityTime[0]?.open}-{data.activityTime[0]?.close}</Text>
           {/* Add Dropdown for days of the week */}
         </View>
         <View style={styles.align}>
           <Icon name="info-circle" size={20} />
-          <Text style={styles.info}>{description}</Text>
+          <Text style={styles.info}>{data.description}</Text>
         </View>
         <View style={styles.align}>
           <Icon name="book" size={20} />
-          <TouchableOpacity style={styles.menuBtn} onPress={() => navigation.navigate('Menu')}>
+          <TouchableOpacity style={styles.menuBtn} onPress={() => handleMenu()}>
             <Text style={styles.menuText}>Menu</Text>
           </TouchableOpacity>
         </View>
       </View>
-      <TouchableOpacity style={styles.findPlace} onPress={() => handleMenu()}>
+      <TouchableOpacity style={styles.findPlace} onPress={() => handleFindPlace()}>
         <Text style={styles.findText}>Find Place</Text>
       </TouchableOpacity>
     </View>
