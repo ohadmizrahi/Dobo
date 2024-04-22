@@ -8,7 +8,7 @@ const handleMenu = () => {
 }
 
 const handleFindPlace = () => {
-  navigation.navigate('TableReservation', { businessId: data.businessId, imageurl: data.imageurl, name: data.name});
+  navigation.navigate('TableReservation', { businessId: data.businessid, imageurl: data.imageurl, name: data.name});
 
 }
   return (

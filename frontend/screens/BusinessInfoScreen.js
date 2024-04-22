@@ -13,7 +13,6 @@ import LoadingIcon from '@Components/LoadingIcon';
 export default function BusinessInfoScreen({ navigation, route }) {
   const [businessInfo, setBusinessInfo] = useState({});
   const [loading, setLoading] = useState(true);
-
   useEffect(() => {
     const fetchData = async () => {
       try {
