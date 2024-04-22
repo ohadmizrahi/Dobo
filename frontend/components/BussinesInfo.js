@@ -1,62 +1,102 @@
-// Bussines rating, description, menu btn, open hours
 import React from 'react';
-import { View, Text, StyleSheet, Button } from 'react-native';
+import { View, Text, StyleSheet, Button, TouchableOpacity } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
-export default function Businessinformation({business, navigation}){
-  const { description, rating, openingHours } = business;
+
+export default function Businessinformation({ navigation }) {
+
+  const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+
+  const businessData = {
+    description: "Nestled in the heart of the bustling city center, our cozy restaurant offers an inviting atmosphere and a delightful culinary experience. Our menu features a tantalizing selection of authentic Italian dishes crafted with the finest ingredients and traditional recipes passed down through generations. From handcrafted pasta dishes to wood-fired pizzas and decadent desserts, every bite is a celebration of Italian gastronomy.",
+    rating: 4.5,
+    openingHours: '10:00 - 22:00', 
+  };
+  
 
   return (
     <View style={styles.container}>
       <View style={styles.details}>
-        <Text style={styles.rating}>Rating: {rating} stars</Text>
-        <Text style={styles.description}>{description}</Text>
-        <Text style={styles.openingHours}>Opening Hours: {openingHours}</Text>
-        <Button title="View Menu" onPress={() => { navigation.navigate('Menu')}} />
+        <View style={styles.align}>
+          <Icon name="smile-o" size={20} />
+          <Text style={styles.info}>{businessData.rating}</Text>
+        </View>
+        <View style={styles.align}>
+          <Icon name="clock-o" size={20} />
+          <Text style={styles.info}>{businessData.openingHours}</Text>
+          {/* Add Dropdown for days of the week */}
+        </View>
+        <View style={styles.align}>
+          <Icon name="info-circle" size={20} />
+          <Text style={styles.info}>{businessData.description}</Text>
+        </View>
+        <View style={styles.align}>
+          <Icon name="book" size={20} />
+            <TouchableOpacity style={styles.menuBtn} onPress={() => navigation.navigate('Menu')}>
+            <Text style={styles.menuText}>Menu</Text>
+            </TouchableOpacity>
+        </View>
       </View>
-      <View>
-        <Button title='find place' color={'black'} onPress={()=>{ navigation.navigate('JoinTable')}}></Button>
-      </View>
+      <TouchableOpacity style={styles.findPlace} onPress={() => navigation.navigate('JoinTable')}>
+      <Text style={styles.findText}>Find Place</Text>
+      </TouchableOpacity>
     </View>
   );
 };
 
-
-// need to be passed to the globalstylesheet 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        padding: 20,
-        backgroundColor: '#f5f5f5', // Light background color
-        borderRadius: 10, // Rounded corners
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.2,
-      },
-      details: {
-        marginTop: 20,
-        padding: 10, // Add some padding for better separation
-        backgroundColor: '#fff', // White background for details
-        borderRadius: 10, // Rounded corners for details section
-      },
-      title: {
-        fontSize: 20,
-        fontWeight: 'bold',
-        color: '#333', // Darker text color
-      },
-      rating: {
-        marginVertical: 5,
-        color: '#777', // Light text color for rating
-      },
-      description: {
-        marginBottom: 10,
-        color: '#555', // Medium text color for description
-      },
-      openingHours: {
-        fontWeight: 'bold',
-        color: '#333',
-      },
-      menuButton: {
-        color: "black",
-        // Customize button styles as needed (consider rounded corners, background color)
-      },
-    });
+  container: {
+    flex: 1,
+    padding: 15,
+    backgroundColor: '#f5f5f5',
+  },
+  details: {
+    padding: 10,
+    borderRadius: 10,
+  },
+  info: {
+    marginVertical: 4,
+    color: '#000',
+    marginLeft: 10,
+  },
+  align: {
+    flexDirection: 'row',
+    alignItems: 'flex-start', // Change this line
+    marginBottom: 10,
+  },
+  menuBtn: {
+    backgroundColor: '#3B4248',
+    borderRadius: 20,
+    marginLeft: 5,
+    height: 25,
+    width: 60,
+    alignItems: 'center',
+    shadowColor: 'black',
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.5,
+    justifyContent: 'center',
+    borderWidth: 0.5,
+    borderColor: 'white',
+  },
+  menuText: {
+    color: 'white',
+  },
+  findPlace: {
+    backgroundColor: '#3B4248',
+    borderRadius: 40,
+    height: 50,
+    width: 200,
+    alignItems: 'center',
+    alignSelf: 'center',
+    justifyContent: 'center',
+    shadowColor: 'black',
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.5,
+    position: 'absolute',
+    bottom: 40,
+  },
+  findText: {
+    color: 'white',
+    fontSize: 20,
+  },
+});

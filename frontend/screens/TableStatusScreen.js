@@ -1,4 +1,4 @@
-import { ScrollView } from 'react-native';
+import { ScrollView, StatusBar } from 'react-native';
 import CustomButton from '@Components/CustomButton';
 import LatestOrderComponent from '@Components/LastOrders';
 import LogoImage from '@Components/DoboLogo';
@@ -15,6 +15,7 @@ export default function TableStatusScreen({ navigation }) {
   }
   return (
     <ScrollView style={globalStyles.screenColor}>
+      <StatusBar barStyle="light-content" />
       <LogoImage />
       <CustomButton handlePress={handleOrderNow} title='Order Now' />
       <LatestOrderComponent />
