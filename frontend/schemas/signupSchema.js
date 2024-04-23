@@ -18,8 +18,8 @@ export const signUpValidationSchema = yup.object().shape({
         .required('Address is required'),
     birthday: yup
         .string()
-        .min(10)
-        .max(10)
+        .min(10, 'Use DD/MM/YYYY format')
+        .max(10, 'Use DD/MM/YYYY format')
         .required('Birthday is required'),
     password: yup
       .string()

@@ -4,7 +4,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default function Businessinformation({ navigation, data }) {
 const handleMenu = () => {
-  navigation.navigate('Menu', { menu: data.menu, imageurl: data.imageurl });
+  navigation.navigate('Menu', { menu: data.menu, imageurl: data.imageurl, name: data.name});
 }
 
 const handleFindPlace = () => {

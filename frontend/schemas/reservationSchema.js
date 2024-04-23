@@ -2,7 +2,9 @@ import * as yup from 'yup';
 
 export const tableReservationValidationSchema = yup.object().shape({
   date: yup
-    .date()
+    .string()
+    .min(10, 'Use DD/MM/YYYY format')
+    .max(10, 'Use DD/MM/YYYY format')
     .required('Reservation Date is required'),
   tableSize: yup
     .number()

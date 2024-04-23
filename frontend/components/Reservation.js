@@ -13,7 +13,7 @@ const TableReservationForm = (data) => {
   const [loading, setLoading] = useState(false);
 
   const fields = [
-    {name: 'date', label: 'Date', iconName: 'calendar', placeholder: 'Reservation Date', Keyboardtype: 'date'},
+    {name: 'date', label: 'Date', iconName: 'calendar', placeholder: 'dd/mm/yyyy', keyboardType: 'numeric'},
     {name: 'tableSize', label: 'TableSize', iconName: 'user', placeholder: 'Number Of Pepole'},
     {name: 'hour', label: 'Hour', iconName: 'clock-o', placeholder: 'Reservation Hour', Keyboardtype: 'time'},
     {name: 'preference',iconName: 'gear', label: 'Preference', placeholder: '(optional)'},
