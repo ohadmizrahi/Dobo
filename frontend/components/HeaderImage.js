@@ -1,10 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Image, View } from 'react-native';
 import { BASE_URL, BE_PORT } from '@env';
 
 
 const HeaderImage = ({ data }) => {
-  const image = `${BASE_URL}:${BE_PORT}/assets/${data}`;
+  const [image, setImage] = useState(`${BASE_URL}:${BE_PORT}/assets/${data}`)
   
     useEffect(() => {
       const fetchImage = async () => {
