@@ -1,15 +1,26 @@
 import React from 'react';
-import { View,ScrollView, StatusBar } from 'react-native';
+import { View, StatusBar, StyleSheet } from 'react-native';
 import Menu from '@Components/Menu';
-import BusinessHeader from '@Components/BussinesHeader';
 import ExitSign from '@Components/ExitSign';
+import HeaderImage from '@Components/HeaderImage';
+import FormHeadLine from '@Components/FormHeadLine';
 
-export default function MenuScreen({ navigation }) {
+export default function MenuScreen({ route }) {
+  const { menu = [], imageurl = '', name='' } = route.params || {};
+
   return (
-    <View>
+    <View style = {styles.container}>
       <StatusBar barStyle="light-content" />
       <ExitSign/>
-      <Menu isOrderScreen={false}/>
+      <HeaderImage data={imageurl} />
+      <FormHeadLine data={name} />
+      <Menu isOrderScreen={false} data={{ menu }}/>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#f5f5f5',
+  },});

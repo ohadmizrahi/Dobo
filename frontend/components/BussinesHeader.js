@@ -32,14 +32,14 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   head: {
-    width: 300,
+    width: 250,
     height: 60,
     alignSelf: 'center',
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#97DECC',
     borderRadius: 50,
-    marginTop: 130,
+    marginTop: 100,
     position: 'absolute',
 
 

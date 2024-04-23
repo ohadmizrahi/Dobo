@@ -7,11 +7,12 @@ import Bell from '@Components/Bell';
 import { FilterPlaces } from '@Components/FilterPlaces';
 import { sendPostRequest } from '@Utils/request/send';
 import { handleResponse } from '@Utils/response/handler';
-
+import LoadingIcon from '@Components/LoadingIcon'; 
 // TBD : how to divide the places into different sections
 
 export default function HomeScreen({ navigation }) {
   const [places, setPlaces] = useState([]);
+  const [loading, setLoading] = useState(true); 
 
   const homeFetchConfiguration = {
     groups: ['recommend', 'new', 'name'],
@@ -19,6 +20,7 @@ export default function HomeScreen({ navigation }) {
     limit: 5,
     offset: 0,
   }
+  
   useEffect(() => {
     const fetchData = async () => {
       const response = await sendPostRequest('api/home', homeFetchConfiguration);
@@ -26,6 +28,7 @@ export default function HomeScreen({ navigation }) {
         response,
         navigation,
         async (data, error) => {
+          setLoading(false);
           if (error) {
             console.log('Error:', error);
             return;
@@ -40,6 +43,10 @@ export default function HomeScreen({ navigation }) {
     };
     fetchData();
   }, []);
+
+  if (loading) { 
+    return <LoadingIcon />;
+  }
   
   return (
     <View style={globalStyles.screenColor}>

@@ -4,7 +4,7 @@ import { View, Text, FlatList, StyleSheet, Image,Button} from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 
-const menu = [
+const menu = [{Food :[
   {
     id: 1,
     name: 'Burger',
@@ -144,57 +144,113 @@ const menu = [
       },
     ],
   },
-];
+],
+Drink :[
+  {
+  id: 6,
+  name: 'Coca Cola',
+  image: 'https://www.fileloinon.gr/18521-large_default/050-72000-Coca-Cola.jpg',
+  price: 15,
+  },
+  {
+    id: 7,
+    name: 'Pepsi',
+    image: 'https://www.pepsi-ny.com/wp-content/uploads/2023/11/PEP_Photography_Product_Hero_TM_RGB-1.png',
+    price: 12,
+  },
+  {
+    id: 8,
+    name: 'Fanta',
+    image: 'https://thesushico.co.uk/cdn/shop/products/Untitleddesign_30.png?v=1673344778&width=1946',
+    price: 10,
+  },
+],
+Dessert :[
+  {
+    id: 9,
+    name: 'Ice Cream',
+    image: 'https://img.taste.com.au/UdoSmp6V/taste/2017/03/nutella-icecream-124606-1.jpg',
+    price: 15,
+  },
+  {
+    id: 10,
+    name: 'Cake',
+    image: 'https://i.ytimg.com/vi/H98-83AvC30/maxresdefault.jpg',
+    price: 12,
+  },
+],
+}];
+
+console.log('Number of keys in menu:', Object.keys(menu[0]).length);
 
 
-export default function Menu ({navigation, isOrderScreen }){
+
+export default function Menu ({navigation, isOrderScreen , data}){
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    setProducts(menu);
-  }, []);
+    setProducts(data);
+  }, [data]);
 
   const renderProducts = ({ item }) => {
-    const bb = item.image;
-    return (
-      <View>
-        {isOrderScreen ? (
-          <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate("Item", { itemID: item.id})}>
-            <View style={styles.itemDetailsContainer} key={item.id}>
+    if (item.isHeader) {
+      return (
+        <View style={styles.categoryHeader}>
+        <Text style={styles.categoryHeaderText}>{item.text}</Text>
+        </View>
+      );
+    } else {
+      const bb = item.image;
+      return (
+        <View>
+          {isOrderScreen ? (
+            <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate("Item", { itemID: item.id })}>
+              <View style={styles.itemDetailsContainer} key={item.id}>
+                <Image source={{ uri: bb }} style={styles.imageContainer} />
+                <Text style={styles.itemName}>{item.name}</Text>
+                <Text style={styles.itemPrice}>Price:{item.price}$</Text>
+              </View>
+            </TouchableOpacity>
+          ) : (
+
+            <View style={[styles.itemDetailsContainer, styles.menuItem]}>
               <Image source={{ uri: bb }} style={styles.imageContainer} />
               <Text style={styles.itemName}>{item.name}</Text>
               <Text style={styles.itemPrice}>Price:{item.price}$</Text>
             </View>
-          </TouchableOpacity>
-        ) : (
-          <View style={[styles.itemDetailsContainer,styles.menuItem]}>
-            <Image source={{ uri: bb }} style={styles.imageContainer} />
-            <Text style={styles.itemName}>{item.name}</Text>
-            <Text style={styles.itemPrice}>Price:{item.price}$</Text>
-          </View>
-        )}
-      </View>
-    );
+          )}
+        </View>
+      );
+    }
   };
 
+  const allMenuItems = Object.entries(menu[0]).reduce((acc, [key, value]) => {
+    acc.push({ isHeader: true, text: key }); // Add header for each section
+    acc = acc.concat(value); // Add items for each section
+    return acc;
+  }, []);
+
   return (
-    <View>
+    <View style={{ flex: 1 }}>
       <FlatList
-        data={menu}
-        keyExtractor={(item) => item.id.toString()}
+        data={allMenuItems}
+        keyExtractor={(item, index) => index.toString()}
         renderItem={renderProducts}
+        contentContainerStyle={{ flexGrow: 1 }}
       />
     </View>
   );
+
+  
 };
 
 const styles = StyleSheet.create({
-    menuItem: {
-        flexDirection: 'row', // Change to row for horizontal layout
-        margin: 3,
-        backgroundColor: '#fff',
-        borderRadius: 8,
-    },
+  menuItem: {
+    flexDirection: 'row', // Change to row for horizontal layout
+    margin: 3,
+    borderBottomWidth: 2, // Add a thin line at the bottom
+    borderBottomColor: '#CCCCCC', // Color of the line
+},
     imageContainer: {
         width: 100, // Set a fixed width for the image container
         height: 100, // Set a fixed height for the image container
@@ -213,11 +269,26 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: 'bold',
         color: '#333',
-        flex: 1, // Allow text to wrap if name is long
-        paddingLeft: 10,
+        flex: 1, 
+        paddingRight: 50,
+        textAlign: 'center',
     },
     itemPrice: {
         fontSize: 14,
         color: '#888',
+    },
+    categoryHeader: {
+        textColor: 'white',
+        fontWeight: 'bold',
+        backgroundColor: '#3D3D3D',
+        padding: 10,
+        alignItems: 'center',
+        justifyContent: 'center',
+        height: 60,
+
+    },
+    categoryHeaderText: {
+        color: 'white',
+        fontSize: 20,
     },
 });
