@@ -20,7 +20,8 @@ const CustomInput = (props) => {
     if (text.length === 2 && name === 'expirationDate') {
       onChange(name)(text + '/');
     }
-    else if ((text.length === 2 || text.length === 5) && (name === 'birthday' || name === 'date')) {
+    else if ((text.length === 2 || text.length === 5) && (name === 'birthday' || name === 'date' || name === 'expirationDate')) {
+      // || name === 'expirationDate' needs to be deleted
       onChange(name)(text + '/');
     }
     else {

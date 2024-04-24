@@ -40,6 +40,7 @@ export default function BusinessInfoScreen({ navigation, route }) {
   if (loading) {
     return <LoadingIcon />;
   }
+  console.log(businessInfo.imageurl);
 
   return (
     <View style={{ flex: 1 }}>
