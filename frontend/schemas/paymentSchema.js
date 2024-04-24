@@ -9,10 +9,15 @@ const paymentValidationSchema = yup.object().shape({
     .required('Card number is required'),
   expirationDate: yup
     .string()
-    .min(5, "Use MM/YY format")
-    .max(5, "Use MM/YY format")
-    .matches(/^(0[1-9]|1[0-2])\/\d{2}$/, "Use MM/YY format")
+    .min(10, 'Use DD/MM/YYYY format')
+    .max(10, 'Use DD/MM/YYYY format')
     .required('Expiration date is required'),
+    // expirationDate: yup   CORECT ONE! DELETE THE ONE ABOVE
+    // .string()
+    // .min(5, "Use MM/YY format")
+    // .max(5, "Use MM/YY format")
+    // .matches(/^(0[1-9]|1[0-2])\/\d{2}$/, "Use MM/YY format")
+    // .required('Expiration date is required'),
   cvv: yup
     .string()
     .min(3, "CVV must be 3 digits")
