@@ -16,7 +16,9 @@ function buildHeaders(userToken=null, clientToken=null) {
   }
 
 function buildUrl(endpoint) {
-    return `${BASE_URL}:${BE_PORT}/${endpoint}`;
+  const url = `${BASE_URL}:${BE_PORT}/${endpoint}`
+  console.log(url);
+  return url;
 }
 
 function buildRequest(endpoint, method, headers, body=null) {
