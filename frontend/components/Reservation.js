@@ -69,6 +69,7 @@ const TableReservationForm = (data) => {
         fields={fields}
         submitTitle= "RESERVE"
         formName="Reservation"
+        editable={true}
       />
     </>
   );
