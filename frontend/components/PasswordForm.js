@@ -24,6 +24,7 @@ const PasswordForm = () => {
       submitTitle="Reset"
       isLoading={isLoading}
       formName="Password"
+      editable={false}
     />
   );
 };

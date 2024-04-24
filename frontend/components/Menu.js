@@ -181,10 +181,6 @@ Dessert :[
 ],
 }];
 
-console.log('Number of keys in menu:', Object.keys(menu[0]).length);
-
-
-
 export default function Menu ({navigation, isOrderScreen , data}){
   const [products, setProducts] = useState([]);
 
@@ -212,7 +208,6 @@ export default function Menu ({navigation, isOrderScreen , data}){
               </View>
             </TouchableOpacity>
           ) : (
-
             <View style={[styles.itemDetailsContainer, styles.menuItem]}>
               <Image source={{ uri: bb }} style={styles.imageContainer} />
               <Text style={styles.itemName}>{item.name}</Text>

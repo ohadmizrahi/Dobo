@@ -26,6 +26,7 @@ const PaymentForm = ({paymentDetails}) => {
       fields={fields}
       submitTitle="Pay Now"
       formName="Payment"
+      editable={true}
     />
   );
   

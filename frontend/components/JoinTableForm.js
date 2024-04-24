@@ -34,6 +34,7 @@ const JoinTableForm = ({ qrData , navigation }) => {
       submitTitle="Join"
       isLoading={isLoading}
       formName="Join Table"
+      editable={true}
     />
   );
 };

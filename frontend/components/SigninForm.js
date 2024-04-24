@@ -50,6 +50,7 @@ const SignInForm = () => {
       submitTitle="SIGN IN"
       isLoading={isLoading}
       formName="Sign In"
+      editable={true}
     />
   );
 };

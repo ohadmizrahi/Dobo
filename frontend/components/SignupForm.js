@@ -62,6 +62,7 @@ const SignUpForm = () => {
       submitTitle="SIGN UP"
       isLoading={isLoading}
       formName="Account"
+      editable={true}
     />
   );
 };
