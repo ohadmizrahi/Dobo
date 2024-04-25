@@ -74,7 +74,7 @@ const PasswordForm = () => {
       initialValues={{ password: dummyPassword }}
       onSubmit={onSubmit}
       fields={fields}
-      submitTitle="Reset"
+      submitTitle="Submit"
       isLoading={isLoading}
       formName="Password"
       editable={false}
