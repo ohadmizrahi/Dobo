@@ -43,9 +43,7 @@ const AccountInfoForm = ({ data }) => {
         response,
         navigation,
         async (data, error) => {
-          if (response.success && response.success.data.success) {
             Alert.alert('Success', 'Your account information has been updated successfully.');
-          }
           navigation.navigate('Profile');
         }
       );

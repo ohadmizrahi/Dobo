@@ -23,6 +23,8 @@ const PasswordForm = () => {
   const passwordInfo = {
     password: dummyPassword,
   };
+
+  
   try {
     const userToken = await getData('userToken');
     const getResponse = await sendGetRequest('api/auth/token/reset-password', { userToken });

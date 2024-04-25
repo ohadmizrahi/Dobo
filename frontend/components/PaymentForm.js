@@ -8,15 +8,15 @@ import { Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 const PaymentForm = ({ paymentDetails, submitTitle }) => {
-  const [editable, setEditable] = useState(true);
+  const [editable, setEditable] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const navigation = useNavigation();
 
   useEffect(() => {
-    if (submitTitle === 'Reset') {
-      setEditable(false);
-    } else {
+    if (submitTitle === 'Set') {
       setEditable(true);
+    } else {
+      setEditable(false);
     }
   }, [submitTitle]);
 
