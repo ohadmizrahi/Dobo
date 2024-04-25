@@ -6,7 +6,7 @@ import { sendPostRequest } from '@Utils/request/send.js';
 import { handleResponse } from '@Utils/response/handler';
 import { Alert } from 'react-native';
 import { sendGetRequest } from '@Utils/request/send.js';
-
+import {passwordValidationSchema} from '@Schemas/passwordSchema';
 
 const PasswordForm = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -96,6 +96,7 @@ const PasswordForm = () => {
     <Form
       initialValues={{ password: dummyPassword }}
       onSubmit={onSubmit}
+      validationSchema={passwordValidationSchema}
       fields={fields}
       submitTitle="Submit"
       isLoading={isLoading}

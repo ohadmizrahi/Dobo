@@ -1,4 +1,3 @@
-// AccountInfoForm.js
 import React, { useState, useEffect } from 'react';
 import Form from '@Components/Form';
 import { getData } from '@Utils/storage/asyncStorage';
@@ -6,7 +5,7 @@ import { sendPostRequest } from '@Utils/request/send.js';
 import { handleResponse } from '@Utils/response/handler';
 import { Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-
+import {accountInfoValidationSchema} from '@Schemas/accountInfoSchema';
 const AccountInfoForm = ({ data }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [account, setAccount] = useState(data);
@@ -73,6 +72,7 @@ const AccountInfoForm = ({ data }) => {
         birthday: formatDate(account.birthdate),
       }}
       onSubmit={onSubmit}
+      validationSchema={accountInfoValidationSchema}
       fields={fields}
       submitTitle="Submit"
       isLoading={isLoading}
