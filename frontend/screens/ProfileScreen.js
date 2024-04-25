@@ -65,7 +65,7 @@ export default function ProfileScreen({ navigation }) {
     <ScrollView>
       <StatusBar barStyle="light-content" />
       <DoboLogo />
-      <ProfilePicture />
+      <ProfilePicture name={profile.account.fullname}/>
       <AccountInfoForm data={profile.account}/>
       <PasswordForm />
       <PaymentDetails data={profile.paymentsMethod}/>

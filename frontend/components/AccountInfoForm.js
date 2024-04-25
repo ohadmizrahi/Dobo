@@ -16,6 +16,14 @@ const AccountInfoForm = ({ data }) => {
     setAccount(data);
   }, [data]);
 
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+  };
+
   const fields = [
     { name: 'fullName', label: 'Full Name', iconName: 'user', placeholder: 'Enter full name' },
     { name: 'email', label: 'Email', iconName: 'envelope', placeholder: 'Enter email', keyboardType: 'email-address' },
@@ -62,7 +70,7 @@ const AccountInfoForm = ({ data }) => {
         email: account.email,
         phoneNumber: account.phonenumber,
         address: account.address,
-        birthday: account.birthdate,
+        birthday: formatDate(account.birthdate),
       }}
       onSubmit={onSubmit}
       fields={fields}

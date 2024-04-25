@@ -17,56 +17,79 @@ const PasswordForm = () => {
     { name: 'password', label: 'Password', iconName: 'lock', placeholder: 'Enter password', secureTextEntry: true },
   ];
 
-  const onSubmit = async (values) => {
-    setIsLoading(true);
+    const onSubmit = async (values) => {
+      const confirmChangePassword = async () => {
+        setIsLoading(true);
 
-  const passwordInfo = {
-    password: dummyPassword,
-  };
+        const passwordInfo = {
+          password: dummyPassword,
+        };
 
-  
-  try {
-    const userToken = await getData('userToken');
-    const getResponse = await sendGetRequest('api/auth/token/reset-password', { userToken });
-    console.log('getResponse:', getResponse);
-    await handleResponse(
-      getResponse,
-      navigation,
-      async (data, error) => {
-        if (getResponse.success && getResponse.success.data.token) {
-          try {
-          const reset = {
-            resetPasswordToken : getResponse.success.data.token,
-            password: values.password,
-          }
-          const postResponse = await sendPostRequest('api/profile/update/password', reset, { userToken });
-          console.log('postResponse:', postResponse);
+        try {
+          const userToken = await getData('userToken');
+          const getResponse = await sendGetRequest('api/auth/token/reset-password', { userToken });
+          console.log('getResponse:', getResponse);
           await handleResponse(
-            postResponse,
+            getResponse,
             navigation,
             async (data, error) => {
-              if (postResponse.success && postResponse.success.data.success) {
-                Alert.alert('Success', 'Your password has been updated successfully.');
+              if (getResponse.success && getResponse.success.data.token) {
+                try {
+                  const reset = {
+                    resetPasswordToken: getResponse.success.data.token,
+                    password: values.password,
+                  };
+                  const postResponse = await sendPostRequest('api/profile/update/password', reset, { userToken });
+                  console.log('postResponse:', postResponse);
+                  await handleResponse(
+                    postResponse,
+                    navigation,
+                    async (data, error) => {
+                      if (postResponse.success && postResponse.success.data.success) {
+                        Alert.alert('Success', 'Your password has been updated successfully.');
+                      }
+                    }
+                  );
+                } catch (error) {
+                  const errorMessage = error.postResponse?.data?.error?.message || 'There was an error. Please try again.';
+                  Alert.alert('Error', errorMessage);
+                } finally {
+                  setIsLoading(false);
+                }
               }
+              navigation.navigate('Profile');
             }
-          )
+          );
         } catch (error) {
-          const errorMessage = error.postResponse?.data?.error?.message || 'There was an error. Please try again.';
+          const errorMessage = error.getResponse?.data?.error?.message || 'There was an error. Please try again.';
           Alert.alert('Error', errorMessage);
         } finally {
           setIsLoading(false);
         }
       };
-        navigation.navigate('Profile');
-      }
-    );
-  } catch (error) {
-    const errorMessage = error.getResponse?.data?.error?.message || 'There was an error. Please try again.';
-    Alert.alert('Error', errorMessage);
-  } finally {
-    setIsLoading(false);
-  }
-};
+    
+      Alert.alert(
+        'Confirmation',
+        'Are you sure you want to change the password?',
+        [
+          {
+            text: "No",
+            onPress: () => {
+              Alert.alert('Password has not been changed');
+            },
+            style: "cancel"
+          },
+          {
+            text: "I'm sure",
+            onPress: () => {
+              setIsLoading(true);
+              confirmChangePassword();
+            }
+          }
+        ]
+      );
+    };
+
 
 
   return (
