@@ -12,6 +12,7 @@ export const Places = ({ title, data }) => {
             return;
         }
         const mappedPlaces = data.map((item) => {
+            console.log(item.imageurl);
             return {
                 businessId: item.businessid,
                 name: item.name,
