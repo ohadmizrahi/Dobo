@@ -1,18 +1,19 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import FormContainer from '@Components/FormContainer';
 
 const orders = [
     {
         id: '1',
         item: 'Classic Burger',
-        price: '$10',
+        price: 10,
         payers: ['John', 'Alice'],
-        progress: 'In Preparation',
+        progress: 'In Progress',
     },
     {
         id: '2',
         item: 'Pizza Margarita',
-        price: '$12',
+        price: 12,
         payers: ['Bob', 'Alice', 'Emily'],
         progress: 'Ready',
     },
@@ -21,63 +22,31 @@ const orders = [
 
 const LatestOrderComponent = () => {
     return (
-        <View style={styles.container}>
-            <Text style={[styles.header,styles.headerText]}>Latest Orders</Text>
-            <View style={styles.orderContainer}>
+        <FormContainer formName='Latest Orders'>
                 {orders.map(order => (
                     <View key={order.id} style={styles.orderItem}>
                         <Text style={styles.orderText}> {order.item}</Text> 
                         <Text style={styles.orderText}>{order.payers.join(', ')}</Text>
-                        <Text style={styles.orderText}> {order.price}</Text>
+                        <Text style={styles.orderText}> {order.price}$</Text>
                         <Text style={styles.orderText}> {order.progress}</Text>
                     </View>
                 ))}
-            </View>
-        </View>
+        </FormContainer>
     );
 };
 
 const styles = StyleSheet.create({
-    container: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginTop: 25,
-    },
-    header: {
-        width: 300,
-        height: 50,
-        alignSelf: 'center',
-        backgroundColor: '#97DECC',
-        borderRadius: 50,
-        marginTop: 10,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    headerText: {
-        alignItems: 'center',
-        alignSelf: 'center',
-        justifyContent: 'center',
-        fontSize: 20,
-        color: '#000',
-        textAlign: 'center',
-    },
-    orderContainer: {
-        backgroundColor: '#FFFFFF',
-        borderRadius: 20,
-        marginVertical: 10,
-        padding: 20,
-        width: '100%',
-        position: 'relative',
-    },
     orderItem: {
         flexDirection: 'row',
         alignItems: 'center',
-        flex: 1,
         padding: 10,
+        borderBottomWidth: 1,
+        borderBottomColor: '#ddd',
+        width: '100%',
     },
     orderText: {
         alignItems: 'center',
-        fontSize: 16,
+        fontSize: 13,
         fontWeight: 'bold',
         color: '#333',
         flex: 1,

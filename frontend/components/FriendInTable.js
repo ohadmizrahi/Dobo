@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
 import {storeData} from '@Utils/storage/asyncStorage';
+import FormContainer from '@Components/FormContainer';
+
 const friendsData = [
     {
         id: '1',
@@ -48,59 +50,44 @@ const FriendsInTable = ({ totalFriends }) => {
     const FriendsData = friendsData;
     storeData('FriendsData', FriendsData)
 
+    const totalPaid = friendsData.reduce((total, friend) => total + friend.paid, 0);
+const totalToPay = friendsData.reduce((total, friend) => total + friend.totalToPay, 0);
+
     return (
-        <View style={styles.container}>
-            <Text style={[styles.header, styles.headerText]}>Friends</Text>
-            <View style={styles.friendsContainer}>
+        <FormContainer formName='Friends'>
+
                 {friendsData.map(friend => (
                     <View key={friend.id} style={styles.friendItem}>
                         <Image source={{ uri: friend.image }} style={styles.friendImage} />
                         <View style={styles.friendDetails}>
                             <Text style={styles.friendName}>{friend.name}</Text>
-                            <Text style={styles.friendAmount}> ${friend.paid}</Text>
-                            <Text style={styles.friendAmount}> ${friend.totalToPay}</Text>
+                            <Text style={styles.friendAmount}> {friend.paid}$</Text>
+                            <Text style={styles.friendAmount}> {friend.totalToPay}$</Text>
                         </View>
                     </View>
                 ))}
-            </View>
-        </View>
+                <View style={styles.columnNames}>
+                    <Text style={styles.columnText}>Payed:</Text>
+                    <Text style={styles.columnText}>Out of:</Text>
+                    <Text style={styles.columnText}>Left:</Text>
+                </View>
+                <View style={styles.columnNames}>
+                    <Text style={styles.columnText}>{totalPaid}$</Text>
+                    <Text style={styles.columnText}>{totalToPay}$</Text>
+                    <Text style={styles.columnText}>{totalToPay - totalPaid}$</Text>
+                </View>
+        </FormContainer>
     );
 };
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        alignItems: 'center',
-        marginTop: 25,
-    },
-    header: {
-        width: 300,
-        height: 50,
-        alignSelf: 'center',
-        backgroundColor: '#97DECC',
-        borderRadius: 50,
-        marginTop: 10,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    headerText: {
-        fontSize: 20,
-        color: '#000',
-        textAlign: 'center',
-    },
-    friendsContainer: {
-        backgroundColor: '#FFFFFF',
-        borderRadius: 20,
-        marginVertical: 10,
-        padding: 20,
-        width: '100%',
-        position: 'relative',
-    },
     friendItem: {
         flexDirection: 'row',
         alignItems: 'center',
-        flex: 1,
         padding: 10,
+        borderBottomWidth: 1,
+        borderBottomColor: '#ddd',
+        width: '100%',
     },
     friendImage: {
         width: 50,
@@ -118,12 +105,28 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: 'bold',
         color: '#333',
+
     },
     friendAmount: {
         flex: 1,
         fontSize: 16,
         fontWeight: 'bold',
         color: '#333',
+        textAlign: 'right',
+    },
+    columnNames: {
+        flexDirection:'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+
+    },
+    columnText: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        color: '#333',
+        flex: 1,
+        textAlign: 'center',
+        margin: 5,
     },
 });
 

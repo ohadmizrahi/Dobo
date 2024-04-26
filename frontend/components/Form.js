@@ -3,6 +3,7 @@ import { SafeAreaView, StyleSheet, View, Text, TouchableOpacity, KeyboardAvoidin
 import { Formik, Field } from 'formik';
 import CustomInput from './CustomInput';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import FormContainer from '@Components/FormContainer';
 
 const Form = ({ initialValues, validationSchema, onSubmit, fields, error, submitTitle, formName, editable }) => {
   const [formValues, setFormValues] = useState(initialValues);
@@ -18,11 +19,7 @@ const Form = ({ initialValues, validationSchema, onSubmit, fields, error, submit
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={styles.detailsContainer}>
-        <View style={[styles.formHeadLine, styles.shadowBottom]}>
-          <Text style={styles.formHeadLineText}>{formName}</Text>
-        </View>
+    <FormContainer formName={formName}>
         <Formik
           initialValues={formValues}
           onSubmit={handleSubmit} 
@@ -57,29 +54,13 @@ const Form = ({ initialValues, validationSchema, onSubmit, fields, error, submit
             </>
           )}
         </Formik>
-      </View>
-    </SafeAreaView>
+    </FormContainer>
   );
 };
 
 export default Form;
 
 const styles = StyleSheet.create({
-  container: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 25,
-  },
-  detailsContainer: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 100,
-    borderWidth: 5,
-    borderColor: '#EFEFEF',
-    margin: 10,
-    padding: 20,
-    maxWidth: '95%',
-    paddingHorizontal: 30,
-  },
   infoRow: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -93,27 +74,6 @@ const styles = StyleSheet.create({
     color: 'red',
     marginTop: 10,
     textAlign: 'center',
-  },
-  formHeadLine: {
-    width: 300,
-    height: 50,
-    alignSelf: 'center',
-    backgroundColor: '#97DECC',
-    borderRadius: 50,
-    marginTop: -40,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  formHeadLineText: {
-    fontSize: 20,
-    color: '#000',
-  },
-  shadowBottom: {
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 5 },
-    shadowOpacity: 0.3,
-    shadowRadius: 3,
-    elevation: 5,
   },
   confirmButton: {
     backgroundColor: '#D9D9D9',
