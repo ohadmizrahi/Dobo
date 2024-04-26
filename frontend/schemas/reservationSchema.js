@@ -13,6 +13,8 @@ export const tableReservationValidationSchema = yup.object().shape({
     .integer('Table Size must be an integer'),
   hour: yup
     .string()
+    .min(5, 'Use HH:MM format')
+    .max(5, 'Use HH:MM format')
     .required('Reservation Hour is required'),
   preference: yup
     .string(),

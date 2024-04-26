@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TableReservationFormSchema } from '@Schemas/reservationSchema';
+import { tableReservationValidationSchema } from '@Schemas/reservationSchema';
 import Form from '@Components/Form';
 import { sendPostRequest } from '@Utils/request/send.js';
 import { handleResponse } from '@Utils/response/handler';
@@ -14,8 +14,8 @@ const TableReservationForm = (data) => {
 
   const fields = [
     {name: 'date', label: 'Date', iconName: 'calendar', placeholder: 'dd/mm/yyyy', keyboardType: 'numeric'},
-    {name: 'tableSize', label: 'TableSize', iconName: 'user', placeholder: 'Number Of Pepole'},
-    {name: 'hour', label: 'Hour', iconName: 'clock-o', placeholder: 'Reservation Hour', Keyboardtype: 'time'},
+    {name: 'tableSize', label: 'TableSize', iconName: 'user', placeholder: 'Number Of Pepole', keyboardType: 'numeric'},
+    {name: 'hour', label: 'Hour', iconName: 'clock-o', placeholder: 'Reservation Hour', keyboardType: 'numeric'},
     {name: 'preference',iconName: 'gear', label: 'Preference', placeholder: '(optional)'},
     {name: 'specialRequest',iconName: 'gear', label: 'Special Request', placeholder: '(optional)'},
   ];
@@ -27,7 +27,7 @@ const TableReservationForm = (data) => {
       businessId: data.data,
       date: values.date,
       time: values.hour,
-      numOfPeople: values.tableSize,
+      numOfPeople: parseInt(values.tableSize),
       preference: values.preference,
       specialRequests: values.specialRequest,
     };
@@ -35,7 +35,7 @@ const TableReservationForm = (data) => {
     const [day, month, year] = values.date.split("/");
     const formattedDate = `${year}-${month}-${day}`;
     reservationInfo.date = formattedDate;
-
+    console.log('Reservation Info:', reservationInfo);
     try {
       const userToken = await getData('userToken');
       const response = await sendPostRequest('api/business/reservation', reservationInfo, { userToken });
@@ -45,7 +45,7 @@ const TableReservationForm = (data) => {
         navigation,
         async (data, error) => {
           if (response.success) {
-            const reservationDetails = `Date: ${reservationInfo.date}\nTime: ${reservationInfo.time}\nNumber of people: ${reservationInfo.people}`;
+            const reservationDetails = `Date: ${reservationInfo.date}\nTime: ${reservationInfo.time}\nNumber of people: ${reservationInfo.numOfPeople}`;
             Alert.alert('Success', `Your reservation was successful!\n\n${reservationDetails}`);
           }
           navigation.navigate('Home');
@@ -64,7 +64,7 @@ const TableReservationForm = (data) => {
       {loading && <LoadingIcon />} 
       <Form
         initialValues={{date: '',tableSize: '',hour: '',preference: '',specialRequests: '' }}
-        validationSchema={TableReservationFormSchema}
+        validationSchema={tableReservationValidationSchema}
         onSubmit={onSubmit}
         fields={fields}
         submitTitle= "RESERVE"

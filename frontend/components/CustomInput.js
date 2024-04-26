@@ -12,13 +12,16 @@ const CustomInput = (props) => {
 
   const handleDatesChange = (text = '') => {
     if (value && text.length < value.length) {
-      if (text.endsWith('/')) {
-        onChange(name)(text.slice(0, -2));
+      if (text.endsWith('/') || text.endsWith(':')) {
+        onChange(name)(text.slice(0, -1));
         return;
       }
     }
     if (text.length === 2 && name === 'expirationDate') {
       onChange(name)(text + '/');
+    }
+    else if (text.length === 2 && name === 'hour') {
+      onChange(name)(text + ':');
     }
     else if ((text.length === 2 || text.length === 5) && (name === 'birthday' || name === 'date' || name === 'expirationDate')) {
       // || name === 'expirationDate' needs to be deleted
