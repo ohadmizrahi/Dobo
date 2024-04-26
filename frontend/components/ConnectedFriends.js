@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import FormContainer from '@Components/FormContainer';
 
 export default function ConnectedFriends({ navigation }) {
     const friends = [
@@ -15,16 +16,12 @@ export default function ConnectedFriends({ navigation }) {
     ];
 
     return (
-        <View style={styles.container}>
-        <View style={[styles.formHeadLine,styles.shadowBottom]}>
-          <Text style={styles.formHeadLineText}>Connected Friends</Text>
-        </View>
-            <Text style={styles.textStyles}>Invite via Phone Number</Text>
-
+        <FormContainer formName='Connected Friends'>
+            <Text style={styles.textStyles}> Invite via phone Number </Text>
             {friends.map((friend, index) => (
                 <View style={styles.friendContainer} key={index}>
                     <Icon name='group' size={20} />
-                    <Text> Friend {index + 1} {friend.name}</Text>
+                    <Text > Friend {index + 1} {friend.name}</Text>
                 </View>
             ))}
             <TouchableOpacity>
@@ -32,45 +29,23 @@ export default function ConnectedFriends({ navigation }) {
                     <Icon name='plus' size={20} color={'white'} />
                 </View>
             </TouchableOpacity>
-
-        </View>
+        </FormContainer>
     );
 }
 
 const styles = StyleSheet.create({
-    container: {
-        alignItems: 'center',
-        marginTop: 25,
-        backgroundColor: '#FFFFFF',
-        borderRadius: 70,
-        width: '95%',
-        alignSelf: 'center',
-        paddingVertical: 20,
-    },
     friendContainer: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginBottom: 10,
+        alignSelf: 'center',
+        marginTop: 15,
+
     },
     textStyles: {
-        fontSize: 20,
+        fontSize: 16,
         padding: 10,
-    },
-    formHeadLine: {
-        width: 300,
-        height: 50,
         alignSelf: 'center',
-        backgroundColor: '#97DECC',
-        borderRadius: 50,
-        marginTop: -40,
-        alignItems: 'center',
-        justifyContent: 'center',
-    
-      },
-      formHeadLineText: {
-        fontSize: 20,
-        color: '#000',
-      },
+    },
       shadowBottom: {
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 5 },
@@ -87,5 +62,9 @@ const styles = StyleSheet.create({
         marginTop: 20,
         alignItems: 'center',
         justifyContent: 'center',
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.2,
+        shadowRadius: 2,
     },
 });
