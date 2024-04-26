@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { signinValidationSchema } from '@Schemas/signupSchema';
 import Form from '@Components/Form';
-import { useNavigation } from '@react-navigation/native';
 
-const JoinTableForm = ({ qrData , navigation }) => {
+const JoinTableForm = ({ qrData, joined, handleSubmit }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [initialValues, setInitialValues] = useState({location: '', table: ''});
   const [qrObject, setQrObject] = useState(qrData ? JSON.parse(qrData) : null);
@@ -21,10 +20,23 @@ const JoinTableForm = ({ qrData , navigation }) => {
   }
 
   const onSubmit = async (values) => {
-    setIsLoading(true);
+    // setIsLoading(true);
+    console.log('values', values);
+    handleSubmit(values.location, values.table);
+  }
+  if (joined) {
+    return (
+      <Form
+        initialValues={initialValues}
+        fields={[]}
+        submitTitle="Joined !"
+        isLoading={isLoading}
+        formName="Welcome to your table!"
+        editable={false}
+      />
     
-    // Submit logic goes here
-  };
+    );
+  }
 
   return (
     <Form

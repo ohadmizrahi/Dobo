@@ -5,9 +5,6 @@ import { BASE_URL, BE_PORT } from '@env';
 
 const HeaderImage = ({ data }) => {
   const image = data ? `${BASE_URL}:${BE_PORT}/assets/${data}` : 'https://www.collinsdictionary.com/images/full/restaurant_135621509.jpg';
-  
-    //   fetchImage();
-    // }, []);
     return (
       <View style={styles.shadow}>
       <Image

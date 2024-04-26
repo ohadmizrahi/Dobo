@@ -11,6 +11,7 @@ const handleFindPlace = () => {
   navigation.navigate('TableReservation', { businessId: data.businessid, imageurl: data.imageurl, name: data.name});
 
 }
+
   return (
     <View style={styles.container}>
       <View style={styles.details}>

@@ -18,6 +18,7 @@ function buildHeaders(userToken=null, clientToken=null) {
 function buildUrl(endpoint) {
   const url = `${BASE_URL}:${BE_PORT}/${endpoint}`
   console.log(url);
+  
   return url;
 }
 

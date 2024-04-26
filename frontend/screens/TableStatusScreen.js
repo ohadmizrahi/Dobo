@@ -7,7 +7,8 @@ import LogoImage from '@Components/DoboLogo';
 import { globalStyles } from '@Root/globalStyles';
 import FriendsInTable from '@Components/FriendInTable';
 
-export default function TableStatusScreen({ navigation }) {
+export default function TableStatusScreen({ navigation, route }) {
+  console.log('TableStatusScreen', route.params);
   function handlePayNow() {
     navigation.navigate('Pay');
   }

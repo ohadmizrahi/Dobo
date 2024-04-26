@@ -6,7 +6,7 @@ export const storeData = async (key, value) => {
             value = JSON.stringify(value);
         }
         await AsyncStorage.setItem(key, value);
-        console.log('Data stored successfully');
+        console.log(`Data ${key} stored successfully`);
     } catch (error) {
         console.log('Error storing data:', error);
         throw new Error('Error storing data');
@@ -17,7 +17,7 @@ export const getData = async (key) => {
     try {
         const value = await AsyncStorage.getItem(key);
         if (value !== null) {
-            console.log('Data retrieved successfully');
+            console.log(`Data ${key} retrieved successfully`);
             return value;
         }
     } catch (error) {
@@ -29,7 +29,7 @@ export const getData = async (key) => {
 export const removeData = async (key) => {
     try {
         await AsyncStorage.removeItem(key);
-        console.log('Data removed successfully');
+        console.log(`Data ${key} removed successfully`);
     } catch (error) {
         console.log('Error removing data:', error);
         throw new Error('Error removing data');
