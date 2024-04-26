@@ -9,23 +9,24 @@ import TableLink from '@Components/TableLink';
 import CustomButton from '@Components/CustomButton';
 import { sendPostRequest } from '@Utils/request/send';
 import { handleResponse } from '@Utils/response/handler';
-import { storeData, getData, removeMulti, getAllData } from '@Utils/storage/asyncStorage';
+import { storeData, getData, removeMulti } from '@Utils/storage/asyncStorage';
 
 export default function JoinTableScreen({ navigation, route }) {
-  const qrData = route.params ? route.params.qrData : null
+  const qrData = route.params ? JSON.parse(route.params.qrData) : null
+  console.log('qrData', qrData);
 
-  const [virtualTableId, setVirtualTableId] = useState('');
+  const [clientId, setClientId] = useState('');
   const [tableToJoin, setTableToJoin] = useState({
-    businessId: qrData && qrData.businessId,
-    tableId: qrData && qrData.tableId
+    businessId: qrData && qrData.business,
+    tableId: qrData && qrData.table
   });
 
   console.log('tableToJoin', JSON.stringify(tableToJoin));
-  console.log('virtualTableId', virtualTableId);
+  console.log('clientId', clientId);
 
   function handleGoToTable() {
     console.log('going to table');
-    navigation.navigate('TableStatus', { virtualTableId });
+    navigation.navigate('TableStatus');
   }
 
   async function handleCleanup() {
@@ -70,16 +71,17 @@ export default function JoinTableScreen({ navigation, route }) {
             menu: data.menu.items
           });
         
-        setVirtualTableId(data.virtualTable.virtualtableid);
+          setClientId(data.client.clientid);
         }
       );
     };
     async function blockReJoin() {
       const clientToken = await getData('clientToken')
       if (clientToken.length > 0) {
-        const virtualTable = JSON.parse(await getData('virtualTable'))
-        console.log('virtualTable', virtualTable);
-        setVirtualTableId(virtualTable.virtualtableId);
+        console.log('clientToken', clientToken);
+        const client = JSON.parse(await getData('client'))
+        console.log('client', client);
+        setClientId(client.clientId);
       }
     }
     blockReJoin()
@@ -94,7 +96,7 @@ export default function JoinTableScreen({ navigation, route }) {
       <DoboLogo />
       <JoinTableForm 
       qrData={qrData}
-      joined={virtualTableId !== ''}
+      joined={clientId !== ''}
       handleSubmit={
         (businessId, tableId) => setTableToJoin({
           businessId: businessId,

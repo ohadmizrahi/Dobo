@@ -5,7 +5,7 @@ import Form from '@Components/Form';
 const JoinTableForm = ({ qrData, joined, handleSubmit }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [initialValues, setInitialValues] = useState({location: '', table: ''});
-  const [qrObject, setQrObject] = useState(qrData ? JSON.parse(qrData) : null);
+  const [qrObject, setQrObject] = useState(qrData ? qrData : null);
 
   const fields = [
     { name: 'location', label: 'Location', iconName: 'map-marker', placeholder: 'Business Name' },
