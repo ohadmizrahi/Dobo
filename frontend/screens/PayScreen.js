@@ -40,7 +40,7 @@ export default function PayScreen({ navigation }) {
       <InvoiceComponent invoiceList={invoices} onRemoveItem={handleRemoveItem} />
       <YourAccountButton invoices={invoices} />
       <LineAcross text='Payment Method' />
-      <PaymentForm submitTitle="Pay"/>
+      <PaymentForm submitTitle="Pay" edit={true}/>
     </ScrollView>
     </KeyboardAvoidingView>
   );

@@ -4,8 +4,8 @@ export default function Navscreen ({ navigation }){
     return (
     <View>
         <Button title="Go to Home" onPress={() => navigation.navigate('Home')} />
-        <Button title="Go to Item" onPress={() => navigation.navigate('Item')} />
-        <Button title="Go to BusinessInfo" onPress={() => navigation.navigate('BusinessInfo')} />
+        {/* <Button title="Go to Item" onPress={() => navigation.navigate('Item')} />
+        <Button title="Go to BusinessInfo" onPress={() => navigation.navigate('BusinessInfo')} /> */}
         <Button title="Go to JoinTable" onPress={() => navigation.navigate('JoinTable')} />
         <Button title="Go to Order" onPress={() => navigation.navigate('Order')} />
         <Button title="Go to Pay" onPress={() => navigation.navigate('Pay')} />

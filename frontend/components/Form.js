@@ -12,6 +12,11 @@ const Form = ({ initialValues, validationSchema, onSubmit, fields, error, submit
     setFormValues(initialValues);
   }, [initialValues]);
 
+  const handleSubmit = async (values, actions) => {
+    await onSubmit(values, actions);
+    setIsEditMode(editable);
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.detailsContainer}>
@@ -20,7 +25,7 @@ const Form = ({ initialValues, validationSchema, onSubmit, fields, error, submit
         </View>
         <Formik
           initialValues={formValues}
-          onSubmit={onSubmit}
+          onSubmit={handleSubmit} 
           validationSchema={validationSchema}
           enableReinitialize
         >
@@ -36,7 +41,7 @@ const Form = ({ initialValues, validationSchema, onSubmit, fields, error, submit
                     placeholder={field.placeholder}
                     keyboardType={field.keyboardType}
                     secureTextEntry={field.secureTextEntry}
-                    editable={isEditMode} // Pass editable prop to CustomInput
+                    editable={isEditMode} 
                   />
                 </View>
               ))}

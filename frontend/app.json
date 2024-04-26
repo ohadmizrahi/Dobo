@@ -1,10 +1,12 @@
 {
   "expo": {
     "plugins": [
+      "expo-barcode-scanner",
       [
-        "expo-barcode-scanner",
+        "expo-image-picker",
         {
-          "cameraPermission": "Allow $(PRODUCT_NAME) to access camera."
+          "cameraPermission": "Allow $(PRODUCT_NAME) to access camera.",
+          "photosPermission": "The app accesses your photos to let you share them with your friends."
         }
       ]
     ],
