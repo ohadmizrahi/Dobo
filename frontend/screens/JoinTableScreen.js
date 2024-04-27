@@ -92,7 +92,7 @@ export default function JoinTableScreen({ navigation, route }) {
     };
     async function blockReJoin() {
       const clientToken = await getData('clientToken')
-      if (clientToken.length > 0) {
+      if (clientToken && clientToken.length > 0) {
         console.log('clientToken', clientToken);
         const client = JSON.parse(await getData('client'))
         console.log('client', client);
