@@ -42,7 +42,7 @@ async def agent_manager_service_on_startup():
         run_env = os.getenv('RUN_ENV', 'local')
         if run_env == 'local':
             raise Exception('Environment variables not found when running locally.')
-        print("Environment variables found.\nStarting service...")
+        print(f'Environment variables found.\nStarting service in {run_env} environment...')
 
     global agent_manager, broker_conn, db_conn
     scheduler.start()

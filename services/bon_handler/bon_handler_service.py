@@ -40,7 +40,7 @@ async def startup_event():
         run_env = os.getenv('RUN_ENV', 'local')
         if run_env == 'local':
             raise Exception('Environment variables not found when running locally.')
-        print("Environment variables found.\nStarting service...")
+        print(f'Environment variables found.\nStarting service in {run_env} environment...')
 
     try:
         rabbit_printer_orchestrator = await Orchestrator(
