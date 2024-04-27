@@ -34,7 +34,7 @@ export default function Cart({navigation}) {
   if (selectedItems.length === 0) {
     return (
       <View style={styles.container}>
-        <Text>No items in the cart.</Text>
+        <Text style={styles.emptyCartText}>No items in the cart.</Text>
       </View>
     );
   }
@@ -57,7 +57,7 @@ export default function Cart({navigation}) {
           </TouchableOpacity>
           <Text style={styles.itemName}>{item.name}</Text>
           <Text style={styles.itemPrice}>Price: {item.price}$</Text>
-          <Text style={styles.itemName}>User/Table</Text>
+          <Text style={styles.itemName}>User/Table</Text> 
         </View>
       ))}
       <TouchableOpacity onPress={()=> sendorder()}>
@@ -71,6 +71,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
+  },
+  emptyCartText:{
+    fontSize: 20,
+    textAlign: 'center',
+    color: 'black',
+    fontWeight: 'bold',
   },
   title: {
     fontSize: 20,

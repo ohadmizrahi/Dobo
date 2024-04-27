@@ -2,6 +2,7 @@ import asyncio
 import os
 import sys
 
+from dotenv import load_dotenv
 from fastapi import FastAPI
 from pathlib import Path
 from starlette.responses import JSONResponse
@@ -30,6 +31,16 @@ os.environ['PRINTER_ID'] = 'home'
 @app.on_event('startup')
 async def startup_event():
     print(f"Starting bon handler server for business {os.environ['BUSINESS_ID']}...")
+    
+    print('Loading environment variables...')
+    success = load_dotenv("../.env")
+    if not success:
+        print("Warning: local .env file not found")
+        print("Searcing for environment variables...")
+        run_env = os.getenv('RUN_ENV', 'local')
+        if run_env == 'local':
+            raise Exception('Environment variables not found when running locally.')
+        print(f'Environment variables found.\nStarting service in {run_env} environment...')
 
     try:
         rabbit_printer_orchestrator = await Orchestrator(

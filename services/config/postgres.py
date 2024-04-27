@@ -1,15 +1,16 @@
+import os
 import asyncpg
 from pydantic import BaseSettings
 
 class PostgresConfig(BaseSettings):
-    pg_user: str
-    pg_password: str
-    database: str
-    pg_host: str
-    pg_port: int
+    pg_user: str = os.getenv('PG_USER')
+    pg_password: str = os.getenv('PG_PASSWORD')
+    database: str = os.getenv('DATABASE')
+    pg_host: str = os.getenv('PG_HOST')
+    pg_port: int = int(os.getenv('PG_PORT', 5432))
 
-    class Config:
-        env_file = "../.env"
+    # class Config:
+    #     env_file = "../.env"
 
     async def connect(self):
         connection = await asyncpg.connect(
