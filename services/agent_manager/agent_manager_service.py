@@ -1,7 +1,9 @@
+import os
 import sys
 import pytz
 import asyncpg
 
+from dotenv import load_dotenv
 from fastapi import FastAPI
 from pathlib import Path
 from starlette.responses import JSONResponse
@@ -31,6 +33,17 @@ db_conn = None
 
 async def agent_manager_service_on_startup():
     print('Starting agent manager service...')
+    
+    print('Loading environment variables...')
+    success = load_dotenv("../.env")
+    if not success:
+        print("Warning: local .env file not found")
+        print("Searcing for environment variables...")
+        run_env = os.getenv('RUN_ENV', 'local')
+        if run_env == 'local':
+            raise Exception('Environment variables not found when running locally.')
+        print("Environment variables found.\nStarting service...")
+
     global agent_manager, broker_conn, db_conn
     scheduler.start()
     broker_conn = await RabbitMQConfig().connect()

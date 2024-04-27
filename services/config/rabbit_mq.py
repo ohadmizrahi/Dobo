@@ -1,11 +1,12 @@
+import os
 import aio_pika
 from pydantic import BaseSettings
 
 class RabbitMQConfig(BaseSettings):
-    broker_host: str
-    broker_port: int
-    broker_username: str
-    broker_password: str
+    broker_host: str = os.getenv('BROKER_HOST')
+    broker_port: int = int(os.getenv('BROKER_PORT', 5672))
+    broker_username: str = os.getenv('BROKER_USERNAME')
+    broker_password: str = os.getenv('BROKER_PASSWORD')
 
     class Config:
         env_file = "../.env"
