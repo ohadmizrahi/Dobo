@@ -42,6 +42,7 @@ export default function BusinessInfoScreen({ navigation, route }) {
   }
   console.log(businessInfo.imageurl);
 
+  
   return (
     <View style={{ flex: 1 }}>
       <StatusBar barStyle="light-content" />

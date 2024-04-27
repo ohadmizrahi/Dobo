@@ -7,18 +7,12 @@ import { handleResponse } from '@Utils/response/handler';
 import { Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-const PaymentForm = ({ paymentDetails, submitTitle }) => {
-  const [editable, setEditable] = useState(true);
+const PaymentForm = ({ paymentDetails, submitTitle, edit }) => {
+  const [editable, setEditable] = useState(edit);
   const [isLoading, setIsLoading] = useState(false);
   const navigation = useNavigation();
 
-  useEffect(() => {
-    if (submitTitle === 'Reset') {
-      setEditable(false);
-    } else {
-      setEditable(true);
-    }
-  }, [submitTitle]);
+
 
   const fields = [
     { name: 'cardNumber', label: 'Card Number', iconName: 'cc-visa', placeholder: 'Enter card number', keyboardType: 'numeric', secureTextEntry: true },
@@ -40,7 +34,7 @@ const PaymentForm = ({ paymentDetails, submitTitle }) => {
     const [day, month, year] = values.expirationDate.split("/"); // Format needs change to month,year
     const formattedDate = `${year}-${month}-${day}`; // Format needs change to YY-MM
     paymentInfo["experationdate"] = formattedDate;
-
+    if (submitTitle != "pay") {
     try {
       const userToken = await getData('userToken');
       const response = await sendPostRequest('api/profile/update/payment-method', paymentInfo, { userToken });
@@ -59,6 +53,11 @@ const PaymentForm = ({ paymentDetails, submitTitle }) => {
       Alert.alert('Error', errorMessage);
     } finally {
       setIsLoading(false);
+    }}
+    else {
+      Alert.alert('Succsess', "payment is done successfully");
+      navigation.navigate('OrderCart');
+      // add function to send  to backend and delete item from cart
     }
   }
 

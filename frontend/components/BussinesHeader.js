@@ -11,6 +11,7 @@ const BussinesHeader = () => {
     };
 
 
+    
   return (
     <View style={styles.BusinessCardcontainer}>
       <Image source={{ uri: businessCardData.imageUrl }} style={styles.backgroundImage} />

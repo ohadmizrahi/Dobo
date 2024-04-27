@@ -1,4 +1,3 @@
-// AccountInfoForm.js
 import React, { useState, useEffect } from 'react';
 import Form from '@Components/Form';
 import { getData } from '@Utils/storage/asyncStorage';
@@ -6,7 +5,7 @@ import { sendPostRequest } from '@Utils/request/send.js';
 import { handleResponse } from '@Utils/response/handler';
 import { Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-
+import {accountInfoValidationSchema} from '@Schemas/accountInfoSchema';
 const AccountInfoForm = ({ data }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [account, setAccount] = useState(data);
@@ -15,6 +14,14 @@ const AccountInfoForm = ({ data }) => {
   useEffect(() => {
     setAccount(data);
   }, [data]);
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+  };
 
   const fields = [
     { name: 'fullName', label: 'Full Name', iconName: 'user', placeholder: 'Enter full name' },
@@ -43,9 +50,7 @@ const AccountInfoForm = ({ data }) => {
         response,
         navigation,
         async (data, error) => {
-          if (response.success && response.success.data.success) {
             Alert.alert('Success', 'Your account information has been updated successfully.');
-          }
           navigation.navigate('Profile');
         }
       );
@@ -64,9 +69,10 @@ const AccountInfoForm = ({ data }) => {
         email: account.email,
         phoneNumber: account.phonenumber,
         address: account.address,
-        birthday: account.birthdate,
+        birthday: formatDate(account.birthdate),
       }}
       onSubmit={onSubmit}
+      validationSchema={accountInfoValidationSchema}
       fields={fields}
       submitTitle="Submit"
       isLoading={isLoading}

@@ -54,16 +54,16 @@ export default function MainNavigation() {
         <Stack.Screen name="Home" component={withFocusHandler(HomeScreen)} options={{...MainHeaderOptions,title: ""}}/>
         <Stack.Screen name="Item" component={withFocusHandler(ItamScreen)} options={{ headerShown: false }}/>
         <Stack.Screen name="BusinessInfo" component={withFocusHandler(BusinessInfoScreen)} options={{ headerShown: false }}/>
-        <Stack.Screen name="JoinTable" component={withFocusHandler(JoinTableScreen)} options={MainHeaderOptions}/>
+        <Stack.Screen name="JoinTable" component={withFocusHandler(JoinTableScreen)} options={{...MainHeaderOptions,title: ""}}/>
         <Stack.Screen name="Order" component={withFocusHandler(OrderScreen)} options={{ headerShown: false }} />
         <Stack.Screen name="Pay" component={withFocusHandler(PayScreen)} options={{ headerShown: false }}/>
         <Stack.Screen name="Menu" component={withFocusHandler(MenuScreen)} options={{ headerShown: false }}/>
         <Stack.Screen name="OrderCart" component={withFocusHandler(OrderCartScreen)} options={{ headerShown: false }} />
-        <Stack.Screen name="Profile" component={withFocusHandler(ProfileScreen)} options={MainHeaderOptions}/>
-        <Stack.Screen name="SignIn" component={withFocusHandler(SignInScreen)} options={MainHeaderOptions}/>
-        <Stack.Screen name="SignUp" component={withFocusHandler(SignUpScreen)} options={MainHeaderOptions}/>
+        <Stack.Screen name="Profile" component={withFocusHandler(ProfileScreen)} options={{...MainHeaderOptions,title: ""}}/>
+        <Stack.Screen name="SignIn" component={withFocusHandler(SignInScreen)} options={{...MainHeaderOptions,title: ""}}/>
+        <Stack.Screen name="SignUp" component={withFocusHandler(SignUpScreen)} options={{...MainHeaderOptions,title: ""}}/>
         <Stack.Screen name="TableReservation" component={withFocusHandler(TableReservationScreen)} options={{ headerShown: false }}/>
-        <Stack.Screen name="TableStatus" component={withFocusHandler(TableStatusScreen)} options={MainHeaderOptions}/>
+        <Stack.Screen name="TableStatus" component={withFocusHandler(TableStatusScreen)} options={{...MainHeaderOptions,title: ""}}/>
         <Stack.Screen name='QRScanner' component={withFocusHandler(ScanQRScreen)} options={{ headerShown: false }}/>
       </Stack.Navigator>
     </NavigationContainer>
