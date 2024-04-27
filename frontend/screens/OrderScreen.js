@@ -1,4 +1,4 @@
-import { ScrollView,StatusBar, StyleSheet,View,useWindowDimensions  } from 'react-native';
+import { ScrollView, StatusBar, StyleSheet, View, useWindowDimensions  } from 'react-native';
 import { useState, useEffect } from 'react';
 import Menu from '@Components/Menu';
 import {globalStyles} from '@Root/globalStyles';
@@ -15,32 +15,34 @@ export default function OrderScreen({ navigation }) {
     navigation.navigate('OrderCart');
   }
 
-  function handleScroll(event) {
-    const scrollPosition = event.nativeEvent.contentOffset.y;
-    const maxScroll = event.nativeEvent.contentSize.height - event.nativeEvent.layoutMeasurement.height;
+  // function handleScroll(event) {
+  //   const scrollPosition = event.nativeEvent.contentOffset.y;
+  //   const maxScroll = event.nativeEvent.contentSize.height - event.nativeEvent.layoutMeasurement.height;
     
-    // Calculate button position based on scroll position
-    const buttonBottom = 20 + (maxScroll - scrollPosition);
+  //   // Calculate button position based on scroll position
+  //   const buttonBottom = 20 + (maxScroll - scrollPosition);
 
 
-    // Update button position
-    setButtonPosition({ bottom: buttonBottom});
-  }
+  //   // Update button position
+  //   setButtonPosition({ bottom: buttonBottom});
+  // }
 
   function handleViewOrder() {
     navigation.navigate('OrderCart');
   }
 
   return (
-    <ScrollView style={globalStyles.screenColor} onScroll={handleScroll} scrollEventThrottle={16}>
+    <View style={globalStyles.screenColor} >
         <StatusBar barStyle="light-content" />
         <ExitSign/>
         <LogoImage/>
-        <Menu navigation={navigation} isOrderScreen={true} />
+        <ScrollView scrollEventThrottle={16} contentContainerStyle={{ paddingBottom: 60 }}>
+            <Menu navigation={navigation} isOrderScreen={true} />
+        </ScrollView>
         <View style={[styles.floatingButtonContainer, buttonPosition]}>
-          <CustomButton handlePress={handleViewOrder} screen='OrderCart' title={'View Order'} />
+            <CustomButton handlePress={handleViewOrder} screen='OrderCart' title={'View Order'} />
         </View>
-    </ScrollView>
+    </View>
   );
 }
 const styles = StyleSheet.create({
