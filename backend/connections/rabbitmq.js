@@ -10,8 +10,8 @@ const connectToRabbitMQ = () => {
             resolve(channel);
             return;
         }
-
-        amqp.connect(`amqp://${process.env.RABBITMQ_HOST}`, function(connError, conn) {
+        const password = encodeURIComponent(process.env.RABBITMQ_PASSWORD);
+        amqp.connect(`amqps://${process.env.RABBITMQ_USERNAME}:${password}@${process.env.RABBITMQ_HOST}:${process.env.RABBITMQ_PORT}`, function(connError, conn) {
             if (connError) {
                 reject(`Failed to connect to RabbitMQ server: ${connError}`);
                 return;

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { ScrollView, StatusBar } from 'react-native';
+import { Alert, ScrollView, StatusBar } from 'react-native';
 import { globalStyles } from '@Root/globalStyles';
 import DoboLogo from '@Components/DoboLogo';
 import JoinTableForm from '@Components/JoinTableForm';
@@ -24,9 +24,23 @@ export default function JoinTableScreen({ navigation, route }) {
   console.log('tableToJoin', JSON.stringify(tableToJoin));
   console.log('clientId', clientId);
 
-  function handleGoToTable() {
+  async function handleGoToTable() {
     console.log('going to table');
-    navigation.navigate('TableStatus');
+    const userToken = await getData('userToken');
+    const clientToken = await getData('clientToken');
+    if (!clientToken || !userToken) {
+      console.log('No Client Token');
+      Alert.alert(
+        'Please Join Table First',
+        'You need to join a table before you can go to it.',
+        [{
+          text: 'OK',
+        }],
+      );
+    }
+    else {
+    navigation.navigate('TableStatus', { userToken, clientToken });
+    }
   }
 
   async function handleCleanup() {
@@ -47,6 +61,7 @@ export default function JoinTableScreen({ navigation, route }) {
     const fetchData = async () => {
 
       const userToken = await getData('userToken');
+      console.log('userToken', userToken);
       const joinTableTokens = { userToken }
 
       const joinTableBody = {
@@ -77,7 +92,7 @@ export default function JoinTableScreen({ navigation, route }) {
     };
     async function blockReJoin() {
       const clientToken = await getData('clientToken')
-      if (clientToken.length > 0) {
+      if (clientToken && clientToken.length > 0) {
         console.log('clientToken', clientToken);
         const client = JSON.parse(await getData('client'))
         console.log('client', client);
@@ -97,7 +112,7 @@ export default function JoinTableScreen({ navigation, route }) {
       <JoinTableForm 
       qrData={qrData}
       joined={clientId !== ''}
-      handleSubmit={
+cd      handleSubmit={
         (businessId, tableId) => setTableToJoin({
           businessId: businessId,
           tableId: tableId

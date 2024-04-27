@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
-import {storeData} from '@Utils/storage/asyncStorage';
+import { storeData, getData } from '@Utils/storage/asyncStorage';
 import FormContainer from '@Components/FormContainer';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const friendsData = [
     {
@@ -27,7 +28,7 @@ const friendsData = [
     },
 ];
 
-const FriendsInTable = ({ totalFriends }) => {
+const FriendsInTable = ({ friends, totalFriends }) => {
     const [joinedFriends, setJoinedFriends] = useState(0);
     // Question to Bar: why do we need this?
     useEffect(() => {
@@ -47,22 +48,40 @@ const FriendsInTable = ({ totalFriends }) => {
         }
     }, []);
 
-    const FriendsData = friendsData;
-    storeData('FriendsData', FriendsData)
+    storeData('FriendsData', friends)
 
-    const totalPaid = friendsData.reduce((total, friend) => total + friend.paid, 0);
-const totalToPay = friendsData.reduce((total, friend) => total + friend.totalToPay, 0);
+    const totalPaid = friends.reduce((total, friend) => parseFloat(total) + parseFloat(friend.paid), 0);
+    const totalToPay = friends.reduce((total, friend) => parseFloat(total) + parseFloat(friend.total), 0);
+    
+    function renderFriendImage(friend) {
+        if (friend.clientimage) {
+            return <Image source={{ uri: friend.clientimage }} style={styles.friendImage} />;
+        } else {
+            return (
+            <View style={styles.iconContainer}>
+                <Icon name="user" size={25} color="white" />
+            </View>
+        );
+        }
+    }
+
+    function isCurrentClient(clientId) {
+        console.log('clientId', clientId);
+        // const client = await getData('client');
+        // console.log('client', client);
+        return '57b18dc0-96ea-4ee2-8fa7-46168e806a01' === clientId;
+    }
 
     return (
         <FormContainer formName='Friends'>
 
-                {friendsData.map(friend => (
-                    <View key={friend.id} style={styles.friendItem}>
-                        <Image source={{ uri: friend.image }} style={styles.friendImage} />
-                        <View style={styles.friendDetails}>
-                            <Text style={styles.friendName}>{friend.name}</Text>
+                {friends.map(friend => (
+                    <View key={friend.clientid} style={styles.friendItem}>
+                        { renderFriendImage(friend) }
+                        <View style={[styles.friendDetails, isCurrentClient(friend.clientid) && styles.myselfDetails]}>
+                            <Text style={styles.friendName}>{friend.clientname}</Text>
                             <Text style={styles.friendAmount}> {friend.paid}$</Text>
-                            <Text style={styles.friendAmount}> {friend.totalToPay}$</Text>
+                            <Text style={styles.friendAmount}> {friend.total}$</Text>
                         </View>
                     </View>
                 ))}
@@ -94,6 +113,16 @@ const styles = StyleSheet.create({
         height: 50,
         borderRadius: 25,
         marginRight: 10,
+    },
+    myselfDetails: {
+        borderRadius: 40,
+        borderColor: '#97DECC',
+        borderWidth: 3,
+        justifyContent: 'center',
+        alignContent: 'center',
+        alignItems: 'center',
+        padding: 5,
+
     },
     friendDetails: {
         flex: 1,
@@ -127,6 +156,15 @@ const styles = StyleSheet.create({
         flex: 1,
         textAlign: 'center',
         margin: 5,
+    },
+    iconContainer: {
+        borderRadius: 40,
+        width: 40,
+        height: 40,
+        backgroundColor: '#97DECC',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginRight: 20,
     },
 });
 
