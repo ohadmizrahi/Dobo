@@ -145,7 +145,7 @@ const menu = [{Food :[
     ],
   },
 ],
-Drink :[
+Drinks :[
   {
   id: 6,
   name: 'Coca Cola',
@@ -191,27 +191,35 @@ export default function Menu ({navigation, isOrderScreen , data}){
   const renderProducts = ({ item }) => {
     if (item.isHeader) {
       return (
-        <View style={styles.categoryHeader}>
-        <Text style={styles.categoryHeaderText}>{item.text}</Text>
+        <View>
+          {isOrderScreen ? ( // askes if the screen is Order 
+          <View style={[styles.categoryHeader,styles.categoryOrderColor]}>
+            <Text style={styles.categoryOrderText}>{item.text}</Text>
+          </View>
+          ):( // Menu screen
+          <View style={[styles.categoryHeader,styles.categoryMenuColor]}>
+            <Text style={styles.categoryMenuText}>{item.text}</Text>
+          </View>
+          )}
         </View>
       );
     } else {
       const bb = item.image;
       return (
         <View>
-          {isOrderScreen ? (
+          {isOrderScreen ? ( // Order screen
             <TouchableOpacity style={styles.menuItem} onPress={() => navigation.navigate("Item", { itemID: item.id })}>
               <View style={styles.itemDetailsContainer} key={item.id}>
                 <Image source={{ uri: bb }} style={styles.imageContainer} />
-                <Text style={styles.itemName}>{item.name}</Text>
-                <Text style={styles.itemPrice}>Price:{item.price}$</Text>
+                <Text style={[styles.itemName,styles.itemTextOrder]}>{item.name}</Text>
+                <Text style={[styles.itemPrice,styles.itemTextOrder]}>Price:{item.price}$</Text>
               </View>
             </TouchableOpacity>
           ) : (
             <View style={[styles.itemDetailsContainer, styles.menuItem]}>
               <Image source={{ uri: bb }} style={styles.imageContainer} />
-              <Text style={styles.itemName}>{item.name}</Text>
-              <Text style={styles.itemPrice}>Price:{item.price}$</Text>
+              <Text style={[styles.itemName,styles.itemTextMenu]}>{item.name}</Text>
+              <Text style={[styles.itemPrice,styles.itemTextMenu]}>Price:{item.price}$</Text>
             </View>
           )}
         </View>
@@ -245,45 +253,56 @@ const styles = StyleSheet.create({
     margin: 3,
     borderBottomWidth: 2, // Add a thin line at the bottom
     borderBottomColor: '#CCCCCC', // Color of the line
-},
-    imageContainer: {
-        width: 100, // Set a fixed width for the image container
-        height: 100, // Set a fixed height for the image container
-        marginRight: 10, // Add margin for spacing
-        borderRadius: 8, // Maintain rounded corners
-        overflow: 'hidden', // Clip image content within container
-    },
-    itemDetailsContainer: {
-        flexDirection: 'row', // Arrange elements horizontally
-        alignItems: 'center', // Align text vertically
-        flex: 1, // Fill remaining space in the row
-        padding: 10,
-    },
-    itemName: {
-        alignItems: 'center',
-        fontSize: 16,
-        fontWeight: 'bold',
-        color: '#333',
-        flex: 1, 
-        paddingRight: 50,
-        textAlign: 'center',
-    },
-    itemPrice: {
-        fontSize: 14,
-        color: '#888',
-    },
-    categoryHeader: {
-        textColor: 'white',
-        fontWeight: 'bold',
-        backgroundColor: '#3D3D3D',
-        padding: 10,
-        alignItems: 'center',
-        justifyContent: 'center',
-        height: 60,
-
-    },
-    categoryHeaderText: {
-        color: 'white',
-        fontSize: 20,
-    },
+  },
+  imageContainer: {
+    width: 100, // Set a fixed width for the image container
+    height: 100, // Set a fixed height for the image container
+    marginRight: 10, // Add margin for spacing
+    borderRadius: 8, // Maintain rounded corners
+    overflow: 'hidden', // Clip image content within container
+  },
+  itemDetailsContainer: {
+    flexDirection: 'row', // Arrange elements horizontally
+    alignItems: 'center', // Align text vertically
+    flex: 1, // Fill remaining space in the row
+    padding: 10,
+  },
+  itemName: {
+    alignItems: 'center',
+    fontSize: 16,
+    fontWeight: 'bold',
+    flex: 1, 
+    paddingRight: 50,
+    textAlign: 'center',
+  },
+  itemTextMenu:{
+    color: 'black',
+  },
+  itemTextOrder:{
+    color: 'white',
+  },
+  itemPrice: {
+    fontSize: 14,
+  },
+  categoryHeader: {
+    fontWeight: 'bold',
+    padding: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 60,
+  },
+  categoryOrderColor: {
+    backgroundColor: 'white',
+  },
+  categoryOrderText: {
+    color: 'black',
+    fontSize: 20,
+  },
+  categoryMenuColor: {
+    backgroundColor: '#3D3D3D',
+  },
+  categoryMenuText: {
+    color: 'white',
+    fontSize: 20,
+  },
 });
