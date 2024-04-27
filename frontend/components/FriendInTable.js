@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
-import { storeData } from '@Utils/storage/asyncStorage';
+import { storeData, getData } from '@Utils/storage/asyncStorage';
 import FormContainer from '@Components/FormContainer';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -65,13 +65,20 @@ const FriendsInTable = ({ friends, totalFriends }) => {
         }
     }
 
+    function isCurrentClient(clientId) {
+        console.log('clientId', clientId);
+        // const client = await getData('client');
+        // console.log('client', client);
+        return '57b18dc0-96ea-4ee2-8fa7-46168e806a01' === clientId;
+    }
+
     return (
         <FormContainer formName='Friends'>
 
                 {friends.map(friend => (
                     <View key={friend.clientid} style={styles.friendItem}>
-                        {renderFriendImage(friend)}
-                        <View style={styles.friendDetails}>
+                        { renderFriendImage(friend) }
+                        <View style={[styles.friendDetails, isCurrentClient(friend.clientid) && styles.myselfDetails]}>
                             <Text style={styles.friendName}>{friend.clientname}</Text>
                             <Text style={styles.friendAmount}> {friend.paid}$</Text>
                             <Text style={styles.friendAmount}> {friend.total}$</Text>
@@ -106,6 +113,16 @@ const styles = StyleSheet.create({
         height: 50,
         borderRadius: 25,
         marginRight: 10,
+    },
+    myselfDetails: {
+        borderRadius: 40,
+        borderColor: '#97DECC',
+        borderWidth: 3,
+        justifyContent: 'center',
+        alignContent: 'center',
+        alignItems: 'center',
+        padding: 5,
+
     },
     friendDetails: {
         flex: 1,

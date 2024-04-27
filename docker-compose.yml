@@ -1,21 +1,12 @@
 version: '3.9'
 
 services:
-  rabbitmq:
-    image: rabbitmq:3-management
-    ports:
-      - "5672:5672"
-      - "15672:15672"
-    volumes:
-      - rabbitmq-data:/var/lib/rabbitmq
   agent_manager:
     build: 
       context: .
       dockerfile: ./docker/agent_manager/Dockerfile
     ports:
       - "8000:8000"
-    depends_on:
-      - rabbitmq
     environment:
       - RUN_ENV=docker
       - PG_USER=postgres
@@ -23,11 +14,7 @@ services:
       - DATABASE=postgres
       - PG_HOST=dobo.c1a8ya0cgjzv.us-east-1.rds.amazonaws.com
       - PG_PORT=5432
-      - BROKER_HOST=rabbitmq
-      - BROKER_PORT=5672
-      - BROKER_USERNAME=guest
-      - BROKER_PASSWORD=guest
-
-volumes:
-  rabbitmq-data:
-    driver: local
+      - BROKER_HOST=b-59fc34f8-9d2a-4984-a2de-1de7847dc390.mq.us-east-1.amazonaws.com
+      - BROKER_PORT=5671
+      - BROKER_USERNAME=dobo
+      - BROKER_PASSWORD=190330Dobo#@

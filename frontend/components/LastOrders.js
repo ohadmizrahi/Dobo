@@ -24,14 +24,14 @@ const LatestOrder = ({ orders }) => {
     
     return (
         <FormContainer formName='Latest Orders'>
-                {orders.map(order => (
+                {orders.lenght > 0 ? orders.map(order => (
                     <View key={order.orderid} style={styles.orderItem}>
                         <Text style={styles.orderText}> {order.itemname}</Text> 
                         <Text style={styles.orderText}>{order.clients.map(client => client.clientName).join(', ')}</Text>
                         <Text style={styles.orderText}> {order.itemprice}$</Text>
                         <Text style={styles.orderText}> {order.status}</Text>
                     </View>
-                ))}
+                )) : <Text style={styles.noOrders}>No Orders Yet</Text>}
         </FormContainer>
     );
 };
@@ -54,6 +54,16 @@ const styles = StyleSheet.create({
     },
     bold: {
         fontWeight: 'bold',
+    },
+    noOrders: {
+        fontSize: 30,
+        alignItems: 'center',
+        justifyContent: 'center',
+        fontWeight: 'bold',
+        color: '#333',
+        textAlign: 'center',
+        padding: 10,
+        margin: 10,
     },
 });
 
