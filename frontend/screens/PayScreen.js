@@ -24,11 +24,17 @@ const invoicesData = [
     },
 ];
 
+const Total = 50;
+
 export default function PayScreen({ navigation }) {
   const [invoices, setInvoices] = useState(invoicesData);
 
   const handleRemoveItem = (id) => {
     setInvoices(prevInvoices => prevInvoices.filter(item => item.id !== id));
+  };
+
+  const handlePay = () => {
+    navigation.navigate('Home');
   };
 
   return (
@@ -37,8 +43,8 @@ export default function PayScreen({ navigation }) {
       <StatusBar barStyle="light-content" />
       <HeaderImage />
       <ExitSign />
-      <InvoiceComponent invoiceList={invoices} onRemoveItem={handleRemoveItem} />
-      <YourAccountButton invoices={invoices} />
+      <InvoiceComponent invoiceList={invoices} onRemoveItem={handleRemoveItem} />//
+      <YourAccountButton Total={Total} handlePress={handlePay}/>
       <LineAcross text='Payment Method' />
       <PaymentForm submitTitle="Pay" edit={true}/>
     </ScrollView>

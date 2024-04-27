@@ -3,14 +3,6 @@ import { View, Text, FlatList, StyleSheet, TouchableOpacity, Alert } from 'react
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 const InvoiceComponent = ({ invoiceList, onRemoveItem }) => {
-    const calculateTotalPrice = () => {
-        let totalPrice = 0;
-        invoiceList.forEach(item => {
-            totalPrice += item.price;
-        });
-        return totalPrice;
-    };
-
     const handleRemoveItem = (id) => {
         Alert.alert(
             'Confirm',

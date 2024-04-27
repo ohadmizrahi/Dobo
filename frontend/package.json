@@ -21,6 +21,7 @@
     "expo-barcode-scanner": "~12.5.3",
     "expo-camera": "~13.4.4",
     "expo-font": "~11.4.0",
+    "expo-image-picker": "~14.3.2",
     "expo-permissions": "~14.2.1",
     "expo-status-bar": "~1.6.0",
     "expo-updates": "~0.18.19",
@@ -36,8 +37,7 @@
     "react-native-picker-select": "^9.1.3",
     "react-native-social-login": "^1.0.0",
     "react-native-web": "~0.19.6",
-    "yup": "^1.4.0",
-    "expo-image-picker": "~14.3.2"
+    "yup": "^1.4.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0"
