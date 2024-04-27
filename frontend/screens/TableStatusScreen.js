@@ -43,7 +43,7 @@ export default function TableStatusScreen({ navigation, route }) {
     navigation.navigate('Order');
   }
   return (
-    <ScrollView style={globalStyles.screenColor}>
+    <ScrollView style={globalStyles.screenColor} contentContainerStyle={{ paddingBottom: 60 }}>
       <StatusBar barStyle="light-content" />
       <LogoImage />
       <CustomButton handlePress={handleOrderNow} title='Order Now' />
