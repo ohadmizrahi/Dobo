@@ -97,7 +97,7 @@ export default function JoinTableScreen({ navigation, route }) {
       <JoinTableForm 
       qrData={qrData}
       joined={clientId !== ''}
-      handleSubmit={
+cd      handleSubmit={
         (businessId, tableId) => setTableToJoin({
           businessId: businessId,
           tableId: tableId

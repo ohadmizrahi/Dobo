@@ -8,6 +8,25 @@ services:
       - "15672:15672"
     volumes:
       - rabbitmq-data:/var/lib/rabbitmq
+  agent_manager:
+    build: 
+      context: .
+      dockerfile: ./docker/agent_manager/Dockerfile
+    ports:
+      - "8000:8000"
+    depends_on:
+      - rabbitmq
+    environment:
+      - RUN_ENV=docker
+      - PG_USER=postgres
+      - PG_PASSWORD=190330Nj#
+      - DATABASE=postgres
+      - PG_HOST=dobo.c1a8ya0cgjzv.us-east-1.rds.amazonaws.com
+      - PG_PORT=5432
+      - BROKER_HOST=rabbitmq
+      - BROKER_PORT=5672
+      - BROKER_USERNAME=guest
+      - BROKER_PASSWORD=guest
 
 volumes:
   rabbitmq-data:
