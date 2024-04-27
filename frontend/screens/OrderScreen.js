@@ -10,11 +10,7 @@ import ExitSign from '@Components/ExitSign';
 export default function OrderScreen({ navigation }) {
   const [buttonPosition, setButtonPosition] = useState({ bottom: 20 });
   const windowWidth = useWindowDimensions().width;
-
-  function handleViewOrder() {
-    navigation.navigate('OrderCart');
-  }
-
+  
   function handleScroll(event) {
     const scrollPosition = event.nativeEvent.contentOffset.y;
     const maxScroll = event.nativeEvent.contentSize.height - event.nativeEvent.layoutMeasurement.height;
