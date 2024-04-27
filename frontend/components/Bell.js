@@ -1,12 +1,46 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, TouchableOpacity, Text, Button } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Text, Button, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { globalStyles } from '@Root/globalStyles';
+import { getData } from '@Utils/storage/asyncStorage';
 
 export default function Bell({ navigation }) {
     const [showButtons, setShowButtons] = useState(false);
     const toggleButtons = () => {
         setShowButtons(!showButtons);
+    }
+
+    async function handleActiveTable() {
+        const userToken = await getData('userToken');
+        const clientToken = await getData('clientToken');
+        if (!clientToken || !userToken) {
+            Alert.alert(
+                'No Active Table',
+                "You don't have an active table. Please join a table first.",
+                [
+                    {
+                        text: 'Cancel',
+                        onPress: () => setShowButtons(false),
+                        style: 'cancel',
+                    },
+                    {
+                        text: 'OK',
+                        onPress: () => navigation.navigate('JoinTable'),
+                    }
+
+                ],
+            );
+        } else {
+            navigation.navigate('TableStatus', { userToken, clientToken });
+        }
+    }
+
+    function handleQR() {
+        navigation.navigate('QRScanner');
+    }
+
+    function handleJoinTable() {
+        navigation.navigate('JoinTable');
     }
 
     return (
@@ -15,13 +49,13 @@ export default function Bell({ navigation }) {
                 <TouchableOpacity onPress={toggleButtons}>
                     <View style={[styles.bellBackground,styles.bellComponentPressed]}>
                         <Icon name="bell" style={[styles.bellIcon, globalStyles.icons]} />
-                            <TouchableOpacity style={[styles.activeTableButton,styles.button]} onPress={() => navigation.navigate('TableStatus')}>
+                            <TouchableOpacity style={[styles.activeTableButton,styles.button]} onPress={handleActiveTable}>
                                   <Text style={styles.buttonText}>Active Table</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity style={[styles.qrButton,styles.button]} onPress={() => navigation.navigate('QRScanner')}>
+                            <TouchableOpacity style={[styles.qrButton,styles.button]} onPress={handleQR}>
                                   <Text style={styles.buttonText}>QR</Text>
                             </TouchableOpacity>
-                           <TouchableOpacity style={[styles.joinButton,styles.button]} onPress={() => navigation.navigate('JoinTable')}>
+                           <TouchableOpacity style={[styles.joinButton,styles.button]} onPress={handleJoinTable}>
                                 <Text style={styles.buttonText}>Join</Text>
                            </TouchableOpacity>
                     </View>

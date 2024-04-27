@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
-import {storeData} from '@Utils/storage/asyncStorage';
+import { storeData } from '@Utils/storage/asyncStorage';
 import FormContainer from '@Components/FormContainer';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const friendsData = [
     {
@@ -51,13 +52,25 @@ const FriendsInTable = ({ friends, totalFriends }) => {
 
     const totalPaid = friends.reduce((total, friend) => parseFloat(total) + parseFloat(friend.paid), 0);
     const totalToPay = friends.reduce((total, friend) => parseFloat(total) + parseFloat(friend.total), 0);
+    
+    function renderFriendImage(friend) {
+        if (friend.clientimage) {
+            return <Image source={{ uri: friend.clientimage }} style={styles.friendImage} />;
+        } else {
+            return (
+            <View style={styles.iconContainer}>
+                <Icon name="user" size={25} color="white" />
+            </View>
+        );
+        }
+    }
 
     return (
         <FormContainer formName='Friends'>
 
                 {friends.map(friend => (
                     <View key={friend.clientid} style={styles.friendItem}>
-                        <Image source={{ uri: friend.clientimage }} style={styles.friendImage} />
+                        {renderFriendImage(friend)}
                         <View style={styles.friendDetails}>
                             <Text style={styles.friendName}>{friend.clientname}</Text>
                             <Text style={styles.friendAmount}> {friend.paid}$</Text>
@@ -126,6 +139,15 @@ const styles = StyleSheet.create({
         flex: 1,
         textAlign: 'center',
         margin: 5,
+    },
+    iconContainer: {
+        borderRadius: 40,
+        width: 40,
+        height: 40,
+        backgroundColor: '#97DECC',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginRight: 20,
     },
 });
 

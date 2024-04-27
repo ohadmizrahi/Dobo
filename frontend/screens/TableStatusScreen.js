@@ -6,17 +6,15 @@ import LatestOrder from '@Components/LastOrders';
 import LogoImage from '@Components/DoboLogo';
 import { globalStyles } from '@Root/globalStyles';
 import FriendsInTable from '@Components/FriendInTable';
-import { getData } from '@Utils/storage/asyncStorage';
 import { sendGetRequest } from '@Utils/request/send';
 import { handleResponse } from '@Utils/response/handler';
 
-export default function TableStatusScreen({ navigation }) {
+export default function TableStatusScreen({ navigation, route }) {
   const [table, setTable] = useState({ tableName: '', latestOrders: [], friends: [] })
     
   useEffect(() => {
     const fetchData = async () => {
-        const userToken = await getData('userToken');
-        const clientToken = await getData('clientToken'); 
+        const { userToken, clientToken } = route.params;
         const response = await sendGetRequest('api/table', { userToken, clientToken });
 
         await handleResponse(
