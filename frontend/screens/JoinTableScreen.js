@@ -47,6 +47,7 @@ export default function JoinTableScreen({ navigation, route }) {
     const fetchData = async () => {
 
       const userToken = await getData('userToken');
+      console.log('userToken', userToken);
       const joinTableTokens = { userToken }
 
       const joinTableBody = {

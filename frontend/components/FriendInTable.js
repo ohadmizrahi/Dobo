@@ -27,7 +27,7 @@ const friendsData = [
     },
 ];
 
-const FriendsInTable = ({ totalFriends }) => {
+const FriendsInTable = ({ friends, totalFriends }) => {
     const [joinedFriends, setJoinedFriends] = useState(0);
     // Question to Bar: why do we need this?
     useEffect(() => {
@@ -47,22 +47,21 @@ const FriendsInTable = ({ totalFriends }) => {
         }
     }, []);
 
-    const FriendsData = friendsData;
-    storeData('FriendsData', FriendsData)
+    storeData('FriendsData', friends)
 
-    const totalPaid = friendsData.reduce((total, friend) => total + friend.paid, 0);
-const totalToPay = friendsData.reduce((total, friend) => total + friend.totalToPay, 0);
+    const totalPaid = friends.reduce((total, friend) => parseFloat(total) + parseFloat(friend.paid), 0);
+    const totalToPay = friends.reduce((total, friend) => parseFloat(total) + parseFloat(friend.total), 0);
 
     return (
         <FormContainer formName='Friends'>
 
-                {friendsData.map(friend => (
-                    <View key={friend.id} style={styles.friendItem}>
-                        <Image source={{ uri: friend.image }} style={styles.friendImage} />
+                {friends.map(friend => (
+                    <View key={friend.clientid} style={styles.friendItem}>
+                        <Image source={{ uri: friend.clientimage }} style={styles.friendImage} />
                         <View style={styles.friendDetails}>
-                            <Text style={styles.friendName}>{friend.name}</Text>
+                            <Text style={styles.friendName}>{friend.clientname}</Text>
                             <Text style={styles.friendAmount}> {friend.paid}$</Text>
-                            <Text style={styles.friendAmount}> {friend.totalToPay}$</Text>
+                            <Text style={styles.friendAmount}> {friend.total}$</Text>
                         </View>
                     </View>
                 ))}
