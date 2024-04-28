@@ -5,6 +5,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default function Cart({ handleUpdateTotalPrice}) {
   const [cartItems, setCartItems] = useState([]);
+  console.log('cartItems:', cartItems);
 
   useEffect(() => {
     const fetchCartData = async () => {
@@ -38,18 +39,16 @@ export default function Cart({ handleUpdateTotalPrice}) {
     );
   }
 
-
-
   return (
     <ScrollView style={styles.container}>
       {cartItems.map((item, index) => (
         <View style={styles.itemContainer} key={index}>
-          <TouchableOpacity onPress={() => removeItem(index)}>
+          <TouchableOpacity style={{ flex: 1, alignItems: 'center' }} onPress={() => removeItem(index)}>
             <Icon name="minus-circle" size={24} color="red" />
           </TouchableOpacity>
-          <Text style={styles.itemName}>{item.name}</Text>
-          <Text style={styles.itemPrice}>Price: {item.price}$</Text>
-          <Text style={styles.itemName}>User/Table</Text> 
+          <Text style={[styles.itemName, { flex: 1 }]}>{item.name}</Text>
+          <Text style={[styles.itemPrice, { flex: 1 }]}>{item.price}$</Text>
+          <Text style={[styles.itemName, { flex: 1 }]}>{!item.clients ? 'User' : 'Table'}</Text> 
         </View>
       ))}
       </ScrollView>
@@ -75,14 +74,17 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-between',
   },
   itemName: {
     fontSize: 16,
     fontWeight: 'bold',
     padding: 10,
+    textAlign: 'center',
   },
   itemPrice: {
-    fontSize: 14,
+    fontSize: 16,
+    textAlign: 'center',
   },
   totalPrice: {
     fontSize: 20,
