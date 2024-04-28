@@ -5,7 +5,7 @@ import CustomInput from './CustomInput';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import FormContainer from '@Components/FormContainer';
 
-const Form = ({ initialValues, validationSchema, onSubmit, fields, error, submitTitle, formName, editable }) => {
+const Form = ({ initialValues, validationSchema, onSubmit, fields, error, submitTitle, formName, editable,showSubmitButton = true }) => {
   const [formValues, setFormValues] = useState(initialValues);
   const [isEditMode, setIsEditMode] = useState(editable);
 
@@ -19,6 +19,7 @@ const Form = ({ initialValues, validationSchema, onSubmit, fields, error, submit
   };
 
   return (
+    
     <FormContainer formName={formName}>
         <Formik
           initialValues={formValues}
@@ -39,9 +40,11 @@ const Form = ({ initialValues, validationSchema, onSubmit, fields, error, submit
                     keyboardType={field.keyboardType}
                     secureTextEntry={field.secureTextEntry}
                     editable={isEditMode}
+                    
                   />
                 </View>
               ))}
+              {showSubmitButton && ( // Conditionally render the submit button based on showSubmitButton prop
               <TouchableOpacity
                 onPress={isEditMode ? handleSubmit : () => setIsEditMode(true)}
                 style={styles.confirmButton}
@@ -50,6 +53,7 @@ const Form = ({ initialValues, validationSchema, onSubmit, fields, error, submit
                   {isEditMode ? (submitTitle || 'Submit') : (editable ? submitTitle || 'Submit' : 'Edit')}
                 </Text>
               </TouchableOpacity>
+            )}
               {error && <Text style={styles.error}>{error}</Text>}
             </>
           )}

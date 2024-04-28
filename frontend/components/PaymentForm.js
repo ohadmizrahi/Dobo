@@ -29,6 +29,7 @@ const PaymentForm = ({ paymentDetails, submitTitle, edit }) => {
       experationDate: values.expirationDate,
       cvv: values.cvv,
       citizenId: values.ID,
+      type: "visa",
     };
 
     const [day, month, year] = values.expirationDate.split("/"); // Format needs change to month,year

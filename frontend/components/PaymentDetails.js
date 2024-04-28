@@ -15,7 +15,10 @@ export default function PaymentDetails({ data, navigation }) {
     setShowPaymentForm(true);
   };
 
-  if (showPaymentForm || (paymentDetails && Object.keys(paymentDetails).length > 0)) {
+  if (paymentDetails && Object.keys(paymentDetails).length > 0) {
+    return <PaymentForm paymentDetails={paymentDetails} submitTitle="Submit" edit={false} />;
+  }
+    if (showPaymentForm) {
     return <PaymentForm paymentDetails={paymentDetails} submitTitle="Submit" edit={true} />;
   }
 

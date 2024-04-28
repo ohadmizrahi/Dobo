@@ -6,20 +6,46 @@ import ExitSign from '@Components/ExitSign';
 import HeaderImage from '@Components/HeaderImage';
 import CustomButton from '@Components/CustomButton';
 import FormHeadLine from '@Components/FormHeadLine';
+import MultilineInput from '@Components/MultilineInput';
+import { sendPostRequest } from '@Utils/request/send.js';
+import { handleResponse } from '@Utils/response/handler';
+import { getData } from '@Utils/storage/asyncStorage';
 
-export default function TableReservationScreen({ navigation, route}) {
-  const { businessId = '', imageurl = '' ,name=''} = route.params || {};
+
+
+export default function TableReservationScreen({ navigation, route }) {
+  const { businessId = '', imageurl = '', name = '' } = route.params || {};
+  const [formData, setFormData] = useState({}); // State to store form data
+  const [specialRequest, setSpecialRequest] = useState('');
+
+
+  const handleFormChange = (values) => {
+    setFormData(values); // Update the form data in the state
+  };
+
+  const handleSubmit = async () => {
+    console.log('Submitting reservation:', formData);
+    console.log('Special request check:', specialRequest);
+  };
 
   return (
-    <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} keyboardVerticalOffset={Platform.OS === "ios" ? 100 : 0} style={{flex : 1}}>
+    <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} keyboardVerticalOffset={Platform.OS === "ios" ? 100 : 0} style={{ flex: 1 }}>
       <ScrollView>
         <StatusBar barStyle="light-content" />
-        <ExitSign/>
+        <ExitSign />
         <HeaderImage data={imageurl} />
         <FormHeadLine data={name} />
         <BusinessHeader />
-        <TableReservationForm data={businessId}/>
-        <CustomButton title="Back To Home" handlePress={() => navigation.navigate('Home')} />
+        <TableReservationForm
+          data={businessId}
+          onChange={handleFormChange} // Pass the handleFormChange callback to the TableReservationForm
+        />
+        <MultilineInput icon='gear' label="Special Request (Optional)"
+          onChange={setSpecialRequest}
+          value={specialRequest}
+          placeholder="Enter special request"
+          onSubmit={handleSubmit}
+        />
       </ScrollView>
     </KeyboardAvoidingView>
   );
