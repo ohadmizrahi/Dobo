@@ -21,6 +21,7 @@ export default function JoinTableScreen({ navigation, route }) {
     tableId: qrData && qrData.table
   });
 
+
   console.log('tableToJoin', JSON.stringify(tableToJoin));
   console.log('clientId', clientId);
 
@@ -105,6 +106,7 @@ export default function JoinTableScreen({ navigation, route }) {
       fetchData();
     }
   }, [tableToJoin]);
+
   return (
     <ScrollView style={globalStyles.screenColor}>
       <StatusBar barStyle="light-content" />
