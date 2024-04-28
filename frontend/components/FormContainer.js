@@ -42,6 +42,7 @@ const styles = StyleSheet.create({
         marginTop: -40,
         alignItems: 'center',
         justifyContent: 'center',
+        marginBottom: 10,
       },
       formHeadLineText: {
         fontSize: 20,

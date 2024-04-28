@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { SafeAreaView, StyleSheet, View, Text, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
+import { SafeAreaView, StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { Formik, Field } from 'formik';
 import CustomInput from './CustomInput';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -38,7 +38,7 @@ const Form = ({ initialValues, validationSchema, onSubmit, fields, error, submit
                     placeholder={field.placeholder}
                     keyboardType={field.keyboardType}
                     secureTextEntry={field.secureTextEntry}
-                    editable={isEditMode} 
+                    editable={isEditMode}
                   />
                 </View>
               ))}

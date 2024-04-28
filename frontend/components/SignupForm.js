@@ -11,6 +11,10 @@ const SignUpForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const navigation = useNavigation();
 
+  const capitalizeWords = (str) => {
+    return str.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ');
+  };
+  
   const fields = [
     { name: 'fullName', label: 'Full Name', iconName: 'user', placeholder: 'Enter full name' },
     { name: 'email', label: 'Email', iconName: 'envelope', placeholder: 'Enter email', keyboardType: 'email-address' },
@@ -25,7 +29,7 @@ const SignUpForm = () => {
     setIsLoading(true);
 
     const userInfo = {
-      name: values.fullName,
+      name: capitalizeWords(values.fullName),
       email: values.email.toLowerCase(),
       phone: values.phoneNumber,
       address: values.address,
