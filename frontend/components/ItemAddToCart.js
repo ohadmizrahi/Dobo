@@ -148,34 +148,36 @@ export default function ItemAddToCart({ route, navigation }) {
   const { itemID } = route.params;
   const Item = menu.find(item => item.id === itemID);
 
-  const [cartState, setCartState] = useState([]);
+  const [cart, setCart] = useState([]);
 
   useEffect(() => {
     const fetchCartData = async () => {
       const data = await getData('cart');
       if (data) {
-        setCartState(JSON.parse(data));
+        setCart(JSON.parse(data));
       }
     };
     fetchCartData();
   }, []);
 
-  const handleAddToCart = async (person) => { // להוסיף תנאי אם הלחיצה הייתה עליי או על השולחן ולפי זה לשלוח את ההזמנה יחד עם האנשים ששותפים לה
+  const handleAddToCart = async (person) => {
     const itemClients = [];
-    ClientsData = await getData('FriendsData')
-    TableClients = JSON.parse(ClientsData)
+    clientsData = await getData('FriendsData')
+    TableClients = JSON.parse(clientsData)
+    console.log('TableClients:', TableClients);
     if (person==="Me") {
-      // cont clientData = await getData('client');
-      // itemClients.push(clientData.id)
-      itemClients.push(TableClients[0].id)
+      const clientData = await getData('client');
+      const parsedClientData = JSON.parse(clientData);
+      itemClients.push(parsedClientData.clientId)
     }else if (person==="Table"){
       TableClients.forEach(client => {
-        itemClients.push(client.id)
+        itemClients.push(client.clientid)
       })
     }
     Item.clients = itemClients
-    const updatedCart = [...cartState, Item];
-    setCartState(updatedCart);
+    const updatedCart = [...cart, Item];
+    console.log('updatedCart:', updatedCart);
+    setCart(updatedCart);
     await storeData('cart', updatedCart);
     navigation.navigate('Order');
   };
