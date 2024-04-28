@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import { globalStyles } from '@Root/globalStyles';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import * as ImagePicker from 'expo-image-picker';
+import {storeData, getData} from '@Utils/storage/asyncStorage';
 
 const ProfilePicture = ({ name, imageurl }) => {
   const [image, setImage] = useState(imageurl);
@@ -14,13 +15,24 @@ const ProfilePicture = ({ name, imageurl }) => {
       aspect: [1, 1],
       quality: 1,
     });
-
+    await storeData('profilePicture', result.uri);
     console.log(result);
 
     if (!result.cancelled) {
       setImage(result.uri);
     }
   };
+
+  useEffect(() => {
+    const fetchImage = async () => {
+      const storedImage = await getData('profilePicture');
+      if (storedImage) {
+        setImage(storedImage);
+      }
+    };
+  
+    fetchImage();
+  }, []);
 
   return (
     <View style={globalStyles.profilePictureContainer}>
