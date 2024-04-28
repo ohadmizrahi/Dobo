@@ -20,7 +20,8 @@ const styles = StyleSheet.create({
     container: {
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: 25,
+        marginTop: 20,
+        marginBottom: 25,
       },
       detailsContainer: {
         backgroundColor: '#FFFFFF',

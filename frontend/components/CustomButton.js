@@ -17,7 +17,8 @@ const CustomButton = ({ handlePress, title, backgroundColor }) => {
 const styles = StyleSheet.create({
   button: {
     backgroundColor: '#1D2328',
-    marginTop: 5,
+    marginTop: 15,
+    marginBottom: 40,
     width: '80%',
     height: 40,
     borderRadius: 10,
