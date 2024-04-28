@@ -45,7 +45,7 @@ router.post("/api/table/join", validateAccountWithoutOpenTables, async (req, res
                 operation: operation,
                 virtualTable: virtualTable,
                 client: clientInfo,
-                menu
+                menu: menu.items
             });
         } else {
             res.status(400).json({ success: false, message: message });
