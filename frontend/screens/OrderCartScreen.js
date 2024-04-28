@@ -1,5 +1,4 @@
-import React from 'react';
-import { View,ScrollView, Text, StatusBar } from 'react-native';
+import { ScrollView, StatusBar } from 'react-native';
 import Cart from '@Components/Cart';
 import ExitSign from '@Components/ExitSign';
 import HeaderImage from '@Components/HeaderImage';

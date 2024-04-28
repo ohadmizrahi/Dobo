@@ -1,6 +1,4 @@
-import React from 'react';
 import { View,ScrollView, StatusBar, StyleSheet, useWindowDimensions } from 'react-native';
-import { useState, useEffect } from 'react';
 import ItemChanges from '@Components/ItemChanges';
 import ItemAddToCart from '@Components/ItemAddToCart';
 import ExitSign from '@Components/ExitSign';

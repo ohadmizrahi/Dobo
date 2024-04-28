@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import { ScrollView, KeyboardAvoidingView, Platform, StatusBar, StyleSheet } from 'react-native';
+import { ScrollView, KeyboardAvoidingView, Platform, StatusBar } from 'react-native';
 import TableReservationForm from '@Components/Reservation';
 import BusinessHeader from '@Components/BussinesHeader';
 import ExitSign from '@Components/ExitSign';

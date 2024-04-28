@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import { useState } from 'react';
+import { Alert } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import { paymentValidationSchema } from '@Schemas/paymentSchema';
 import Form from '@Components/Form';
 import { getData } from '@Utils/storage/asyncStorage';
 import { sendPostRequest } from '@Utils/request/send.js';
 import { handleResponse } from '@Utils/response/handler';
-import { Alert } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 
 const PaymentForm = ({ paymentDetails, submitTitle, edit }) => {
   const [editable, setEditable] = useState(edit);

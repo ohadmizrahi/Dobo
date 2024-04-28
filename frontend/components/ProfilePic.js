@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import { globalStyles } from '@Root/globalStyles';
 import Icon from 'react-native-vector-icons/FontAwesome';

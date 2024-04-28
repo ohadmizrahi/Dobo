@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
+import { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { getData, removeData, storeData } from '@Utils/storage/asyncStorage';
 import Icon from 'react-native-vector-icons/FontAwesome';
 

@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { Alert } from 'react-native';
 import { tableReservationValidationSchema } from '@Schemas/reservationSchema';
 import Form from '@Components/Form';
 import { sendPostRequest } from '@Utils/request/send.js';
 import { handleResponse } from '@Utils/response/handler';
 import { getData } from '@Utils/storage/asyncStorage';
 import { useNavigation } from '@react-navigation/native';
-import { Alert, Text } from 'react-native';
 import LoadingIcon from '@Components/LoadingIcon';
 
 const TableReservationForm = (data) => {

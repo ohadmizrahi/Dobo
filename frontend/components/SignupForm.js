@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { Alert } from 'react-native';
 import { signUpValidationSchema } from '@Schemas/signupSchema';
 import Form from '@Components/Form';
 import { useNavigation } from '@react-navigation/native';
 import { sendPostRequest } from '@Utils/request/send.js'; 
 import { storeData } from '@Utils/storage/asyncStorage';
 import { handleResponse } from '@Utils/response/handler';
-import { Alert } from 'react-native';
 
 const SignUpForm = () => {
   const [isLoading, setIsLoading] = useState(false);

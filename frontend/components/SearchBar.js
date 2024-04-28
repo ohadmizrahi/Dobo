@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { View, TextInput, Text } from 'react-native';
+import { useState } from 'react';
+import { View, TextInput } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {globalStyles} from '@Root/globalStyles';
 

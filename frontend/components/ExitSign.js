@@ -1,4 +1,3 @@
-import React from "react";
 import { View, TouchableOpacity , StyleSheet } from "react-native";
 import { globalStyles } from "@Root/globalStyles";
 import Icon from "react-native-vector-icons/FontAwesome";

@@ -1,6 +1,6 @@
 // Menu of the items that the bussines has
-import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList, StyleSheet, Image,Button} from 'react-native';
+import { useState, useEffect } from 'react';
+import { View, Text, FlatList, StyleSheet, Image} from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
 

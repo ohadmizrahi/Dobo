@@ -1,8 +1,8 @@
 // google and facebook sing in section ( sign in & sign up screens)
-import React from 'react';
-import { View, Text,Button } from 'react-native';
-import { globalStyles } from '@Root/globalStyles'
+import { View, Button } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { globalStyles } from '@Root/globalStyles'
+
 const SocialSignIn = () => (
   <>
   <View style={globalStyles.socialSignInContainer}>

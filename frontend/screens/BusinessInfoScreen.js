@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { View, StatusBar } from 'react-native';
 import Businessinformation from '@Components/BussinesInfo';
 import ExitSign from '@Components/ExitSign';

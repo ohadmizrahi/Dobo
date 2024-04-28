@@ -1,4 +1,3 @@
-import React from 'react';
 import { ScrollView, StatusBar } from 'react-native';
 import { useState, useEffect } from 'react';
 import CustomButton from '@Components/CustomButton';
