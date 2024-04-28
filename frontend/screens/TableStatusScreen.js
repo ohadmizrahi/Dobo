@@ -1,8 +1,8 @@
-import React from 'react';
 import { ScrollView, StatusBar } from 'react-native';
 import { useState, useEffect } from 'react';
 import CustomButton from '@Components/CustomButton';
 import LatestOrder from '@Components/LastOrders';
+import LoadingIcon from '@Components/LoadingIcon';
 import LogoImage from '@Components/DoboLogo';
 import { globalStyles } from '@Root/globalStyles';
 import FriendsInTable from '@Components/FriendInTable';
@@ -11,6 +11,7 @@ import { handleResponse } from '@Utils/response/handler';
 
 export default function TableStatusScreen({ navigation, route }) {
   const [table, setTable] = useState({ tableName: '', latestOrders: [], friends: [] })
+  const [loading, setLoading] = useState(true);
     
   useEffect(() => {
     const fetchData = async () => {
@@ -21,6 +22,7 @@ export default function TableStatusScreen({ navigation, route }) {
             response,
             navigation,
             async (data, error) => {
+                setLoading(false);
                 const newTable = {
                     ...table,
                     tableName: data.virtualTable.name,
@@ -42,8 +44,13 @@ export default function TableStatusScreen({ navigation, route }) {
   function handleOrderNow() {
     navigation.navigate('Order');
   }
+
+  if (loading) { 
+    return <LoadingIcon />;
+  }
+
   return (
-    <ScrollView style={globalStyles.screenColor}>
+    <ScrollView style={globalStyles.screenColor} contentContainerStyle={{ paddingBottom: 60 }}>
       <StatusBar barStyle="light-content" />
       <LogoImage />
       <CustomButton handlePress={handleOrderNow} title='Order Now' />

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Form from '@Components/Form';
 import { getData } from '@Utils/storage/asyncStorage';
 import { sendPostRequest } from '@Utils/request/send.js';

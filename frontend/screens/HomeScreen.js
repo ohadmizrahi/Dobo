@@ -7,7 +7,7 @@ import Bell from '@Components/Bell';
 import { FilterPlaces } from '@Components/FilterPlaces';
 import { sendPostRequest } from '@Utils/request/send';
 import { handleResponse } from '@Utils/response/handler';
-import LoadingIcon from '@Components/LoadingIcon'; 
+import LoadingIcon from '@Components/LoadingIcon';
 // TBD : how to divide the places into different sections
 
 export default function HomeScreen({ navigation }) {

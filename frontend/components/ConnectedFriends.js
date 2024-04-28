@@ -1,9 +1,8 @@
-import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import FormContainer from '@Components/FormContainer';
 
-export default function ConnectedFriends({ navigation }) {
+export default function ConnectedFriends() {
     const friends = [
         {
             name: 'John Doe',

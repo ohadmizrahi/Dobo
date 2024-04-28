@@ -1,4 +1,3 @@
-import React from 'react';
 import {ScrollView , KeyboardAvoidingView, Platform, StatusBar} from 'react-native';
 import SocialSignIn from '@Components/SocialSignIn';
 import LogoImage from '@Components/DoboLogo';

@@ -5,7 +5,7 @@ import ProfileLogo from '@Components/ProfileLogo';
 import withFocusHandler from '@Components/withFocusHandler';
 import HomeLogo from './HomeLogo';
 import HomeScreen from '@Screens/HomeScreen';
-import ItamScreen from '@Screens/ItemScreen';
+import ItemScreen from '@Screens/ItemScreen';
 import BusinessInfoScreen from '@Screens/BusinessInfoScreen';
 import JoinTableScreen from '@Screens/JoinTableScreen';
 import OrderScreen from '@Screens/OrderScreen';
@@ -52,7 +52,7 @@ export default function MainNavigation() {
       <Stack.Navigator initialRouteName="Nav">
         <Stack.Screen name="Nav" component={withFocusHandler(Navscreen)} options={MainHeaderOptions}/>
         <Stack.Screen name="Home" component={withFocusHandler(HomeScreen)} options={{...MainHeaderOptions,title: ""}}/>
-        <Stack.Screen name="Item" component={withFocusHandler(ItamScreen)} options={{ headerShown: false }}/>
+        <Stack.Screen name="Item" component={withFocusHandler(ItemScreen)} options={{ headerShown: false }}/>
         <Stack.Screen name="BusinessInfo" component={withFocusHandler(BusinessInfoScreen)} options={{ headerShown: false }}/>
         <Stack.Screen name="JoinTable" component={withFocusHandler(JoinTableScreen)} options={{...MainHeaderOptions,title: ""}}/>
         <Stack.Screen name="Order" component={withFocusHandler(OrderScreen)} options={{ headerShown: false }} />

@@ -1,37 +1,37 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList, StyleSheet, TouchableOpacity } from 'react-native';
+import { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { getData, removeData, storeData } from '@Utils/storage/asyncStorage';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-export default function Cart({navigation}) {
-  const [selectedItems, setSelectedItems] = useState([]);
+export default function Cart({ handleUpdateTotalPrice}) {
+  const [cartItems, setCartItems] = useState([]);
+  console.log('cartItems:', cartItems);
 
   useEffect(() => {
     const fetchCartData = async () => {
       const data = await getData('cart');
       if (data) {
-        setSelectedItems(JSON.parse(data));
+        const parsedData = JSON.parse(data);
+        setCartItems(parsedData);
       }
     };
     fetchCartData();
   }, []);
 
+  useEffect(() => {
+      const newTotalPrice = cartItems.reduce((total, item) => total + item.price, 0);
+      handleUpdateTotalPrice(newTotalPrice);
+  }, [cartItems]);
+
   const removeItem = async (index) => {
-    const updatedCart = [...selectedItems];
+    const updatedCart = [...cartItems];
     updatedCart.splice(index, 1);
-    setSelectedItems(updatedCart);
+    setCartItems(updatedCart);
     await removeData('cart');
     await storeData('cart', updatedCart);
   };
 
-  const sendorder = async () => {
-    await getData('cart');
-    navigation.navigate('TableStatus');
-    console.log(selectedItems); // צריך לשלוח את הדאטה של ההזמנה לדאטה בייס וגם להציג את מה הוזמן במסך של השולחן
-    await removeData('cart');
-  }
-
-  if (selectedItems.length === 0) {
+  if (cartItems.length === 0) {
     return (
       <View style={styles.container}>
         <Text style={styles.emptyCartText}>No items in the cart.</Text>
@@ -39,50 +39,32 @@ export default function Cart({navigation}) {
     );
   }
 
-  const calculateTotalPrice = () => {
-    let totalPrice = 0;
-    selectedItems.forEach((item) => {
-      totalPrice += parseFloat(item.price);
-    });
-    return totalPrice.toFixed(2);
-  };
-
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Order Items</Text>
-      {selectedItems.map((item, index) => (
+    <ScrollView style={styles.container}>
+      {cartItems.map((item, index) => (
         <View style={styles.itemContainer} key={index}>
-          <TouchableOpacity onPress={() => removeItem(index)}>
+          <TouchableOpacity style={{ flex: 1, alignItems: 'center' }} onPress={() => removeItem(index)}>
             <Icon name="minus-circle" size={24} color="red" />
           </TouchableOpacity>
-          <Text style={styles.itemName}>{item.name}</Text>
-          <Text style={styles.itemPrice}>Price: {item.price}$</Text>
-          <Text style={styles.itemName}>User/Table</Text> 
+          <Text style={[styles.itemName, { flex: 1 }]}>{item.name}</Text>
+          <Text style={[styles.itemPrice, { flex: 1 }]}>{item.price}$</Text>
+          <Text style={[styles.itemName, { flex: 1 }]}>{item.clients.length > 1 ? 'Table' : 'User'}</Text> 
         </View>
       ))}
-      <TouchableOpacity onPress={()=> sendorder()}>
-      <Text style={styles.totalPrice} >Send Order ${calculateTotalPrice()}</Text>
-      </TouchableOpacity>
-    </View>
+      </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     padding: 10,
+    maxHeight: 500,
   },
   emptyCartText:{
     fontSize: 20,
     textAlign: 'center',
     color: 'black',
     fontWeight: 'bold',
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 10,
-    alignSelf: 'center',
   },
   itemContainer: {
     marginBottom: 10,
@@ -92,14 +74,17 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-between',
   },
   itemName: {
     fontSize: 16,
     fontWeight: 'bold',
     padding: 10,
+    textAlign: 'center',
   },
   itemPrice: {
-    fontSize: 14,
+    fontSize: 16,
+    textAlign: 'center',
   },
   totalPrice: {
     fontSize: 20,

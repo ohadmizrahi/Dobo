@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import Form from './Form';
+import Form from '@Components/Form';
 import { useNavigation } from '@react-navigation/native';
 import { getData } from '@Utils/storage/asyncStorage';
 import { sendPostRequest } from '@Utils/request/send.js';
