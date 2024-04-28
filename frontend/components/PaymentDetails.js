@@ -44,8 +44,8 @@ const styles = StyleSheet.create({
     height: 230,
     borderRadius: 90,
     alignSelf: "center",
-    marginTop: 25,
-    marginBottom: 10,
+    marginTop: 20,
+    marginBottom: 25,
   },
   text: {
     fontSize: 40,

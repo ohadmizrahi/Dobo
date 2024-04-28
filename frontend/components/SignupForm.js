@@ -26,7 +26,7 @@ const SignUpForm = () => {
 
     const userInfo = {
       name: values.fullName,
-      email: values.email,
+      email: values.email.toLowerCase(),
       phone: values.phoneNumber,
       address: values.address,
       birthday: values.birthday,
