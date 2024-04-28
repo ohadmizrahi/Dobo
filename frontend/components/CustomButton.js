@@ -1,23 +1,9 @@
 import React from 'react';
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
 
-const CustomButton = ({ handlePress, title, backgroundColor, children }) => {
-  const buttonStyle = {
-    ...styles.button,
-    backgroundColor: backgroundColor || styles.button.backgroundColor,
-  };
-
-  return (
-    <TouchableOpacity style={buttonStyle} onPress={handlePress}>
-      <Text style={styles.text}>{title}</Text>
-      {children}
-    </TouchableOpacity>
-  );
-};
-
-const styles = StyleSheet.create({
-  button: {
-    backgroundColor: '#1D2328',
+const CustomButton = ({ handlePress, title, backgroundColor, children, buttonStyle }) => {
+  const defaultButtonStyle = {
+    backgroundColor: backgroundColor || '#1D2328', // Use the provided backgroundColor or the default value
     marginTop: 5,
     width: '80%',
     height: 40,
@@ -35,7 +21,17 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 4,
     elevation: 5,
-  },
+  };
+
+  return (
+    <TouchableOpacity style={[defaultButtonStyle, buttonStyle]} onPress={handlePress}>
+      <Text style={styles.text}>{title}</Text>
+      <Text style={styles.text}>{children}</Text>
+    </TouchableOpacity>
+  );
+};
+
+const styles = StyleSheet.create({
   text: {
     color: '#fff',
     fontSize: 20,
