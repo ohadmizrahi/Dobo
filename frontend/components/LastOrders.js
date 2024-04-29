@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Modal } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
 import FormContainer from '@Components/FormContainer';
 
 const LatestOrder = ({ orders }) => {
@@ -18,11 +19,8 @@ const LatestOrder = ({ orders }) => {
                     <Text style={[styles.orderText, { flex: 1 }]}> {order.itemname}</Text> 
                     <Text style={[styles.orderText, { flex: 1 }]}> {order.itemprice}$</Text>
                     <Text style={[styles.orderText, { flex: 1 }]}> {order.status}</Text>
-                    <TouchableOpacity onPress={() => handlePress(order)}>
-                        <Text style={[styles.orderText, { flex: 1 }]}>
-                            {order.clients[0].clientName + '\n'}
-                            {order.clients.length > 1 && ' + more'}
-                        </Text>
+                    <TouchableOpacity style={styles.iconButton} onPress={() => handlePress(order)}>
+                        <Icon name='users' size={20} color="#97DECC" />
                     </TouchableOpacity>
                 </View>
             )) : <Text style={styles.noOrders}>No Orders Yet</Text>}
@@ -110,12 +108,17 @@ const styles = StyleSheet.create({
         elevation: 2
     },
     buttonClose: {
-        backgroundColor: "#2196F3",
+        backgroundColor: "#97DECC",
     },
     textStyle: {
         color: "white",
         fontWeight: "bold",
         textAlign: "center"
+    },
+    iconButton: {
+        padding: 10,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
 });
 

@@ -47,7 +47,7 @@ export default function Cart({ handleUpdateTotalPrice}) {
           </TouchableOpacity>
           <Text style={[styles.itemName, { flex: 1 }]}>{item.name}</Text>
           <Text style={[styles.itemPrice, { flex: 1 }]}>{item.price}$</Text>
-          <Text style={[styles.itemName, { flex: 1 }]}>{item.clients.length > 1 ? 'Table' : 'User'}</Text> 
+          <Text style={[styles.itemName, { flex: 1 }]}>{item.clients.length > 1 ? 'Table' : 'Me'}</Text> 
         </View>
       ))}
       </ScrollView>
