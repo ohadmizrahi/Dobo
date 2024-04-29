@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ScrollView, StatusBar, View, StyleSheet, Text } from 'react-native';
+import { StatusBar, View, StyleSheet, Text, Alert } from 'react-native';
 import Cart from '@Components/Cart';
 import ExitSign from '@Components/ExitSign';
 import HeaderImage from '@Components/HeaderImage';
@@ -14,18 +14,36 @@ export default function OrderCartScreen({ navigation }) {
 
   const sendOrder = async () => {
     const cart = await getData('cart');
-    const orders = cart.map(
+    if (!cart) {
+      return Alert.alert('No items in the cart');
+    }
+    const userToken = await getData('userToken');
+    const clientToken = await getData('clientToken');
+
+    const parsedCart = JSON.parse(cart);
+    const orders = parsedCart.map(
       item => {
         return {
-          itemId: item.id,
+          itemId: item.itemid,
           itemName: item.name,
           clients: item.clients,
           price: item.price
         };
       });
-      
-    navigation.navigate('TableStatus');
-    await removeData('cart');
+    console.log('orders', orders);
+    const response = await sendPostRequest(
+      endpoint='api/table/order',
+      body={ orders },
+      tokens={ userToken, clientToken }
+    );
+    handleResponse(
+      response,
+      navigation,
+      async (data) => {
+        console.log('Order response data', data);
+        navigation.navigate('TableStatus',{ userToken, clientToken });
+        await removeData('cart');
+      });
   }
   return (
     <View>
