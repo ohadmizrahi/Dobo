@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Dimensions } from 'react-native';
 import { getData, removeData, storeData } from '@Utils/storage/asyncStorage';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -57,7 +57,7 @@ export default function Cart({ handleUpdateTotalPrice}) {
 const styles = StyleSheet.create({
   container: {
     padding: 10,
-    maxHeight: 500,
+    maxHeight: Dimensions.get('window').height - Dimensions.get('window').height*0.5,
   },
   emptyCartText:{
     fontSize: 20,
