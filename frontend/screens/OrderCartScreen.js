@@ -40,7 +40,6 @@ export default function OrderCartScreen({ navigation }) {
       response,
       navigation,
       async (data) => {
-        console.log('Order response data', data);
         navigation.navigate('TableStatus',{ userToken, clientToken });
         await removeData('cart');
       });
