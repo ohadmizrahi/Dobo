@@ -6,7 +6,6 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 const FriendsInTable = ({ friends, totalFriends }) => {
     const [myself, setMyself] = useState(null);
-    console.log('myself', myself);
 
     useEffect(() => {
         getData('client').then(client => {

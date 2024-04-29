@@ -4,15 +4,27 @@ import Cart from '@Components/Cart';
 import ExitSign from '@Components/ExitSign';
 import HeaderImage from '@Components/HeaderImage';
 import CustomButton from '@Components/CustomButton';
+import { getData, removeData } from '@Utils/storage/asyncStorage';
+import { sendPostRequest } from '@Utils/request/send';
+import { handleResponse } from '@Utils/response/handler';
 
 
 export default function OrderCartScreen({ navigation }) {
   const [totalPrice, setTotalPrice] = useState(0);
 
   const sendOrder = async () => {
-    await getData('cart');
+    const cart = await getData('cart');
+    const orders = cart.map(
+      item => {
+        return {
+          itemId: item.id,
+          itemName: item.name,
+          clients: item.clients,
+          price: item.price
+        };
+      });
+      
     navigation.navigate('TableStatus');
-    console.log(selectedItems); // צריך לשלוח את הדאטה של ההזמנה לדאטה בייס וגם להציג את מה הוזמן במסך של השולחן
     await removeData('cart');
   }
   return (
@@ -23,7 +35,12 @@ export default function OrderCartScreen({ navigation }) {
       <Text style={styles.title}>Order Items</Text>
       <Cart handleUpdateTotalPrice={setTotalPrice} />
       <View style={{marginTop: 10}}>
-        <CustomButton title={`Send Order $${totalPrice}`} backgroundColor='#97DECC' textColor='black'/>
+        <CustomButton
+          title={`Send Order $${totalPrice}`}
+          backgroundColor='#97DECC'
+          textColor='black'
+          handlePress={sendOrder}
+        />
       </View>
     </View>
   );

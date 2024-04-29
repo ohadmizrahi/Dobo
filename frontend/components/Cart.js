@@ -5,7 +5,6 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default function Cart({ handleUpdateTotalPrice}) {
   const [cartItems, setCartItems] = useState([]);
-  console.log('cartItems:', cartItems);
 
   useEffect(() => {
     const fetchCartData = async () => {
@@ -19,7 +18,7 @@ export default function Cart({ handleUpdateTotalPrice}) {
   }, []);
 
   useEffect(() => {
-      const newTotalPrice = cartItems.reduce((total, item) => total + item.price, 0);
+      const newTotalPrice = cartItems.reduce((total, item) => total + parseFloat(item.price), 0);
       handleUpdateTotalPrice(newTotalPrice);
   }, [cartItems]);
 
