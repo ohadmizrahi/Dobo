@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { KeyboardAvoidingView, Platform, StatusBar, ScrollView, StyleSheet } from 'react-native';
-import InvoiceComponent from '@Components/ItemPayment';
+import { KeyboardAvoidingView, Platform, StatusBar, ScrollView, StyleSheet, View } from 'react-native';
+import Invoice from '@Components/ItemPayment';
 import CustomButton from '@Components/CustomButton';
 import PaymentForm from '@Components/PaymentForm';
 import ExitSign from '@Components/ExitSign';
@@ -19,6 +19,30 @@ const invoicesData = [
     item: 'Pizza Margarita',
     price: 12,
     payers: ['Bob', 'Alice', 'Emily']
+  },
+  {
+    id: '3',
+    item: 'Beer',
+    price: 15,
+    payers: ['John']
+  },
+  {
+    id: '4',
+    item: 'Pasta',
+    price: 20,
+    payers: ['Alice', 'Emily']
+  },
+  {
+    id: '5',
+    item: 'Cake',
+    price: 10,
+    payers: ['John', 'Alice']
+  },
+  {
+    id: '6',
+    item: 'Sushi',
+    price: 30,
+    payers: ['Emily']
   },
 ];
 const Total = 50;
@@ -40,20 +64,36 @@ export default function PayScreen({ navigation }) {
         <StatusBar barStyle="light-content" />
         <HeaderImage />
         <ExitSign />
-        <InvoiceComponent invoiceList={invoices} onRemoveItem={handleRemoveItem} />
-        <CustomButton
-          title={'Your Account'}
-          handlePress={handleGoToTable}
-          buttonStyle={payScreenStyles.button}
-        >
-          Total: ${Total}
-        </CustomButton>
+        <View style={styles.container}>
+          <ScrollView style={styles.invoiceContainer} nestedScrollEnabled={true}>
+            <Invoice invoiceList={invoices} onRemoveItem={handleRemoveItem} />
+          </ScrollView>
+          <CustomButton
+            title={'Your Account'}
+            handlePress={handleGoToTable}
+            buttonStyle={payScreenStyles.button}
+          >
+            Total: ${Total}
+          </CustomButton>
+        </View>
         <LineAcross text='Payment Method' />
         <PaymentForm submitTitle="Pay" edit={true} />
+        <View style={{ height: 100 }} />
       </ScrollView>
     </KeyboardAvoidingView>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection: 'column',
+  },
+  invoiceContainer: {
+    flex: 1,
+    maxHeight: 380,
+  },
+});
 
 const payScreenStyles = StyleSheet.create({
   button: {
@@ -67,5 +107,6 @@ const payScreenStyles = StyleSheet.create({
     justifyContent: 'center',
     fontSize: 20,
     color: '#000',
+    marginTop: 30,
   },
 });

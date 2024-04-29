@@ -1,7 +1,7 @@
 import { View, Text, FlatList, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-const InvoiceComponent = ({ invoiceList, onRemoveItem }) => {
+const Invoice = ({ invoiceList, onRemoveItem }) => {
     const handleRemoveItem = (id) => {
         Alert.alert(
             'Confirm',
@@ -110,4 +110,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default InvoiceComponent;
+export default Invoice;
