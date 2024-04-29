@@ -7,7 +7,7 @@ import { getData } from '@Utils/storage/asyncStorage';
 import { sendPostRequest } from '@Utils/request/send.js';
 import { handleResponse } from '@Utils/response/handler';
 
-const PaymentForm = ({ paymentDetails, submitTitle, edit }) => {
+const PaymentForm = ({ paymentDetails, submitTitle, edit, formName='Payment' }) => {
   const [editable, setEditable] = useState(edit);
   const [isLoading, setIsLoading] = useState(false);
   const navigation = useNavigation();
@@ -76,7 +76,7 @@ const PaymentForm = ({ paymentDetails, submitTitle, edit }) => {
       onSubmit={onSubmit}
       fields={fields}
       submitTitle={submitTitle}
-      formName="Payment"
+      formName={formName}
       editable={editable}
     />
   );

@@ -184,12 +184,12 @@ export const globalStyles = StyleSheet.create({
       line: {
         flex: 1,
         height: StyleSheet.hairlineWidth,
-        backgroundColor: 'white',
+        backgroundColor: '#D3D3D3',
       },
       lineText: {
         marginHorizontal: 20,
         fontWeight: 'bold',
-        color: 'white',
+        color: '#D3D3D3',
       },
       exitSignContainer: {
         zIndex: 999,

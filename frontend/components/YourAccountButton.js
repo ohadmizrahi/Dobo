@@ -1,26 +1,11 @@
-import { useState, useEffect } from 'react';
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
 
-const YourAccountButton = ({ invoices }) => {
-    const [total, setTotal] = useState(0); // State to hold the total amount
-
-    useEffect(() => {
-        const calculateTotalPrice = () => {
-            let totalPrice = 0;
-            invoices.forEach(item => {
-                totalPrice += item.price;
-            });
-            return totalPrice.toFixed(2); // Format total to two decimal places
-        };
-
-        const newTotal = calculateTotalPrice();
-        setTotal(newTotal); // Update total price when invoices prop changes
-    }, [invoices]); // Run effect when invoices prop changes
+const YourAccountButton = ({ balance, handlePress }) => {
 
     return (
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button} onPress={handlePress}>
             <Text style={styles.buttonText}>Your Account</Text>
-            <Text style={styles.totalText}>Total: ${total}</Text>
+            <Text style={styles.totalText}>Total: ${balance}</Text>
         </TouchableOpacity>
     );
 };
