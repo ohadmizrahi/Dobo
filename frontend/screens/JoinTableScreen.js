@@ -39,19 +39,6 @@ export default function JoinTableScreen({ navigation, route }) {
     }
   }
 
-  async function handleCleanup() {
-    console.log('cleaning client data');
-    const keysToRemove = [
-        'clientToken',
-        'clientRefreshToken',
-        'client',
-        'virtualTable',
-        'FriendsData',
-        'cart'
-    ];
-    await removeMulti(keysToRemove);
-    navigation.navigate('Home');
-  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -120,7 +107,6 @@ cd      handleSubmit={
       <LineAcross text='OR' />
       <TableLink />
       <CustomButton handlePress={handleGoToTable} title='Go to Table' />
-      <CustomButton handlePress={handleCleanup} title='TEMP CLEANUP' />
     </ScrollView>
   );
 }

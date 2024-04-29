@@ -43,13 +43,13 @@ const InvoiceComponent = ({ onRemoveItem, check }) => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.header}>You pay on</Text>
-            <FlatList
+            <Text style={styles.header}>{ check.length > 0 ? 'You pay on' : 'Nothing To Pay On' }</Text>
+            {check.length > 0 && <FlatList
                 data={check}
                 keyExtractor={(item) => item.orderid}
                 renderItem={renderItem}
                 style={{padding: 10}}
-            />
+            />}
         </View>
     );
 };

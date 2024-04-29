@@ -1,9 +1,27 @@
-import { TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { TouchableOpacity, Text, StyleSheet, Alert } from 'react-native';
 
 const YourAccountButton = ({ balance, handlePress }) => {
 
+    function pay() {
+        Alert.alert(
+            'Confirm Checkout',
+            'Are you sure you want to checkout?',
+            [
+              {
+                text: 'Cancel',
+                style: 'cancel',
+              },
+              {
+                text: 'Confirm',
+                onPress: () => handlePress(),
+              },
+            ],
+            { cancelable: false }
+          );
+    }
+
     return (
-        <TouchableOpacity style={styles.button} onPress={handlePress}>
+        <TouchableOpacity style={styles.button} onPress={pay}>
             <Text style={styles.buttonText}>Your Account</Text>
             <Text style={styles.totalText}>Total: ${balance}</Text>
         </TouchableOpacity>
