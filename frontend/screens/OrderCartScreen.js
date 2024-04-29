@@ -7,16 +7,19 @@ import CustomButton from '@Components/CustomButton';
 import { getData, removeData } from '@Utils/storage/asyncStorage';
 import { sendPostRequest } from '@Utils/request/send';
 import { handleResponse } from '@Utils/response/handler';
+import LoadingIcon from '@Components/LoadingIcon';
 
 
 export default function OrderCartScreen({ navigation }) {
   const [totalPrice, setTotalPrice] = useState(0);
+  const [loading, setLoading] = useState(false);
 
   const sendOrder = async () => {
     const cart = await getData('cart');
-    if (!cart) {
+    if (!cart || JSON.parse(cart).length === 0) {
       return Alert.alert('No items in the cart');
     }
+    setLoading(true);
     const userToken = await getData('userToken');
     const clientToken = await getData('clientToken');
 
@@ -43,6 +46,9 @@ export default function OrderCartScreen({ navigation }) {
         navigation.navigate('TableStatus',{ userToken, clientToken });
         await removeData('cart');
       });
+  }
+  if (loading) { 
+    return <LoadingIcon />;
   }
   return (
     <View>
