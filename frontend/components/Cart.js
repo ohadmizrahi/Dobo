@@ -1,11 +1,10 @@
 import { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Dimensions } from 'react-native';
 import { getData, removeData, storeData } from '@Utils/storage/asyncStorage';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default function Cart({ handleUpdateTotalPrice}) {
   const [cartItems, setCartItems] = useState([]);
-  console.log('cartItems:', cartItems);
 
   useEffect(() => {
     const fetchCartData = async () => {
@@ -19,7 +18,7 @@ export default function Cart({ handleUpdateTotalPrice}) {
   }, []);
 
   useEffect(() => {
-      const newTotalPrice = cartItems.reduce((total, item) => total + item.price, 0);
+      const newTotalPrice = cartItems.reduce((total, item) => total + parseFloat(item.price), 0);
       handleUpdateTotalPrice(newTotalPrice);
   }, [cartItems]);
 
@@ -48,7 +47,7 @@ export default function Cart({ handleUpdateTotalPrice}) {
           </TouchableOpacity>
           <Text style={[styles.itemName, { flex: 1 }]}>{item.name}</Text>
           <Text style={[styles.itemPrice, { flex: 1 }]}>{item.price}$</Text>
-          <Text style={[styles.itemName, { flex: 1 }]}>{item.clients.length > 1 ? 'Table' : 'User'}</Text> 
+          <Text style={[styles.itemName, { flex: 1 }]}>{item.clients.length > 1 ? 'Table' : 'Me'}</Text> 
         </View>
       ))}
       </ScrollView>
@@ -58,7 +57,7 @@ export default function Cart({ handleUpdateTotalPrice}) {
 const styles = StyleSheet.create({
   container: {
     padding: 10,
-    maxHeight: 500,
+    maxHeight: Dimensions.get('window').height - Dimensions.get('window').height*0.5,
   },
   emptyCartText:{
     fontSize: 20,

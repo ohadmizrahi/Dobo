@@ -13,17 +13,12 @@ import { storeData, getData, removeMulti } from '@Utils/storage/asyncStorage';
 
 export default function JoinTableScreen({ navigation, route }) {
   const qrData = route.params ? JSON.parse(route.params.qrData) : null
-  console.log('qrData', qrData);
 
   const [clientId, setClientId] = useState('');
   const [tableToJoin, setTableToJoin] = useState({
     businessId: qrData && qrData.business,
     tableId: qrData && qrData.table
   });
-
-
-  console.log('tableToJoin', JSON.stringify(tableToJoin));
-  console.log('clientId', clientId);
 
   async function handleGoToTable() {
     console.log('going to table');
@@ -44,19 +39,6 @@ export default function JoinTableScreen({ navigation, route }) {
     }
   }
 
-  async function handleCleanup() {
-    console.log('cleaning client data');
-    const keysToRemove = [
-        'clientToken',
-        'clientRefreshToken',
-        'client',
-        'virtualTable',
-        'FriendsData',
-        'cart'
-    ];
-    await removeMulti(keysToRemove);
-    navigation.navigate('Home');
-  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -84,7 +66,7 @@ export default function JoinTableScreen({ navigation, route }) {
             tableId: data.virtualTable.tableid,
             businessId: data.virtualTable.businessid,
             virtualTableName: data.virtualTable.name,
-            menu: data.menu.items
+            menu: data.menu
           });
         
           setClientId(data.client.clientid);
@@ -125,7 +107,6 @@ cd      handleSubmit={
       <LineAcross text='OR' />
       <TableLink />
       <CustomButton handlePress={handleGoToTable} title='Go to Table' />
-      <CustomButton handlePress={handleCleanup} title='TEMP CLEANUP' />
     </ScrollView>
   );
 }

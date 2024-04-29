@@ -1,7 +1,8 @@
 import { View, Text, FlatList, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-const Invoice = ({ invoiceList, onRemoveItem }) => {
+const Invoice = ({ onRemoveItem, check }) => {
+
     const handleRemoveItem = (id) => {
         Alert.alert(
             'Confirm',
@@ -20,30 +21,34 @@ const Invoice = ({ invoiceList, onRemoveItem }) => {
         );
     };
 
-    const renderItem = ({ item }) => (
+    const renderItem = ({ item }) => {
+        console.log('order', item);
+        return (
         <View style={styles.invoiceItem}>
-            <TouchableOpacity onPress={() => handleRemoveItem(item.id)}>
+            <TouchableOpacity onPress={() => handleRemoveItem(item.orderid)}>
                 <Icon name="minus-circle" size={24} color="red" />
             </TouchableOpacity>
             <View style={styles.invoiceDetails}>
-                <Text style={styles.invoiceText}>{item.item}</Text>
+                <Text style={styles.invoiceText}>{item.itemname}</Text>
                 <View style={styles.priceContainer}>
-                    <Text style={styles.invoiceText}>${item.price}</Text>
+                    <Text style={styles.invoiceText}>${item.clientcost}</Text>
+                    <Text style={styles.invoiceText}>Out of</Text>
+                    <Text style={styles.invoiceText}>${item.totalprice}</Text>
                 </View>
-                <Text style={styles.invoiceText}>{item.payers.join(', ')}</Text>
+                <Text style={styles.invoiceText}>{item.clientcost === item.totalprice ? 'Me' : 'Table'}</Text>
             </View>
         </View>
-    );
+    )};
 
     return (
         <View style={styles.container}>
-            <Text style={styles.header}>You pay on</Text>
-            <FlatList
-                data={invoiceList}
-                keyExtractor={(item) => item.id.toString()}
+            <Text style={styles.header}>{ check.length > 0 ? 'You pay on' : 'Nothing To Pay On' }</Text>
+            {check.length > 0 && <FlatList
+                data={check}
+                keyExtractor={(item) => item.orderid}
                 renderItem={renderItem}
                 style={{padding: 10}}
-            />
+            />}
         </View>
     );
 };

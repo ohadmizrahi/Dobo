@@ -1,14 +1,14 @@
 import { Alert } from 'react-native';
 import { successCodes, errorCodes } from './codes';
 
-async function handleResponse(response, navigation, callback=null) {
+async function handleResponse(response, navigation, callback=null, skipErrorHandling=false) {
     const { success, error } = response;
     if (success) {
         const { status, data } = success;
         await handleSucsess(status, data, callback);
     } else {
         const { status, message } = error;
-        await handleError(status, message, navigation);
+        await handleError(status, message, navigation, skipErrorHandling ? callback : null);
     }
 
     return success ? success.status : error.status;

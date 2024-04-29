@@ -108,7 +108,8 @@ async function getTableOrders(virtualTableId) {
 					    JOIN accounts a on a.accountId = c.accountId
 				    GROUP BY co.orderId
 			    ) as payers ON o.orderId = payers.orderId 
-    WHERE o.virtualTable = $1;`;
+    WHERE o.virtualTable = $1
+    ORDER BY o.ts;`;
     const values = [virtualTableId];
     try {
         const res = await pool.query(query, values);

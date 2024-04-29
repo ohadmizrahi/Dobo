@@ -51,6 +51,10 @@ export default function ProfileScreen({ navigation }) {
             'userToken',
             'userRefreshToken',
             'clientToken',
+            'clientRefreshToken',
+            'client',
+            'businessInfo',
+            'virtualTable',
             'account',
             'FriendsData',
             'cart'

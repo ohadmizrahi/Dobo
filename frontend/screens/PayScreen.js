@@ -1,85 +1,149 @@
-import React, { useState } from 'react';
-import { KeyboardAvoidingView, Platform, StatusBar, ScrollView, StyleSheet, View } from 'react-native';
+import { useState, useEffect } from 'react';
+import { KeyboardAvoidingView, Platform, StatusBar, ScrollView, View, StyleSheet, Alert } from 'react-native';
 import Invoice from '@Components/ItemPayment';
 import CustomButton from '@Components/CustomButton';
 import PaymentForm from '@Components/PaymentForm';
 import ExitSign from '@Components/ExitSign';
 import LineAcross from '@Components/LineAcross';
 import HeaderImage from '@Components/HeaderImage';
-
-const invoicesData = [
-  {
-    id: '1',
-    item: 'Classic Burger',
-    price: 10,
-    payers: ['John', 'Alice']
-  },
-  {
-    id: '2',
-    item: 'Pizza Margarita',
-    price: 12,
-    payers: ['Bob', 'Alice', 'Emily']
-  },
-  {
-    id: '3',
-    item: 'Beer',
-    price: 15,
-    payers: ['John']
-  },
-  {
-    id: '4',
-    item: 'Pasta',
-    price: 20,
-    payers: ['Alice', 'Emily']
-  },
-  {
-    id: '5',
-    item: 'Cake',
-    price: 10,
-    payers: ['John', 'Alice']
-  },
-  {
-    id: '6',
-    item: 'Sushi',
-    price: 30,
-    payers: ['Emily']
-  },
-];
-const Total = 50;
+import { getData, removeMulti } from '@Utils/storage/asyncStorage';
+import { sendGetRequest, sendPostRequest } from '@Utils/request/send';
+import { handleResponse } from '@Utils/response/handler';
 
 export default function PayScreen({ navigation }) {
-  const [invoices, setInvoices] = useState(invoicesData);
+  const [check, setCheck] = useState([]);
+  const [balance, setBalance] = useState(0);
+  console.log('check', check);
+  console.log('balance', balance);
 
-  const handleRemoveItem = (id) => {
-    setInvoices(prevInvoices => prevInvoices.filter(item => item.id !== id));
+  function handleNoOrders(error) {
+    if (error) {
+      const { status, error: errorMessage } = error;
+      if (status !== 404 || errorMessage !== 'No orders') {
+        Alert.alert(`Error ${status}`, errorMessage);
+        return;
+      }
+      setCheck([]);
+      setBalance(0);
+    }
+  }
+
+  useEffect(() => {
+    const getCheck = async () => {
+      const userToken = await getData('userToken');
+      const clientToken = await getData('clientToken');
+      const response = await sendGetRequest(
+        'api/table/check/calculate',
+        tokens={ userToken, clientToken }
+      );
+      handleResponse(
+        response,
+        navigation,
+        async (data, error) => {
+            handleNoOrders(error);
+            data && setCheck(data.clientOrders);
+            data && setBalance(data.clientBalance);
+        },
+        skipErrorHandling=true
+      );
+    };
+    getCheck();
+  }, []);
+
+
+  async function handleRemoveItem(id) {
+      const userToken = await getData('userToken');
+      const clientToken = await getData('clientToken');
+      const response = await sendPostRequest(
+        'api/table/check/recalculate',
+        body={ orders:[{ orderId: id }] },
+        tokens={ userToken, clientToken }
+      );
+
+      handleResponse(
+        response,
+        navigation,
+        async (data, error) => {
+            setCheck(data.clientOrders);
+            setBalance(data.clientBalance);
+        },
+      );
   };
 
-  const handleGoToTable = () => {
-    navigation.navigate('Home');
-  };
+  async function pay() {
+    const userToken = await getData('userToken');
+    const clientToken = await getData('clientToken');
+    const response = await sendPostRequest(
+      'api/table/check/pay',
+      body={ orders: check.map(order => ({ orderId: order.orderid })) },
+      tokens={ userToken, clientToken }
+    );
+
+    handleResponse(
+      response,
+      navigation,
+      async (data, error) => {
+        if (data) {
+          setCheck(data.clientOrders);
+          setBalance(data.clientBalance);
+          return;
+        }
+        handleNoOrders(error);
+          const keysToRemove = [
+            'clientToken',
+            'clientRefreshToken',
+            'client',
+            'virtualTable',
+            'FriendsData',
+            'cart'
+        ];
+        await removeMulti(keysToRemove);
+        navigation.navigate('Home');
+      },
+      skipErrorHandling=true
+    );
+  }
+
+  function handlePayment() {
+    Alert.alert(
+        'Confirm Checkout',
+        'Are you sure you want to checkout?',
+        [
+          {
+            text: 'Cancel',
+            style: 'cancel',
+          },
+          {
+            text: 'Confirm',
+            onPress: () => pay(),
+          },
+        ],
+        { cancelable: false }
+      );
+}
 
   return (
-    <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} keyboardVerticalOffset={Platform.OS === "ios" ? 100 : 0} style={{ flex: 1 }}>
-      <ScrollView>
-        <StatusBar barStyle="light-content" />
-        <HeaderImage />
-        <ExitSign />
-        <View style={styles.container}>
+    
+    <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} keyboardVerticalOffset={Platform.OS === "ios" ? 100 : 0} style={{flex : 1}}>
+    <StatusBar barStyle="light-content" />
+    <ScrollView contentContainerStyle={{ paddingBottom: 60 }}>
+      <HeaderImage />
+      <ExitSign />
+      <View style={styles.container}>
           <ScrollView style={styles.invoiceContainer} nestedScrollEnabled={true}>
-            <Invoice invoiceList={invoices} onRemoveItem={handleRemoveItem} />
+            <Invoice check={check} onRemoveItem={handleRemoveItem} />
           </ScrollView>
           <CustomButton
             title={'Your Account'}
-            handlePress={handleGoToTable}
+            handlePress={handlePayment}
             buttonStyle={payScreenStyles.button}
           >
-            Total: ${Total}
+            Total: ${balance}
           </CustomButton>
-        </View>
-        <LineAcross text='Payment Method' />
-        <PaymentForm submitTitle="Pay" edit={true} />
-        <View style={{ height: 100 }} />
-      </ScrollView>
+      </View>
+      <LineAcross text='OR' />
+      <PaymentForm formName='Enter Payment Method' submitTitle="Pay" edit={true}/>
+    </ScrollView>
     </KeyboardAvoidingView>
   );
 }
