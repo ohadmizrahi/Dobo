@@ -4,48 +4,13 @@ import { storeData, getData } from '@Utils/storage/asyncStorage';
 import FormContainer from '@Components/FormContainer';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-const friendsData = [
-    {
-        id: '1',
-        name: 'John Doe',
-        image: 'https://randomuser.me/api/portraits/women/2.jpg',
-        paid: 30,
-        totalToPay: 50,
-    },
-    {
-        id: '2',
-        name: 'Alice Smith',
-        image: 'https://randomuser.me/api/portraits/men/1.jpg',
-        paid: 20,
-        totalToPay: 50,
-    },
-    {
-        id: '3',
-        name: 'Moshe Smith',
-        image: 'https://randomuser.me/api/portraits/men/1.jpg',
-        paid: 60,
-        totalToPay: 100,
-    },
-];
-
 const FriendsInTable = ({ friends, totalFriends }) => {
-    const [joinedFriends, setJoinedFriends] = useState(0);
-    // Question to Bar: why do we need this?
-    useEffect(() => {
-        if (joinedFriends === totalFriends) {
-            console.log('All friends have joined the table');
-        }
-    }, [joinedFriends, totalFriends]);
-
-    // Function to handle when a friend joins the table
-    const handleFriendJoin = () => {
-        setJoinedFriends(prevJoinedFriends => prevJoinedFriends + 1);
-    };
+    const [myself, setMyself] = useState(null);
 
     useEffect(() => {
-        if (joinedFriends < totalFriends) {
-            handleFriendJoin();
-        }
+        getData('client').then(client => {
+            setMyself(JSON.parse(client).clientId);
+        });
     }, []);
 
     storeData('FriendsData', friends)
@@ -65,20 +30,13 @@ const FriendsInTable = ({ friends, totalFriends }) => {
         }
     }
 
-    function isCurrentClient(clientId) {
-        console.log('clientId', clientId);
-        // const client = await getData('client');
-        // console.log('client', client);
-        return '57b18dc0-96ea-4ee2-8fa7-46168e806a01' === clientId;
-    }
-
     return (
         <FormContainer formName='Friends'>
 
                 {friends.map(friend => (
                     <View key={friend.clientid} style={styles.friendItem}>
                         { renderFriendImage(friend) }
-                        <View style={[styles.friendDetails, isCurrentClient(friend.clientid) && styles.myselfDetails]}>
+                        <View style={[styles.friendDetails, myself === friend.clientid && styles.myselfDetails]}>
                             <Text style={styles.friendName}>{friend.clientname}</Text>
                             <Text style={styles.friendAmount}> {friend.paid}$</Text>
                             <Text style={styles.friendAmount}> {friend.total}$</Text>
@@ -117,7 +75,7 @@ const styles = StyleSheet.create({
     myselfDetails: {
         borderRadius: 40,
         borderColor: '#97DECC',
-        borderWidth: 3,
+        borderWidth: 2,
         justifyContent: 'center',
         alignContent: 'center',
         alignItems: 'center',

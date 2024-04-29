@@ -10,9 +10,11 @@ import { sendGetRequest } from '@Utils/request/send';
 import { handleResponse } from '@Utils/response/handler';
 import { storeData, getData, removeMulti, getAllData } from '@Utils/storage/asyncStorage';
 import { useState, useEffect } from 'react';
+import LoadingIcon from '@Components/LoadingIcon';
 
 export default function ProfileScreen({ navigation }) {
   const [profile, setProfile] = useState({ account: {}, paymentsMethod: {} })
+  const [loading, setLoading] = useState(true); 
 
     useEffect(() => {
     const fetchData = async () => {
@@ -23,6 +25,7 @@ export default function ProfileScreen({ navigation }) {
             response,
             navigation,
             async (data, error) => {
+                setLoading(false);
                 const { data: accountData } = data;
 
                 const newAccount = { ...accountData.account };
@@ -41,7 +44,6 @@ export default function ProfileScreen({ navigation }) {
     };
 
     fetchData()
-    
     }, []);
 
     async function handleLogOut() {
@@ -49,6 +51,10 @@ export default function ProfileScreen({ navigation }) {
             'userToken',
             'userRefreshToken',
             'clientToken',
+            'clientRefreshToken',
+            'client',
+            'businessInfo',
+            'virtualTable',
             'account',
             'FriendsData',
             'cart'
@@ -59,7 +65,9 @@ export default function ProfileScreen({ navigation }) {
         console.log('after', data2);
     }
 
-
+  if (loading) { 
+    return <LoadingIcon />;
+  }
   return (
     <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} keyboardVerticalOffset={Platform.OS === "ios" ? 100 : 0} style={globalStyles.screenColor}>
     <ScrollView>

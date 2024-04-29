@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { SafeAreaView, StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import { useState, useEffect } from 'react';
+import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import { Formik, Field } from 'formik';
 import CustomInput from './CustomInput';
 import Icon from 'react-native-vector-icons/FontAwesome';

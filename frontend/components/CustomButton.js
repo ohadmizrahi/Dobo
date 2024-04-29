@@ -1,7 +1,6 @@
-import React from 'react';
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
 
-const CustomButton = ({ handlePress, title, backgroundColor }) => {
+const CustomButton = ({ handlePress, title, backgroundColor, textColor }) => {
   const buttonStyle = {
     ...styles.button,
     backgroundColor: backgroundColor || styles.button.backgroundColor,
@@ -9,7 +8,7 @@ const CustomButton = ({ handlePress, title, backgroundColor }) => {
 
   return (
     <TouchableOpacity style={buttonStyle} onPress={handlePress}>
-      <Text style={styles.text}>{title}</Text>
+      <Text style={[styles.text, textColor && {color: textColor} ]}>{title}</Text>
     </TouchableOpacity>
   );
 };

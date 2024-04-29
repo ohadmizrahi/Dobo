@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity } from 'react-native';
-import { BASE_URL, BE_PORT } from '@env';
 import { useNavigation } from '@react-navigation/native';
+import { BASE_URL, BE_PORT } from '@env';
+
 export const Places = ({ title, data }) => {
     const navigation = useNavigation();
     const [selectedBusinessId, setSelectedBusinessId] = useState(null);

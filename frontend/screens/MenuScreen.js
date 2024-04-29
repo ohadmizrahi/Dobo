@@ -1,4 +1,3 @@
-import React from 'react';
 import { View, StatusBar, StyleSheet } from 'react-native';
 import Menu from '@Components/Menu';
 import ExitSign from '@Components/ExitSign';

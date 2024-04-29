@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import Form from './Form';
+import { useState } from 'react';
+import Form from '@Components/Form';
 import { useNavigation } from '@react-navigation/native';
 import { getData } from '@Utils/storage/asyncStorage';
 import { sendPostRequest } from '@Utils/request/send.js';
@@ -11,7 +11,7 @@ import {passwordValidationSchema} from '@Schemas/passwordSchema';
 const PasswordForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const navigation = useNavigation();
-  const [dummyPassword,setdummyPassword] = useState('123456789')
+  const [dummyPassword, setdummyPassword] = useState('123456789')
 
   const fields = [
     { name: 'password', label: 'Password', iconName: 'lock', placeholder: 'Enter password', secureTextEntry: true },

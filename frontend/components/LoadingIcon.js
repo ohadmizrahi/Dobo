@@ -1,4 +1,3 @@
-import React from 'react';
 import { View, Text, ActivityIndicator, StatusBar, StyleSheet } from 'react-native';
 
 const LoadingIcon = () => {

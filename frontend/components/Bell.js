@@ -1,8 +1,19 @@
-import React, { useState } from 'react';
-import { View, StyleSheet, TouchableOpacity, Text, Button, Alert } from 'react-native';
+import { useState } from 'react';
+import { View, StyleSheet, TouchableOpacity, Text, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { globalStyles } from '@Root/globalStyles';
 import { getData } from '@Utils/storage/asyncStorage';
+
+async function checkForActiveTable(actionTrue, actionFalse) {
+    const userToken = await getData('userToken');
+    const clientToken = await getData('clientToken');
+    const activeTable = clientToken && userToken ? true : false;
+    if (activeTable) {
+        actionTrue(userToken, clientToken);
+    } else {
+        actionFalse(userToken, clientToken);
+    }
+}
 
 export default function Bell({ navigation }) {
     const [showButtons, setShowButtons] = useState(false);
@@ -11,15 +22,14 @@ export default function Bell({ navigation }) {
     }
 
     async function handleActiveTable() {
-        const userToken = await getData('userToken');
-        const clientToken = await getData('clientToken');
-        if (!clientToken || !userToken) {
-            Alert.alert(
+        await checkForActiveTable(
+            actionTrue=(userToken, clientToken) => navigation.navigate('TableStatus', { userToken, clientToken }),
+            actionFalse=() => Alert.alert(
                 'No Active Table',
                 "You don't have an active table. Please join a table first.",
                 [
                     {
-                        text: 'Cancel',
+                        text: 'Close',
                         onPress: () => setShowButtons(false),
                         style: 'cancel',
                     },
@@ -29,18 +39,52 @@ export default function Bell({ navigation }) {
                     }
 
                 ],
-            );
-        } else {
-            navigation.navigate('TableStatus', { userToken, clientToken });
-        }
+            )
+        );
     }
 
-    function handleQR() {
-        navigation.navigate('QRScanner');
+    async function handleQR() {
+        await checkForActiveTable(
+            actionTrue=(userToken, clientToken) => Alert.alert(
+                'You already have an active table',
+                "Do you want to go to your table?",
+                [
+                    {
+                        text: 'Close',
+                        onPress: () => setShowButtons(false),
+                        style: 'cancel',
+                    },
+                    {
+                        text: 'Go to table',
+                        onPress: () => navigation.navigate('TableStatus', { userToken, clientToken })
+                    }
+
+                ],
+            ),
+            actionFalse=() => navigation.navigate('QRScanner')
+        );
     }
 
-    function handleJoinTable() {
-        navigation.navigate('JoinTable');
+    async function handleJoinTable() {
+        await checkForActiveTable(
+            actionTrue=(userToken, clientToken) => Alert.alert(
+                'You already have an active table',
+                "Do you want to go to your table?",
+                [
+                    {
+                        text: 'Close',
+                        onPress: () => setShowButtons(false),
+                        style: 'cancel',
+                    },
+                    {
+                        text: 'Go to table',
+                        onPress: () => navigation.navigate('TableStatus', { userToken, clientToken })
+                    }
+
+                ],
+            ),
+            actionFalse=() => navigation.navigate('JoinTable')
+        );
     }
 
     return (

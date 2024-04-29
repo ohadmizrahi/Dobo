@@ -1,5 +1,4 @@
 // logo image 
-import React from 'react';
 import { Image, SafeAreaView } from 'react-native';
 import { globalStyles } from '@Root/globalStyles';
 
