@@ -1,4 +1,4 @@
-import { View, Text, FlatList, StyleSheet, TouchableOpacity, Alert } from 'react-native';
+import { View, Text, FlatList, StyleSheet, TouchableOpacity, Alert, Dimensions } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 const Invoice = ({ onRemoveItem, check }) => {
@@ -55,8 +55,9 @@ const Invoice = ({ onRemoveItem, check }) => {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-    },
+        padding: 10,
+        maxHeight: Dimensions.get('window').height - Dimensions.get('window').height*0.5,
+      },
     header: {
         fontSize: 24,
         textAlign: 'center',
@@ -69,13 +70,14 @@ const styles = StyleSheet.create({
         marginVertical: 10,
     },
     invoiceItem: {
+        marginBottom: 10,
+        padding: 10,
+        borderWidth: 1,
+        borderColor: '#ccc',
+        borderRadius: 5,
         flexDirection: 'row',
         alignItems: 'center',
-        paddingVertical: 10,
-        paddingHorizontal: 20,
-        borderBottomWidth: 1,
-        borderBottomColor: '#ccc',
-        paddingHorizontal: 10,
+        justifyContent: 'space-between',
     },
     removeButton: {
         width: 30,

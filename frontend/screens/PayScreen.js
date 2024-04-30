@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { KeyboardAvoidingView, Platform, StatusBar, ScrollView, View, StyleSheet, Alert } from 'react-native';
+import { Text, KeyboardAvoidingView, Platform, StatusBar, ScrollView, View, StyleSheet, Alert } from 'react-native';
 import Invoice from '@Components/ItemPayment';
 import CustomButton from '@Components/CustomButton';
 import PaymentForm from '@Components/PaymentForm';
@@ -133,13 +133,18 @@ export default function PayScreen({ navigation }) {
           <ScrollView style={styles.invoiceContainer} nestedScrollEnabled={true}>
             <Invoice check={check} onRemoveItem={handleRemoveItem} />
           </ScrollView>
-          <CustomButton
-            title={'Your Account'}
-            handlePress={handlePayment}
-            buttonStyle={payScreenStyles.button}
-          >
-            Total: ${balance}
-          </CustomButton>
+          <View style={{flex: 1, alignItems: 'center', justifyContent: 'center', marginTop: balance > 0 ? 20 : 0}}>
+            {balance > 0 && (<Text>
+              Click here to pay with default payment method
+            </Text>)}
+            <CustomButton
+              title={'Your Account'}
+              handlePress={handlePayment}
+              buttonStyle={payScreenStyles.button}
+            >
+              ${balance}
+            </CustomButton>
+          </View>
       </View>
       <LineAcross text='OR' />
       <PaymentForm formName='Enter Payment Method' submitTitle="Pay" edit={true}/>
@@ -166,11 +171,10 @@ const payScreenStyles = StyleSheet.create({
     height: 50,
     alignSelf: 'center',
     borderRadius: 50,
-    marginTop: 20,
+    marginTop: 5,
     alignItems: 'center',
     justifyContent: 'center',
     fontSize: 20,
-    color: '#000',
-    marginTop: 30,
+    textColor: 'black',
   },
 });

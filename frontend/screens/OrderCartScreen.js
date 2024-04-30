@@ -60,8 +60,7 @@ export default function OrderCartScreen({ navigation }) {
       <View style={{marginTop: 10}}>
         <CustomButton
           title={`Send Order $${totalPrice}`}
-          backgroundColor='#97DECC'
-          textColor='black'
+          buttonStyle={{backgroundColor: '#97DECC', textColor: 'black'}}
           handlePress={sendOrder}
         />
       </View>

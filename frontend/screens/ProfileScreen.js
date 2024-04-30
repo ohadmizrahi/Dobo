@@ -77,7 +77,7 @@ export default function ProfileScreen({ navigation }) {
       <AccountInfoForm data={profile.account}/>
       <PasswordForm />
       <PaymentDetails data={profile.paymentsMethod}/>
-      <CustomButton handlePress={handleLogOut} title={'Log out'} backgroundColor={'red'}/>
+      <CustomButton handlePress={handleLogOut} title={'Log out'} buttonStyle={{backgroundColor: 'red'}}/>
     </ScrollView>
     </KeyboardAvoidingView>
   );

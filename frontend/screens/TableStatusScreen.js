@@ -56,7 +56,7 @@ export default function TableStatusScreen({ navigation, route }) {
       <CustomButton handlePress={handleOrderNow} title='Order Now' />
       <LatestOrder orders={table.latestOrders} />
       <FriendsInTable friends={table.friends} />
-      <CustomButton handlePress={handlePayNow} title={'Pay Now'} backgroundColor={'red'}/>
+      <CustomButton handlePress={handlePayNow} title={'Pay Now'} buttonStyle={{backgroundColor: 'red'}}/>
     </ScrollView>
   );
 }

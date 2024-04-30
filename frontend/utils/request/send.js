@@ -53,7 +53,7 @@ async function sendRequest(url, content, ignoreTokenExperation=false) {
         }
             
         if (!response.ok) {
-            console.error(`ERROR: ${responseData.message} ${response.status}`);
+            console.log(`ERROR: ${responseData.message} ${response.status}`);
             return { error: { status: response.status, message: responseData.message }};
         }
         return { success: { status: response.status, data: responseData } };

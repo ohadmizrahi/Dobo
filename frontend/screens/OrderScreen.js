@@ -36,7 +36,7 @@ export default function OrderScreen({ navigation }) {
             <Menu navigation={navigation} isOrderScreen={true} data={menu} />
         </ScrollView>
         <View style={styles.floatingButtonContainer}>
-            <CustomButton handlePress={handleViewOrder} screen='OrderCart' title={'View Order'} />
+            <CustomButton handlePress={handleViewOrder} title={'View Order'} />
         </View>
     </View>
   );
