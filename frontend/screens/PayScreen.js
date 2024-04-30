@@ -9,12 +9,12 @@ import HeaderImage from '@Components/HeaderImage';
 import { getData, removeMulti } from '@Utils/storage/asyncStorage';
 import { sendGetRequest, sendPostRequest } from '@Utils/request/send';
 import { handleResponse } from '@Utils/response/handler';
+import LoadingIcon from '@Components/LoadingIcon';
 
 export default function PayScreen({ navigation }) {
   const [check, setCheck] = useState([]);
   const [balance, setBalance] = useState(0);
-  console.log('check', check);
-  console.log('balance', balance);
+  const [loading, setLoading] = useState(true); 
 
   function handleNoOrders(error) {
     if (error) {
@@ -43,6 +43,7 @@ export default function PayScreen({ navigation }) {
             handleNoOrders(error);
             data && setCheck(data.clientOrders);
             data && setBalance(data.clientBalance);
+            setLoading(false);
         },
         skipErrorHandling=true
       );
@@ -52,6 +53,7 @@ export default function PayScreen({ navigation }) {
 
 
   async function handleRemoveItem(id) {
+      setLoading(true);
       const userToken = await getData('userToken');
       const clientToken = await getData('clientToken');
       const response = await sendPostRequest(
@@ -66,11 +68,13 @@ export default function PayScreen({ navigation }) {
         async (data, error) => {
             setCheck(data.clientOrders);
             setBalance(data.clientBalance);
+            setLoading(false);
         },
       );
   };
 
   async function pay() {
+    setLoading(true);
     const userToken = await getData('userToken');
     const clientToken = await getData('clientToken');
     const response = await sendPostRequest(
@@ -98,6 +102,7 @@ export default function PayScreen({ navigation }) {
             'cart'
         ];
         await removeMulti(keysToRemove);
+        setLoading(false);
         navigation.navigate('Home');
       },
       skipErrorHandling=true
@@ -122,8 +127,11 @@ export default function PayScreen({ navigation }) {
       );
 }
 
+  if (loading) { 
+    return <LoadingIcon />;
+  }
+
   return (
-    
     <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} keyboardVerticalOffset={Platform.OS === "ios" ? 100 : 0} style={{flex : 1}}>
     <StatusBar barStyle="light-content" />
     <ScrollView contentContainerStyle={{ paddingBottom: 60 }}>

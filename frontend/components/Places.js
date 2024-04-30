@@ -38,7 +38,7 @@ export const Places = ({ title, data }) => {
                 renderItem={({ item }) => (
                     <TouchableOpacity onPress={() => handleBusinessPress(item.businessId)}>
                         <View style={styles.place}>
-                            <Image style={styles.image} source={{ uri: item.image }} />
+                            <Image style={styles.image} source={{ uri: item.image }} resizeMode='cover' />
                             <Text style={styles.title}>{item.name}</Text>
                             <Text style={styles.type}>{item.description}</Text>
                         </View>
