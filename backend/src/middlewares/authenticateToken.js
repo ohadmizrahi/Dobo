@@ -58,7 +58,8 @@ async function authenticateClientToken(req, res, next) {
             req.client = clients[0];
             next();
         } catch (err) {
-            return res.status(403).json({ message: 'Invalid client token' });
+            console.log(err);
+            return res.status(403).json({ message: 'Invalid client token', source: 'client' });
         }
     }
 }

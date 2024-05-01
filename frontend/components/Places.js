@@ -13,7 +13,6 @@ export const Places = ({ title, data }) => {
             return;
         }
         const mappedPlaces = data.map((item) => {
-            console.log(item.imageurl);
             
             return {
                 businessId: item.businessid,
@@ -21,6 +20,7 @@ export const Places = ({ title, data }) => {
                 description: item.description,
                 image: `${BASE_URL}:${BE_PORT}/assets/${item.imageurl}`
                 }
+
             });
         setPlaces(mappedPlaces);
     }, [data]);

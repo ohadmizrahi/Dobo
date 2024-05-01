@@ -2,6 +2,7 @@ import { buildHeaders, buildRequest } from './builder';
 import { removeData, storeData, getData } from '@Utils/storage/asyncStorage';
 
 async function refreshToken(source) {
+    console.log('source', source);
     let headers = null;
     let endpoint = null;
     if (source === 'user') {
@@ -44,7 +45,6 @@ async function sendRequest(url, content, ignoreTokenExperation=false) {
             } else {
                 const currentUserToken = await getData('userToken');
                 const { clienttoken } = content.headers;
-                
                 const { token: newToken } = await refreshToken(responseData.source);
                 const { userToken, clientToken } = responseData.source == 'user' ? { userToken: newToken, clientToken: clienttoken } : { userToken: currentUserToken, clientToken: newToken };
                 const headers = buildHeaders(userToken, clientToken);
