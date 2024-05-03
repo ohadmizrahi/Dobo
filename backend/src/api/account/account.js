@@ -3,8 +3,9 @@ const { find: getUserPaymentMethod } = require('@src/models/paymentMethods.js')
 const { findMany: findReservations } = require('@src/models/reservation.js')
 
 async function updateAccountDetails(username, fieldsToUpdate) {
-
+    console.log('Fields to update:', fieldsToUpdate);
     const response = await updateAccount(username, fieldsToUpdate, "account");
+
     if (!response.success) {
         throw new Error(response.message);
     }
@@ -32,6 +33,10 @@ async function getAccount(username) {
     const accounts = await findAccount(username);
     const paymentsMethods = await getUserPaymentMethod(username);
     const account = accounts.length == 1 ? accounts[0] : null;
+    console.log(account);
+    account.birthdate.setDate(account.birthdate.getDate() + 1);
+    account.birthdate = account.birthdate.toISOString().split('T')[0];
+    console.log(account);
     const paymentsMethod = paymentsMethods.length == 1 ? paymentsMethods[0] : null;
     return { account, paymentsMethod }
 }

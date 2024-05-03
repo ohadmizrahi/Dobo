@@ -30,6 +30,7 @@ export default function ProfileScreen({ navigation }) {
 
                 const newAccount = { ...accountData.account };
                 delete newAccount.password;
+                console.log('newAccount', newAccount);
 
                 const newProfile = {
                     ...profile,
@@ -74,7 +75,7 @@ export default function ProfileScreen({ navigation }) {
       <StatusBar barStyle="light-content" />
       <DoboLogo />
       <ProfilePicture name={profile.account.fullname} imageurl={profile.account.imageurl}/>
-      <AccountInfoForm data={profile.account}/>
+      <AccountInfoForm data={profile.account} handleUpdateProfile={setProfile} />
       <PasswordForm />
       <PaymentDetails data={profile.paymentsMethod}/>
       <CustomButton handlePress={handleLogOut} title={'Log out'} buttonStyle={{backgroundColor: 'red'}}/>
