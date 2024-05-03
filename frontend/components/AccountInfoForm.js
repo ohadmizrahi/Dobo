@@ -25,13 +25,10 @@ const AccountInfoForm = ({ data, handleUpdateProfile }) => {
   }, [data]);
 
   const formatDate = (dateString) => {
-    console.log('Date String:', dateString);
     const date = new Date(dateString);
-    console.log('Date:', date);
     const day = date.getDate().toString().padStart(2, '0');
     const month = (date.getMonth() + 1).toString().padStart(2, '0');
     const year = date.getFullYear();
-    console.log(`${day}/${month}/${year}`);
     return `${day}/${month}/${year}`;
   };
 
@@ -45,7 +42,6 @@ const AccountInfoForm = ({ data, handleUpdateProfile }) => {
 
   const onSubmit = async (values) => {
     setIsLoading(true);
-    console.log('Values:', values);
 
     const userInfo = {
       fullName: values.fullName,
@@ -58,21 +54,22 @@ const AccountInfoForm = ({ data, handleUpdateProfile }) => {
     try {
       const userToken = await getData('userToken');
       const response = await sendPostRequest('api/profile/update/account', userInfo, { userToken });
-      console.log('Response:', response);
+      
       await handleResponse(
         response,
         navigation,
         async (data, error) => {
-          console.log('Data:', data);
             Alert.alert('Success', 'Your account information has been updated successfully.');
             const updatedFields = Object.keys(data.updatedFields).reduce((acc, key) => {
               
               acc[keysMap[key]] = data.updatedFields[key];
               return acc;
             }, { ...account });
-            console.log('Updated Fields:', updatedFields);
-            handleUpdateProfile((prevProfile) => ({ ...prevProfile, account: updatedFields }));
-            await storeData('account', updatedFields);
+
+            handleUpdateProfile((prevProfile) => ({ ...prevProfile, account: {...prevProfile.account, ...updatedFields} }));
+
+            const account = await getData('account');
+            await storeData('account', {...JSON.parse(account), ...updatedFields});
         }
       );
     } catch (error) {

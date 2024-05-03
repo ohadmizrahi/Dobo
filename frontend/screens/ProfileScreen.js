@@ -30,7 +30,11 @@ export default function ProfileScreen({ navigation }) {
 
                 const newAccount = { ...accountData.account };
                 delete newAccount.password;
-                console.log('newAccount', newAccount);
+
+                const account = await getData('account');
+                const parsedAccount = JSON.parse(account);
+                await storeData('account', { ...parsedAccount, ...newAccount, imageurl: parsedAccount.imageurl});
+                newAccount.imageurl = parsedAccount.imageurl || null
 
                 const newProfile = {
                     ...profile,
@@ -38,8 +42,6 @@ export default function ProfileScreen({ navigation }) {
                     paymentsMethod: accountData.paymentsMethod,
                 };
                 setProfile(newProfile);
-
-                await storeData('account', newAccount);
             }
         );
     };
@@ -74,7 +76,7 @@ export default function ProfileScreen({ navigation }) {
     <ScrollView>
       <StatusBar barStyle="light-content" />
       <DoboLogo />
-      <ProfilePicture name={profile.account.fullname} imageurl={profile.account.imageurl}/>
+      <ProfilePicture name={profile.account.fullname} imageurl={profile.account.imageurl} handleUpdateProfile={setProfile}/>
       <AccountInfoForm data={profile.account} handleUpdateProfile={setProfile} />
       <PasswordForm />
       <PaymentDetails data={profile.paymentsMethod}/>
