@@ -5,7 +5,7 @@ import FormContainer from '@Components/FormContainer';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { ScrollView } from 'react-native';
 
-const FriendsInTable = ({ friends, totalFriends }) => {
+const FriendsInTable = ({ friends }) => {
     const [myself, setMyself] = useState(null);
 
     useEffect(() => {

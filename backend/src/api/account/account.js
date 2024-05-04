@@ -31,11 +31,17 @@ async function updateImage(username, image) {
 async function getAccount(username) {
     const accounts = await findAccount(username);
     const paymentsMethods = await getUserPaymentMethod(username);
+
     const account = accounts.length == 1 ? accounts[0] : null;
-    account.birthdate.setDate(account.birthdate.getDate() + 1);
-    account.birthdate = account.birthdate.toISOString().split('T')[0];
-    
+    if (account) {
+        account.birthdate.setDate(account.birthdate.getDate() + 1);
+        account.birthdate = account.birthdate.toISOString().split('T')[0];
+    }
     const paymentsMethod = paymentsMethods.length == 1 ? paymentsMethods[0] : null;
+    if (paymentsMethod) {
+        paymentsMethod.experationdate.setDate(paymentsMethod.experationdate.getDate() + 1);
+        paymentsMethod.experationdate = paymentsMethod.experationdate.toISOString().split('T')[0];
+    }
     return { account, paymentsMethod }
 }
 

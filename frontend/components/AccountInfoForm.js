@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
+import { Alert } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import Form from '@Components/Form';
 import { getData, storeData } from '@Utils/storage/asyncStorage';
 import { sendPostRequest } from '@Utils/request/send.js';
 import { handleResponse } from '@Utils/response/handler';
-import { Alert } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { formatDate } from '@Utils/dates';
 import {accountInfoValidationSchema} from '@Schemas/accountInfoSchema';
 
 const keysMap = {
@@ -23,15 +24,7 @@ const AccountInfoForm = ({ data, handleUpdateProfile }) => {
   useEffect(() => {
     setAccount(data);
   }, [data]);
-
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    const day = date.getDate().toString().padStart(2, '0');
-    const month = (date.getMonth() + 1).toString().padStart(2, '0');
-    const year = date.getFullYear();
-    return `${day}/${month}/${year}`;
-  };
-
+  
   const fields = [
     { name: 'fullName', label: 'Full Name', iconName: 'user', placeholder: 'Enter full name' },
     { name: 'email', label: 'Email', iconName: 'envelope', placeholder: 'Enter email', keyboardType: 'email-address' },
