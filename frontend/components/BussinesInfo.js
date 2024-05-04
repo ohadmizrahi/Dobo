@@ -1,13 +1,28 @@
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { getData } from '@Utils/storage/asyncStorage'; 
 
-export default function Businessinformation({ navigation, data }) {
+export default function BussinesInfo({ navigation, data }) {
 const handleMenu = () => {
   navigation.navigate('Menu', { menu: data.menu, imageurl: data.imageurl, name: data.name});
 }
 
-const handleFindPlace = () => {
-  navigation.navigate('TableReservation', { businessId: data.businessid, imageurl: data.imageurl, name: data.name});
+const handleFindPlace = async () => {
+  const userToken = await getData('userToken');
+  userToken ? 
+  navigation.navigate('TableReservation', { businessId: data.businessid, imageurl: data.imageurl, name: data.name}) :
+  (() => {
+    Alert.alert('You need sign in before making a reservation', 'Would you like to sign in?', [
+      {
+        text: 'Yes',
+        onPress: () => navigation.navigate('SignIn'),
+      },
+      {
+        text: 'No',
+        cancelable: true,
+      },
+    ]);
+  })()
 
 }
 

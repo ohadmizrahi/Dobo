@@ -20,7 +20,6 @@ export default function TableReservationScreen({ navigation, route}) {
         <FormHeadLine data={name} />
         <BussinesHeader />
         <TableReservationForm data={businessId}/>
-        <CustomButton title="Back To Home" handlePress={() => navigation.navigate('Home')} />
       </ScrollView>
     </KeyboardAvoidingView>
   );
