@@ -34,7 +34,7 @@ export default function ProfileScreen({ navigation }) {
                 delete newAccount.password;
 
                 const account = await getData('account');
-                const parsedAccount = JSON.parse(account);
+                const parsedAccount = account ? JSON.parse(account) : {};
                 await storeData('account', { ...parsedAccount, ...newAccount, imageurl: parsedAccount.imageurl});
                 newAccount.imageurl = parsedAccount.imageurl || null
 
