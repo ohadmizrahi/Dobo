@@ -1,7 +1,7 @@
 import { ScrollView, KeyboardAvoidingView, Platform, StatusBar } from 'react-native';
 import {
   TableReservationForm,
-  BusinessHeader,
+  BussinesHeader,
   ExitSign,
   HeaderImage,
   CustomButton,
@@ -18,7 +18,7 @@ export default function TableReservationScreen({ navigation, route}) {
         <ExitSign/>
         <HeaderImage data={imageurl} />
         <FormHeadLine data={name} />
-        <BusinessHeader />
+        <BussinesHeader />
         <TableReservationForm data={businessId}/>
         <CustomButton title="Back To Home" handlePress={() => navigation.navigate('Home')} />
       </ScrollView>

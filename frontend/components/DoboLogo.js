@@ -4,11 +4,11 @@ import { globalStyles } from '@Root/globalStyles';
 
 const logoImg = require('@Assets/logo.png');
 
-const LogoImage = () => {
+const DoboLogo = () => {
     return (
         <SafeAreaView>
             <Image source={logoImg} style={globalStyles.image} />
         </SafeAreaView>
     );
 };
-export default LogoImage;
+export default DoboLogo;

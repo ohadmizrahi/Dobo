@@ -5,8 +5,8 @@ import { sendGetRequest } from '@Utils/request/send';
 import { handleResponse } from '@Utils/response/handler';
 import {
   CustomButton,
-  LogoImage,
-  LatestOrder,
+  DoboLogo,
+  LastOrders,
   FriendsInTable,
   LoadingIcon
 } from '@Components';
@@ -54,9 +54,9 @@ export default function TableStatusScreen({ navigation, route }) {
   return (
     <ScrollView style={globalStyles.screenColor} contentContainerStyle={{ paddingBottom: 60 }}>
       <StatusBar barStyle="light-content" />
-      <LogoImage />
+      <DoboLogo />
       <CustomButton handlePress={handleOrderNow} title='Order Now' />
-      <LatestOrder orders={table.latestOrders} />
+      <LastOrders orders={table.latestOrders} />
       <FriendsInTable friends={table.friends} />
       <CustomButton handlePress={handlePayNow} title={'Pay Now'} buttonStyle={{backgroundColor: 'red'}}/>
     </ScrollView>

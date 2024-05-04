@@ -4,7 +4,7 @@ import {globalStyles} from '@Root/globalStyles';
 import { getData } from '@Utils/storage/asyncStorage';
 import {
   Menu,
-  LogoImage,
+  DoboLogo,
   CustomButton,
   ExitSign
 } from '@Components';
@@ -33,7 +33,7 @@ export default function OrderScreen({ navigation }) {
     <View style={globalStyles.screenColor}>
         <StatusBar barStyle="light-content" />
         <ExitSign/>
-        <LogoImage/>
+        <DoboLogo/>
         <ScrollView scrollEventThrottle={16} contentContainerStyle={{ paddingBottom: 80 }}>
             <Menu navigation={navigation} isOrderScreen={true} data={menu} />
         </ScrollView>

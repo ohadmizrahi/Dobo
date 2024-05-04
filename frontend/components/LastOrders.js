@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, Modal } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import FormContainer from '@Components/FormContainer';
 
-const LatestOrder = ({ orders }) => {
+const LastOrders = ({ orders }) => {
     const [showClients, setShowClients] = useState(false);
     const [selectedOrder, setSelectedOrder] = useState(null);
 
@@ -122,4 +122,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default LatestOrder;
+export default LastOrders;

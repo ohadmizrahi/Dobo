@@ -2,7 +2,7 @@ import { ScrollView , KeyboardAvoidingView, Platform , StatusBar} from 'react-na
 import { globalStyles } from '@Root/globalStyles';
 import {
   SocialSignIn,
-  LogoImage,
+  DoboLogo,
   ProfilePicture,
   SignUpForm
 } from '@Components';
@@ -12,7 +12,7 @@ export default function SignUpScreen() {
     <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} keyboardVerticalOffset={Platform.OS === "ios" ? 100 : 0} style={globalStyles.screenColor}>
       <ScrollView>
       <StatusBar barStyle="light-content" />
-      <LogoImage />
+      <DoboLogo />
       <ProfilePicture />
       <SignUpForm />
       <SocialSignIn />

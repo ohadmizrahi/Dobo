@@ -2,7 +2,7 @@ import {ScrollView , KeyboardAvoidingView, Platform, StatusBar} from 'react-nati
 import { globalStyles } from '@Root/globalStyles';
 import {
   SocialSignIn,
-  LogoImage,
+  DoboLogo,
   ProfilePicture,
   DontHaveAccount,
   SigninForm,
@@ -14,7 +14,7 @@ export default function SignInScreen({ navigation }) {
     <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} keyboardVerticalOffset={Platform.OS === "ios" ? 100 : 0} style={globalStyles.screenColor}>
     <ScrollView>
       <StatusBar barStyle="light-content" />
-      <LogoImage />
+      <DoboLogo />
       <ProfilePicture />
       <SigninForm />
       <DontHaveAccount navigation={navigation}/>
