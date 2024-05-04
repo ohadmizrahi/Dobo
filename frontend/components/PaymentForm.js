@@ -28,9 +28,6 @@ const PaymentForm = ({ paymentDetails, submitTitle, edit, formName='Payment' }) 
       citizenId: values.ID,
     };
 
-    const [day, month, year] = values.expirationDate.split("/"); // Format needs change to month,year
-    const formattedDate = `${year}-${month}-${day}`; // Format needs change to YY-MM
-    paymentInfo["experationdate"] = formattedDate;
     if (submitTitle != "pay") {
     try {
       const userToken = await getData('userToken');
