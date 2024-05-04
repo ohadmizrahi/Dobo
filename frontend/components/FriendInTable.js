@@ -50,9 +50,9 @@ const FriendsInTable = ({ friends }) => {
                         <Text style={styles.gridText}>Left:</Text>
                     </View>
                     <View style={styles.gridRow}>
-                        <Text style={styles.gridText}>{totalPaid}$</Text>
-                        <Text style={styles.gridText}>{totalToPay}$</Text>
-                        <Text style={styles.gridText}>{totalToPay - totalPaid}$</Text>
+                        <Text style={styles.gridText}>{totalPaid.toFixed(2)}$</Text>
+                        <Text style={styles.gridText}>{totalToPay.toFixed(2)}$</Text>
+                        <Text style={styles.gridText}>{(totalToPay - totalPaid).toFixed(2)}$</Text>
                     </View>
                 </View>
         </FormContainer>

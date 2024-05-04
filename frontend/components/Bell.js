@@ -34,8 +34,12 @@ export default function Bell({ navigation }) {
                         style: 'cancel',
                     },
                     {
-                        text: 'OK',
+                        text: 'Join Table',
                         onPress: () => navigation.navigate('JoinTable'),
+                    },
+                    {
+                        text: 'Scan QR',
+                        onPress: () => navigation.navigate('QRScanner'),
                     }
 
                 ],
@@ -70,7 +74,7 @@ export default function Bell({ navigation }) {
                     'Do you want to sign in?',
                     [
                       {text: 'Yes', onPress: () => navigation.navigate('SignIn')},
-                      {text: 'No', onPress: () => setShowButtons(false)}
+                      {text: 'No', onPress: () => setShowButtons(false), style: 'cancel'}
                     ],{cancelable: true});
                   })(); 
             }
@@ -104,7 +108,7 @@ export default function Bell({ navigation }) {
                     'Do you want to sign in?',
                     [
                       {text: 'Yes', onPress: () => navigation.navigate('SignIn')},
-                      {text: 'No', onPress: () => setShowButtons(false)}
+                      {text: 'No', onPress: () => setShowButtons(false), style: 'cancel'}
                     ],{cancelable: true});
                   })(); 
             }
