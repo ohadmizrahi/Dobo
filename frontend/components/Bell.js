@@ -61,7 +61,19 @@ export default function Bell({ navigation }) {
 
                 ],
             ),
-            actionFalse=() => navigation.navigate('QRScanner')
+            actionFalse=(userToken) => {
+                userToken ?
+                navigation.navigate('QRScanner') :
+                (() => {
+                    Alert.alert(
+                    'You are not signed in',
+                    'Do you want to sign in?',
+                    [
+                      {text: 'Yes', onPress: () => navigation.navigate('SignIn')},
+                      {text: 'No', onPress: () => setShowButtons(false)}
+                    ],{cancelable: true});
+                  })(); 
+            }
         );
     }
 
@@ -83,7 +95,19 @@ export default function Bell({ navigation }) {
 
                 ],
             ),
-            actionFalse=() => navigation.navigate('JoinTable')
+            actionFalse=(userToken) => {
+                userToken ?
+                navigation.navigate('JoinTable') :
+                (() => {
+                    Alert.alert(
+                    'You are not signed in',
+                    'Do you want to sign in?',
+                    [
+                      {text: 'Yes', onPress: () => navigation.navigate('SignIn')},
+                      {text: 'No', onPress: () => setShowButtons(false)}
+                    ],{cancelable: true});
+                  })(); 
+            }
         );
     }
 
