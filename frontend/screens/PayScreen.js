@@ -1,15 +1,17 @@
 import { useState, useEffect } from 'react';
 import { Text, KeyboardAvoidingView, Platform, StatusBar, ScrollView, View, StyleSheet, Alert } from 'react-native';
-import Invoice from '@Components/ItemPayment';
-import CustomButton from '@Components/CustomButton';
-import PaymentForm from '@Components/PaymentForm';
-import ExitSign from '@Components/ExitSign';
-import LineAcross from '@Components/LineAcross';
-import HeaderImage from '@Components/HeaderImage';
 import { getData, removeMulti } from '@Utils/storage/asyncStorage';
 import { sendGetRequest, sendPostRequest } from '@Utils/request/send';
 import { handleResponse } from '@Utils/response/handler';
-import LoadingIcon from '@Components/LoadingIcon';
+import {
+  Invoice,
+  CustomButton,
+  PaymentForm,
+  ExitSign,
+  LineAcross,
+  HeaderImage,
+  LoadingIcon
+} from '@Components';
 
 export default function PayScreen({ navigation }) {
   const [check, setCheck] = useState([]);

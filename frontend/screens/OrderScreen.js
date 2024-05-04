@@ -1,11 +1,13 @@
 import { ScrollView, StatusBar, StyleSheet, View, useWindowDimensions  } from 'react-native';
 import { useState, useEffect } from 'react';
-import Menu from '@Components/Menu';
 import {globalStyles} from '@Root/globalStyles';
-import LogoImage from '@Components/DoboLogo';
-import CustomButton from '@Components/CustomButton';
-import ExitSign from '@Components/ExitSign';
 import { getData } from '@Utils/storage/asyncStorage';
+import {
+  Menu,
+  LogoImage,
+  CustomButton,
+  ExitSign
+} from '@Components';
 
 
 export default function OrderScreen({ navigation }) {

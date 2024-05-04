@@ -3,8 +3,7 @@ import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
 // needs to ger values from the backend
 // need to be imported in home screen and business info screen with different values
 
-
-export const FilterPlaces = () => {
+const FilterPlaces = () => {
     const filters = ['Late Night', 'Happy Hour', 'Breakfast'];
 
     return (
@@ -41,3 +40,5 @@ const styles = StyleSheet.create({
         color: "black",
     },
 });
+
+export default FilterPlaces;

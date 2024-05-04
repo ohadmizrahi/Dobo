@@ -1,14 +1,16 @@
 import { useState, useEffect } from 'react';
 import { View, StatusBar } from 'react-native';
-import Businessinformation from '@Components/BussinesInfo';
-import ExitSign from '@Components/ExitSign';
-import HeaderImage from '@Components/HeaderImage';
-import { FilterPlaces } from '@Components/FilterPlaces';
 import { sendPostRequest } from '@Utils/request/send';
 import { handleResponse } from '@Utils/response/handler';
 import { storeData } from '@Utils/storage/asyncStorage';
-import LoadingIcon from '@Components/LoadingIcon';
-import FormHeadLine from '@Components/FormHeadLine';
+import { 
+  BussinesInfo,
+  ExitSign,
+  HeaderImage,
+  FilterPlaces,
+  LoadingIcon,
+  FormHeadLine
+ } from '@Components';
 
 export default function BusinessInfoScreen({ navigation, route }) {
   const [businessInfo, setBusinessInfo] = useState({});
@@ -50,7 +52,7 @@ export default function BusinessInfoScreen({ navigation, route }) {
       <HeaderImage data={businessInfo.imageurl} />
       <FormHeadLine data={businessInfo.name} />
       <FilterPlaces />
-      <Businessinformation navigation={navigation} data={businessInfo}/>
+      <BussinesInfo navigation={navigation} data={businessInfo}/>
     </View>
   );
 }

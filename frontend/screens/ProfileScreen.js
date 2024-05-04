@@ -1,16 +1,18 @@
+import { useState, useEffect } from 'react';
 import { ScrollView, KeyboardAvoidingView, Platform,StatusBar } from 'react-native';
-import CustomButton from '@Components/CustomButton';
 import { globalStyles } from '@Root/globalStyles';
-import ProfilePicture from '@Components/ProfilePic';
-import DoboLogo from '@Components/DoboLogo';
-import AccountInfoForm from '@Components/AccountInfoForm';
-import PasswordForm from '@Components/PasswordForm';
-import PaymentDetails from '@Components/PaymentDetails';
 import { sendGetRequest } from '@Utils/request/send';
 import { handleResponse } from '@Utils/response/handler';
 import { storeData, getData, removeMulti, getAllData } from '@Utils/storage/asyncStorage';
-import { useState, useEffect } from 'react';
-import LoadingIcon from '@Components/LoadingIcon';
+import {
+  CustomButton,
+  ProfilePicture,
+  AccountInfoForm,
+  PasswordForm,
+  PaymentDetails,
+  DoboLogo,
+  LoadingIcon,
+} from '@Components';
 
 export default function ProfileScreen({ navigation }) {
   const [profile, setProfile] = useState({ account: {}, paymentsMethod: {} })

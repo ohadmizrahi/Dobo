@@ -1,15 +1,17 @@
 import { useState, useEffect } from 'react';
 import { Alert, ScrollView, StatusBar } from 'react-native';
 import { globalStyles } from '@Root/globalStyles';
-import DoboLogo from '@Components/DoboLogo';
-import JoinTableForm from '@Components/JoinTableForm';
-import ConnectedFriends from '@Components/ConnectedFriends';
-import LineAcross from '@Components/LineAcross';
-import TableLink from '@Components/TableLink';
-import CustomButton from '@Components/CustomButton';
 import { sendPostRequest } from '@Utils/request/send';
 import { handleResponse } from '@Utils/response/handler';
 import { storeData, getData } from '@Utils/storage/asyncStorage';
+import { 
+  DoboLogo,
+  JoinTableForm,
+  ConnectedFriends,
+  LineAcross,
+  TableLink,
+  CustomButton
+} from '@Components';
 
 export default function JoinTableScreen({ navigation, route }) {
   const qrData = route.params ? JSON.parse(route.params.qrData) : null

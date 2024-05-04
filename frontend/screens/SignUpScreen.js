@@ -1,9 +1,11 @@
 import { ScrollView , KeyboardAvoidingView, Platform , StatusBar} from 'react-native';
-import SocialSignIn from '@Components/SocialSignIn';
-import LogoImage from '@Components/DoboLogo';
-import ProfilePicture from  '@Components/ProfilePic';
-import SignUpForm from '@Components/SignupForm';
 import { globalStyles } from '@Root/globalStyles';
+import {
+  SocialSignIn,
+  LogoImage,
+  ProfilePicture,
+  SignUpForm
+} from '@Components';
 
 export default function SignUpScreen() {
   return (

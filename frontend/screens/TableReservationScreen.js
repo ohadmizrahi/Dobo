@@ -1,10 +1,12 @@
 import { ScrollView, KeyboardAvoidingView, Platform, StatusBar } from 'react-native';
-import TableReservationForm from '@Components/Reservation';
-import BusinessHeader from '@Components/BussinesHeader';
-import ExitSign from '@Components/ExitSign';
-import HeaderImage from '@Components/HeaderImage';
-import CustomButton from '@Components/CustomButton';
-import FormHeadLine from '@Components/FormHeadLine';
+import {
+  TableReservationForm,
+  BusinessHeader,
+  ExitSign,
+  HeaderImage,
+  CustomButton,
+  FormHeadLine
+} from '@Components';
 
 export default function TableReservationScreen({ navigation, route}) {
   const { businessId = '', imageurl = '' ,name=''} = route.params || {};

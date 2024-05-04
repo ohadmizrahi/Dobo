@@ -1,11 +1,13 @@
 import {ScrollView , KeyboardAvoidingView, Platform, StatusBar} from 'react-native';
-import SocialSignIn from '@Components/SocialSignIn';
-import LogoImage from '@Components/DoboLogo';
-import ProfilePicture from  '@Components/ProfilePic';
 import { globalStyles } from '@Root/globalStyles';
-import DontHaveAccount from '@Components/NewAccount';
-import SigninForm from '@Components/SigninForm';
-import LineAcross from '@Components/LineAcross';
+import {
+  SocialSignIn,
+  LogoImage,
+  ProfilePicture,
+  DontHaveAccount,
+  SigninForm,
+  LineAcross
+} from '@Components';
 
 export default function SignInScreen({ navigation }) {
   return (

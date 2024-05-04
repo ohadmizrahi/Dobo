@@ -1,14 +1,9 @@
 import { ScrollView, View, StatusBar } from 'react-native';
 import { useState, useEffect } from 'react';
-import { Places } from '@Components/Places';
 import { globalStyles } from '@Root/globalStyles';
-import SearchBar from '@Components/SearchBar';
-import Bell from '@Components/Bell';
-import { FilterPlaces } from '@Components/FilterPlaces';
 import { sendPostRequest } from '@Utils/request/send';
 import { handleResponse } from '@Utils/response/handler';
-import LoadingIcon from '@Components/LoadingIcon';
-// TBD : how to divide the places into different sections
+import { Places, SearchBar, FilterPlaces, Bell, LoadingIcon } from '@Components';
 
 export default function HomeScreen({ navigation }) {
   const [places, setPlaces] = useState([]);

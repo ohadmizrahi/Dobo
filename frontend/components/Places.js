@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity } from 'react
 import { useNavigation } from '@react-navigation/native';
 import { BASE_URL, BE_PORT } from '@env';
 
-export const Places = ({ title, data }) => {
+const Places = ({ title, data }) => {
     const navigation = useNavigation();
     const [selectedBusinessId, setSelectedBusinessId] = useState(null);
     const [places, setPlaces] = useState([]);
@@ -97,3 +97,5 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
 });
+
+export default Places;

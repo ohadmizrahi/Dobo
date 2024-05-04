@@ -2,8 +2,7 @@ import { useState, useEffect } from 'react';
 import { Text, SafeAreaView, StyleSheet, Button,StatusBar, View} from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { globalStyles } from '@Root/globalStyles';
-import DoboLogo from '@Components/DoboLogo';
-import CustomButton from '@Components/CustomButton';
+import { DoboLogo, CustomButton } from '@Components';
 
 
 export default function App({navigation}) {

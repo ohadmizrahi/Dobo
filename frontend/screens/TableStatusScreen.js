@@ -1,13 +1,15 @@
 import { ScrollView, StatusBar } from 'react-native';
 import { useState, useEffect } from 'react';
-import CustomButton from '@Components/CustomButton';
-import LatestOrder from '@Components/LastOrders';
-import LoadingIcon from '@Components/LoadingIcon';
-import LogoImage from '@Components/DoboLogo';
 import { globalStyles } from '@Root/globalStyles';
-import FriendsInTable from '@Components/FriendInTable';
 import { sendGetRequest } from '@Utils/request/send';
 import { handleResponse } from '@Utils/response/handler';
+import {
+  CustomButton,
+  LogoImage,
+  LatestOrder,
+  FriendsInTable,
+  LoadingIcon
+} from '@Components';
 
 export default function TableStatusScreen({ navigation, route }) {
   const [table, setTable] = useState({ tableName: '', latestOrders: [], friends: [] })
