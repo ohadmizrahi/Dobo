@@ -75,7 +75,7 @@ export default function ProfileScreen({ navigation }) {
   }
   return (
     <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} keyboardVerticalOffset={Platform.OS === "ios" ? 100 : 0} style={globalStyles.screenColor}>
-    <ScrollView>
+    <ScrollView contentContainerStyle={{ paddingBottom: 60 }}>
       <StatusBar barStyle="light-content" />
       <DoboLogo />
       <ProfilePicture name={profile.account.fullname} imageurl={profile.account.imageurl} handleUpdateProfile={setProfile}/>
