@@ -1,8 +1,12 @@
 import { View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {Picker} from '@react-native-picker/picker';
 import { getData } from '@Utils/storage/asyncStorage'; 
+import { useState } from 'react';
 
 export default function BussinesInfo({ navigation, data }) {
+  const [selectedDay, setSelectedDay] = useState({});
+  const [selectedHours, setSelectedHours] = useState({});
 const handleMenu = () => {
   navigation.navigate('Menu', { menu: data.menu, imageurl: data.imageurl, name: data.name});
 }
@@ -22,9 +26,14 @@ const handleFindPlace = async () => {
         cancelable: true,
       },
     ]);
-  })()
+  })
 
 }
+const handleDayChange = (day) => {
+  setSelectedDay(day);
+  const selectedDayData = data.activityTime.find(item => item.day === day);
+  setSelectedHours({ open: selectedDayData.open, close: selectedDayData.close });
+};
 
   return (
     <View style={styles.container}>
@@ -35,8 +44,16 @@ const handleFindPlace = async () => {
         </View>
         <View style={styles.align}>
           <Icon name="clock-o" size={20} />
-          <Text style={styles.info}>{data.activityTime[0]?.open}-{data.activityTime[0]?.close}</Text>
-          {/* Add Dropdown for days of the week */}
+          <View style={{ flexDirection: 'row', alignItems: 'center'}}>
+            <Picker
+              selectedValue={selectedDay}
+              style={styles.pickercontainer}
+              onValueChange={(itemValue) => handleDayChange(itemValue)}>
+              {data.activityTime.map((item) => (
+                <Picker.Item key={item.day} label={`Day ${item.day}: ${item.open} - ${item.close}`} value={item.day} style={styles.info}/>
+              ))}
+            </Picker>
+          </View>
         </View>
         <View style={styles.align}>
           <Icon name="info-circle" size={20} />
@@ -115,5 +132,9 @@ const styles = StyleSheet.create({
     color: 'red',
     fontSize: 18,
     textAlign: 'center',
+  },
+  pickercontainer: {
+    height: 50, 
+    width: '95%'
   },
 });
