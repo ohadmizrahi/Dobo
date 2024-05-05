@@ -150,7 +150,7 @@ export default function PayScreen({ navigation }) {
             <CustomButton
               title={'Your Account'}
               handlePress={handlePayment}
-              buttonStyle={payScreenStyles.button}
+              buttonStyle={styles.button}
             >
               ${balance}
             </CustomButton>
@@ -172,9 +172,6 @@ const styles = StyleSheet.create({
     flex: 1,
     maxHeight: 380,
   },
-});
-
-const payScreenStyles = StyleSheet.create({
   button: {
     backgroundColor: '#97DECC',
     width: 300,
@@ -188,3 +185,4 @@ const payScreenStyles = StyleSheet.create({
     textColor: 'black',
   },
 });
+
