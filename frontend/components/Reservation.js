@@ -46,7 +46,10 @@ const TableReservationForm = (data) => {
         async (data, error) => {
           if (response.success) {
             const reservationDetails = `Date: ${reservationInfo.date}\nTime: ${reservationInfo.time}\nNumber of people: ${reservationInfo.numOfPeople}`;
-            Alert.alert('Success', `Your reservation was successful!\n\n${reservationDetails}`);
+            await new Promise(resolve => {
+              setLoading(false);
+              Alert.alert('Success', `Your reservation was successful!\n\n${reservationDetails}`, [{ text: 'OK', onPress: resolve }]);
+            });
           }
           navigation.navigate('Home');
         }
