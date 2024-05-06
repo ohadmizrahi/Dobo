@@ -20,10 +20,10 @@ const SignInForm = () => {
     setIsLoading(true);
 
     const userInfo = {
-      username: values.email,
+      username: values.email.toLowerCase(),
       password: values.password,
     };
-
+    console.log('user',userInfo);
     try {
       const response = await sendPostRequest('api/auth/signin', userInfo);
 

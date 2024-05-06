@@ -33,6 +33,17 @@ const ProfilePicture = ({ name, imageurl, handleUpdateProfile }) => {
     }
   };
 
+  useEffect(() => {
+    const fetchImage = async () => {
+      const storedImage = await getData('profilePicture');
+      if (storedImage) {
+        setImage(storedImage);
+      }
+    };
+  
+    fetchImage();
+  }, []);
+
   return (
     <View style={globalStyles.profilePictureContainer}>
       <View style={globalStyles.iconContainer}>

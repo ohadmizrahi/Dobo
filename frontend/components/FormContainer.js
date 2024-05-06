@@ -20,7 +20,8 @@ const styles = StyleSheet.create({
     container: {
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: 25,
+        marginTop: 20,
+        marginBottom: 25,
       },
       detailsContainer: {
         backgroundColor: '#FFFFFF',
@@ -41,6 +42,7 @@ const styles = StyleSheet.create({
         marginTop: -40,
         alignItems: 'center',
         justifyContent: 'center',
+        marginBottom: 10,
       },
       formHeadLineText: {
         fontSize: 20,

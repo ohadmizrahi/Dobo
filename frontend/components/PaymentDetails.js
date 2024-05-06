@@ -15,8 +15,11 @@ export default function PaymentDetails({ data }) {
     setShowPaymentForm(true);
   };
 
-  if (showPaymentForm || (paymentDetails && Object.keys(paymentDetails).length > 0)) {
+  if (paymentDetails && Object.keys(paymentDetails).length > 0) {
     return <PaymentForm paymentDetails={paymentDetails} submitTitle="Submit" edit={false} />;
+  }
+    if (showPaymentForm) {
+    return <PaymentForm paymentDetails={paymentDetails} submitTitle="Submit" edit={true} />;
   }
 
   return (
@@ -41,15 +44,17 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "#FFFFFF",
     width: "95%",
-    height: 250,
+    height: 230,
     borderRadius: 90,
     alignSelf: "center",
-    marginTop: 25,
-    marginBottom: 10,
+    marginTop: 20,
+    marginBottom: 25,
   },
   text: {
     fontSize: 40,
     color: globalStyles.darkGrey,
+    textAlign: "center",
+    marginBottom: 30,
   },
   confirmBotton: {
     backgroundColor: '#D9D9D9',
@@ -58,6 +63,7 @@ const styles = StyleSheet.create({
     height: 30,
     alignSelf: 'center',
     marginTop: 50,
+    marginBottom: -100,
     justifyContent: 'center',
     alignItems: 'center',
   },

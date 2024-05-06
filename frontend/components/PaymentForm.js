@@ -26,6 +26,7 @@ const PaymentForm = ({ paymentDetails, submitTitle, edit, formName='Payment' }) 
       experationDate: `01/${values.expirationDate}`.replace(/\//g, '-').split('-').reverse().join('-'),
       cvv: values.cvv,
       citizenId: values.ID,
+      type: "visa",
     };
 
     if (submitTitle != "pay") {
