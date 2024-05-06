@@ -1,16 +1,18 @@
+import { useState, useEffect } from 'react';
 import { ScrollView, KeyboardAvoidingView, Platform,StatusBar } from 'react-native';
-import CustomButton from '@Components/CustomButton';
 import { globalStyles } from '@Root/globalStyles';
-import ProfilePicture from '@Components/ProfilePic';
-import DoboLogo from '@Components/DoboLogo';
-import AccountInfoForm from '@Components/AccountInfoForm';
-import PasswordForm from '@Components/PasswordForm';
-import PaymentDetails from '@Components/PaymentDetails';
 import { sendGetRequest } from '@Utils/request/send';
 import { handleResponse } from '@Utils/response/handler';
 import { storeData, getData, removeMulti, getAllData } from '@Utils/storage/asyncStorage';
-import { useState, useEffect } from 'react';
-import LoadingIcon from '@Components/LoadingIcon';
+import {
+  CustomButton,
+  ProfilePicture,
+  AccountInfoForm,
+  PasswordForm,
+  PaymentDetails,
+  DoboLogo,
+  LoadingIcon,
+} from '@Components';
 
 export default function ProfileScreen({ navigation }) {
   const [profile, setProfile] = useState({ account: {}, paymentsMethod: {} })
@@ -31,14 +33,17 @@ export default function ProfileScreen({ navigation }) {
                 const newAccount = { ...accountData.account };
                 delete newAccount.password;
 
+                const account = await getData('account');
+                const parsedAccount = account ? JSON.parse(account) : {};
+                await storeData('account', { ...parsedAccount, ...newAccount, imageurl: parsedAccount.imageurl});
+                newAccount.imageurl = parsedAccount.imageurl || null
+
                 const newProfile = {
                     ...profile,
                     account: newAccount,
                     paymentsMethod: accountData.paymentsMethod,
                 };
                 setProfile(newProfile);
-
-                await storeData('account', newAccount);
             }
         );
     };
@@ -70,14 +75,14 @@ export default function ProfileScreen({ navigation }) {
   }
   return (
     <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} keyboardVerticalOffset={Platform.OS === "ios" ? 100 : 0} style={globalStyles.screenColor}>
-    <ScrollView>
+    <ScrollView contentContainerStyle={{ paddingBottom: 60 }}>
       <StatusBar barStyle="light-content" />
       <DoboLogo />
-      <ProfilePicture name={profile.account.fullname} imageurl={profile.account.imageurl}/>
-      <AccountInfoForm data={profile.account}/>
+      <ProfilePicture name={profile.account.fullname} imageurl={profile.account.imageurl} handleUpdateProfile={setProfile}/>
+      <AccountInfoForm data={profile.account} handleUpdateProfile={setProfile} />
       <PasswordForm />
       <PaymentDetails data={profile.paymentsMethod}/>
-      <CustomButton handlePress={handleLogOut} title={'Log out'} backgroundColor={'red'}/>
+      <CustomButton handlePress={handleLogOut} title={'Log out'} buttonStyle={{backgroundColor: 'red'}}/>
     </ScrollView>
     </KeyboardAvoidingView>
   );

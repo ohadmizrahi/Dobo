@@ -1,4 +1,5 @@
 import subprocess
+import datetime
 import platform
 import io
 import tempfile
@@ -57,6 +58,7 @@ class PrinterProcessor(Proccessor):
 
             styles['Heading1'].alignment = 1
             header = Paragraph(f'Table Number: {message["table"]}', styles['Heading1'])
+            timestamp = Paragraph(f'Time: {datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")}', styles['Heading1'])
             spacer = Spacer(1, 25)
             table = Table(data, hAlign='CENTER')
             frame = Frame(50, 50, 500, 700, id='normal')
@@ -73,7 +75,7 @@ class PrinterProcessor(Proccessor):
             buffer = io.BytesIO()
             doc = SimpleDocTemplate(buffer, pagesize=letter)
             doc.addPageTemplates([template])
-            doc.build([header, spacer, table])
+            doc.build([header, timestamp, spacer, table])
             
             print('Done building message')
             return buffer.getvalue()

@@ -6,13 +6,11 @@ import Form from '@Components/Form';
 import { getData } from '@Utils/storage/asyncStorage';
 import { sendPostRequest } from '@Utils/request/send.js';
 import { handleResponse } from '@Utils/response/handler';
+import { formatDate } from '@Utils/dates';
 
-const PaymentForm = ({ paymentDetails, submitTitle, edit }) => {
+const PaymentForm = ({ paymentDetails, submitTitle, edit, formName='Payment' }) => {
   const [editable, setEditable] = useState(edit);
-  const [isLoading, setIsLoading] = useState(false);
   const navigation = useNavigation();
-
-
 
   const fields = [
     { name: 'cardNumber', label: 'Card Number', iconName: 'cc-visa', placeholder: 'Enter card number', keyboardType: 'numeric', secureTextEntry: true },
@@ -22,19 +20,15 @@ const PaymentForm = ({ paymentDetails, submitTitle, edit }) => {
   ];
 
   const onSubmit = async (values) => {
-    setIsLoading(true);
 
     const paymentInfo = {
       cardNumber: values.cardNumber,
-      experationDate: values.expirationDate,
+      experationDate: `01/${values.expirationDate}`.replace(/\//g, '-').split('-').reverse().join('-'),
       cvv: values.cvv,
       citizenId: values.ID,
       type: "visa",
     };
 
-    const [day, month, year] = values.expirationDate.split("/"); // Format needs change to month,year
-    const formattedDate = `${year}-${month}-${day}`; // Format needs change to YY-MM
-    paymentInfo["experationdate"] = formattedDate;
     if (submitTitle != "pay") {
     try {
       const userToken = await getData('userToken');
@@ -52,9 +46,8 @@ const PaymentForm = ({ paymentDetails, submitTitle, edit }) => {
     } catch (error) {
       const errorMessage = error.response?.data?.error?.message || 'There was an error. Please try again.';
       Alert.alert('Error', errorMessage);
-    } finally {
-      setIsLoading(false);
-    }}
+    }
+  }
     else {
       Alert.alert('Succsess', "payment is done successfully");
       navigation.navigate('OrderCart');
@@ -67,7 +60,7 @@ const PaymentForm = ({ paymentDetails, submitTitle, edit }) => {
       initialValues={
         paymentDetails ? {
           cardNumber: paymentDetails.cardnumber,
-          expirationDate: paymentDetails.experationdate,
+          expirationDate: formatDate(paymentDetails.experationdate, withoutDay=true),
           cvv: paymentDetails.cvv,
           ID: paymentDetails.citizenid,
 
@@ -77,7 +70,7 @@ const PaymentForm = ({ paymentDetails, submitTitle, edit }) => {
       onSubmit={onSubmit}
       fields={fields}
       submitTitle={submitTitle}
-      formName="Payment"
+      formName={formName}
       editable={editable}
     />
   );

@@ -3,8 +3,9 @@ import { View, Text, StyleSheet, Image } from 'react-native';
 import { storeData, getData } from '@Utils/storage/asyncStorage';
 import FormContainer from '@Components/FormContainer';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { ScrollView } from 'react-native';
 
-const FriendsInTable = ({ friends, totalFriends }) => {
+const FriendsInTable = ({ friends }) => {
     const [myself, setMyself] = useState(null);
 
     useEffect(() => {
@@ -32,26 +33,27 @@ const FriendsInTable = ({ friends, totalFriends }) => {
 
     return (
         <FormContainer formName='Friends'>
-
                 {friends.map(friend => (
                     <View key={friend.clientid} style={styles.friendItem}>
-                        { renderFriendImage(friend) }
                         <View style={[styles.friendDetails, myself === friend.clientid && styles.myselfDetails]}>
+                        { renderFriendImage(friend) }
                             <Text style={styles.friendName}>{friend.clientname}</Text>
                             <Text style={styles.friendAmount}> {friend.paid}$</Text>
                             <Text style={styles.friendAmount}> {friend.total}$</Text>
                         </View>
                     </View>
                 ))}
-                <View style={styles.columnNames}>
-                    <Text style={styles.columnText}>Payed:</Text>
-                    <Text style={styles.columnText}>Out of:</Text>
-                    <Text style={styles.columnText}>Left:</Text>
-                </View>
-                <View style={styles.columnNames}>
-                    <Text style={styles.columnText}>{totalPaid}$</Text>
-                    <Text style={styles.columnText}>{totalToPay}$</Text>
-                    <Text style={styles.columnText}>{totalToPay - totalPaid}$</Text>
+                <View style={styles.grid}>
+                    <View style={styles.gridRow}>
+                        <Text style={styles.gridText}>Payed:</Text>
+                        <Text style={styles.gridText}>Out of:</Text>
+                        <Text style={styles.gridText}>Left:</Text>
+                    </View>
+                    <View style={styles.gridRow}>
+                        <Text style={styles.gridText}>{totalPaid.toFixed(2)}$</Text>
+                        <Text style={styles.gridText}>{totalToPay.toFixed(2)}$</Text>
+                        <Text style={styles.gridText}>{(totalToPay - totalPaid).toFixed(2)}$</Text>
+                    </View>
                 </View>
         </FormContainer>
     );
@@ -73,19 +75,22 @@ const styles = StyleSheet.create({
         marginRight: 10,
     },
     myselfDetails: {
-        borderRadius: 40,
         borderColor: '#97DECC',
-        borderWidth: 2,
-        justifyContent: 'center',
-        alignContent: 'center',
-        alignItems: 'center',
-        padding: 5,
+        padding: 8,
 
     },
     friendDetails: {
         flex: 1,
+        height: 80,
         flexDirection: 'row',
         alignItems: 'center',
+        borderRadius: 40,
+        borderColor: '#fff',
+        borderWidth: 2,
+        justifyContent: 'center',
+        alignContent: 'center',
+        alignItems: 'center',
+        padding: 8,
     },
     friendName: {
         flex: 1,
@@ -101,20 +106,6 @@ const styles = StyleSheet.create({
         color: '#333',
         textAlign: 'right',
     },
-    columnNames: {
-        flexDirection:'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-
-    },
-    columnText: {
-        fontSize: 16,
-        fontWeight: 'bold',
-        color: '#333',
-        flex: 1,
-        textAlign: 'center',
-        margin: 5,
-    },
     iconContainer: {
         borderRadius: 40,
         width: 40,
@@ -123,6 +114,23 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         marginRight: 20,
+    },
+    grid: {
+        flexDirection: 'column',
+    },
+    gridRow: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+    },
+    gridText: {
+        flex: 1,
+        textAlign: 'center',
+        fontSize: 16,
+        fontWeight: 'bold',
+        color: '#333',
+        flex: 1,
+        textAlign: 'center',
+        margin: 5,
     },
 });
 

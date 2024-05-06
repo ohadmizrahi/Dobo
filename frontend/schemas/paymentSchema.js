@@ -9,8 +9,8 @@ const paymentValidationSchema = yup.object().shape({
     .required('Card number is required'),
   expirationDate: yup
     .string()
-    .min(10, 'Use DD/MM/YYYY format')
-    .max(10, 'Use DD/MM/YYYY format')
+    .min(7, 'Use MM/YYYY format')
+    .max(7, 'Use MM/YYYY format')
     .required('Expiration date is required'),
     // expirationDate: yup   CORECT ONE! DELETE THE ONE ABOVE
     // .string()

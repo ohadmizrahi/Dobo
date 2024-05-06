@@ -1,13 +1,15 @@
 import { useState } from 'react';
 import { StatusBar, View, StyleSheet, Text, Alert } from 'react-native';
-import Cart from '@Components/Cart';
-import ExitSign from '@Components/ExitSign';
-import HeaderImage from '@Components/HeaderImage';
-import CustomButton from '@Components/CustomButton';
 import { getData, removeData } from '@Utils/storage/asyncStorage';
 import { sendPostRequest } from '@Utils/request/send';
 import { handleResponse } from '@Utils/response/handler';
-import LoadingIcon from '@Components/LoadingIcon';
+import {
+  Cart,
+  ExitSign,
+  HeaderImage,
+  CustomButton,
+  LoadingIcon
+} from '@Components';
 
 
 export default function OrderCartScreen({ navigation }) {
@@ -60,8 +62,7 @@ export default function OrderCartScreen({ navigation }) {
       <View style={{marginTop: 10}}>
         <CustomButton
           title={`Send Order $${totalPrice}`}
-          backgroundColor='#97DECC'
-          textColor='black'
+          buttonStyle={{backgroundColor: '#97DECC', textColor: 'black'}}
           handlePress={sendOrder}
         />
       </View>

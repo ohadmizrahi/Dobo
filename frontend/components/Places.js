@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity } from 'react
 import { useNavigation } from '@react-navigation/native';
 import { BASE_URL, BE_PORT } from '@env';
 
-export const Places = ({ title, data }) => {
+const Places = ({ title, data }) => {
     const navigation = useNavigation();
     const [selectedBusinessId, setSelectedBusinessId] = useState(null);
     const [places, setPlaces] = useState([]);
@@ -13,7 +13,6 @@ export const Places = ({ title, data }) => {
             return;
         }
         const mappedPlaces = data.map((item) => {
-            console.log(item.imageurl);
             
             return {
                 businessId: item.businessid,
@@ -21,6 +20,7 @@ export const Places = ({ title, data }) => {
                 description: item.description,
                 image: `${BASE_URL}:${BE_PORT}/assets/${item.imageurl}`
                 }
+
             });
         setPlaces(mappedPlaces);
     }, [data]);
@@ -38,7 +38,7 @@ export const Places = ({ title, data }) => {
                 renderItem={({ item }) => (
                     <TouchableOpacity onPress={() => handleBusinessPress(item.businessId)}>
                         <View style={styles.place}>
-                            <Image style={styles.image} source={{ uri: item.image }} />
+                            <Image style={styles.image} source={{ uri: item.image }} resizeMode='cover' />
                             <Text style={styles.title}>{item.name}</Text>
                             <Text style={styles.type}>{item.description}</Text>
                         </View>
@@ -97,3 +97,5 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
 });
+
+export default Places;

@@ -1,25 +1,35 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import { globalStyles } from '@Root/globalStyles';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import * as ImagePicker from 'expo-image-picker';
-import {storeData, getData} from '@Utils/storage/asyncStorage';
+import { getData, storeData } from '@Utils/storage/asyncStorage';
+import { launchImageLibraryAsync, MediaTypeOptions } from 'expo-image-picker';
 
-const ProfilePicture = ({ name, imageurl }) => {
+const ProfilePicture = ({ name, imageurl, handleUpdateProfile }) => {
   const [image, setImage] = useState(imageurl);
 
+  useEffect(() => {
+    setImage(imageurl)
+  }, [imageurl]);
+
   const selectImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
+    let result = await launchImageLibraryAsync({
+      mediaTypes: MediaTypeOptions.All,
       allowsEditing: true,
       aspect: [1, 1],
-      quality: 1,
+      quality: 1
     });
-    await storeData('profilePicture', result.uri);
-    console.log(result);
 
-    if (!result.cancelled) {
-      setImage(result.uri);
+    if (!result.canceled) {
+      const imageUrl = result.assets[0].uri;
+      
+      const account = await getData('account');
+      await storeData('account', {...JSON.parse(account), imageurl: imageUrl});
+      const account2 = await getData('account');
+      console.log('account2', account2);
+
+      handleUpdateProfile((prevProfile) => ({ ...prevProfile, account: {...prevProfile.account, imageurl: imageUrl } }));
+      
     }
   };
 

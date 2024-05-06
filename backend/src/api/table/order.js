@@ -1,5 +1,6 @@
 const { create: createOrder, deleteOrder } = require("@src/models/order.js")
 const { splitOrder } = require("@src/models/clientOrders.js")
+const { getTableClients } = require("@src/models/client.js")
 const { find: findVirtualTable } = require("@src/models/virtualTables.js")
 
 async function handleNewOrders(virtualTable, orders) {
@@ -10,7 +11,12 @@ async function handleNewOrders(virtualTable, orders) {
             if (!creation.success) {
                 return { success: false, step: 'create', message: creation.message }
             }
-            const splitted = await splitOrder(creation.order, clients, price)
+            
+            let activeClients = await getTableClients(virtualTable, active=true)
+            activeClients = activeClients.map(client => client.clientid)
+            const clientsForSpliting = clients.filter(clientId => activeClients.includes(clientId))
+            
+            const splitted = await splitOrder(creation.order, clientsForSpliting, price)
             if (!splitted.success) {
                 await deleteOrder(creation.order)
                 return { success: false, step: 'split', message: splitted.message }

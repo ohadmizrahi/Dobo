@@ -1,8 +1,10 @@
 import { View, StatusBar, StyleSheet } from 'react-native';
-import Menu from '@Components/Menu';
-import ExitSign from '@Components/ExitSign';
-import HeaderImage from '@Components/HeaderImage';
-import FormHeadLine from '@Components/FormHeadLine';
+import {
+  Menu,
+  ExitSign,
+  HeaderImage,
+  FormHeadLine
+} from '@Components';
 
 export default function MenuScreen({ route }) {
   const { menu = [], imageurl = '', name='' } = route.params || {};

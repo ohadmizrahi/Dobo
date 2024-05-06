@@ -75,17 +75,17 @@ async function recalculateCheck(clientId, orders) {
 
 async function payCheck(clientId, ordersToPay) {
     try {
-        if (ordersToPay.length === 0) {
-            return { success: false, message: "No orders to pay" };
-        }
         const failedOrders = [];
-        for (const order of ordersToPay) {
-            const { success, message } = await updateClientOrder(clientId, order.orderId, true);
-            if (!success) {
-                console.error({ error: message });
-                failedOrders.push(order);
+        if (ordersToPay.length > 0) {
+            for (const order of ordersToPay) {
+                const { success, message } = await updateClientOrder(clientId, order.orderId, true);
+                if (!success) {
+                    console.error({ error: message });
+                    failedOrders.push(order);
+                }
             }
         }
+
         const orders = await getClientOrders(clientId);
         if (failedOrders.length === 0) {
             if (orders.length !== 0) {

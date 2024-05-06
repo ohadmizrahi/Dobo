@@ -47,14 +47,14 @@ function Section({ title, items, isOrderScreen, navigation }) {
               <View style={styles.itemDetailsContainer} key={item.itemid}>
                 <Image source={{ uri: item.image || 'https://img.taste.com.au/UdoSmp6V/taste/2017/03/nutella-icecream-124606-1.jpg' }} style={styles.imageContainer} />
                 <Text style={[styles.itemName, styles.itemTextOrder]}>{item.name}</Text>
-                <Text style={[styles.itemPrice,styles.itemTextOrder]}>Price:{item.price}$</Text>
+                <Text style={[styles.itemPrice,styles.itemTextOrder]}>{item.price}$</Text>
               </View>
             </TouchableOpacity>
           ) : (
             <View style={[styles.itemDetailsContainer, styles.menuItem]}>
               <Image source={{ uri: item.image || 'https://img.taste.com.au/UdoSmp6V/taste/2017/03/nutella-icecream-124606-1.jpg' }} style={styles.imageContainer} />
               <Text style={[styles.itemName,styles.itemTextMenu]}>{item.name}</Text>
-              <Text style={[styles.itemPrice,styles.itemTextMenu]}>Price:{item.price}$</Text>
+              <Text style={[styles.itemPrice,styles.itemTextMenu]}>{item.price}$</Text>
             </View>
           )}
         </View>

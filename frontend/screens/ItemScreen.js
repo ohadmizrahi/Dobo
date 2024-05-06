@@ -1,7 +1,5 @@
 import { View,ScrollView, StatusBar, StyleSheet, useWindowDimensions } from 'react-native';
-import ItemChanges from '@Components/ItemChanges';
-import ItemAddToCart from '@Components/ItemAddToCart';
-import ExitSign from '@Components/ExitSign';
+import { ItemChanges, ItemAddToCart, ExitSign } from '@Components'
 
 export default function ItemScreen({route, navigation}) {
   const windowWidth = useWindowDimensions().width;

@@ -1,29 +1,41 @@
-import { TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { TouchableOpacity, Text, StyleSheet, View } from 'react-native';
 
-const CustomButton = ({ handlePress, title, backgroundColor, textColor }) => {
-  const buttonStyle = {
-    ...styles.button,
-    backgroundColor: backgroundColor || styles.button.backgroundColor,
-  };
+const CustomButton = ({ handlePress, title, children, buttonStyle }) => {
 
   return (
-    <TouchableOpacity style={buttonStyle} onPress={handlePress}>
-      <Text style={[styles.text, textColor && {color: textColor} ]}>{title}</Text>
+    <TouchableOpacity style={[styles.defaultButtonStyle, buttonStyle]} onPress={handlePress}>
+      <View style={{flexDirection: 'row'}}>
+      <Text 
+        style={[styles.text, buttonStyle && buttonStyle.textColor && {color: buttonStyle.textColor}]}
+      >
+        {title}
+      </Text>
+      {children && 
+      <Text 
+        style={[styles.text, buttonStyle && buttonStyle.textColor && {color: buttonStyle.textColor}]}>
+        {children}
+      </Text>}
+      </View>
     </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
-  button: {
+  text: {
+    color: '#fff',
+    fontSize: 20,
+    padding: 5,
+  },
+  defaultButtonStyle: {
     backgroundColor: '#1D2328',
-    marginTop: 15,
-    marginBottom: 40,
-    width: '80%',
+    marginTop: 5,
+    width: '70%',
     height: 40,
     borderRadius: 10,
     alignItems: 'center',
     alignSelf: 'center',
     justifyContent: 'center',
+    alignContent: 'center',
     shadowColor: '#000',
     borderWidth: 1,
     borderColor: 'white',
@@ -34,10 +46,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 4,
     elevation: 5,
-  },
-  text: {
-    color: '#fff',
-    fontSize: 20,
   },
 });
 

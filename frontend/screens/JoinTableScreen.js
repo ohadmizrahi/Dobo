@@ -1,15 +1,17 @@
 import { useState, useEffect } from 'react';
 import { Alert, ScrollView, StatusBar } from 'react-native';
 import { globalStyles } from '@Root/globalStyles';
-import DoboLogo from '@Components/DoboLogo';
-import JoinTableForm from '@Components/JoinTableForm';
-import ConnectedFriends from '@Components/ConnectedFriends';
-import LineAcross from '@Components/LineAcross';
-import TableLink from '@Components/TableLink';
-import CustomButton from '@Components/CustomButton';
 import { sendPostRequest } from '@Utils/request/send';
 import { handleResponse } from '@Utils/response/handler';
-import { storeData, getData, removeMulti } from '@Utils/storage/asyncStorage';
+import { storeData, getData } from '@Utils/storage/asyncStorage';
+import { 
+  DoboLogo,
+  JoinTableForm,
+  ConnectedFriends,
+  LineAcross,
+  TableLink,
+  CustomButton
+} from '@Components';
 
 export default function JoinTableScreen({ navigation, route }) {
   const qrData = route.params ? JSON.parse(route.params.qrData) : null
@@ -21,7 +23,6 @@ export default function JoinTableScreen({ navigation, route }) {
   });
 
   async function handleGoToTable() {
-    console.log('going to table');
     const userToken = await getData('userToken');
     const clientToken = await getData('clientToken');
     if (!clientToken || !userToken) {
@@ -39,19 +40,6 @@ export default function JoinTableScreen({ navigation, route }) {
     }
   }
 
-  async function handleCleanup() {
-    console.log('cleaning client data');
-    const keysToRemove = [
-        'clientToken',
-        'clientRefreshToken',
-        'client',
-        'virtualTable',
-        'FriendsData',
-        'cart'
-    ];
-    await removeMulti(keysToRemove);
-    navigation.navigate('Home');
-  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -103,7 +91,7 @@ export default function JoinTableScreen({ navigation, route }) {
   }, [tableToJoin]);
 
   return (
-    <ScrollView style={globalStyles.screenColor}>
+    <ScrollView style={globalStyles.screenColor}  contentContainerStyle={{ paddingBottom: 50 }}>
       <StatusBar barStyle="light-content" />
       <DoboLogo />
       <JoinTableForm 
@@ -119,8 +107,7 @@ cd      handleSubmit={
       <ConnectedFriends navigation={navigation} />
       <LineAcross text='OR' />
       <TableLink />
-      <CustomButton handlePress={handleGoToTable} title='Go to Table' />
-      <CustomButton handlePress={handleCleanup} title='TEMP CLEANUP' />
+      <CustomButton handlePress={handleGoToTable} title='Go to Table' buttonStyle={{marginTop: 20}}/>
     </ScrollView>
   );
 }

@@ -56,11 +56,11 @@ async function updateOrderClients(orderId, clientId, tableClients, itemPrice) {
         } else {
             let clientsForSpliting = [...tableClients]
 
-            if (clientsForSpliting.length === 1 && clientsForSpliting[0].clientid === clientId) {
+            if (clientsForSpliting.length === 1 && clientsForSpliting[0] === clientId) {
                 return { success: false, message: "Client is the last client in table" };
             }
             if (orderClientsIds.length > 1) {
-                clientsForSpliting = clientsForSpliting.filter(client => client.clientid !== clientId);
+                clientsForSpliting = clientsForSpliting.filter(client => client !== clientId);
                 const isDeleted = await deleteClientOrder(clientId, orderId);
                 if (!isDeleted.success) {
                     return { success: false, message: isDeleted.message };

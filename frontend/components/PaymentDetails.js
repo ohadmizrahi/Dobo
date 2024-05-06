@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { globalStyles } from "@Root/globalStyles";
 import PaymentForm from "./PaymentForm";
 
-export default function PaymentDetails({ data, navigation }) {
+export default function PaymentDetails({ data }) {
   const [showPaymentForm, setShowPaymentForm] = useState(false);
   const [paymentDetails, setPaymentDetails] = useState(data);
 

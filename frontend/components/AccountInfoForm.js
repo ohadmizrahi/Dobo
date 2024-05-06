@@ -1,12 +1,22 @@
 import { useState, useEffect } from 'react';
-import Form from '@Components/Form';
-import { getData } from '@Utils/storage/asyncStorage';
-import { sendPostRequest } from '@Utils/request/send.js';
-import { handleResponse } from '@Utils/response/handler';
 import { Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import Form from '@Components/Form';
+import { getData, storeData } from '@Utils/storage/asyncStorage';
+import { sendPostRequest } from '@Utils/request/send.js';
+import { handleResponse } from '@Utils/response/handler';
+import { formatDate } from '@Utils/dates';
 import {accountInfoValidationSchema} from '@Schemas/accountInfoSchema';
-const AccountInfoForm = ({ data }) => {
+
+const keysMap = {
+  fullName: 'fullname',
+  email: 'email',
+  phoneNumber: 'phonenumber',
+  address: 'address',
+  birthDate: 'birthdate',
+}
+
+const AccountInfoForm = ({ data, handleUpdateProfile }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [account, setAccount] = useState(data);
   const navigation = useNavigation();
@@ -14,15 +24,7 @@ const AccountInfoForm = ({ data }) => {
   useEffect(() => {
     setAccount(data);
   }, [data]);
-
-  const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    const day = date.getDate().toString().padStart(2, '0');
-    const month = (date.getMonth() + 1).toString().padStart(2, '0');
-    const year = date.getFullYear();
-    return `${day}/${month}/${year}`;
-  };
-
+  
   const fields = [
     { name: 'fullName', label: 'Full Name', iconName: 'user', placeholder: 'Enter full name' },
     { name: 'email', label: 'Email', iconName: 'envelope', placeholder: 'Enter email', keyboardType: 'email-address' },
@@ -35,23 +37,32 @@ const AccountInfoForm = ({ data }) => {
     setIsLoading(true);
 
     const userInfo = {
-      name: values.fullName,
+      fullName: values.fullName,
       email: values.email,
-      phone: values.phoneNumber,
+      phoneNumber: values.phoneNumber,
       address: values.address,
-      birthday: values.birthday,
+      birthDate: values.birthday.replace(/\//g, '-').split('-').reverse().join('-')
     };
 
     try {
       const userToken = await getData('userToken');
       const response = await sendPostRequest('api/profile/update/account', userInfo, { userToken });
-      console.log('Response:', response);
+      
       await handleResponse(
         response,
         navigation,
         async (data, error) => {
             Alert.alert('Success', 'Your account information has been updated successfully.');
-          navigation.navigate('Profile');
+            const updatedFields = Object.keys(data.updatedFields).reduce((acc, key) => {
+              
+              acc[keysMap[key]] = data.updatedFields[key];
+              return acc;
+            }, { ...account });
+
+            handleUpdateProfile((prevProfile) => ({ ...prevProfile, account: {...prevProfile.account, ...updatedFields} }));
+
+            const account = await getData('account');
+            await storeData('account', {...JSON.parse(account), ...updatedFields});
         }
       );
     } catch (error) {
