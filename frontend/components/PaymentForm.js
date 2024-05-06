@@ -14,7 +14,7 @@ const PaymentForm = ({ paymentDetails, submitTitle, edit, formName='Payment' }) 
 
   const fields = [
     { name: 'cardNumber', label: 'Card Number', iconName: 'cc-visa', placeholder: 'Enter card number', keyboardType: 'numeric', secureTextEntry: true },
-    { name: 'expirationDate', label: 'Expiration Date', iconName: 'calendar', placeholder: 'MM/YY', keyboardType: 'numeric' },
+    { name: 'expirationDate', label: 'Expiration Date', iconName: 'calendar', placeholder: 'MM/YYYY', keyboardType: 'numeric' },
     { name: 'cvv', label: 'CVV', iconName: 'lock', placeholder: 'Enter CVV', keyboardType: 'numeric', secureTextEntry: true },
     { name: 'ID', label: 'ID', iconName: 'id-card-o', placeholder: 'Enter ID', keyboardType: 'numeric' },
   ];
