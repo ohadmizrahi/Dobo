@@ -75,13 +75,13 @@ const styles = StyleSheet.create({
         fontSize: 15,
         fontWeight: 'bold',
         alignSelf: 'flex-start',
-        marginLeft: 2,
+        marginLeft: 4,
     },
     type: {
-        fontSize: 14,
+        fontSize: 13,
         color: '#666',
         alignSelf: 'flex-start',
-        marginLeft: 2,
+        marginLeft: 4,
     },
     image: {
         width: 130,
