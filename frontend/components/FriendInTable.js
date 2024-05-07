@@ -19,12 +19,13 @@ const FriendsInTable = ({ friends }) => {
         let contentHeight = 0;
         friends.forEach(friend => {
             // Assuming each friend item has a fixed height of 80
-            contentHeight += 80;
+            contentHeight += 1;
         });
+        if (contentHeight<=5) contentHeight=5;
         // Adjust container height based on content height and device height
         const screenHeight = Dimensions.get('window').height;
         const maxContainerHeight = screenHeight * 0.6; // 60% of screen height
-        setContainerHeight(Math.min(contentHeight, maxContainerHeight));
+        setContainerHeight(Math.min(contentHeight*80, maxContainerHeight));
     }, [friends]);
 
     storeData('FriendsData', friends);

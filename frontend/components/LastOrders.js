@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Modal, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Modal, ScrollView, Dimensions } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import FormContainer from '@Components/FormContainer';
 
@@ -14,10 +14,12 @@ const LastOrders = ({ orders }) => {
     };
     
     useEffect(() => {
-        // Calculate the total height of the content
-        let contentHeight = orders.length * 50; // Assuming each order item has a fixed height of 50
-        // Set container height to content height
-        setContainerHeight(contentHeight);
+        let length = orders.length;
+        if (length<=5) length=5;
+        let contentHeight = length * 50; 
+        const screenHeight = Dimensions.get('window').height;
+        const maxContainerHeight = screenHeight * 0.6; // 60% of screen height
+        setContainerHeight(Math.min(contentHeight, maxContainerHeight));
     }, [orders]);
 
 
