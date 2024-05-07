@@ -1,4 +1,4 @@
-import { ScrollView, View, StatusBar } from 'react-native';
+import { ScrollView, View, StatusBar,Modal,StyleSheet } from 'react-native';
 import { useState, useEffect } from 'react';
 import { globalStyles } from '@Root/globalStyles';
 import { sendPostRequest } from '@Utils/request/send';
@@ -39,13 +39,20 @@ export default function HomeScreen({ navigation }) {
     fetchData();
   }, []);
 
-  if (loading) { 
-    return <LoadingIcon />;
-  }
+
   
   return (
     <View style={globalStyles.screenColor}>
       <StatusBar barStyle="light-content" />
+      <Modal
+        transparent={true}
+        visible={loading}
+        animationType="none"
+      >
+        <View style={styles.loadingOverlay}>
+          <LoadingIcon />
+        </View>
+      </Modal>
       <ScrollView>
         <SearchBar/>
         <FilterPlaces/>
@@ -59,3 +66,14 @@ export default function HomeScreen({ navigation }) {
     </View>
   );
 }
+const styles = StyleSheet.create({
+  loadingOverlay: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+  },
+});
