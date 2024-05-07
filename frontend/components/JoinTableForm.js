@@ -30,7 +30,7 @@ const JoinTableForm = ({ qrData, joined, handleSubmit }) => {
         fields={[]}
         submitTitle="Joined !"
         formName="Welcome to your table!"
-        editable={false}
+        editable={true}
       />
     
     );
