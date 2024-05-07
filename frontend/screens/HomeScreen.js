@@ -39,29 +39,23 @@ export default function HomeScreen({ navigation }) {
     fetchData();
   }, []);
 
+  if (loading) {
+    return <LoadingIcon backgroundColor={'#3D3D3D'}/>;
+  }
 
   
   return (
     <View style={globalStyles.screenColor}>
       <StatusBar barStyle="light-content" />
-      <Modal
-        transparent={true}
-        visible={loading}
-        animationType="none"
-      >
-        <View style={styles.loadingOverlay}>
-          <LoadingIcon />
-        </View>
-      </Modal>
-      <ScrollView>
-        <SearchBar/>
-        <FilterPlaces/>
-        <Places title="New places" data={places.new} />
-        <Places title="Near you" data={places.name} />
-        <Places title="Recomended for you" data={places.recommend} />
-        <Places title="Italian" data={places.name} />
-        <Places title="Breakfast" data={places.name} />
-      </ScrollView>
+        <ScrollView>
+          <SearchBar/>
+          <FilterPlaces/>
+          <Places title="New places" data={places.new} />
+          <Places title="Near you" data={places.name} />
+          <Places title="Recomended for you" data={places.recommend} />
+          <Places title="Italian" data={places.name} />
+          <Places title="Breakfast" data={places.name} />
+        </ScrollView>
       <Bell navigation={navigation} />
     </View>
   );

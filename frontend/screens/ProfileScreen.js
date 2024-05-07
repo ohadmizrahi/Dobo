@@ -63,21 +63,14 @@ export default function ProfileScreen({ navigation }) {
         navigation.navigate('SignIn');
     }
 
+    if (loading) {
+        return <LoadingIcon backgroundColor={'#3D3D3D'}/>;
+    }
 
   return (
     <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} keyboardVerticalOffset={Platform.OS === "ios" ? 100 : 0} style={globalStyles.screenColor}>
     <ScrollView contentContainerStyle={{ paddingBottom: 60 }}>
       <StatusBar barStyle="light-content" />
-      <Modal
-        transparent={true}
-        visible={loading}
-        animationType="none"
-      >
-        <View style={styles.loadingOverlay}>
-          <LoadingIcon />
-        </View>
-        </Modal>
-
       <DoboLogo />
       <ProfilePicture name={profile.account.fullname} imageurl={profile.account.imageurl} handleUpdateProfile={setProfile}/>
       <AccountInfoForm data={profile.account} handleUpdateProfile={setProfile} />

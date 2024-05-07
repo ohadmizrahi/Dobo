@@ -47,9 +47,9 @@ export default function TableStatusScreen({ navigation, route }) {
     navigation.navigate('Order');
   }
 
-  if (loading) { 
-    return <LoadingIcon />;
-  }
+  if (loading) {
+    return <LoadingIcon backgroundColor={'#3D3D3D'}/>;
+}
 
   return (
     <ScrollView style={globalStyles.screenColor} contentContainerStyle={{ paddingBottom: 60 }}>

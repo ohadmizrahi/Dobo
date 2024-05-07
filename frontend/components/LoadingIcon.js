@@ -1,8 +1,8 @@
 import { View, Text, ActivityIndicator, StatusBar, StyleSheet } from 'react-native';
 
-const LoadingIcon = () => {
+const LoadingIcon = ({backgroundColor}) => {
   return (
-    <View style={styles.loadingContainer}>
+    <View style={[styles.loadingContainer, { backgroundColor: backgroundColor }]}>
       <ActivityIndicator size="large" color="#97DECC" />
       <Text>Loading...</Text>
     </View>
