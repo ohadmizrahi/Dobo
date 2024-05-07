@@ -40,6 +40,8 @@ const FriendsInTable = ({ friends }) => {
                             <Text style={styles.friendName}>{friend.clientname}</Text>
                             <Text style={styles.friendAmount}> {friend.paid}$</Text>
                             <Text style={styles.friendAmount}> {friend.total}$</Text>
+                            
+                            <Icon name="circle" size={25}     color={friend.active ? "green" : "red"} style={styles.iconStatus}/>
                         </View>
                     </View>
                 ))}
@@ -105,6 +107,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: '#333',
         textAlign: 'right',
+        marginRight: 15,
     },
     iconContainer: {
         borderRadius: 40,
@@ -132,6 +135,12 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         margin: 5,
     },
+    iconStatus: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        textAlign: 'right',
+        marginLeft: 10,
+    }
 });
 
 export default FriendsInTable;

@@ -147,12 +147,16 @@ export default function PayScreen({ navigation }) {
             {balance > 0 && (<Text>
               Click here to pay with default payment method
             </Text>)}
+            {balance === 0 && (<Text>
+              Click here to leave the table
+            </Text>)}
             <CustomButton
               title={'Your Account'}
               handlePress={handlePayment}
               buttonStyle={styles.button}
             >
               ${balance}
+
             </CustomButton>
           </View>
       </View>
