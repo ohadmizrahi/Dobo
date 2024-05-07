@@ -161,7 +161,7 @@ export default function PayScreen({ navigation }) {
           </View>
       </View>
       <LineAcross text='OR' />
-      <PaymentForm formName='Enter Payment Method' submitTitle="Pay" edit={true}/>
+      <PaymentForm formName='Use New Payment Method' submitTitle="Pay" edit={true}/>
     </ScrollView>
     </KeyboardAvoidingView>
   );

@@ -55,19 +55,11 @@ export default function ProfileScreen({ navigation }) {
         const keysToRemove = [
             'userToken',
             'userRefreshToken',
-            'clientToken',
-            'clientRefreshToken',
-            'client',
             'businessInfo',
-            'virtualTable',
             'account',
-            'FriendsData',
-            'cart'
         ];
         await removeMulti(keysToRemove);
         navigation.navigate('SignIn');
-        const data2 = await getAllData()
-        console.log('after', data2);
     }
 
   if (loading) { 
