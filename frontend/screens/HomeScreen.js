@@ -1,4 +1,4 @@
-import { ScrollView, View, StatusBar } from 'react-native';
+import { ScrollView, View, StatusBar,Modal,StyleSheet } from 'react-native';
 import { useState, useEffect } from 'react';
 import { globalStyles } from '@Root/globalStyles';
 import { sendPostRequest } from '@Utils/request/send';
@@ -39,23 +39,35 @@ export default function HomeScreen({ navigation }) {
     fetchData();
   }, []);
 
-  if (loading) { 
-    return <LoadingIcon />;
+  if (loading) {
+    return <LoadingIcon backgroundColor={'#3D3D3D'}/>;
   }
+
   
   return (
     <View style={globalStyles.screenColor}>
       <StatusBar barStyle="light-content" />
-      <ScrollView>
-        <SearchBar/>
-        <FilterPlaces/>
-        <Places title="New places" data={places.new} />
-        <Places title="Near you" data={places.name} />
-        <Places title="Recomended for you" data={places.recommend} />
-        <Places title="Italian" data={places.name} />
-        <Places title="Breakfast" data={places.name} />
-      </ScrollView>
+        <ScrollView>
+          <SearchBar/>
+          <FilterPlaces/>
+          <Places title="New places" data={places.new} />
+          <Places title="Near you" data={places.name} />
+          <Places title="Recomended for you" data={places.recommend} />
+          <Places title="Italian" data={places.name} />
+          <Places title="Breakfast" data={places.name} />
+        </ScrollView>
       <Bell navigation={navigation} />
     </View>
   );
 }
+const styles = StyleSheet.create({
+  loadingOverlay: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+  },
+});

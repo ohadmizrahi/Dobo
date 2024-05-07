@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Form from '@Components/Form';
-
-
+import FormContainer from '@Components/FormContainer';
+import { Text, StyleSheet } from 'react-native';
 const JoinTableForm = ({ qrData, joined, handleSubmit }) => {
   const [initialValues, setInitialValues] = useState({location: '', table: ''});
   const [qrObject, setQrObject] = useState(qrData ? qrData : null);
@@ -25,13 +25,9 @@ const JoinTableForm = ({ qrData, joined, handleSubmit }) => {
 
   if (joined) {
     return (
-      <Form
-        initialValues={initialValues}
-        fields={[]}
-        submitTitle="Joined !"
-        formName="Welcome to your table!"
-        editable={true}
-      />
+      <FormContainer formName="Welcome to your table!">
+        <Text style={styles.joinedText}>You have successfully joined the table.</Text>
+      </FormContainer>
     
     );
   }
@@ -49,3 +45,12 @@ const JoinTableForm = ({ qrData, joined, handleSubmit }) => {
 };
 
 export default JoinTableForm;
+
+
+const styles = StyleSheet.create({
+  joinedText: {
+    fontSize: 20,
+    color: '#000',
+    textAlign: 'center',
+  },
+});

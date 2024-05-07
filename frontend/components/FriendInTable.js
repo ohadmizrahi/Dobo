@@ -1,12 +1,12 @@
-import { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Image } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, Image, ScrollView, Dimensions } from 'react-native';
 import { storeData, getData } from '@Utils/storage/asyncStorage';
 import FormContainer from '@Components/FormContainer';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import { ScrollView } from 'react-native';
 
 const FriendsInTable = ({ friends }) => {
     const [myself, setMyself] = useState(null);
+    const [containerHeight, setContainerHeight] = useState(null);
 
     useEffect(() => {
         getData('client').then(client => {
@@ -14,7 +14,20 @@ const FriendsInTable = ({ friends }) => {
         });
     }, []);
 
-    storeData('FriendsData', friends)
+    useEffect(() => {
+        // Calculate the total height of the content
+        let contentHeight = 0;
+        friends.forEach(friend => {
+            // Assuming each friend item has a fixed height of 80
+            contentHeight += 80;
+        });
+        // Adjust container height based on content height and device height
+        const screenHeight = Dimensions.get('window').height;
+        const maxContainerHeight = screenHeight * 0.6; // 60% of screen height
+        setContainerHeight(Math.min(contentHeight, maxContainerHeight));
+    }, [friends]);
+
+    storeData('FriendsData', friends);
 
     const totalPaid = friends.reduce((total, friend) => parseFloat(total) + parseFloat(friend.paid), 0);
     const totalToPay = friends.reduce((total, friend) => parseFloat(total) + parseFloat(friend.total), 0);
@@ -30,9 +43,18 @@ const FriendsInTable = ({ friends }) => {
         );
         }
     }
+    const newDetailsContainerStyle = {
+        ...styles.detailsContainer,
+        margin: 0,
+        padding: 10,
+        paddingHorizontal: 50,
+        maxWidth: '100%',
+      };
 
     return (
-        <FormContainer formName='Friends'>
+    <View style={{ height: containerHeight }}>
+            <FormContainer formName='Friends' style={newDetailsContainerStyle}>
+            <ScrollView>
                 {friends.map(friend => (
                     <View key={friend.clientid} style={styles.friendItem}>
                         <View style={[styles.friendDetails, myself === friend.clientid && styles.myselfDetails]}>
@@ -40,11 +62,11 @@ const FriendsInTable = ({ friends }) => {
                             <Text style={styles.friendName}>{friend.clientname}</Text>
                             <Text style={styles.friendAmount}> {friend.paid}$</Text>
                             <Text style={styles.friendAmount}> {friend.total}$</Text>
-                            
                             <Icon name="circle" size={25}     color={friend.active ? "green" : "red"} style={styles.iconStatus}/>
                         </View>
                     </View>
                 ))}
+                </ScrollView>
                 <View style={styles.grid}>
                     <View style={styles.gridRow}>
                         <Text style={styles.gridText}>Payed:</Text>
@@ -58,6 +80,9 @@ const FriendsInTable = ({ friends }) => {
                     </View>
                 </View>
         </FormContainer>
+    </View>
+
+
     );
 };
 
@@ -65,7 +90,7 @@ const styles = StyleSheet.create({
     friendItem: {
         flexDirection: 'row',
         alignItems: 'center',
-        padding: 10,
+        padding: -20,
         borderBottomWidth: 1,
         borderBottomColor: '#ddd',
         width: '100%',
@@ -78,7 +103,6 @@ const styles = StyleSheet.create({
     },
     myselfDetails: {
         borderColor: '#97DECC',
-        padding: 8,
 
     },
     friendDetails: {
@@ -92,7 +116,6 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignContent: 'center',
         alignItems: 'center',
-        padding: 8,
     },
     friendName: {
         flex: 1,
@@ -107,7 +130,6 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: '#333',
         textAlign: 'right',
-        marginRight: 15,
     },
     iconContainer: {
         borderRadius: 40,
