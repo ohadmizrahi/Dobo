@@ -39,7 +39,7 @@ const Form = ({ initialValues, validationSchema, onSubmit, fields, error, submit
                     placeholder={field.placeholder}
                     keyboardType={field.keyboardType}
                     secureTextEntry={field.secureTextEntry}
-                    editable={isEditMode}
+                    editable={field.editable !== undefined ? field.editable : isEditMode}
                     
                   />
                 </View>

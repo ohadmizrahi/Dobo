@@ -25,9 +25,10 @@ const AccountInfoForm = ({ data, handleUpdateProfile }) => {
     setAccount(data);
   }, [data]);
   
+
   const fields = [
     { name: 'fullName', label: 'Full Name', iconName: 'user', placeholder: 'Enter full name' },
-    { name: 'email', label: 'Email', iconName: 'envelope', placeholder: 'Enter email', keyboardType: 'email-address' },
+    { name: 'email', label: 'Email', iconName: 'envelope', placeholder: 'Enter email', keyboardType: 'email-address', editable: false },
     { name: 'phoneNumber', label: 'Phone', iconName: 'mobile', placeholder: 'Enter phone number', keyboardType: 'numeric' },
     { name: 'address', label: 'Address', iconName: 'home', placeholder: 'Enter address' },
     { name: 'birthday', label: 'Birthday', iconName: 'gift', placeholder: 'Enter birthday', keyboardType: 'numeric' },
