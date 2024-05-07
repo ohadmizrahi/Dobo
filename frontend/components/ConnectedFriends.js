@@ -1,6 +1,7 @@
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import FormContainer from '@Components/FormContainer';
+import { Alert } from 'react-native';
 
 export default function ConnectedFriends() {
     const friends = [
@@ -23,7 +24,9 @@ export default function ConnectedFriends() {
                     <Text > Friend {index + 1} {friend.name}</Text>
                 </View>
             ))}
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => {
+                Alert.alert('Invite Friend Button', 'This functionality is not part of the POC');
+            }}>
                 <View style={styles.plusButton}>
                     <Icon name='plus' size={20} color={'white'} />
                 </View>
