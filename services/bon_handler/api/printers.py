@@ -34,3 +34,21 @@ class CupsPrinter:
                 subprocess.run(["lp", "-d", self.printer_name, temp.name])
         except subprocess.CalledProcessError as e:
             raise RuntimeError("Failed to print file.") from e
+        
+
+# handle error:
+# import subprocess
+
+# def restart_cups(password):
+#     command = 'echo {} | sudo -S service cups restart'.format(password)
+#     process = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+#     stdout, stderr = process.communicate()
+
+#     if process.returncode != 0:
+#         # There was an error
+#         print(stderr.decode())
+#     else:
+#         print(stdout.decode())
+
+# # Replace 'your_password' with your actual password
+# restart_cups('your_password')
