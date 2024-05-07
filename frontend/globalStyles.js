@@ -165,6 +165,7 @@ export const globalStyles = StyleSheet.create({
         textAlign: 'center',
     },
     socialSignInContainer: {
+        flex: 1,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
