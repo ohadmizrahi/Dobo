@@ -1,4 +1,4 @@
-import { ScrollView, StatusBar } from 'react-native';
+import { ScrollView, StatusBar, View, StyleSheet } from 'react-native';
 import { useState, useEffect } from 'react';
 import { globalStyles } from '@Root/globalStyles';
 import { sendGetRequest } from '@Utils/request/send';
@@ -8,7 +8,8 @@ import {
   DoboLogo,
   LastOrders,
   FriendsInTable,
-  LoadingIcon
+  LoadingIcon,
+  TableHeader
 } from '@Components';
 
 export default function TableStatusScreen({ navigation, route }) {
@@ -55,10 +56,36 @@ export default function TableStatusScreen({ navigation, route }) {
     <ScrollView style={globalStyles.screenColor} contentContainerStyle={{ paddingBottom: 60 }}>
       <StatusBar barStyle="light-content" />
       <DoboLogo />
-      <CustomButton handlePress={handleOrderNow} title='Order Now' />
-      <LastOrders orders={table.latestOrders} />
-      <FriendsInTable friends={table.friends} />
-      <CustomButton handlePress={handlePayNow} title={'Pay Now'} buttonStyle={{backgroundColor: 'red'}}/>
+      <View style={styles.container}>
+        <View style={styles.row}>
+          <TableHeader showPencilButton={true}/>
+        </View>
+        <View style={styles.row}>
+          <CustomButton handlePress={handleOrderNow} title='Order Now' />
+        </View>
+        <View style={styles.row}>
+          <LastOrders orders={table.latestOrders} />
+        </View>
+        <View style={styles.row}>
+          <FriendsInTable friends={table.friends} />
+        </View>
+        <View style={styles.row}>
+          <CustomButton handlePress={handlePayNow} title={'Pay Now'} buttonStyle={{backgroundColor: 'red'}}/>
+        </View>
+      </View>
     </ScrollView>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+  },
+  row: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});

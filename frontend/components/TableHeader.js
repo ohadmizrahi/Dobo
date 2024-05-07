@@ -1,50 +1,85 @@
-import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { getData, storeData } from '@Utils/storage/asyncStorage';
 
-const TableHeader = ({ tableNumber, showPencilButton }) => {
+const TableHeader = ({ title, showPencilButton, style }) => {
+  const [tableName, setTableName] = useState(title);
+  const [edit, setEdit] = useState(false);
+
+  useEffect(() => {
+    const fetchTableName = async () => {
+      if (title) {
+        setTableName(title);
+      } else {
+        let virtualTable = await getData('virtualTable');
+        if (typeof virtualTable === 'string') {
+          virtualTable = JSON.parse(virtualTable);
+          setTableName(virtualTable.virtualTableName);
+      }
+    };
+  }
+
+    fetchTableName();
+  }, []);
+
+  async function storeNewName() {
+    let virtualTable = await getData('virtualTable');
+    if (typeof virtualTable === 'string') {
+      virtualTable = JSON.parse(virtualTable);
+      await storeData('virtualTable', { ...virtualTable, virtualTableName: tableName });
+    }
+  }
+  
   const handleIconPress = () => {
-    // Implement functionality for pencil button press here
-    console.log('Pencil button pressed');
+    if (edit) {
+      storeNewName();
+    }
+    setEdit(!edit);
   };
 
   return (
-    <View style={styles.head}>
+    <View style={[styles.head, style]}>
       {showPencilButton && (
         <TouchableOpacity onPress={handleIconPress}>
           <View style={styles.iconContainer}>
-            <Icon name="pencil" size={20} color="#333" style={styles.icon} />
+            <Icon name={edit ? "check-circle" : "pencil"} size={30} color="#333" />
           </View>
         </TouchableOpacity>
       )}
-      <Text style={styles.text}>Table {tableNumber}</Text>
+      <TextInput
+        style={styles.text}
+        value={tableName}
+        onChangeText={setTableName}
+        editable={edit}
+      />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   head: {
-    flexDirection: 'row',
-    alignItems: 'center',
     justifyContent: 'center',
-    width: 300,
-    height: 50,
+    width: '80%',
+    height: '65%',
     alignSelf: 'center',
     backgroundColor: '#97DECC',
     marginTop: '10%',
+    marginBottom: '15%',
     borderRadius: 50,
+    maxHeight: 80,
   },
   text: {
-    padding: 10,
     fontSize: 20,
-    borderRadius: 50,
     textAlign: 'center',
-    flex: 1,
+    maxWidth: '60%',
+    alignSelf: 'center',
   },
   iconContainer: {
-    marginRight: 10,
+    position: 'absolute',
+    right: '12%'
+
   },
-  icon: {},
 });
 
 export default TableHeader;

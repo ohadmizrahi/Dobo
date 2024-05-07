@@ -57,10 +57,11 @@ export const globalStyles = StyleSheet.create({
         paddingHorizontal: 10,
         marginTop: 20,
         marginBottom: 20,
+        height: 40,
     },
     textInput: {
         flex: 1,
-        fontSize: 25,
+        fontSize: 20,
     },
     searchIcon: {
         fontSize: 20,

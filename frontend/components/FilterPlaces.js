@@ -1,7 +1,4 @@
-import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
-
-// needs to ger values from the backend
-// need to be imported in home screen and business info screen with different values
+import { View, TouchableOpacity, Text, StyleSheet, Alert } from 'react-native';
 
 const FilterPlaces = () => {
     const filters = ['Late Night', 'Happy Hour', 'Breakfast'];
@@ -9,7 +6,8 @@ const FilterPlaces = () => {
     return (
         <View style={styles.rowContainer}>
             {filters.map((filter, index) => (
-                <TouchableOpacity key={index} style={styles.container} onPress={() => console.log(filter)}>
+                <TouchableOpacity key={index} style={styles.container} onPress={
+                    () => Alert.alert('Filters', 'This functionality is not part of the POC')}>
                     <Text style={styles.text}>{filter}</Text>
                 </TouchableOpacity>
             ))}

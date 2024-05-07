@@ -6,12 +6,12 @@ import {
   Menu,
   DoboLogo,
   CustomButton,
-  ExitSign
+  ExitSign,
+  TableHeader
 } from '@Components';
 
 
 export default function OrderScreen({ navigation }) {
-  const windowWidth = useWindowDimensions().width;
   const [menu, setMenu] = useState({});
 
   useEffect(() => {
@@ -34,9 +34,8 @@ export default function OrderScreen({ navigation }) {
         <StatusBar barStyle="light-content" />
         <ExitSign/>
         <DoboLogo/>
-        <ScrollView scrollEventThrottle={16} contentContainerStyle={{ paddingBottom: 80 }}>
+        <TableHeader style={{marginBottom: '5%'}}/>
             <Menu navigation={navigation} isOrderScreen={true} data={menu} />
-        </ScrollView>
         <View style={styles.floatingButtonContainer}>
             <CustomButton handlePress={handleViewOrder} title={'View Order'} />
         </View>

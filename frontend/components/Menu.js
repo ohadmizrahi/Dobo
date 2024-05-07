@@ -85,7 +85,7 @@ export default function Menu ({navigation, isOrderScreen , data}){
 
 
   return (
-    <ScrollView>
+    <ScrollView contentContainerStyle={{ paddingBottom: 80 }}>
       {groups.map((group, index) => (
         <Section key={index} title={group.group} items={group.items} isOrderScreen={isOrderScreen} navigation={navigation} />
       ))}

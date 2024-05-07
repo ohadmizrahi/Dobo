@@ -15,17 +15,4 @@ const TableLink = () => (
   </TouchableOpacity>
   </>
 );
-
-// socialSignInContainer: {
-//   flex: 1,
-//   flexDirection: 'row',
-//   alignItems: 'center',
-//   justifyContent: 'center',
-//   alignSelf: 'center',
-//   margin: 5,
-//   backgroundColor: '#FFFFFF',
-//   borderRadius: 100,
-//   width: '90%',
-//   height: 40,
-// },
 export default TableLink;
