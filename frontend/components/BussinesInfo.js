@@ -1,18 +1,10 @@
 import { View, Text, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {Picker} from '@react-native-picker/picker';
 import { getData } from '@Utils/storage/asyncStorage'; 
-import { useState } from 'react';
+import ActivityTimeSection from '@Components/ActivityTimeSection';
 
 export default function BussinesInfo({ navigation, data }) {
-  const [selectedDay, setSelectedDay] = useState({});
-  const [selectedHours, setSelectedHours] = useState({});
-  const dayName = {};
-  const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-  
-  for (let i = 0; i < daysOfWeek.length; i++) {
-    dayName[i + 1] = daysOfWeek[i];
-  }
+
 const handleMenu = () => {
   navigation.navigate('Menu', { menu: data.menu, imageurl: data.imageurl, name: data.name});
 }
@@ -35,12 +27,6 @@ const handleFindPlace = async () => {
   })
 
 }
-const handleDayChange = (day) => {
-  setSelectedDay(day);
-  const selectedDayData = data.activityTime.find(item => item.day === day);
-  setSelectedHours({ open: selectedDayData.open, close: selectedDayData.close });
-};
-
   return (
     <View style={styles.container}>
       <View style={styles.details}>
@@ -48,19 +34,7 @@ const handleDayChange = (day) => {
           <Icon name="smile-o" size={20} />
           <Text style={styles.info}>{data.rank}</Text>
         </View>
-        <View style={styles.align}>
-          <Icon name="clock-o" size={20} />
-          <View style={{ flexDirection: 'row', alignItems: 'center'}}>
-            <Picker
-              selectedValue={selectedDay}
-              style={styles.pickercontainer}
-              onValueChange={(itemValue) => handleDayChange(itemValue)}>
-              {data.activityTime.map((item) => (
-                <Picker.Item key={item.day} label={`${dayName[item.day]}: ${item.open.split(':').slice(0, 2).join(':')} - ${item.close.split(':').slice(0, 2).join(':')}`} value={item.day} style={styles.info}/>
-              ))}
-            </Picker>
-          </View>
-        </View>
+          <ActivityTimeSection activityTime={data.activityTime} />
         <View style={styles.align}>
           <Icon name="info-circle" size={20} />
           <Text style={styles.info}>{data.description}</Text>

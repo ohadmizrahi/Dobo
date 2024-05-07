@@ -10,7 +10,7 @@ const TableLink = () => (
   }}>
   <View style={globalStyles.socialSignInContainer}>
     <Icon name="whatsapp" size={24}/>
-    <Text style={{padding: 10, adjustsFontSizeToFit: true, fontSize: 18}}>Copy Table Invitation Link</Text>
+    <Text style={{padding: 10, fontSize: 18}}>Copy Table Invitation Link</Text>
   </View>
   </TouchableOpacity>
   </>

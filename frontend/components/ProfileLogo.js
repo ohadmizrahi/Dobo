@@ -11,14 +11,7 @@ export default function ProfileLogo() {
     const userToken = await getData('userToken');
     userToken ?
     navigation.navigate('Profile') :
-    (() => {
-      Alert.alert(
-      'You are not signed in',
-      'Do you want to sign in?',
-      [
-        {text: 'Yes', onPress: () => navigation.navigate('SignIn')},
-        {text: 'No'}],{cancelable: true});
-    })();
+    navigation.navigate('SignIn')
   }
 
   return (

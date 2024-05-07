@@ -4,7 +4,7 @@ const LoadingIcon = () => {
   return (
     <View style={styles.loadingContainer}>
       <ActivityIndicator size="large" color="#97DECC" />
-      <Text>Loading...</Text>
+      <Text style={{color: 'white'}}>Loading...</Text>
     </View>
   );
 };
@@ -15,6 +15,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingTop: StatusBar.currentHeight || 0,
+    backgroundColor: '#3D3D3D'
   },
 });
 
