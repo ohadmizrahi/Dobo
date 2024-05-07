@@ -69,15 +69,17 @@ const styles = StyleSheet.create({
     height: 200,
   },
   itemName: {
-    fontSize: 40,
+    fontSize: 50,
     fontWeight: 'bold',
     alignSelf: 'center',
     marginBottom: 8,
+    fontFamily: 'Noteworthy-Light',
   },
   itemDescription: {
     fontSize: 30,
     alignSelf: 'center',
     marginBottom: 16,
+    
   },
   line: {
     height: 1,
