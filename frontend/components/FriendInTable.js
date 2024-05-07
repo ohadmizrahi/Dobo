@@ -41,7 +41,7 @@ const FriendsInTable = ({ friends }) => {
                             <Text style={styles.friendAmount}> {friend.paid}$</Text>
                             <Text style={styles.friendAmount}> {friend.total}$</Text>
                             
-                            <Icon name="circle" size={25} color="red" style={styles.iconStatus}/>
+                            <Icon name="circle" size={25}     color={friend.active ? "green" : "red"} style={styles.iconStatus}/>
                         </View>
                     </View>
                 ))}
