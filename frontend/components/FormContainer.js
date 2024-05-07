@@ -1,10 +1,10 @@
 import { SafeAreaView, StyleSheet, View, Text } from 'react-native';
 
-const FormContainer = ({ children, formName, displayHeadline = true }) => {
+const FormContainer = ({ children, formName, displayHeadline = true, style }) => {
 
     return (
         <SafeAreaView style={styles.container}>
-            <View style={styles.detailsContainer}>
+            <View style={[styles.detailsContainer,style ]}>
                 {displayHeadline && (
                     <View style={[styles.formHeadLine, styles.shadowBottom]}>
                         <Text style={styles.formHeadLineText}>{formName}</Text>

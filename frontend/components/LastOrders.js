@@ -1,19 +1,38 @@
-import { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Modal } from 'react-native';
+import { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, Modal, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import FormContainer from '@Components/FormContainer';
 
 const LastOrders = ({ orders }) => {
     const [showClients, setShowClients] = useState(false);
     const [selectedOrder, setSelectedOrder] = useState(null);
+    const [containerHeight, setContainerHeight] = useState(null);
 
     const handlePress = (order) => {
         setSelectedOrder(order);
         setShowClients(true);
     };
     
+    useEffect(() => {
+        // Calculate the total height of the content
+        let contentHeight = orders.length * 50; // Assuming each order item has a fixed height of 50
+        // Set container height to content height
+        setContainerHeight(contentHeight);
+    }, [orders]);
+
+
+    const newDetailsContainerStyle = {
+        ...styles.detailsContainer,
+        margin: 0,
+        padding: 10,
+        paddingHorizontal: 50,
+        maxWidth: '100%',
+      };
+
     return (
-        <FormContainer formName='Latest Orders'>
+        <View style={{ height: containerHeight, marginTop: 40 }}>
+            <FormContainer formName='Latest Orders' style={newDetailsContainerStyle}>
+            <ScrollView>
             {orders.length > 0 ? orders.map(order => (
                 <View key={order.orderid} style={styles.orderItem}>
                     <Text style={[styles.orderText, { flex: 1 }]}> {order.itemname}</Text> 
@@ -24,6 +43,7 @@ const LastOrders = ({ orders }) => {
                     </TouchableOpacity>
                 </View>
             )) : <Text style={styles.noOrders}>No Orders Yet</Text>}
+            </ScrollView>
 
             <Modal
                 animationType="slide"
@@ -48,6 +68,7 @@ const LastOrders = ({ orders }) => {
                 </View>
             </Modal>
         </FormContainer>
+        </View>
     );
 };
 
