@@ -13,11 +13,10 @@ const Places = ({ title, data }) => {
             return;
         }
         const mappedPlaces = data.map((item) => {
-            
             return {
                 businessId: item.businessid,
                 name: item.name,
-                description: item.description,
+                shortdesc: item.shortdesc,
                 image: `${BASE_URL}:${BE_PORT}/assets/${item.imageurl}`
                 }
 
@@ -40,7 +39,7 @@ const Places = ({ title, data }) => {
                         <View style={styles.place}>
                             <Image style={styles.image} source={{ uri: item.image }} resizeMode='cover' />
                             <Text style={styles.title}>{item.name}</Text>
-                            <Text style={styles.type}>{item.description}</Text>
+                            <Text style={styles.type}>{item.shortdesc}</Text>
                         </View>
                     </TouchableOpacity>
                 )}

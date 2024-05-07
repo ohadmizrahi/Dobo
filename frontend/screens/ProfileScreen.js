@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { ScrollView, KeyboardAvoidingView, Platform,StatusBar } from 'react-native';
+
+import { ScrollView, KeyboardAvoidingView, Platform,StatusBar ,Modal,StyleSheet, View } from 'react-native';
 import { globalStyles } from '@Root/globalStyles';
 import { sendGetRequest } from '@Utils/request/send';
 import { handleResponse } from '@Utils/response/handler';
@@ -62,9 +63,10 @@ export default function ProfileScreen({ navigation }) {
         navigation.navigate('SignIn');
     }
 
-  if (loading) { 
-    return <LoadingIcon />;
-  }
+    if (loading) {
+        return <LoadingIcon backgroundColor={'#3D3D3D'}/>;
+    }
+
   return (
     <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"} keyboardVerticalOffset={Platform.OS === "ios" ? 100 : 0} style={globalStyles.screenColor}>
     <ScrollView contentContainerStyle={{ paddingBottom: 60 }}>
@@ -79,3 +81,15 @@ export default function ProfileScreen({ navigation }) {
     </KeyboardAvoidingView>
   );
 }
+
+const styles = StyleSheet.create({
+  loadingOverlay: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+  },
+});
