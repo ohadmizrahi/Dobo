@@ -79,6 +79,7 @@ async function getTableClients(virtualTableId, active=false) {
             c.clientId AS clientId,
             a.fullName AS clientName,
             MAX(a.imageUrl) AS clientImage,
+            c.active as active,
             COALESCE(SUM(CASE WHEN co.paid = true THEN co.cost ELSE 0 END), 0) AS paid,
             COALESCE(SUM(co.cost), 0) AS total
         FROM 

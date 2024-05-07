@@ -1,9 +1,8 @@
 import { useState } from 'react';
-import { signinValidationSchema } from '@Schemas/signupSchema';
 import Form from '@Components/Form';
 
+
 const JoinTableForm = ({ qrData, joined, handleSubmit }) => {
-  const [isLoading, setIsLoading] = useState(false);
   const [initialValues, setInitialValues] = useState({location: '', table: ''});
   const [qrObject, setQrObject] = useState(qrData ? qrData : null);
 
@@ -20,17 +19,16 @@ const JoinTableForm = ({ qrData, joined, handleSubmit }) => {
   }
 
   const onSubmit = async (values) => {
-    // setIsLoading(true);
-    console.log('values', values);
     handleSubmit(values.location, values.table);
   }
+
+
   if (joined) {
     return (
       <Form
         initialValues={initialValues}
         fields={[]}
         submitTitle="Joined !"
-        isLoading={isLoading}
         formName="Welcome to your table!"
         editable={false}
       />
@@ -44,7 +42,6 @@ const JoinTableForm = ({ qrData, joined, handleSubmit }) => {
       onSubmit={onSubmit}
       fields={fields}
       submitTitle="Join"
-      isLoading={isLoading}
       formName="Join Table"
       editable={true}
     />
