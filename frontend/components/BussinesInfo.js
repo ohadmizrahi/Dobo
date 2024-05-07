@@ -7,6 +7,12 @@ import { useState } from 'react';
 export default function BussinesInfo({ navigation, data }) {
   const [selectedDay, setSelectedDay] = useState({});
   const [selectedHours, setSelectedHours] = useState({});
+  const dayName = {};
+  const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  
+  for (let i = 0; i < daysOfWeek.length; i++) {
+    dayName[i + 1] = daysOfWeek[i];
+  }
 const handleMenu = () => {
   navigation.navigate('Menu', { menu: data.menu, imageurl: data.imageurl, name: data.name});
 }
@@ -50,7 +56,7 @@ const handleDayChange = (day) => {
               style={styles.pickercontainer}
               onValueChange={(itemValue) => handleDayChange(itemValue)}>
               {data.activityTime.map((item) => (
-                <Picker.Item key={item.day} label={`Day ${item.day}: ${item.open} - ${item.close}`} value={item.day} style={styles.info}/>
+                <Picker.Item key={item.day} label={`${dayName[item.day]}: ${item.open.split(':').slice(0, 2).join(':')} - ${item.close.split(':').slice(0, 2).join(':')}`} value={item.day} style={styles.info}/>
               ))}
             </Picker>
           </View>
@@ -135,6 +141,6 @@ const styles = StyleSheet.create({
   },
   pickercontainer: {
     height: 50, 
-    width: '95%'
+    width: '93%',
   },
 });

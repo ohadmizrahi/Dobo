@@ -10,7 +10,8 @@ import {
   ConnectedFriends,
   LineAcross,
   TableLink,
-  CustomButton
+  CustomButton,
+  LoadingIcon
 } from '@Components';
 
 export default function JoinTableScreen({ navigation, route }) {
@@ -21,6 +22,7 @@ export default function JoinTableScreen({ navigation, route }) {
     businessId: qrData && qrData.business,
     tableId: qrData && qrData.table
   });
+  const [loading, setLoading] = useState(false);
 
   async function handleGoToTable() {
     const userToken = await getData('userToken');
@@ -43,9 +45,8 @@ export default function JoinTableScreen({ navigation, route }) {
 
   useEffect(() => {
     const fetchData = async () => {
-
+      setLoading(true);
       const userToken = await getData('userToken');
-      console.log('userToken', userToken);
       const joinTableTokens = { userToken }
 
       const joinTableBody = {
@@ -73,13 +74,12 @@ export default function JoinTableScreen({ navigation, route }) {
           setClientId(data.client.clientid);
         }
       );
+      setLoading(false);
     };
     async function blockReJoin() {
       const clientToken = await getData('clientToken')
       if (clientToken && clientToken.length > 0) {
-        console.log('clientToken', clientToken);
         const client = JSON.parse(await getData('client'))
-        console.log('client', client);
         setClientId(client.clientId);
       }
     }
@@ -94,16 +94,18 @@ export default function JoinTableScreen({ navigation, route }) {
     <ScrollView style={globalStyles.screenColor}  contentContainerStyle={{ paddingBottom: 50 }}>
       <StatusBar barStyle="light-content" />
       <DoboLogo />
+      {loading ?
+      <LoadingIcon/> : 
       <JoinTableForm 
       qrData={qrData}
       joined={clientId !== ''}
-cd      handleSubmit={
+      handleSubmit={
         (businessId, tableId) => setTableToJoin({
           businessId: businessId,
           tableId: tableId
           })
         }
-      />
+      />}
       <ConnectedFriends navigation={navigation} />
       <LineAcross text='OR' />
       <TableLink />

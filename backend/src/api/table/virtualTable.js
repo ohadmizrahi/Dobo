@@ -66,7 +66,7 @@ async function startTableConsumer(virtualTableId) {
 async function stopTableConsumer(virtualTableId) {
     const validResponses = [200, 201]
     try {
-        response = await fetch(`http://127.0.0.1:8001/agents/stop/${virtualTableId}`)
+        response = await fetch(`http://0.0.0.0:8000/agents/stop/${virtualTableId}`)
         const status = response.status;
         const response_data = await response.json();
         if (!validResponses.includes(status)) {
