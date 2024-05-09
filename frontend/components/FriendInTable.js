@@ -21,7 +21,7 @@ const FriendsInTable = ({ friends }) => {
             // Assuming each friend item has a fixed height of 80
             contentHeight += 1;
         });
-        if (contentHeight<=5) contentHeight=5;
+        if (contentHeight<=4) contentHeight=4;
         // Adjust container height based on content height and device height
         const screenHeight = Dimensions.get('window').height;
         const maxContainerHeight = screenHeight * 0.6; // 60% of screen height

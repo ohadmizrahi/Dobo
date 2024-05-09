@@ -105,7 +105,16 @@ export default function PayScreen({ navigation }) {
         ];
         await removeMulti(keysToRemove);
         setLoading(false);
-        navigation.navigate('Home');
+        Alert.alert(
+          'Success',
+          'You have successfully paid and left the table.',
+          [
+            {
+              text: 'OK',
+              onPress: () => navigation.navigate('Home')
+            }
+          ]
+        );
       },
       skipErrorHandling=true
     );
@@ -123,6 +132,7 @@ export default function PayScreen({ navigation }) {
           {
             text: 'Confirm',
             onPress: () => pay(),
+            
           },
         ],
         { cancelable: false }
@@ -161,7 +171,7 @@ export default function PayScreen({ navigation }) {
           </View>
       </View>
       <LineAcross text='OR' />
-      <PaymentForm formName='Use New Payment Method' submitTitle="Pay" edit={true}/>
+      <PaymentForm formName='Use New Payment Method' submitTitle="Pay" edit={true} handlePayment={handlePayment}/>
     </ScrollView>
     </KeyboardAvoidingView>
   );
