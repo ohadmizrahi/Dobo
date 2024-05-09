@@ -15,7 +15,7 @@ const LastOrders = ({ orders }) => {
     
     useEffect(() => {
         let length = orders.length;
-        if (length<=5) length=5;
+        if (length<=4) length=4;
         let contentHeight = length * 50; 
         const screenHeight = Dimensions.get('window').height;
         const maxContainerHeight = screenHeight * 0.6; // 60% of screen height

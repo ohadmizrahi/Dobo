@@ -8,7 +8,7 @@ import { sendPostRequest } from '@Utils/request/send.js';
 import { handleResponse } from '@Utils/response/handler';
 import { formatDate } from '@Utils/dates';
 
-const PaymentForm = ({ paymentDetails, submitTitle, edit, formName='Payment' }) => {
+const PaymentForm = ({ paymentDetails, submitTitle, edit, formName='Payment', handlePayment }) => {
   const [editable, setEditable] = useState(edit);
   const navigation = useNavigation();
 
@@ -29,7 +29,7 @@ const PaymentForm = ({ paymentDetails, submitTitle, edit, formName='Payment' }) 
       type: "visa",
     };
 
-    if (submitTitle != "pay") {
+    if (submitTitle != "Pay") {
     try {
       const userToken = await getData('userToken');
       const response = await sendPostRequest('api/profile/update/payment-method', paymentInfo, { userToken });
@@ -49,9 +49,7 @@ const PaymentForm = ({ paymentDetails, submitTitle, edit, formName='Payment' }) 
     }
   }
     else {
-      Alert.alert('Succsess', "payment is done successfully");
-      navigation.navigate('OrderCart');
-      // add function to send  to backend and delete item from cart
+      handlePayment();
     }
   }
 
