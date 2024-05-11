@@ -23,7 +23,6 @@ export default function ProfileScreen({ navigation }) {
     const fetchData = async () => {
         const userToken = await getData('userToken');
         const response = await sendGetRequest('api/profile', { userToken });
-
         await handleResponse(
             response,
             navigation,
@@ -45,6 +44,7 @@ export default function ProfileScreen({ navigation }) {
                     paymentsMethod: accountData.paymentsMethod,
                 };
                 setProfile(newProfile);
+                await storeData("paymentMethod", newProfile.paymentsMethod && newProfile.paymentsMethod.cardnumber ? true : false);
             }
         );
     };
@@ -58,6 +58,7 @@ export default function ProfileScreen({ navigation }) {
             'userRefreshToken',
             'businessInfo',
             'account',
+            'paymentMethod',
         ];
         await removeMulti(keysToRemove);
         navigation.navigate('SignIn');

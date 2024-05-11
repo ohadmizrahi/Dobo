@@ -30,6 +30,7 @@ export default function PayScreen({ navigation }) {
     }
   }
 
+
   useEffect(() => {
     const getCheck = async () => {
       const userToken = await getData('userToken');
@@ -120,8 +121,17 @@ export default function PayScreen({ navigation }) {
     );
   }
 
-  function handlePayment() {
-    Alert.alert(
+  async function handleDefaultPayment() {
+    let hasPaymentMethod = await getData('paymentMethod');
+    hasPaymentMethod = JSON.parse(hasPaymentMethod);
+    if (!hasPaymentMethod) {
+      Alert.alert(
+        'No Payment Method',
+        'You do not have a payment method configured. Please configure one before proceeding.'
+      );
+      return;
+    }
+      Alert.alert(
         'Confirm Checkout',
         'Are you sure you want to checkout?',
         [
@@ -132,12 +142,31 @@ export default function PayScreen({ navigation }) {
           {
             text: 'Confirm',
             onPress: () => pay(),
-            
           },
         ],
         { cancelable: false }
       );
-}
+  }
+
+  
+  function handleFormPayment() {
+      Alert.alert(
+        'Confirm Checkout',
+        'Are you sure you want to checkout?',
+        [
+          {
+            text: 'Cancel',
+            style: 'cancel',
+          },
+          {
+            text: 'Confirm',
+            onPress: () => pay(),
+          },
+        ],
+        { cancelable: false }
+      );
+  }
+  
 
   if (loading) { 
     return <LoadingIcon backgroundColor={'#3D3D3D'}/>;
@@ -162,7 +191,7 @@ export default function PayScreen({ navigation }) {
             </Text>)}
             <CustomButton
               title={'Your Account'}
-              handlePress={handlePayment}
+              handlePress={handleDefaultPayment}
               buttonStyle={styles.button}
             >
               ${balance}
@@ -171,7 +200,7 @@ export default function PayScreen({ navigation }) {
           </View>
       </View>
       <LineAcross text='OR' />
-      <PaymentForm formName='Use New Payment Method' submitTitle="Pay" edit={true} handlePayment={handlePayment}/>
+      <PaymentForm formName='Use New Payment Method' submitTitle="Pay" edit={true} handlePayment={handleFormPayment}/>
     </ScrollView>
     </KeyboardAvoidingView>
   );

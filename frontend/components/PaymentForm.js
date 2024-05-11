@@ -3,7 +3,7 @@ import { Alert, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { paymentValidationSchema } from '@Schemas/paymentSchema';
 import Form from '@Components/Form';
-import { getData } from '@Utils/storage/asyncStorage';
+import { getData, storeData } from '@Utils/storage/asyncStorage';
 import { sendPostRequest } from '@Utils/request/send.js';
 import { handleResponse } from '@Utils/response/handler';
 import { formatDate } from '@Utils/dates';
@@ -55,7 +55,9 @@ const PaymentForm = ({ paymentDetails, submitTitle, edit, formName='Payment', ha
     }
   }
     else {
-      handlePayment();
+      const paidForm = true
+      handlePayment(paidForm);
+      setIsLoading(false);
     }
   }
 
