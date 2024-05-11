@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Modal, ScrollView, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Modal, Dimensions } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import FormContainer from '@Components/FormContainer';
+import { ScrollView } from 'react-native-gesture-handler';
 
 const LastOrders = ({ orders }) => {
     const [showClients, setShowClients] = useState(false);

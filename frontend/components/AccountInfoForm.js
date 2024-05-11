@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Alert } from 'react-native';
+import { Alert, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Form from '@Components/Form';
 import { getData, storeData } from '@Utils/storage/asyncStorage';
@@ -7,6 +7,7 @@ import { sendPostRequest } from '@Utils/request/send.js';
 import { handleResponse } from '@Utils/response/handler';
 import { formatDate } from '@Utils/dates';
 import {accountInfoValidationSchema} from '@Schemas/accountInfoSchema';
+import LoadingIcon from '@Components/LoadingIcon';
 
 const keysMap = {
   fullName: 'fullname',
@@ -74,7 +75,15 @@ const AccountInfoForm = ({ data, handleUpdateProfile }) => {
     }
   };
 
-  return (
+if (isLoading) {
+    return (
+      <View style={{marginTop : "10%"}}>
+        <LoadingIcon />
+      </View>
+      )
+  }
+
+  return ( 
     <Form
       initialValues={{
         fullName: account.fullname,

@@ -16,13 +16,14 @@ import {
 
 export default function JoinTableScreen({ navigation, route }) {
   const qrData = route.params ? JSON.parse(route.params.qrData) : null
-
+  const [qrLoading, setQrLoading] = useState(route.params ? true : false);
   const [clientId, setClientId] = useState('');
   const [tableToJoin, setTableToJoin] = useState({
     businessId: qrData && qrData.business,
     tableId: qrData && qrData.table
   });
   const [loading, setLoading] = useState(false);
+
 
   async function handleGoToTable() {
     const userToken = await getData('userToken');
@@ -75,6 +76,7 @@ export default function JoinTableScreen({ navigation, route }) {
         }
       );
       setLoading(false);
+      setQrLoading(false);
     };
     async function blockReJoin() {
       const clientToken = await getData('clientToken')
@@ -89,6 +91,12 @@ export default function JoinTableScreen({ navigation, route }) {
       fetchData();
     }
   }, [tableToJoin]);
+
+
+
+if (qrLoading) {
+  return <LoadingIcon backgroundColor="#3D3D3D"/>;
+}
 
   return (
     <ScrollView style={globalStyles.screenColor}  contentContainerStyle={{ paddingBottom: 50 }}>
