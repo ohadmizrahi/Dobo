@@ -31,6 +31,8 @@ export default function App({navigation}) {
     return <Text>No access to camera</Text>;
   }
 
+
+
   return (
     <SafeAreaView style={globalStyles.screenColor}>
       <StatusBar barStyle="light-content" />
