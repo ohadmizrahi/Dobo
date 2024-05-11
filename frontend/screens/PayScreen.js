@@ -124,7 +124,7 @@ export default function PayScreen({ navigation }) {
   async function handleDefaultPayment() {
     let hasPaymentMethod = await getData('paymentMethod');
     hasPaymentMethod = JSON.parse(hasPaymentMethod);
-    if (!hasPaymentMethod) {
+    if (!hasPaymentMethod && balance > 0) {
       Alert.alert(
         'No Payment Method',
         'You do not have a payment method configured. Please configure one before proceeding.'
