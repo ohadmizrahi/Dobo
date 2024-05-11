@@ -13,7 +13,6 @@ async function updatedOrCreatePaymentMethod(username, data) {
         throw new Error(operationResponse.message);
     }
 
-    
     const secureResponse = {
         cardNumber: "************" + operationResponse.data.cardnumber.slice(-4),
         expiritionDate: operationResponse.data.expiritiondate,

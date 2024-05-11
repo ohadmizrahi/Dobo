@@ -56,7 +56,8 @@ async function update(username, fieldsToUpdate) {
         if (res.rows.length === 0) {
             return { success: false, message: "Payment Method not found" }
         }
-        return { success: true, data: fieldsToUpdate, message: "Payment Method updated"}
+        const updatedPaymentMethod = res.rows[0];
+        return { success: true, data: updatedPaymentMethod, message: "Payment Method updated"}
     } catch (error) {
         console.error(error);
         throw new Error('Payment Method update failed');
