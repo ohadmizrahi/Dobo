@@ -50,7 +50,7 @@ export default function OrderCartScreen({ navigation }) {
       });
   }
   if (loading) { 
-    return <LoadingIcon />;
+    return <LoadingIcon backgroundColor={'#3D3D3D'}/>;
   }
   return (
     <View>

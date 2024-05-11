@@ -40,7 +40,7 @@ export default function BusinessInfoScreen({ navigation, route }) {
 
 
   if (loading) {
-    return <LoadingIcon />;
+    return <LoadingIcon backgroundColor={'#3D3D3D'}/>;
   }
   console.log(businessInfo.imageurl);
 

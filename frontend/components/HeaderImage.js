@@ -1,7 +1,6 @@
 import { Image, View } from 'react-native';
 import { BASE_URL, BE_PORT } from '@env';
 
-
 const HeaderImage = ({ data }) => {
   const image = data ? `${BASE_URL}:${BE_PORT}/assets/${data}` : 'https://www.collinsdictionary.com/images/full/restaurant_135621509.jpg';
     return (
@@ -13,7 +12,6 @@ const HeaderImage = ({ data }) => {
       </View>
     );
   }
-
   const styles = ({
     image: {
       width: '100%',
