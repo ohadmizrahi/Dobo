@@ -19,10 +19,10 @@ const Places = ({ title, data }) => {
                 shortdesc: item.shortdesc,
                 image: `${BASE_URL}:${BE_PORT}/assets/${item.imageurl}`
                 }
-
             });
         setPlaces(mappedPlaces);
     }, [data]);
+
 
     const handleBusinessPress = async (businessId) => {
         setSelectedBusinessId(businessId);
