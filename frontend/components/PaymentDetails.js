@@ -13,6 +13,7 @@ export default function PaymentDetails({ data }) {
 
   const handleAddPaymentMethod = () => {
     setShowPaymentForm(true);
+    return <PaymentForm paymentDetails={paymentDetails} submitTitle="Submit" edit={true} />;
   };
 
   if (paymentDetails && Object.keys(paymentDetails).length > 0) {

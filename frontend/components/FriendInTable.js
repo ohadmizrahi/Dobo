@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Image, ScrollView, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, Image, Dimensions } from 'react-native';
 import { storeData, getData } from '@Utils/storage/asyncStorage';
 import FormContainer from '@Components/FormContainer';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import { ScrollView } from 'react-native-gesture-handler';
+
 
 const FriendsInTable = ({ friends }) => {
     const [myself, setMyself] = useState(null);
