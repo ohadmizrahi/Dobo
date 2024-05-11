@@ -52,6 +52,7 @@ export default function ProfileScreen({ navigation }) {
     fetchData()
     }, []);
 
+    
     async function handleLogOut() {
         const keysToRemove = [
             'userToken',
