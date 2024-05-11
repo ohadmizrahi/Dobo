@@ -43,7 +43,7 @@ export default function ActivityTimeSection({ activityTime}) {
 
       <Modal isVisible={isModalVisible} >
         {daysOfWeek.map((day, index) => (
-          <Button color='white' key={index} title={day} onPress={() => handleDayChange(day)} />
+          <Button color={Platform.OS === 'android' ? 'grey' : 'white'} key={index} title={day} onPress={() => handleDayChange(day)} />
         ))}
         <Button color='#97DECC' title="Close" onPress={toggleModal} />
       
