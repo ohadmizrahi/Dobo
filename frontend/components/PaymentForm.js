@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Alert } from 'react-native';
+import { Alert, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { paymentValidationSchema } from '@Schemas/paymentSchema';
 import Form from '@Components/Form';
@@ -7,10 +7,12 @@ import { getData } from '@Utils/storage/asyncStorage';
 import { sendPostRequest } from '@Utils/request/send.js';
 import { handleResponse } from '@Utils/response/handler';
 import { formatDate } from '@Utils/dates';
+import LoadingIcon from '@Components/LoadingIcon';
 
 const PaymentForm = ({ paymentDetails, submitTitle, edit, formName='Payment', handlePayment }) => {
   const [editable, setEditable] = useState(edit);
   const navigation = useNavigation();
+  const [isLoading, setIsLoading] = useState(false);
 
   const fields = [
     { name: 'cardNumber', label: 'Card Number', iconName: 'cc-visa', placeholder: 'Enter card number', keyboardType: 'numeric', secureTextEntry: true },
@@ -20,6 +22,7 @@ const PaymentForm = ({ paymentDetails, submitTitle, edit, formName='Payment', ha
   ];
 
   const onSubmit = async (values) => {
+    setIsLoading(true);
 
     const paymentInfo = {
       cardNumber: values.cardNumber,
@@ -47,10 +50,21 @@ const PaymentForm = ({ paymentDetails, submitTitle, edit, formName='Payment', ha
       const errorMessage = error.response?.data?.error?.message || 'There was an error. Please try again.';
       Alert.alert('Error', errorMessage);
     }
+   finally {
+    setIsLoading(false);
+    }
   }
     else {
       handlePayment();
     }
+  }
+
+  if (isLoading) {
+    return (
+      <View style={{marginTop : "10%"}}>
+        <LoadingIcon />
+      </View>
+      )
   }
 
   return (
