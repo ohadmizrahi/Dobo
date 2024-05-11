@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Text, SafeAreaView, StyleSheet, Button,StatusBar, View} from 'react-native';
-import { BarCodeScanner } from 'expo-barcode-scanner';
+import { CameraView, Camera } from "expo-camera";
 import { globalStyles } from '@Root/globalStyles';
 import { DoboLogo, ExitSign } from '@Components';
 
@@ -10,12 +10,12 @@ export default function App({navigation}) {
   const [scanned, setScanned] = useState(false);
 
   useEffect(() => {
-    const getBarCodeScannerPermissions = async () => {
-      const { status } = await BarCodeScanner.requestPermissionsAsync();
+    const getCameraPermissions = async () => {
+      const { status } = await Camera.requestCameraPermissionsAsync();
       setHasPermission(status === 'granted');
     };
 
-    getBarCodeScannerPermissions();
+    getCameraPermissions();
   }, []);
 
   const handleBarCodeScanned = ({ type, data }) => {
@@ -41,11 +41,15 @@ export default function App({navigation}) {
     <View style={styles.container}>
       <Text style={styles.title}>Scan QR Code</Text>
       <View style={styles.cameraView}>
-        <BarCodeScanner
-        onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+      <CameraView
+        onBarcodeScanned={scanned ? undefined : handleBarCodeScanned}
         style={styles.square}
-        />
+        barcodeScannerSettings={{
+          barcodeTypes: ["qr", "pdf417"],
+        }}
+      />
       </View>
+      
       {scanned && <Button title={'Tap to Scan Again'} onPress={() => setScanned(false)} />}
       </View>
     </SafeAreaView>
