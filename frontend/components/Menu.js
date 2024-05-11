@@ -40,6 +40,7 @@ function Section({ title, items, isOrderScreen, navigation }) {
       <FlatList 
         data={items}
         keyExtractor={(item) => item.itemid}
+        scrollEnabled={false}
         renderItem={({item}) => (
           <View>
           {isOrderScreen ? ( // Order screen

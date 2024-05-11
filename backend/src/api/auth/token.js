@@ -19,7 +19,7 @@ function resetPasswordToken(username) {
 }
 
 function generateClientToken(clientId) {
-    return generateTokens({ clientId }, process.env.CLIENT_SECRET_KEY, "1d", { expiresIn: '1d' })
+    return generateTokens({ clientId }, process.env.CLIENT_SECRET_KEY, "1d", { expiresIn: '30d' })
 }
 
 module.exports = {
