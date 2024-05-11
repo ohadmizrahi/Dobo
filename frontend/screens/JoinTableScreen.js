@@ -16,13 +16,9 @@ import {
 
 export default function JoinTableScreen({ navigation, route }) {
   const qrData = route.params ? JSON.parse(route.params.qrData) : null
-  const [qrLoading, setQrLoading] = useState(route.params ? true : false);
+  const [loading, setLoading] = useState(route.params);
   const [clientId, setClientId] = useState('');
-  const [tableToJoin, setTableToJoin] = useState({
-    businessId: qrData && qrData.business,
-    tableId: qrData && qrData.table
-  });
-  const [loading, setLoading] = useState(false);
+  const [tableToJoin, setTableToJoin] = useState({ businessId: '', tableId: '' });
 
 
   async function handleGoToTable() {
@@ -45,7 +41,7 @@ export default function JoinTableScreen({ navigation, route }) {
 
 
   useEffect(() => {
-    const fetchData = async () => {
+    const joinTable = async () => {
       setLoading(true);
       const userToken = await getData('userToken');
       const joinTableTokens = { userToken }
@@ -60,7 +56,6 @@ export default function JoinTableScreen({ navigation, route }) {
         response,
         navigation,
         async (data, error) => {
-          console.log('data', JSON.stringify(data));
           await storeData('clientToken', data.client.token);
           await storeData('clientRefreshToken', data.client.tokenForRefresh);
           await storeData('client', { clientId: data.client.clientid });
@@ -76,25 +71,16 @@ export default function JoinTableScreen({ navigation, route }) {
         }
       );
       setLoading(false);
-      setQrLoading(false);
     };
-    async function blockReJoin() {
-      const clientToken = await getData('clientToken')
-      if (clientToken && clientToken.length > 0) {
-        const client = JSON.parse(await getData('client'))
-        setClientId(client.clientId);
-      }
+    if (tableToJoin.businessId && tableToJoin.tableId && clientId === '') {
+      console.log('joining table data');
+      joinTable();
+    } else {
+      setLoading(false);
     }
-    blockReJoin()
-    if (tableToJoin.businessId && tableToJoin.tableId) {
-      console.log('fetching data');
-      fetchData();
-    }
-  }, [tableToJoin]);
+  }, [tableToJoin, clientId]);
 
-
-
-if (qrLoading) {
+if (loading) {
   return <LoadingIcon backgroundColor="#3D3D3D"/>;
 }
 

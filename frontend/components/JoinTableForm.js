@@ -1,22 +1,21 @@
-import { useState } from 'react';
+import { useEffect } from 'react';
 import Form from '@Components/Form';
 import FormContainer from '@Components/FormContainer';
 import { Text, StyleSheet } from 'react-native';
+
 const JoinTableForm = ({ qrData, joined, handleSubmit }) => {
-  const [initialValues, setInitialValues] = useState({location: '', table: ''});
-  const [qrObject, setQrObject] = useState(qrData ? qrData : null);
 
   const fields = [
     { name: 'location', label: 'Location', iconName: 'map-marker', placeholder: 'Business Name' },
     { name: 'table', label: 'Table Code', iconName: 'cutlery', placeholder: 'Table Code' },
   ];
 
-  if (qrObject) {
-    const business = qrObject.business.toString()
-    const table = qrObject.table.toString()
-    setInitialValues({location: business, table: table});
-    setQrObject(null);
-  }
+  useEffect(() => {
+    if (qrData) {
+      const {business, table} = qrData
+      handleSubmit(business, table);
+    }
+  }, []);
 
   const onSubmit = async (values) => {
     handleSubmit(values.location, values.table);
@@ -34,7 +33,7 @@ const JoinTableForm = ({ qrData, joined, handleSubmit }) => {
 
   return (
     <Form
-      initialValues={initialValues}
+      initialValues={{location: '', table: ''}}
       onSubmit={onSubmit}
       fields={fields}
       submitTitle="Join"
