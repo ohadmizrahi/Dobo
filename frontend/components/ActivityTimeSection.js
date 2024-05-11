@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Button } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Button, Platform } from 'react-native';
 import Modal from 'react-native-modal';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
@@ -43,7 +43,7 @@ export default function ActivityTimeSection({ activityTime}) {
 
       <Modal isVisible={isModalVisible} >
         {daysOfWeek.map((day, index) => (
-          <Button color={Platform.OS === 'android' ? 'grey' : 'white'} key={index} title={day} onPress={() => handleDayChange(day)} />
+          <Button color={ Platform.OS == 'ios' ? 'white' : 'grey' } key={index} title={day} onPress={() => handleDayChange(day)} />
         ))}
         <Button color='#97DECC' title="Close" onPress={toggleModal} />
       
