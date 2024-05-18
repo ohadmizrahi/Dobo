@@ -15,25 +15,21 @@ const LastOrders = ({ orders }) => {
     };
     
     useEffect(() => {
-        let length = orders.length;
-        if (length<=4) length=4;
-        let contentHeight = length * 50; 
+        let nOrders = orders.length || 1;
         const screenHeight = Dimensions.get('window').height;
-        const maxContainerHeight = screenHeight * 0.6; // 60% of screen height
-        setContainerHeight(Math.min(contentHeight, maxContainerHeight));
+        const currentHeight =  nOrders * 130;
+        console.log('ORDER', currentHeight, screenHeight * 0.7);
+        setContainerHeight(Math.min(currentHeight, screenHeight * 0.5));
     }, [orders]);
 
 
     const newDetailsContainerStyle = {
-        ...styles.detailsContainer,
-        margin: 0,
-        padding: 10,
-        paddingHorizontal: 50,
-        maxWidth: '100%',
+        paddingHorizontal: '9%',
+        height: containerHeight,
+        marginTop: 40
       };
 
     return (
-        <View style={{ height: containerHeight, marginTop: 40 }}>
             <FormContainer formName='Latest Orders' style={newDetailsContainerStyle}>
             <ScrollView>
             {orders.length > 0 ? orders.map(order => (
@@ -71,18 +67,18 @@ const LastOrders = ({ orders }) => {
                 </View>
             </Modal>
         </FormContainer>
-        </View>
     );
 };
 
 const styles = StyleSheet.create({
     orderItem: {
+        flex: 1, 
         flexDirection: 'row',
         alignItems: 'center',
-        padding: 10,
         borderBottomWidth: 1,
         borderBottomColor: '#ddd',
         width: '100%',
+        height: 75,
         
     },
     orderText: {
@@ -95,15 +91,11 @@ const styles = StyleSheet.create({
     bold: {
         fontWeight: 'bold',
     },
-    noOrders: {
+    noOrders: { 
         fontSize: 30,
-        alignItems: 'center',
-        justifyContent: 'center',
         fontWeight: 'bold',
         color: '#333',
         textAlign: 'center',
-        padding: 10,
-        margin: 10,
     },
     centeredView: {
         flex: 1,
@@ -140,7 +132,7 @@ const styles = StyleSheet.create({
         textAlign: "center"
     },
     iconButton: {
-        padding: 10,
+        padding: 0,
         justifyContent: 'center',
         alignItems: 'center',
     },

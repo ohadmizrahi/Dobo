@@ -179,9 +179,7 @@ export default function PayScreen({ navigation }) {
       <HeaderImage />
       <ExitSign />
       <View style={styles.container}>
-          <ScrollView style={styles.invoiceContainer} nestedScrollEnabled={true}>
-            <Invoice check={check} onRemoveItem={handleRemoveItem} />
-          </ScrollView>
+          <Invoice check={check} onRemoveItem={handleRemoveItem} />
           <View style={{flex: 1, alignItems: 'center', justifyContent: 'center', marginTop: balance > 0 ? 20 : 0}}>
             {balance > 0 && (<Text>
               Click here to pay with default payment method
@@ -194,7 +192,7 @@ export default function PayScreen({ navigation }) {
               handlePress={handleDefaultPayment}
               buttonStyle={styles.button}
             >
-              ${balance}
+              ${balance.toFixed(2)}
 
             </CustomButton>
           </View>

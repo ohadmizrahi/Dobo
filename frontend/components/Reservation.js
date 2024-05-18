@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Alert } from 'react-native';
+import { Alert, View } from 'react-native';
 import { tableReservationValidationSchema } from '@Schemas/reservationSchema';
 import Form from '@Components/Form';
 import { sendPostRequest } from '@Utils/request/send.js';
@@ -64,7 +64,8 @@ const TableReservationForm = (data) => {
 
   return (
     <>
-      {loading && <LoadingIcon />} 
+      {loading ?
+      <LoadingIcon /> :
       <Form
         initialValues={{date: '',tableSize: '',hour: '',preference: '',specialRequests: '' }}
         validationSchema={tableReservationValidationSchema}
@@ -74,6 +75,7 @@ const TableReservationForm = (data) => {
         formName="Reservation"
         editable={true}
       />
+      }
     </>
   );
 };

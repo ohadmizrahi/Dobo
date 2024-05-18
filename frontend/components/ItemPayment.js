@@ -46,7 +46,7 @@ const Invoice = ({ onRemoveItem, check }) => {
             {check.length > 0 && <FlatList
                 data={check}
                 keyExtractor={(item) => item.orderid}
-                scrollEnabled={false}
+                scrollEnabled={true}
                 renderItem={renderItem}
                 style={{padding: 10}}
             />}

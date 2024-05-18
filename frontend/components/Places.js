@@ -20,6 +20,7 @@ const Places = ({ title, data }) => {
                 image: `${BASE_URL}:${BE_PORT}/assets/${item.imageurl}`
                 }
             });
+            console.log();
         setPlaces(mappedPlaces);
     }, [data]);
 

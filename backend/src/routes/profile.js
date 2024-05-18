@@ -1,23 +1,16 @@
 const { Router } = require('express');
 const multer = require('multer');
+
 const { authenticateUserToken, authenticateResetPasswordToken } = require("@src/middlewares/authenticateToken.js");
 const { updateAccountDetails, resetPassword, updateImage, getAccount, getAccountReservations } = require('@src/api/account/account.js');
 const { updatedOrCreatePaymentMethod } = require('@src/api/account/paymentMethod.js');
 
 const router = Router();
 
+const upload = multer({ storage: multer.memoryStorage() });
+console.log('upload', upload);
+
 router.use(authenticateUserToken);
-
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-      cb(null, 'usersImage/')
-    },
-    filename: function (req, file, cb) {
-      cb(null, req.user.username + '-profile-' + Date.now())
-    }
-  }) 
-
-const upload = multer({ storage: storage });
 
 router.get("/api/profile", async (req, res) => {
     const username = req.user.username;
@@ -109,7 +102,7 @@ router.post("/api/profile/update/password", authenticateResetPasswordToken, asyn
 router.post("/api/profile/update/image", upload.single('image'), async (req, res) => {
     const username = req.user.username;
     // const filename = req.file.filename;
-    console.log({req});
+    console.log('req', req.file);
     // console.log({filename});
     try {
         const response = await updateImage(username, filename)

@@ -70,10 +70,8 @@ export default function Menu ({navigation, isOrderScreen , data}){
   useEffect(() => {
     const tempGroups = []
     const menu = data.menu
-    console.log('menu', menu);
     for (const groupName in menu) {
       const tempGroup = {}
-      console.log('key', groupName);
       if (menu[groupName].length === 0) {
         continue
       }

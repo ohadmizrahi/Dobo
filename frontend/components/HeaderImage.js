@@ -2,6 +2,7 @@ import { Image, View } from 'react-native';
 import { BASE_URL, BE_PORT } from '@env';
 
 const HeaderImage = ({ data }) => {
+  console.log();
   const image = data ? `${BASE_URL}:${BE_PORT}/assets/${data}` : 'https://www.collinsdictionary.com/images/full/restaurant_135621509.jpg';
     return (
       <View style={styles.shadow}>

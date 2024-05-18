@@ -17,17 +17,12 @@ const FriendsInTable = ({ friends }) => {
     }, []);
 
     useEffect(() => {
-        // Calculate the total height of the content
-        let contentHeight = 0;
-        friends.forEach(friend => {
-            // Assuming each friend item has a fixed height of 80
-            contentHeight += 1;
-        });
-        if (contentHeight<=4) contentHeight=4;
-        // Adjust container height based on content height and device height
+        const nFriends = friends.length;
         const screenHeight = Dimensions.get('window').height;
-        const maxContainerHeight = screenHeight * 0.6; // 60% of screen height
-        setContainerHeight(Math.min(contentHeight*80, maxContainerHeight));
+        const maxContainerHeight = screenHeight * 0.65;
+        const currentHeight = Math.max(nFriends * 220, screenHeight * 0.35)
+        console.log('currentHeight', currentHeight, screenHeight);
+        setContainerHeight(Math.min(currentHeight, maxContainerHeight));
     }, [friends]);
 
     storeData('FriendsData', friends);
@@ -47,25 +42,23 @@ const FriendsInTable = ({ friends }) => {
         }
     }
     const newDetailsContainerStyle = {
-        ...styles.detailsContainer,
-        margin: 0,
-        padding: 10,
-        paddingHorizontal: 50,
-        maxWidth: '100%',
+        paddingHorizontal: '9%',
       };
 
     return (
     <View style={{ height: containerHeight }}>
             <FormContainer formName='Friends' style={newDetailsContainerStyle}>
-            <ScrollView>
+            <ScrollView >
                 {friends.map(friend => (
                     <View key={friend.clientid} style={styles.friendItem}>
-                        <View style={[styles.friendDetails, myself === friend.clientid && styles.myselfDetails]}>
+                        <View style={[styles.details, myself === friend.clientid && styles.myself]}>
+                        <View style={styles.friendDetails}>
                         { renderFriendImage(friend) }
                             <Text style={styles.friendName}>{friend.clientname}</Text>
                             <Text style={styles.friendAmount}> {friend.paid}$</Text>
                             <Text style={styles.friendAmount}> {friend.total}$</Text>
-                            <Icon name="circle" size={25}     color={friend.active ? "green" : "red"} style={styles.iconStatus}/>
+                            <Icon name="circle" size={25} color={friend.active ? "green" : "red"} style={styles.iconStatus}/>
+                        </View>
                         </View>
                     </View>
                 ))}
@@ -91,12 +84,13 @@ const FriendsInTable = ({ friends }) => {
 
 const styles = StyleSheet.create({
     friendItem: {
+        flex: 1,
         flexDirection: 'row',
         alignItems: 'center',
-        padding: -20,
         borderBottomWidth: 1,
         borderBottomColor: '#ddd',
         width: '100%',
+        height: 90,
     },
     friendImage: {
         width: 50,
@@ -104,35 +98,42 @@ const styles = StyleSheet.create({
         borderRadius: 25,
         marginRight: 10,
     },
-    myselfDetails: {
-        borderColor: '#97DECC',
+    details: {
+        flex: 1,
+        flexDirection: 'row',
+        paddingHorizontal: 10,
+        width: '100%',
 
     },
+    myself: {
+        borderColor: '#97DECC',
+        borderRadius: 40,
+        borderWidth: 2,
+    },
     friendDetails: {
-        flex: 1,
-        height: 80,
+        flex: 2,
+        height: 70,
         flexDirection: 'row',
         alignItems: 'center',
-        borderRadius: 40,
-        borderColor: '#fff',
-        borderWidth: 2,
-        justifyContent: 'center',
-        alignContent: 'center',
-        alignItems: 'center',
+        
     },
     friendName: {
         flex: 1,
-        fontSize: 16,
+        flexDirection: 'column',
+        fontSize: 14,
         fontWeight: 'bold',
         color: '#333',
+        textAlign: 'left',
 
     },
     friendAmount: {
-        flex: 1,
-        fontSize: 16,
+        flex: 1.2,
+        flexDirection: 'column',
+        fontSize: 14,
         fontWeight: 'bold',
         color: '#333',
-        textAlign: 'right',
+        textAlign: 'center',
+        padding: 5,
     },
     iconContainer: {
         borderRadius: 40,
@@ -145,6 +146,7 @@ const styles = StyleSheet.create({
     },
     grid: {
         flexDirection: 'column',
+        marginTop: 20
     },
     gridRow: {
         flexDirection: 'row',
@@ -156,15 +158,16 @@ const styles = StyleSheet.create({
         fontSize: 16,
         fontWeight: 'bold',
         color: '#333',
-        flex: 1,
         textAlign: 'center',
         margin: 5,
     },
     iconStatus: {
+        flex: 0.5,
+        flexDirection: 'column',
         fontSize: 16,
         fontWeight: 'bold',
-        textAlign: 'right',
-        marginLeft: 10,
+        textAlign: 'center',
+        
     }
 });
 
