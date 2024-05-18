@@ -52,3 +52,7 @@ class CupsPrinter:
 
 # # Replace 'your_password' with your actual password
 # restart_cups('your_password')
+
+
+# to set = sudo lpadmin -p home -E -v socket://<ip>
+# to delete = sudo lpadmin -x home
